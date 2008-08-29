@@ -1,0 +1,1 @@
+Host-side (ie OSGi bundle) of the Sun SPOT sensors producer
