@@ -1,14 +1,26 @@
 /*
-Banner
- **/
+ * Copyright 2005-2008, Aspire
+ * 
+ * This library is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU Lesser General Public License as published by 
+ * the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+ * License, or (at your option) any later version. If you do not alter this 
+ * notice, a recipient may use your version of this file under either the 
+ * LGPL version 2.1, or (at his option) any later version.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License 
+ * along with this library; if not, write to the Free Software Foundation, 
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * 
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+ * KIND, either express or implied. See the GNU Lesser General Public 
+ * License for the specific language governing rights and limitations.
+ */
 
 package org.ow2.aspirerfid.sensor.sunspot;
 
-/*
- * SunSpotSensorsProducerOnSpot.java
- *
- */ 
-
+import com.sun.spot.peripheral.radio.IProprietaryRadio;
+import com.sun.spot.peripheral.radio.IRadioPolicyManager;
 import com.sun.spot.sensorboard.EDemoBoard;
 import com.sun.spot.sensorboard.io.IIOPin;
 import com.sun.spot.sensorboard.io.IOutputPin;
@@ -25,6 +37,9 @@ import com.sun.spot.util.Utils;
 import com.sun.spot.util.BootloaderListener;
 
 import java.io.IOException;
+import javax.microedition.io.Connector;
+import javax.microedition.io.Datagram;
+import javax.microedition.io.DatagramConnection;
 
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
@@ -41,15 +56,15 @@ public class SunSpotSensorsProducerOnSpot extends MIDlet
     private static final short PAN_ID               = IRadioPolicyManager.DEFAULT_PAN_ID;
     private static final short MAX_BROADCAST_HOPS=1;      // =1 means "don't want packets being rebroadcasted""
 
-    private static final String BROADCAST_PORT              = "42";
+    private static final int BROADCAST_PORT              = 42;
     /**
      * Type for the configuration message (host --> spot)
      */
-    private static final int RADIO_CONFIG_PACKET            = DD;
+    private static final int RADIO_CONFIG_PACKET            = 0xDD;
     /**
      * Type for the sensor data message (spot --> spot/host)
      */
-    private static final int RADIO_SENSORDATA_PACKET        = DE;
+    private static final int RADIO_SENSORDATA_PACKET        = 0xDE;
     
     // indicators
     private ITriColorLED leds[]          = EDemoBoard.getInstance().getLEDs();
@@ -106,7 +121,7 @@ public class SunSpotSensorsProducerOnSpot extends MIDlet
         // TODO
     }
     
-    private void heatIndicator(){
+    private void heatIndicator() throws IOException {
          // heatIndication is scaled so that reaching 20 degrees away from 72 gives the maximum LED brightness (255)
             int heatIndication = (int) ((tempSensor.getCelsius() - 25.0) * 255.0 / 20);
             if(heatIndication > 0){
@@ -160,7 +175,7 @@ public class SunSpotSensorsProducerOnSpot extends MIDlet
         }.start();
     }
 
-    public void processConfigurationMessage() {
+    public void processConfigurationMessage() throws IOException {
         // read the header (contains the message type)
 
         // configure the emission period
@@ -200,7 +215,7 @@ public class SunSpotSensorsProducerOnSpot extends MIDlet
         try {
             // The Connection is a broadcast so we specify it in the creation string
             dgConnection = (DatagramConnection) Connector.open("radiogram://broadcast:"+BROADCAST_PORT);
-            dgConnection.setMaxBroadcastHops(MAX_BROADCAST_HOPS);
+            // TODO dgConnection.setMaxBroadcastHops(MAX_BROADCAST_HOPS);
             // Then, we ask for a datagram with the maximum size allowed
             dg = dgConnection.newDatagram(dgConnection.getMaximumLength());
         } catch (IOException ex) {
@@ -253,7 +268,7 @@ public class SunSpotSensorsProducerOnSpot extends MIDlet
             startSensorThresholdListeners();
             startPeriodicalSender();
             startMessageReceiver();
-        } catch (IOException ex) {              // A problem in reading the sensors. 
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
