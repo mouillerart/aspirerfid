@@ -1,3 +1,4 @@
+Apple Sudden Motion Producer
 
 1. Summary
 Apple MacBook Pro includes a 3-axis accelerometer (X Y Z).
@@ -5,4 +6,19 @@ This bundle provides a WireAdmin producer services pushing a array of Measuremen
 
 2. Contributors
 Arnaud Constancin, Lionel Touseau, Mikael Desertot
- 
+
+3. Dependencies
+This bundle uses
+* the SMS JNI lib from http://www.shiffman.net/p5/sms/
+* and the UniMotion 0.4.1 (released under the LGPL) http://unimotion.sourceforge.net/
+
+4. TODOLIST
+* Provides a WireAdmin producer
+* demo with the Flash puppet http://homepage.mac.com/dave_chatting/boiling-frogs/motion/README.html
+5. Misc
+http://en.wikipedia.org/wiki/Sudden_Motion_Sensor
+In http://en.wikipedia.org/wiki/Sudden_Motion_Sensor Similar systems
+
+IBM, now Lenovo, has an analogous system, the Active Protection System, found in some ThinkPads starting in 2003.
+Acer has a similar system, known as GraviSense, found in some TravelMate-series notebooks manufactured in 2006.
+HP has two equivalent systems named 3D DriveGuard and HP Mobile Data Protection System 3D.
