@@ -1,0 +1,15 @@
+zigbee.devices
+
+1. Summary
+The bundle provides services to discover ZigBee devices and to send/receive raw packets with them.
+It provides also a command for the Felix shell.
+
+2. Authors
+Lionel Touseau, Didier Donsez
+
+3. Tested devices
+* SunSPOT(tm) base station and sensors
+* more are welcomed
+
+TODOLIST
+* migrate to iPOJO

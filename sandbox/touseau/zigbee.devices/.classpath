@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER/modules"/>
+	<classpathentry kind="lib" path="F:/devtools/Sun/SunSPOT/sdk/lib/spotlib_host.jar"/>
+	<classpathentry kind="lib" path="F:/devtools/Sun/SunSPOT/sdk/lib/spotclient.jar"/>
+	<classpathentry kind="lib" path="F:/devtools/Sun/SunSPOT/sdk/lib/spotlib_common.jar"/>
+	<classpathentry kind="lib" path="F:/devtools/Sun/SunSPOT/sdk/lib/spotselector.jar"/>
+	<classpathentry kind="lib" path="F:/devtools/Sun/SunSPOT/sdk/lib/socket_proxy.jar"/>
+	<classpathentry kind="lib" path="F:/devtools/Sun/SunSPOT/sdk/lib/spotlib_device.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

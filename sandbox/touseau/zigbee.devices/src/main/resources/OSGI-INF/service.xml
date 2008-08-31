@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="zigbee.serviceimpl">
+  <!-- xmlns="http://www.osgi.org/xmlns/scr/v1.0.0" -->
+	<implementation class="org.ow2.aspirerfid.sensor.zigbee.device.impl.SunSPOTZigBeeServicesImpl"/>
+	
+	<service>
+		<provide interface="org.ow2.aspirerfid.sensor.zigbee.device.NodeDiscoveryService"/>
+		<provide interface="org.ow2.aspirerfid.sensor.zigbee.device.NodePacketService"/>
+	</service>
+
+	<reference name="LOG"
+	    interface="org.osgi.service.log.LogService"
+	    cardinality="0..1"
+	    policy="dynamic"
+	    bind="bindLogService"
+	    unbind="unbindLogService"
+	/>
+	
+</component>
