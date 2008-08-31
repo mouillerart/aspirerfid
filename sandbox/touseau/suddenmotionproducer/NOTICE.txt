@@ -15,7 +15,11 @@ This bundle uses
 4. TODOLIST
 * Provides a WireAdmin producer
 * demo with the Flash puppet http://homepage.mac.com/dave_chatting/boiling-frogs/motion/README.html
-5. Misc
+
+5. Tested on
+* MacBook Pro  2006,  MacOSX 10.4.11 (Tiger), JDK 1.5. (by Arnaud)
+
+6. Misc
 http://en.wikipedia.org/wiki/Sudden_Motion_Sensor
 In http://en.wikipedia.org/wiki/Sudden_Motion_Sensor Similar systems
 
