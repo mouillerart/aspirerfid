@@ -1,0 +1,47 @@
+<project name="JMXML transformation example" default="execute.build" basedir=".">
+
+	<property name="jmxml.xml" value="jmxml.demo.xml"/>
+	<property name="jmxml.properties" value="jmxml.demo.properties"/>
+	<property file="${properties}"/>
+	<property name="xslt.classes.dir" value="./xsltclasses"/>
+	<property name="xslt.java.dir" value="./xsltjava"/>
+	<property name="generated.dir" value="generated"/>
+
+	<target name="init">
+		<mkdir dir="${generated.dir}"/>
+		<tstamp>
+			<format property="date" pattern="d-MMMM-yyyy" locale="en"/>
+		</tstamp>
+		<property name="author" value="Didier DONSEZ"/>
+
+		<mkdir dir="${xslt.java.dir}"/>
+		<mkdir dir="${xslt.classes.dir}"/>
+		<javac destdir="${xslt.classes.dir}">
+   		 	<src path="${xslt.java.dir}"/>
+				<include name="**/*.java"/>
+		</javac>
+	</target>
+
+	<target name="generate.build" depends="init">	
+		<echo>Generation of the JMX tasks ...</echo>
+		<xslt in="${jmxml.xml}" out="${generated.dir}/build.jmx.xml" style="jmxml2build.xsl" classpath="${xslt.classes.dir}" >
+			<param name="date" expression="${date}"/>
+			<param name="author" expression="${author}"/>
+			<outputproperty name="encoding" value="ISO-8859-1"/>
+			<outputproperty name="indent" value="yes"/>
+		</xslt>
+		<copy file="${jmxml.properties}" todir="${generated.dir}" overwrite="true" verbose="true"/>
+	</target>
+
+	<target name="execute.build" depends="generate.build">
+		<echo>Execution of the JMX tasks ...</echo>
+		<ant antfile="build.jmx.xml" dir="${generated.dir}" target="main" />
+	</target>
+	
+   	<!-- clean generated files and backup files -->
+	<target name="clean">
+		<delete dir="${generated.dir}"/>
+		<delete dir="${xslt.classes.dir}"/>
+	</target>
+
+</project>
