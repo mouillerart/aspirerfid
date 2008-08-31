@@ -48,23 +48,13 @@ import javax.microedition.midlet.MIDletStateChangeException;
  * @author Didier Donsez, Lionel Touseau
  */ 
 public class SunSpotSensorsProducerOnSpot extends MIDlet
-        implements IAccelerometer3DThresholdListener, ITemperatureInputThresholdListener, ILightSensorThresholdListener {
+        implements IAccelerometer3DThresholdListener, ITemperatureInputThresholdListener, ILightSensorThresholdListener, PacketType {
 
     
     private static final String VERSION = "1.0";
     private static final int INITIAL_CHANNEL_NUMBER = IProprietaryRadio.DEFAULT_CHANNEL;
     private static final short PAN_ID               = IRadioPolicyManager.DEFAULT_PAN_ID;
     private static final short MAX_BROADCAST_HOPS=1;      // =1 means "don't want packets being rebroadcasted""
-
-    private static final int BROADCAST_PORT              = 42;
-    /**
-     * Type for the configuration message (host --> spot)
-     */
-    private static final int RADIO_CONFIG_PACKET            = 0xDD;
-    /**
-     * Type for the sensor data message (spot --> spot/host)
-     */
-    private static final int RADIO_SENSORDATA_PACKET        = 0xDE;
     
     // indicators
     private ITriColorLED leds[]          = EDemoBoard.getInstance().getLEDs();
@@ -81,7 +71,8 @@ public class SunSpotSensorsProducerOnSpot extends MIDlet
     //private IIOPin ioPins                = EDemoBoard.getInstance().getIOPins();
     
     // configuration parameters
-    private boolean indicatorOn = true;
+    private boolean indicatorOnFlag = true;
+    private boolean resetCountersAfterEmission = true;
     private long emissionPeriod = 1000;
     private double accelerationXThreshold = 20.0d;
     private double accelerationYThreshold = 20.0d;
@@ -96,6 +87,24 @@ public class SunSpotSensorsProducerOnSpot extends MIDlet
     private boolean emissionOnOpenedSW2 = true;
     private boolean alertThresholdsOnLED = true;
     // private double batteryMinThreshold = 20.0d;
+
+    // accumulators and counters
+    private long startingTimestamp = 0;
+    private int accelerationXThresholdCounter = 0;
+    private int accelerationYThresholdCounter = 0;
+    private int accelerationZThresholdCounter = 0;
+    private int lightMinThresholdCounter = 0;
+    private int lightMaxThresholdCounter = 0;
+    private int temperatureMinThresholdCounter = 0;
+    private int temperatureMaxThresholdCounter = 0;
+    private int closedSW1Counter = 0;
+    private int openedSW1Counter = 0;
+    private int closedSW2Counter = 0;
+    private int openedSW2Counter = 0;
+    
+    
+    
+    
     
     private void initIndicator(){
         for(int i = 0; i < leds.length; i++){
