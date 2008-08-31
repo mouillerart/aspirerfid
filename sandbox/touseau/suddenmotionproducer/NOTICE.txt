@@ -13,8 +13,10 @@ This bundle uses
 * and the UniMotion 0.4.1 (released under the LGPL) http://unimotion.sourceforge.net/
 
 4. TODOLIST
+* migrate to iPOJO
 * Provides a WireAdmin producer
 * demo with the Flash puppet http://homepage.mac.com/dave_chatting/boiling-frogs/motion/README.html
+* add a command for Felix
 
 5. Tested on
 * MacBook Pro  2006,  MacOSX 10.4.11 (Tiger), JDK 1.5. (by Arnaud)
