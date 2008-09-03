@@ -105,7 +105,7 @@
 
 	<xsl:template match="agent" mode="target">
 
-    <xsl:comment>Target for agent {@id}</xsl:comment>
+    <xsl:comment>Target for agent <xsl:value-of select="@id"/></xsl:comment>
 		<target name="exec.{@id}">
 		
 				<openConnection ref="{@id}.jmx.connection.ref"
@@ -117,10 +117,11 @@
         <xsl:with-param name="id" select="@id"  />
       </xsl:apply-templates>
 					
+			<!--		
       <closeConnection ref="{@id}.jmx.connection.ref"/>
       
       <dumpProperties id="{@id}"/>
-      
+      -->
 		</target>
 
 	</xsl:template>
@@ -145,30 +146,68 @@
 	
 	<xsl:template match="mbean" mode="target">
       <xsl:param name="id" />
-      <xsl:apply-templates select="attributes|operation" mode="target">
+      <xsl:apply-templates select="attribute|operation" mode="target">
         <xsl:with-param name="id" select="$id" />
       </xsl:apply-templates>
 	</xsl:template>
-	
-	<xsl:template match="attributes" mode="target">
+
+<!--
+	<xsl:template match="attributes/attribute" mode="target">
       <xsl:param name="id" />
-			<jmx:set ref="{@id}.jmx.connection.ref" name="@{{objectName}}"
-						attribute="@{{attributeName}}" value="@{{attributeValue}}"
-						type="@{{attributeType}}" echo="true" />
+			<jmx:set ref="{$id}.jmx.connection.ref" name="{../../@objectName}"
+						attribute="{@name}" value="{text()}"
+						type="{@type}" echo="true" />
+	</xsl:template>
+-->
+
+	<xsl:template match="attribute[@resultProperty]" mode="target">
+      <xsl:param name="id" />
+          <jmx:get
+            ref="{$id}.jmx.connection.ref" name="{../@objectName}"
+						attribute="{@name}"
+            resultproperty="{@resultProperty}"
+            echo="true"
+        />
 	</xsl:template>
 
-	<xsl:template match="operation" mode="target">
+	<xsl:template match="attribute" mode="target">
       <xsl:param name="id" />
-		<jmx:invoke ref="{@id}.jmx.connection.ref"
-			operation="{@name}" name="{../@objectName}">
+        <jmx:set ref="{$id}.jmx.connection.ref" name="{../@objectName}"
+						attribute="{@name}"
+						value="{text()}"
+						type="{@type}"
+						echo="true"
+						/>
+	</xsl:template>
+
+	<xsl:template match="operation[@resultProperty]" mode="target">
+      <xsl:param name="id" />
+		<jmx:invoke ref="{$id}.jmx.connection.ref"
+			operation="{@name}"
+			name="{../@objectName}"
+			resultproperty="{@resultProperty}">
 			<xsl:apply-templates select="arg" />
 		</jmx:invoke>
 	</xsl:template>
 
-	<xsl:template match="arg">
-		<arg value="{text()}" />
+	<xsl:template match="operation" mode="target">
+      <xsl:param name="id" />
+		<jmx:invoke ref="{$id}.jmx.connection.ref"
+			operation="{@name}"
+			name="{../@objectName}">
+			<xsl:apply-templates select="arg"/>
+		</jmx:invoke>
 	</xsl:template>
 
-	<xsl:template match="*"></xsl:template>
+	<xsl:template match="arg[@type]">
+      <arg type="@type" value="{text()}"/>
+	</xsl:template>
 
+	<xsl:template match="arg">
+      <arg value="{text()}"/>
+	</xsl:template>
+
+<!--
+	<xsl:template match="*"></xsl:template>
+-->
 </xsl:stylesheet>

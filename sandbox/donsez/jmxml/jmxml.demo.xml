@@ -14,18 +14,24 @@
     >
 
       <mbean objectName="java.lang:type=OperatingSystem">
-        <attributes properties="agent1._operatingsystem"
+<!--        <attributes resultProperties="agent1._operatingsystem"
           description="put all mbean attributes in the properties prefixed by agent1._operatingsystem"/>
+-->
       </mbean>
 
 
       <mbean objectName="java.lang:type=Memory">
+<!--
         <attributes>
           <attribute name="Verbose" type="boolean"
                     description="set the attribute to true"
           >true</attribute>
         </attributes>
-        
+-->        
+        <attribute name="Verbose" type="boolean"
+                    description="set the attribute to true"
+          >true</attribute>
+
         <operation name="gc"
                     description="invoke the gc() operation"/>
         
@@ -36,10 +42,11 @@
        </mbean>
       
       <mbean objectName="java.util.logging:type=Logging">
-        <attribute name="LoggerNames" properties="agent1._loggernames"
+        <!-- add the value to the properties -->
+        <attribute name="LoggerNames" resultProperty="agent1._loggernames"
                 description="get the array cells and put them in the properties prefixed by agent1._loggernames"/>
         
-        <operation name="getLoggerLevel" result="agent1._loggerLevel"
+        <operation name="getLoggerLevel" resultProperty="agent1._loggerLevel"
                     description="invoke the getLoggerLevel() operation. The result is in the property agent1._loggerLevel">
           <arg>${agent1._loggernames}.0</arg>
         </operation>
