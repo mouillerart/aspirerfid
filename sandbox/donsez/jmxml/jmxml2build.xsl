@@ -129,7 +129,7 @@
 	<xsl:template match="parallel" mode="target">
       <xsl:param name="id" />
 			<parallel>
-      <xsl:apply-templates select="parallel|sequential|mbean" mode="target">
+      <xsl:apply-templates select="parallel|sequential|mbean|anttasks" mode="target">
         <xsl:with-param name="id" select="$id" />
       </xsl:apply-templates>
 			</parallel>
@@ -138,7 +138,7 @@
   <xsl:template match="sequential" mode="target">
       <xsl:param name="id" />
 			<sequential>
-      <xsl:apply-templates select="parallel|sequential|mbean" mode="target">
+      <xsl:apply-templates select="parallel|sequential|mbean|anttasks" mode="target">
         <xsl:with-param name="id" select="$id" />
       </xsl:apply-templates>
 			</sequential>
@@ -146,7 +146,7 @@
 	
 	<xsl:template match="mbean" mode="target">
       <xsl:param name="id" />
-      <xsl:apply-templates select="attribute|operation" mode="target">
+      <xsl:apply-templates select="attribute|operation|anttasks" mode="target">
         <xsl:with-param name="id" select="$id" />
       </xsl:apply-templates>
 	</xsl:template>
@@ -199,15 +199,18 @@
 		</jmx:invoke>
 	</xsl:template>
 
-	<xsl:template match="arg[@type]">
+	<xsl:template match="arg[@type]"  mode="target">
       <arg type="@type" value="{text()}"/>
 	</xsl:template>
 
-	<xsl:template match="arg">
+	<xsl:template match="arg"  mode="target">
       <arg value="{text()}"/>
 	</xsl:template>
 
-<!--
+	<xsl:template match="anttasks" mode="target">
+      <xsl:comment>Ant tasks</xsl:comment>
+      <xsl:copy-of select="node()"/>
+	</xsl:template>
+
 	<xsl:template match="*"></xsl:template>
--->
 </xsl:stylesheet>
