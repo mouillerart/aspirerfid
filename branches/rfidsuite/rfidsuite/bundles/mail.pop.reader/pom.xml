@@ -52,9 +52,9 @@
 			<version>2.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi_R4_core</artifactId>
+			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		
@@ -73,14 +73,14 @@
 	    <dependency>
 	      <groupId>org.apache.felix</groupId>
 	      <artifactId>org.apache.felix.ipojo</artifactId>
-	      <version>0.7.3-SNAPSHOT</version>
+	      <version>0.8.0</version>
 	      <scope>provided</scope>
 	    </dependency>
 
 	     <dependency>
 	      <groupId>org.apache.felix</groupId>
 	      <artifactId>org.apache.felix.ipojo.metadata</artifactId>
-	      <version>0.7.3-SNAPSHOT</version>
+	      <version>0.8.0</version>
 	      <scope>provided</scope>
 	    </dependency>
 	</dependencies>
@@ -90,7 +90,7 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>0.9.0-incubator-SNAPSHOT</version>
+				<version>1.4.3</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
@@ -110,8 +110,7 @@
 			</plugin>
 		      <plugin>
 			      <groupId>org.apache.felix</groupId>
-			      <artifactId>org.apache.felix.ipojo.plugin</artifactId>
-                  <version>0.7.3-SNAPSHOT</version>
+			      <artifactId>maven-ipojo-plugin</artifactId>
 				  <executions>
 		          	<execution>
 		            	<goals>

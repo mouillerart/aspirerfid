@@ -34,6 +34,12 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>war</packaging>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>gwt-maven</id>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+		</pluginRepository>
+	</pluginRepositories>
 
   <dependencies>
     <dependency>
@@ -51,7 +57,7 @@
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-servlet</artifactId>
-      <version>1.4.10</version>
+      <version>1.4.62</version>
     </dependency>
     <dependency>
       <groupId>gwt</groupId>
@@ -95,7 +101,7 @@
   <repositories>
     <repository>
       <id>gwt-maven</id>
-      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
     </repository>
   </repositories>
 
@@ -124,12 +130,12 @@
       <plugin>
         <groupId>com.totsp.gwt</groupId>
         <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
-        <version>1.5.3-SNAPSHOT</version>
+        <version>LATEST</version>
         <configuration>
           <runTarget>org.ow2.aspirerfid.app.epcis.IndexModule/IndexModule.html</runTarget>
-          <compileTarget>
+          <compileTargets>
             <param>org.ow2.aspirerfid.app.epcis.IndexModule</param>
-          </compileTarget>
+          </compileTargets>
           <gwtHome>${env.GWT_ROOT}</gwtHome>
           <extraJvmArgs>-Xmx128m</extraJvmArgs>
         </configuration>
