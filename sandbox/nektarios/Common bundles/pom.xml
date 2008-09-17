@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <name>Apache Felix Commons: Build</name>
+    <groupId>org.ow2.aspirerfid.bundles.commons</groupId>
+    <artifactId>common-bundles</artifactId>
+    <version>1.0</version>
+    <description>
+        These subprojects wrap common third-party jars as OSGi bundles.
+    </description>
+
+    <modules>
+        <!--
+        <module>antlr</module>
+        <module>jzlib</module>
+        <module>cblib</module>
+        -->
+        <module>commons-lang-osgi</module>
+        <module>commons-beanutils-osgi</module>
+        <module>commons-codec-osgi</module>
+        <module>commons-configuration-osgi</module>
+        <module>commons-digester-osgi</module>
+        <module>commons-el-osgi</module>
+        <module>commons-fileupload-osgi</module>
+        <module>commons-httpclient-osgi</module>
+        <module>commons-io-osgi</module>
+        <module>antlr-osgi</module>
+        <module>commons-collections-osgi</module>
+        <module>commons-activation-osgi</module>
+    </modules>
+
+</project>

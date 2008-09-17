@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+        <groupId>org.ow2.aspirerfid.bundles.commons</groupId>
+        <artifactId>common-bundles</artifactId>
+        <version>1.0</version>
+    </parent>
+  <artifactId>commons-collections-osgi</artifactId>
+  <name>${pom.artifactId} bundle</name>
+  <version>3</version>
+  <description>
+    The Apache Commons Collections Library packaged as an OSGi bundle.
+  </description>
+  <packaging>bundle</packaging>  
+  <dependencies>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2.1</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>
+                            org.apache.commons.collections
+                        </Export-Package>                        
+                    </instructions>
+                </configuration>
+            </plugin>
+    </plugins>
+  </build>
+</project>

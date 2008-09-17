@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.ow2.aspirerfid.bundles.commons</groupId>
+        <artifactId>common-bundles</artifactId>
+        <version>1.0</version>
+    </parent>
+    <properties>
+        <pkgArtifactId>commons-lang</pkgArtifactId>
+        <pkgVersion>2.3</pkgVersion>
+        <pomVersion>0001</pomVersion>
+        <osgiVersion>${pkgVersion}.0</osgiVersion>
+    </properties>
+    <artifactId>commons-lang-osgi</artifactId>
+    <version>2.3</version>
+    <packaging>bundle</packaging>
+    <name>${pom.artifactId} bundle</name>
+    <description>This bundle simply wraps commons-lang-${pom.version}.jar.</description>
+    <organization>
+        <name>Apache Felix Project</name>
+        <url>http://felix.apache.org/</url>
+    </organization>
+    <scm>
+      <connection>scm:svn:http://svn.apache.org/repos/asf/felix/releases/org.apache.felix.commons.commons-lang-2.3.0-0001</connection>
+      <developerConnection>scm:svn:https://svn.apache.org/repos/asf/felix/releases/org.apache.felix.commons.commons-lang-2.3.0-0001</developerConnection>
+      <url>http://svn.apache.org/viewcvs/felix/releases/org.apache.felix.commons.commons-lang-2.3.0-0001</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>${pkgArtifactId}</artifactId>
+            <version>${pkgVersion}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>
+                            ${pom.artifactId}
+                        </Bundle-SymbolicName>
+                        <Export-Package>*;version=${pkgVersion}</Export-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
