@@ -2,7 +2,7 @@ Apple Sudden Motion Producer
 
 1. Summary
 Apple MacBook Pro includes a 3-axis accelerometer (X Y Z).
-This bundle provides a WireAdmin producer services pushing a array of Measurement for the 3 acceleration values (in m/s2) from the Mac' Sudden Motion sensor.
+This bundle provides a WireAdmin producer service pushing a array of Measurement for the 3 acceleration values (in m/s2) from the Mac' Sudden Motion sensor.
 
 2. Contributors
 Arnaud Constancin, Lionel Touseau, Mikael Desertot

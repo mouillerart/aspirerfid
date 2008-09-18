@@ -20,27 +20,17 @@
  */
  -->
 <scr:component
-  name="MotionSensorService"
+  name="MotionSensorProducer"
   immediate="true"
   xmlns:scr="http://www.osgi.org/xmlns/scr/v1.0.0">
   <scr:implementation
-    class="org.ow2.aspirerfid.sensor.motionsensorproducer.impl.MotionSensorImpl" />
+    class="org.ow2.aspirerfid.sensor.motionsensorproducer.MotionSensorProducer" />
   <scr:service>
     <scr:provide
-      interface="org.ow2.aspirerfid.sensor.motionsensorproducer.service.MotionSensorService" />
+      interface="org.osgi.service.wireadmin.Producer" />
   </scr:service>
-</scr:component>
-<scr:component
-  name="MotionSensorClient"
-  xmlns:scr="http://www.osgi.org/xmlns/scr/v1.0.0"
-  immediate="true">
-  <scr:implementation
-    class="org.ow2.aspirerfid.sensor.motionsensorproducer.client.MotionSensorClientImpl" />
-  <scr:reference
-    name="MotionSensorService"
-    interface="org.ow2.aspirerfid.sensor.motionsensorproducer.service.MotionSensorService"
-    cardinality="1..1"
-    policy="dynamic"
-    bind="setMotionSensorService"
-    unbind="unsetMotionSensorService" />
+  <scr:property name="service.pid"
+      value="org.ow2.aspirerfid.sensor.motionsensorproducer.MotionSensorProducer"/>
+  <!-- <scr:property name="wireadmin.producer.flavors"
+      value="{int.class}" type=""/> -->
 </scr:component>
