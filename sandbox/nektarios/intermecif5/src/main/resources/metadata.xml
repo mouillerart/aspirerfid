@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright © 2008-2010, Aspire 
+	
+	Aspire is free software; you can redistribute it and/or 
+	modify it under  the terms of the GNU Lesser General Public 
+	License version 2.1 as published by the Free Software Foundation (the 
+	"LGPL"). 
+	
+	You should have received a copy of the GNU Lesser General Public 
+	License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
+	
+	This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
+	OF ANY KIND, either express or implied. See the GNU Lesser General Public 
+	License for the specific language governing rights and limitations. 
+-->
+
+<iPOJO>
+  <component className="org.ow2.aspirerfid.reader.intermecif5.IntermecIF5Driver" architecture="true"
+    immediate="true">
+    <Provides interface="org.ow2.aspirerfid.reader.intermecif5.IntermecIF5DriverMBean">
+      <Property type="java.lang.String" name="jmxagent.objectname"
+        value="rfid:type=service,SymbolicName=IntermecIF5Driver" />
+    </Provides>
+
+    <requires field="eventAdmin" optional="true" >
+      <callback type="unbind" method="removeEventAdmin" />
+      <callback type="bind" method="addEventAdmin" />
+    </requires>
+    <requires field="cron" optional="true" >
+      <callback type="unbind" method="removeCron" />
+      <callback type="bind" method="addCron" />
+    </requires>
+
+    <callback transition="INVALIDATE" method="stop" />
+    
+  </component>
+  <instance component="org.ow2.aspirerfid.reader.intermecif5.IntermecIF5Driver" name="IntermecIF5Driver"/>
+</iPOJO>
