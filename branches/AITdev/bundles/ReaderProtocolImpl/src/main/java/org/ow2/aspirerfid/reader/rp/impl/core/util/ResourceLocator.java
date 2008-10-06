@@ -24,11 +24,13 @@ package org.ow2.aspirerfid.reader.rp.impl.core.util;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.File;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
 import org.osgi.framework.Bundle;
 import org.ow2.aspirerfid.reader.rp.impl.Activator;
+
 /**
  * This class locates resources (configuration files, images) for the accada
  * reader core. It searches for user resources in the user directory (current
@@ -36,74 +38,76 @@ import org.ow2.aspirerfid.reader.rp.impl.Activator;
  * resources found.
  * 
  * author hallerj, Nektarios Leontiadis (nele@ait.edu.gr)
- *
+ * 
  */
 public final class ResourceLocator {
 
-   /**
-    * The logger.
-    */
-   private static Logger log = Logger.getLogger(ResourceLocator.class);
+	/**
+	 * The logger.
+	 */
+	private static Logger log = Logger.getLogger(ResourceLocator.class);
 
-   /**
-    * Suffix for default resource file name if no name given.
-    */
-   private static final String DEFAULT_SUFFIX = "_default";
+	/**
+	 * Suffix for default resource file name if no name given.
+	 */
+	private static final String DEFAULT_SUFFIX = "_default";
 
-   /**
-    * Get the URL of the resourceFileName.
-    * 
-    * @param resourceFileName
-    *          path and name of the resource file (e.g. '/path/file.ext')
-    * @param defaultResourceFileName
-    *          path and name of the default resource file (e.g. '/path/file_default.ext')
-    * @param caller
-    *          the caller class
-    * @return URL of the file or null if not found
-    */
-   public static URL getURL(String resourceFileName,
-         String defaultResourceFileName) {
-	   Bundle bundle = Activator.bundle;
-      // check arguments
-   	if ((resourceFileName == null) && (defaultResourceFileName != null)) {
-   		resourceFileName = defaultResourceFileName;
-   	}
-      if (!resourceFileName.startsWith("/")) {
-         resourceFileName = "/" + resourceFileName;
-      }
-      if (defaultResourceFileName == null) {
-         defaultResourceFileName = resourceFileName.substring(0,
-            resourceFileName.lastIndexOf(".")) + DEFAULT_SUFFIX
-            + resourceFileName.substring(resourceFileName.lastIndexOf("."));
-      }
+	public static URL getURL(String resourceFileName, String defaultResourceFileName, Object obj) {
+		return getURL(resourceFileName, defaultResourceFileName);
+	}
 
-      URL url = null;
-//      log.info(url);
-      log.debug("Bundle location: "+bundle.getLocation());
-      url = bundle.getEntry(resourceFileName);
-      if(url ==null)
-    	  url = bundle.getEntry(defaultResourceFileName);
+	/**
+	 * Get the URL of the resourceFileName.
+	 * 
+	 * @param resourceFileName
+	 *            path and name of the resource file (e.g. '/path/file.ext')
+	 * @param defaultResourceFileName
+	 *            path and name of the default resource file (e.g.
+	 *            '/path/file_default.ext')
+	 * @return URL of the file or null if not found
+	 */
+	public static URL getURL(String resourceFileName, String defaultResourceFileName) {
+		
+		Bundle bundle = Activator.bundle;
+		URL url = null;
+		File configFile = null;
+		
+		if(resourceFileName != null)
+			configFile = new File(System.getProperty("user.home"),resourceFileName);
 
-      if (url != null) {
-         log.debug("Resource URL is: " + url.toString());
-      } else {
-         log.debug("Resource '" + resourceFileName + "' and '"
-            + defaultResourceFileName + "' not found.");
-      }
+		if (configFile!=null && configFile.exists())
+			try{
+			url = configFile.toURL();
+			}catch(java.net.MalformedURLException e){
+				log.error(e.getMessage());
+				return getURL(null, defaultResourceFileName);
+			}
+		else {
+			if (!defaultResourceFileName.startsWith("/")) {
+				defaultResourceFileName = "/" + defaultResourceFileName;
+			}
 
-      return url;
-   }
-   
-   public static Reader getReader(String resourceFileName, String defaultResourceFileName) {
-	   InputStreamReader reader=null;
-      try {
-    	  URL url = getURL(resourceFileName, defaultResourceFileName);
-    	  reader = new InputStreamReader(url.openStream());
-      }catch(Exception e)
-      {
-    	  e.printStackTrace();
-      }
-	   return reader;
-   }
+			log.debug("Bundle location: " + bundle.getLocation());
+			url = bundle.getEntry(defaultResourceFileName);
+		}
+		if (url != null) {
+			log.debug("Resource URL is: " + url.toString());
+		} else {
+			log.error(" Resource " + defaultResourceFileName + "not found.");
+		}
+
+		return url;
+	}
+
+	public static Reader getReader(String resourceFileName, String defaultResourceFileName) {
+		InputStreamReader reader = null;
+		try {
+			URL url = getURL(resourceFileName, defaultResourceFileName);
+			reader = new InputStreamReader(url.openStream());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return reader;
+	}
 
 }

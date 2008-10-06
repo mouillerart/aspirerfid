@@ -27,6 +27,6 @@
 	<packaging>pom</packaging>
 
   <modules>
-    <module>WarehouseDemo</module>
+    <module>aspireTcpMessageCapturerV0.1m</module>
   </modules>
 </project>

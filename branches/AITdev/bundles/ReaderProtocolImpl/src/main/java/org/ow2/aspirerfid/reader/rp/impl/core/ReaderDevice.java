@@ -80,7 +80,7 @@ public class ReaderDevice {
     * The path of the default configuration file.
     */
    public static final String DEFAULT_PROPERTIES_FILE = "/props/ReaderDevice_default.xml";
-   public static String PROPERTIES_FILE = "/target/classes/props/ReaderDevice_default.xml";//public static String PROPERTIES_FILE = "/props/ReaderDevice.xml";
+   public static String PROPERTIES_FILE = "ReaderDevice.xml";//public static String PROPERTIES_FILE = "/props/ReaderDevice.xml";
 
    /**
     * The current data selector.
@@ -351,6 +351,10 @@ public class ReaderDevice {
 	   if (instance == null) {
 		   instance = new ReaderDevice();
 	   }
+	   else
+	   {
+		   instance.resetToDefaultSettings();
+	   }
 	   return instance;
    }
 
@@ -416,6 +420,15 @@ public class ReaderDevice {
     	  log.error(se.getMessage());
       }
       reboot(propFile, defaultPropFile);
+   }
+   
+   public void stopReaders()
+   {
+	   instance = null;
+	   for(HardwareAbstraction ha : readers.values())
+	   {
+		   ha.disconnect();
+	   }
    }
 
    /**
@@ -1171,7 +1184,7 @@ public class ReaderDevice {
             String rClass = readerConf.getString(key + ".class");
             String prop = readerConf.getString(key + ".properties");
             try {
-               Class cls = Class.forName(rClass);
+               Class cls = org.ow2.aspirerfid.reader.rp.impl.Activator.bundle.getClass().forName(rClass);
                Class[] partypes = new Class[] {String.class, String.class};
                Constructor ct = cls.getConstructor(partypes);
                Object[] arglist = new Object[] {readerName, prop};

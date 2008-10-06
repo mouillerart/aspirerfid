@@ -29,6 +29,6 @@
   <modules>
     <module>bundles</module>
     <module>servers</module>
-    <module>demo</module>
+    <module>demos&amp;tools</module>
   </modules>
 </project>

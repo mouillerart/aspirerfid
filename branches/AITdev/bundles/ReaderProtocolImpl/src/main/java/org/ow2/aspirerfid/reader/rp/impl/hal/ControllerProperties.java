@@ -40,7 +40,6 @@ import org.apache.log4j.Logger;
  * As a convention the properties file associated with a certain reader has to be named according to its
  * class name.
  * 
- * @version 19.01.2004
  * @author Stefan Schlegel (schlstef@student.ethz.ch)
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
  * 
@@ -61,6 +60,8 @@ public class ControllerProperties {
 	/** the configuration */
 	private XMLConfiguration conf = null;
 	
+	private URL configURL = null;
+	
 //-------------------------------------------constructors--------------------------------------//	
 	
 	public ControllerProperties(String configFile, String defaultConfigFile){
@@ -68,6 +69,12 @@ public class ControllerProperties {
       this.defaultConfigFile = defaultConfigFile;
 		log.debug("PropertiesFile: " + configFile + " and " + defaultConfigFile);
 		
+	}
+	
+	public ControllerProperties(URL configURL)
+	{
+		this.configURL = configURL;
+		log.debug("Configuration file URL: "+ configURL);
 	}
 	
 //---------------------------------------------methods--------------------------------------------//	
@@ -171,10 +178,11 @@ public class ControllerProperties {
     */
    private void loadConfig() throws IOException {
       
-      URL url = ResourceLocator.getURL(configFile, defaultConfigFile);
+	   if(configURL == null)
+		   configURL = ResourceLocator.getURL(configFile, defaultConfigFile);
       try {
          conf = new XMLConfiguration();
-         conf.load(url.openStream());
+         conf.load(configURL.openStream());
       } catch (ConfigurationException e) {
          log.error("Could not find properties file: " + configFile);
          throw new IOException("Properties file not found.");     

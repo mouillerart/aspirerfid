@@ -14,6 +14,10 @@
 	This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
 	OF ANY KIND, either express or implied. See the GNU Lesser General Public 
 	License for the specific language governing rights and limitations. 
+	
+	
+							!java.awt, !java.awt.event,
+							!javax.swing.border, !javax.swing.event,
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -142,17 +146,18 @@
 							org.snmp4j.agent.io, !*
 						</Private-Package>
 						<Import-Package>
-							!org.snmp4j.version, !javax.swing,
-							!java.awt, !java.awt.event,
-							!javax.swing.border, !javax.swing.event,
+							!org.snmp4j.version,
 							com.sun.xml.bind.v2, *
 						</Import-Package>
 						<DynamicImport-Package>
-							javax.crypto, javax.crypto.spec
+							javax.crypto, 
+							javax.crypto.spec,
+							org.ow2.aspirerfid.reader.rp.hal.impl.*
 						</DynamicImport-Package>
 						<Export-Package>
 							org.ow2.aspirerfid.reader.rp.impl.core.*,
-							org.ow2.aspirerfid.reader.rp.impl.hal.*
+							org.ow2.aspirerfid.reader.rp.impl.hal.*,
+							!org.ow2.aspirerfid.reader.rp.impl.hal.impl.*
 						</Export-Package>
 						<Bundle-Name>
 							Reader Protocol implementation

@@ -60,7 +60,7 @@ public class Activator implements BundleActivator{
 		}
 		sTracker.open();
 		rp = new AccadaRmRp();
-		props.put("jmxagent.objectname", "rfid:type=service,SymbolicName=AccadaRP");
+		props.put("jmxagent.objectname", "rfid:type=service,SymbolicName=RPreader");
 		rpServiceRegistration = context.registerService(AccadaRmRpMBean.class.getName(), rp, props);
 	}
 

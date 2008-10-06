@@ -27,65 +27,86 @@ import org.ow2.aspirerfid.reader.rp.impl.core.util.ResourceLocator;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.ow2.aspirerfid.reader.rp.RmRpMBean;
+import java.io.File;
 
 /**
  * @author Nektarios Leontiadis
  * 
  */
-public class AccadaRmRp implements AccadaRmRpMBean{
+public class AccadaRmRp implements AccadaRmRpMBean {
 
 	private static XMLConfiguration conf;
-	private final static String configFile = "configFile.xml";
-	private ReaderDevice device; 
+	
+	private ReaderDevice device;
 	private MessageLayer ml;
 	private static Logger log;
-	
-	static  {
+	private static File configFile;
+
+	static {
 		log = Logger.getLogger(AccadaRmRp.class);
+		configFile = new File(System.getProperty("user.home"),ReaderDevice.PROPERTIES_FILE);
 	}
-	
-	public AccadaRmRp()
-	{
-		
+
+	public AccadaRmRp() {
+
 		conf = new XMLConfiguration();
 		try {
-		conf.load(ResourceLocator.getURL(null,ReaderDevice.DEFAULT_PROPERTIES_FILE));
-		}catch(Exception e)
-		{
+			if (configFile.exists()) {
+				conf.load(configFile);
+			} else {
+				conf.load(ResourceLocator.getURL(null,
+						ReaderDevice.DEFAULT_PROPERTIES_FILE));
+				conf.save(configFile);
+				conf = new XMLConfiguration();
+				conf.load(configFile);
+			}
+		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		conf.setAutoSave(true);
 	}
-	
-	public AccadaRmRp(String configFile)
-	{
+
+	public void resetConfig() {
+		conf = new XMLConfiguration();
 		try {
-			conf = new XMLConfiguration(configFile);
-		} catch (ConfigurationException e) {
+			conf.load(ResourceLocator.getURL(null,ReaderDevice.DEFAULT_PROPERTIES_FILE));
+			conf.save(configFile);
+			conf = new XMLConfiguration();
+			conf.load(configFile);
+
+		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
+		conf.setAutoSave(true);
 	}
-	
+
+	public void loadConfig() {
+		try {
+			conf.save(configFile);
+		} catch (ConfigurationException e) {
+			log.error("Error while saving configuration:" + e.getMessage());
+		}
+
+		if (ml != null)
+			ml.reset();
+	}
 
 	public void start() {
 		ml = new MessageLayer();
 	}
-	
+
 	public void stop() {
-		if(ml!=null)
-		{
+		if (ml != null) {
 			try {
-			conf.save();
-			}catch(ConfigurationException e)
-			{
-				log.warn(e.getMessage());
+				conf.save(configFile);
+			} catch (ConfigurationException e) {
+				log.warn("Problem while saving configuration:"+ e.getMessage());
 			}
 			ml.stop();
 			ml = null;
 		}
 	}
-	
-	
+
 	public void addAlarmChannel(String name, String host, int port) {
 		conf.addProperty("alarmChannels.alarmChannel(-1).name", name);
 		conf.addProperty("alarmChannels.alarmChannel.host", host);
@@ -102,23 +123,21 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 
 	public void addReader(String name, String className, String propertiesFile) {
 		conf.addProperty("readers.reader(-1).name", name);
-		conf.addProperty("readers.reader.class",className);
+		conf.addProperty("readers.reader.class", className);
 		conf.addProperty("readers.reader.properties", propertiesFile);
-		
+
 	}
 
 	public void addReaderReadpoint(String readerName, String readpoint) {
-		List list = conf.getList("readers");
-		for(int i = 0; i<list.size(); i++)
-		{
-			if(list.get(i).equals(readerName))
-			{
-				conf.addProperty("readers.reader("+i+").readpoint(-1)", readpoint);
+		List list = conf.getList("readers.reader.name");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(readerName)) {
+				
+				conf.addProperty("readers.reader(" + i + ").readpoint(-1)",readpoint);
 				break;
 			}
 		}
-		
-		
+
 	}
 
 	public void addSource(String name, boolean fixed, String readpoint) {
@@ -129,27 +148,25 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 
 	public String getAlarmChannelHost(String channelName) {
 		List list = conf.getList("alarmChannels");
-		for(int i = 0; i<list.size(); i++)
-		{
-			if(list.get(i).equals(channelName))
-			{
-				return conf.getString("alarmChannels.alarmChannel("+i+").host");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(channelName)) {
+				return conf.getString("alarmChannels.alarmChannel(" + i
+						+ ").host");
 			}
 		}
-		
+
 		return null;
 	}
 
 	public int getAlarmChannelPort(String channelName) {
 		List list = conf.getList("alarmChannels");
-		for(int i = 0; i<list.size(); i++)
-		{
-			if(list.get(i).equals(channelName))
-			{
-				return conf.getInt("alarmChannels.alarmChannel("+i+").port");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(channelName)) {
+				return conf
+						.getInt("alarmChannels.alarmChannel(" + i + ").port");
 			}
 		}
-		
+
 		return -1;
 	}
 
@@ -158,14 +175,13 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 		final String COMMA = ",";
 		String channels[] = new String[list.size()];
 		String name, host, port;
-		for(int i = 0; i<list.size(); i++)
-		{
-			name = conf.getString("alarmChannels.alarmChannel("+i+").name");
-			host = conf.getString("alarmChannels.alarmChannel("+i+").host");
-			port = conf.getString("alarmChannels.alarmChannel("+i+").port");
-			channels[i] = name+COMMA+host+COMMA+port;
+		for (int i = 0; i < list.size(); i++) {
+			name = conf.getString("alarmChannels.alarmChannel(" + i + ").name");
+			host = conf.getString("alarmChannels.alarmChannel(" + i + ").host");
+			port = conf.getString("alarmChannels.alarmChannel(" + i + ").port");
+			channels[i] = name + COMMA + host + COMMA + port;
 		}
-		
+
 		return channels;
 	}
 
@@ -197,11 +213,11 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 		List list = conf.getList("IOEdgeTriggerPortManager");
 		final String COMMA = ",";
 		String ports[] = new String[list.size()];
-		for(int i = 0; i<list.size(); i++)
-		{
-			ports [i] = conf.getString("IOEdgeTriggerPortManager.port("+i+")");
+		for (int i = 0; i < list.size(); i++) {
+			ports[i] = conf.getString("IOEdgeTriggerPortManager.port(" + i
+					+ ")");
 		}
-		
+
 		return ports;
 	}
 
@@ -209,24 +225,22 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 		List list = conf.getList("IOValueTriggerPortManager");
 		final String COMMA = ",";
 		String ports[] = new String[list.size()];
-		for(int i = 0; i<list.size(); i++)
-		{
-			ports [i] = conf.getString("IOValueTriggerPortManager.port("+i+")");
+		for (int i = 0; i < list.size(); i++) {
+			ports[i] = conf.getString("IOValueTriggerPortManager.port(" + i
+					+ ")");
 		}
-		
+
 		return ports;
 	}
 
 	public boolean getIsSourceFixed(String sourceName) {
 		List list = conf.getList("sources.source.name");
-		for(int i = 0; i<list.size(); i++)
-		{
-			if(list.get(i).equals(sourceName))
-			{
-				return conf.getBoolean("sources.source("+i+").fixed");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(sourceName)) {
+				return conf.getBoolean("sources.source(" + i + ").fixed");
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -315,14 +329,26 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 	}
 
 	public String[] getReadPointNames(String readerName) {
-		List list = conf.getList("readers.reader.readpoint");
-		String readpoints[] = new String[list.size()];
-		for(int i = 0; i<list.size(); i++)
-		{
-			readpoints [i] = (String)list.get(i);
+		List list;
+		int pos = -1;
+
+		list = conf.getList("readers.reader.name");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(readerName)) {
+				pos = i;
+				break;
+			}
 		}
-		
-		return readpoints;
+		if (pos != -1) {
+			list = conf.getList("readers.reader(" + pos + ").readpoint");
+			String readpoints[] = new String[list.size()];
+			for (int i = 0; i < list.size(); i++) {
+				readpoints[i] = (String) list.get(i);
+			}
+
+			return readpoints;
+		} else
+			return null;
 	}
 
 	public long getReadTimeout() {
@@ -331,33 +357,29 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 
 	public String getReaderClassName(String readerName) {
 		List list = conf.getList("readers.reader.name");
-		for(int i = 0; i<list.size(); i++)
-		{
-			if(list.get(i).equals(readerName))
-			{
-				return conf.getString("readers.reader("+i+").class");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(readerName)) {
+				return conf.getString("readers.reader(" + i + ").class");
 			}
 		}
-		
+
 		return null;
 	}
 
 	public String getReaderPropertiesFile(String readerName) {
 		List list = conf.getList("readers.reader.name");
-		for(int i = 0; i<list.size(); i++)
-		{
-			if(list.get(i).equals(readerName))
-			{
-				return conf.getString("readers.reader("+i+").properties");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(readerName)) {
+				return conf.getString("readers.reader(" + i + ").properties");
 			}
 		}
-		
+
 		return null;
 	}
 
 	public String[] getReaders() {
 		List list = conf.getList("readers.reader.name");
-		return (String [])list.toArray(new String[list.size()]);
+		return (String[]) list.toArray(new String[list.size()]);
 	}
 
 	public String getRole() {
@@ -366,20 +388,18 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 
 	public String getSourceReadpoint(String sourceName) {
 		List list = conf.getList("sources.source.name");
-		for(int i = 0; i<list.size(); i++)
-		{
-			if(list.get(i).equals(sourceName))
-			{
-				return conf.getString("readers.reader("+i+").readepoint");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(sourceName)) {
+				return conf.getString("readers.reader(" + i + ").readpoint");
 			}
 		}
-		
+
 		return null;
 	}
 
 	public String[] getSources() {
-		// TODO Auto-generated method stub
-		return null;
+		List list = conf.getList("sources.source.name");
+		return (String[]) list.toArray(new String[list.size()]);
 	}
 
 	public int getTcpPort() {
@@ -396,7 +416,6 @@ public class AccadaRmRp implements AccadaRmRpMBean{
 
 	public void setCurrentSource(String source) {
 		conf.setProperty("currentSource", source);
-		
 	}
 
 	public void setEPC(String epc) {

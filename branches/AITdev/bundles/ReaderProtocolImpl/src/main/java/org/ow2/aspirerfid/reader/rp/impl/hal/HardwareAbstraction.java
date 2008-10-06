@@ -1,21 +1,23 @@
 /*
- * Copyright (C) 2007 ETH Zurich
- *
- * This file is part of Accada (www.accada.org).
- *
- * Accada is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License version 2.1, as published by the Free Software Foundation.
- *
- * Accada is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with Accada; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA  02110-1301  USA
+ * Copyright © 2008-2010, Aspire 
+ * 
+ * This file contains the source code of the Accada library by ETH Zurich (www.accada.org), 
+ * licensed under the terms of the GNU Lesser General Public License version 2.1 in 2007 and 
+ * modified for the needs of the Aspire project.
+ * 
+ * Aspire is free software; you can redistribute it and/or 
+ * modify it under  the terms of the GNU Lesser General Public 
+ * License version 2.1 as published by the Free Software Foundation (the 
+ * "LGPL"). 
+ * 
+ * You should have received a copy of the GNU Lesser General Public 
+ * License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
+ * 
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
+ * OF ANY KIND, either express or implied. See the GNU Lesser General Public 
+ * License for the specific language governing rights and limitations.
+ *  
  */
 
 package org.ow2.aspirerfid.reader.rp.impl.hal;
@@ -64,12 +66,13 @@ import org.ow2.aspirerfid.reader.rp.impl.hal.UnsupportedOperationException;
  *
  * @author Matthias Lampe, lampe@acm.org
  * @author Christian Floerkemeier, floerkem@mit.edu
+ * @author Nektarios Leontiadis, nele@ait.edu.gr
  */
 public interface HardwareAbstraction {
-	
-	
+		
 	//--------- Identify
 
+	public void disconnect();
 	/**
 	 * Identifies the tags in a reader's field. The concrete behaviour of this
 	 * method depends on the concrete implementation of the underlaying

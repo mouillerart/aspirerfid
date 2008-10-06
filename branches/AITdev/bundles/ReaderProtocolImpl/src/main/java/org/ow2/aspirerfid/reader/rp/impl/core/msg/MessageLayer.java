@@ -305,6 +305,7 @@ public class MessageLayer {
 	{
 		
 		Source source = readerDevice.getCurrentSource();
+		readerDevice.stopReaders();
 		Hashtable triggers = source.getReadTriggers();
 		if(triggers.size() > 0)
 		{

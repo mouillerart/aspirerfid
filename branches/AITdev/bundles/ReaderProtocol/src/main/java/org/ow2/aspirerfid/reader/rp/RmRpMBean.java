@@ -27,6 +27,8 @@ public interface RmRpMBean {
 
 	public void start();
 	public void stop();
+	public void loadConfig();
+	public void resetConfig();
 	
 	public void setEPC(String epc);
 	public String getEPC();

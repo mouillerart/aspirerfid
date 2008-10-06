@@ -33,6 +33,6 @@
     <module>tdt</module>
     <module>ReaderProtocol</module>
     <module>ReaderProtocolImpl</module>
-    <module>RPProxyLib</module>
+    <module>readers</module>
   </modules>
 </project>
