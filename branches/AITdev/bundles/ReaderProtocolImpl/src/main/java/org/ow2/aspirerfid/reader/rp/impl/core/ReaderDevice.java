@@ -353,6 +353,7 @@ public class ReaderDevice {
 	   }
 	   else
 	   {
+		   instance.stopReaders();
 		   instance.resetToDefaultSettings();
 	   }
 	   return instance;
@@ -424,7 +425,6 @@ public class ReaderDevice {
    
    public void stopReaders()
    {
-	   instance = null;
 	   for(HardwareAbstraction ha : readers.values())
 	   {
 		   ha.disconnect();
@@ -1123,6 +1123,7 @@ public class ReaderDevice {
     */
    public final void resetToDefaultSettings(final String propFile,
          final String defaultPropFile) throws ReaderProtocolException {
+	   log.info("reseting");
       // operational status is DOWN before resetting
 	   setOperStatus(OperationalStatus.DOWN);
 

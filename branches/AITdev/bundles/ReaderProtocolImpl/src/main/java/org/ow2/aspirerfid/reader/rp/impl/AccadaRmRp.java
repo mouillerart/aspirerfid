@@ -30,7 +30,7 @@ import org.ow2.aspirerfid.reader.rp.RmRpMBean;
 import java.io.File;
 
 /**
- * @author Nektarios Leontiadis
+ * @author Nektarios Leontiadis nele@ait.edu.gr
  * 
  */
 public class AccadaRmRp implements AccadaRmRpMBean {

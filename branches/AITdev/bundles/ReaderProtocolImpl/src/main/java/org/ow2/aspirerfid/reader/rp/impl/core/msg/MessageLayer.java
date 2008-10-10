@@ -124,20 +124,6 @@ public class MessageLayer {
 		this.initialize();
 	}
 
-	// ====================================================================
-	// ------------------------- Methods --------------------------------//
-	// ====================================================================
-
-	/**
-	 * The main method.
-	 *
-	 * @param args
-	 *            Not used
-	 */
-	public static void main(String[] args) {
-		MessageLayer m = new MessageLayer();
-	}
-
 	/**
 	 * Initializes the messaging layer and starts the reader device.
 	 *
@@ -293,11 +279,7 @@ public class MessageLayer {
 	 *
 	 */
 	public void reset() {
-		/* TODO: Was ist genauer Semantik von reset?? Connections auch zumachen? */
-
 		stop();
-
-		// Re-Initialize
 		initialize();
 	}
 	
@@ -378,28 +360,28 @@ public class MessageLayer {
 		return System.getProperty("java.class.path");
 	}
 
-	/**
-	 * Reads the management agent properties from a file.
-	 *
-	 * @param propFile
-	 *            The properties file
-	 * @throws ReaderProtocolException
-	 */
-	private void readMgmtAgentProperties(String propFile, String defaultPropFile) {
-		XMLConfiguration conf;
-      URL fileurl = ResourceLocator.getURL(propFile, defaultPropFile);
-		try {
-			conf = new XMLConfiguration(fileurl);
-			MessageLayer.mgmtAgentType = AgentType.valueOf(conf.getString(
-					"mgmtAgentType").toUpperCase());
-			mgmtAgentAddress = conf.getString("mgmtAgentAddress");
-			mgmtAgentPort = conf.getInt("mgmtAgentPort");
-			mgmtSimulatorStart = conf.getBoolean("mgmtSimulatorStart");
-		} catch (ConfigurationException e) {
-			log.error("Failed to read the management agent information from "
-					+ propFile + "\n -> Start default SNMP agent.");
-			MessageLayer.mgmtAgentType = AgentType.SNMP;
-		}
-	}
+//	/**
+//	 * Reads the management agent properties from a file.
+//	 *
+//	 * @param propFile
+//	 *            The properties file
+//	 * @throws ReaderProtocolException
+//	 */
+//	private void readMgmtAgentProperties(String propFile, String defaultPropFile) {
+//		XMLConfiguration conf;
+//      URL fileurl = ResourceLocator.getURL(propFile, defaultPropFile);
+//		try {
+//			conf = new XMLConfiguration(fileurl);
+//			MessageLayer.mgmtAgentType = AgentType.valueOf(conf.getString(
+//					"mgmtAgentType").toUpperCase());
+//			mgmtAgentAddress = conf.getString("mgmtAgentAddress");
+//			mgmtAgentPort = conf.getInt("mgmtAgentPort");
+//			mgmtSimulatorStart = conf.getBoolean("mgmtSimulatorStart");
+//		} catch (ConfigurationException e) {
+//			log.error("Failed to read the management agent information from "
+//					+ propFile + "\n -> Start default SNMP agent.");
+//			MessageLayer.mgmtAgentType = AgentType.SNMP;
+//		}
+//	}
 
 }
