@@ -22,6 +22,12 @@
 */
 package org.ow2.aspirerfid.ndef;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 import javax.microedition.contactless.ndef.NDEFMessage;
 
 /**
@@ -74,19 +80,50 @@ public class NDEFSmartPosterMessage extends NDEFMessage{
     		}
 	}
 				
-	public static void main(String args[]){
+	public static void main(String args[]) throws IOException{
+
+		NDEFSmartPosterMessage message;
 		
-		StringBuffer sb=new StringBuffer();
-		for (int i = 2; i < args.length; i++) {
-			if(i!=0) sb.append(" ");
-			sb.append(args[i]);
+		if(args.length==1) {
+			Properties properties=new Properties();
+			properties.load(new FileInputStream(args[0]));
+		
+			String urlstr=(String) properties.get("url");
+			
+			List langs=new ArrayList();
+			List titles=new ArrayList();
+			
+			StringBuffer sb=new StringBuffer();
+			for (int i = 0;; i++) {
+				String title=(String) properties.get("title-"+i);
+				if(title==null) break;
+				String lang=(String) properties.get("lang-"+i);
+				if(lang==null) lang="en";
+				
+				langs.add(lang);
+				titles.add(title);	
+			}
+			
+		    message = new NDEFSmartPosterMessage(
+		    		args[0],
+		    		(String[])langs.toArray(new String[langs.size()]),
+				    (String[])titles.toArray(new String[titles.size()])
+		    );
+			
+		} else {
+		
+			StringBuffer sb=new StringBuffer();
+			for (int i = 2; i < args.length; i++) {
+				if(i!=0) sb.append(" ");
+				sb.append(args[i]);
+			}
+			
+		    message = new NDEFSmartPosterMessage(
+		    		args[0],
+		    		new String[] {args[1]},
+		    		new String[] {sb.toString()}
+		    );
 		}
-		
-	    NDEFSmartPosterMessage message = new NDEFSmartPosterMessage(
-	    		args[0],
-	    		new String[] {args[1]},
-	    		new String[] {sb.toString()}
-	    );
 		
 		System.out.println(HexUtility.toHexString(message.toByteArray()," "));		
 	}

@@ -28,6 +28,7 @@ import javax.microedition.contactless.ndef.NDEFRecordType;
 
 /**
  * This class represents a NDEF record containing a text
+ * <p>TODO check the convertion of UTF8 instead of UNICODE (java.lang.String)
  * @link http://www.nfc-forum.org/specs
  * @author Didier Donsez
  */

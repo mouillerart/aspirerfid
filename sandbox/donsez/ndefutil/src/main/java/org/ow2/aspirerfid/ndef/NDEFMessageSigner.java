@@ -115,7 +115,6 @@ public class NDEFMessageSigner {
 		return true;		
 	}
 
-	
 	public static void main(String args[]){
 		
 		StringBuffer sb=new StringBuffer();
