@@ -24,28 +24,55 @@ package org.ow2.aspirerfid.ndef;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.security.SignatureException;
 
 import javax.microedition.contactless.ndef.NDEFMessage;
 import javax.microedition.contactless.ndef.NDEFRecord;
+import javax.microedition.contactless.ndef.NDEFRecordType;
 
 /**
  * This utility class signs or checks a NDEF message
  * <p>Signed messages contains 2 records ending the message: one for the signer and one for the signature 
+ * <p>TODO provides cryto API available in J2ME and JavaSE (java.security)  
  * @link http://www.nfc-forum.org/specs
  * @author Didier Donsez
  */
 public class NDEFMessageSigner {
 
-// TODO NDEFSignerRecord and NDEFSignatureRecord
-//	public class NDEFSignerRecord extends NDEFRecord {
-//		
-//	}
-//
-//	public class NDEFSignatureRecord extends NDEFRecord {
-//		
-//	}
-
+	public class NDEFSignerRecord extends NDEFRecord {
+		
+		public static final byte X509_DN_IDENTITY=0x00;
+		
+		public NDEFSignerRecord(byte typeCode, String identity) {
 	
+	        super(new NDEFRecordType(NDEFRecordType.NFC_FORUM_RTD, "urn:nfc:wkt:X"), null, null);
+		
+	        // Append Payload Manually
+	        super.appendPayload(new byte[] {typeCode} );
+	        super.appendPayload(identity.getBytes());
+		}
+	}
+	
+	public class NDEFSignatureRecord extends NDEFRecord {
+
+		public static final byte DSA_ALGO=0x00;
+		
+		public NDEFSignatureRecord(byte[] bytesToSign, byte algoCode, Signature signature, PrivateKey privateKey) throws InvalidKeyException, SignatureException {
+	
+	        super(new NDEFRecordType(NDEFRecordType.NFC_FORUM_RTD, "urn:nfc:wkt:S"), null, null);
+	
+			signature.initSign(privateKey);
+			signature.update(bytesToSign, 0, bytesToSign.length);
+
+	        // Append Payload Manually
+	        super.appendPayload(new byte[] {algoCode} );
+	        super.appendPayload(signature.sign());
+		}
+	}
+
 	public static void signMessage(NDEFMessage message, String signer, String keystorepw, String keypw) {
 
 		NDEFRecord signerRecord=null;
