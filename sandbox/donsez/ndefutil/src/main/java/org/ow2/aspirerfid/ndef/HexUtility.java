@@ -20,7 +20,7 @@
 
    LGPL version 2.1 full text http://www.gnu.org/licenses/lgpl-2.1.txt    
 */
-package org.ow2.aspirerfid.nfc.util;
+package org.ow2.aspirerfid.ndef;
 
 /**
  * This class provides utility methods to print hexadecimal strings

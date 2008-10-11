@@ -20,13 +20,18 @@
 
    LGPL version 2.1 full text http://www.gnu.org/licenses/lgpl-2.1.txt    
 */
-package org.ow2.aspirerfid.nfc.util;
+package org.ow2.aspirerfid.ndef;
+
+import javax.microedition.contactless.ndef.NDEFMessage;
+import javax.microedition.contactless.ndef.NDEFRecord;
+import javax.microedition.contactless.ndef.NDEFRecordType;
 
 /**
- * This class provides constants and methods for NDEF URI records
+ * This class represents a NDEF record containing a URI
+ * @link http://www.nfc-forum.org/specs
  * @author Didier Donsez
  */
-public class NDEFURIConstants {
+public class NDEFURIRecord extends NDEFRecord {
 
 	public static final String[] NDEF_URI_IDENTIFIER_CODE={
 		"",
@@ -82,4 +87,34 @@ public class NDEFURIConstants {
 		}
 		return url;
 	}	
+		
+	/**
+	 * Constructor of a NDEF Record containing a URI
+	 * @param urlstr
+	 */
+	public NDEFURIRecord(String urlstr) {
+
+        super(new NDEFRecordType(NDEFRecordType.NFC_FORUM_RTD, "urn:nfc:wkt:U"), null, null);
+
+        // Headerbyte: open Bookmark in Browser
+        byte[] prefixCode = {(byte)(getURLPrefixCode(urlstr))};
+
+        // Payload Text: URL as a byte-Array
+        byte[] urlBytes = getURLSuffix(urlstr).getBytes();
+
+        // Create NDEF Record
+
+        // Append Payload Manually
+        super.appendPayload(prefixCode);
+        super.appendPayload(urlBytes);
+	}
+	
+			
+	public static void main(String args[]){
+		
+	    NDEFMessage message = new NDEFMessage();
+	    message.appendRecord(new NDEFURIRecord(args[0]));
+		
+		System.out.println(HexUtility.toHexString(message.toByteArray()," "));		
+	}
 }
