@@ -30,19 +30,21 @@
   <description>provides an OSGi service for Apple Motion Sensor</description>
   <dependencies>
     <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi_R4_core</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi_R4_compendium</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.ipojo</artifactId>
       <version>0.9.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.felix</groupId>
+    	<artifactId>org.osgi.core</artifactId>
+    	<version>1.2.0</version>
+    	<type>bundle</type>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.felix</groupId>
+    	<artifactId>org.osgi.compendium</artifactId>
+    	<version>1.2.0</version>
+    	<type>bundle</type>
     </dependency>    
   </dependencies>
   <build>
