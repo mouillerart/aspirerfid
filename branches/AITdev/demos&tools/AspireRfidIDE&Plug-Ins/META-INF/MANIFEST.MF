@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: AspireRfidIDE Plug-in
+Bundle-SymbolicName: aspireRfidIDE;singleton:=true
+Bundle-Version: 0.1.0
+Bundle-Activator: org.ow2.aspirerfid.ide.Activator
+Bundle-Vendor: Nikos Kefalakis
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.intro,
+ org.eclipse.ui.forms,
+ aspireRfidIde_AleServerConfigurator_Plug_in;bundle-version="1.0.0",
+ org.eclipse.ui.console;bundle-version="3.3.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
