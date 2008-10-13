@@ -1,0 +1,5 @@
+Adaptateurs pour tous types capteurs
+ajouter presentation (format ODP)
+JMX handler (pour polling et autres)
+Diviser en 4 components iPOJO (+faire un connecteur pour le NXT)
+Gerer la synchro de threads et l'acces au NXT pour le multi-sensors.

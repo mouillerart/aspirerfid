@@ -1,0 +1,59 @@
+<ipojo>
+<!-- declare your component types and instances here -->
+	<component className="org.ow2.aspirerfid.sensor.lego.nxt.NXTSensors"
+				name="sensors">
+		<requires field="m_nxtAccessService"/>
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+	<component className="org.ow2.aspirerfid.sensor.lego.nxt.producers.NXTDistanceProducer"
+				name="ultrasonic-sensor-producer">
+		<requires field="m_nxtAccessService"/>
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+	<component className="org.ow2.aspirerfid.sensor.lego.nxt.producers.NXTLightProducer"
+				name="light-sensor-producer">
+		<requires field="m_nxtAccessService"/>
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+	<component className="org.ow2.aspirerfid.sensor.lego.nxt.producers.NXTSoundProducer"
+				name="sound-sensor-producer">
+		<requires field="m_nxtAccessService"/>
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+	<component className="org.ow2.aspirerfid.sensor.lego.nxt.producers.NXTTouchPublisher"
+				name="touch-sensor-publisher">
+		<requires field="m_nxtAccessService"/>
+		<!-- <requires field="m_eventAdmin"/>  -->
+		<ev:publisher
+			name="pressedPublisher"
+			field="m_pressedPublisher"
+			topics="org/ow2/aspirerfid/sensors/lego/nxt/touch/pressed/*"/>
+		<ev:publisher
+			name="releasedPublisher"
+			field="m_releasedPublisher"
+			topics="org/ow2/aspirerfid/sensors/lego/nxt/touch/released/*"/>			
+				
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+	<component className="org.ow2.aspirerfid.sensor.lego.nxt.producers.NXTRFIDReader"
+				name="rfid-reader-publisher">
+		<requires field="m_nxtAccessService"/>
+<!-- 		<requires field="m_eventAdmin"/>  -->
+		<ev:publisher
+			name="nxtLegoRFIDReader"
+			field="m_publisher"
+			data-key="tag.id"
+			topics="org/ow2/aspirerfid/reader/lego/nxt/rfid/*"/>	
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+	<!-- TODO ajouter component de control / pilotage du NXT -->
+	
+	
+	<instance component="org.ow2.aspirerfid.sensor.lego.nxt.NXTSensors" name="NXT-Sensors"/>
+</ipojo>
