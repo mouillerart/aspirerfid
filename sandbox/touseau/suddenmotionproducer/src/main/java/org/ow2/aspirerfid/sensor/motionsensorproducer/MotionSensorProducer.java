@@ -46,9 +46,9 @@ public class MotionSensorProducer implements Producer, Runnable {
 	
 	private BundleContext m_bc;
 	
-	private ServiceRegistration m_sr;
+	private final String PID = "org.ow2.aspirerfid.sensor.motionsensorproducer.MotionSensorProducer";	
 	
-	private final String PID = "org.ow2.aspirerfid.sensor.motionsensorproducer.MotionSensorProducer";
+	private ServiceRegistration m_sr;
 	
 	private boolean end;
 
@@ -112,7 +112,7 @@ public class MotionSensorProducer implements Producer, Runnable {
 		int[] accelerometerValues;
 		Measurement[] measurements = new Measurement[3];
 		
-		while (!end){
+		while (!end) {
 			accelerometerValues = Unimotion.getSMSArray();
 			for (int i = 0; i < 3; i++){
 				measurements[i] = new Measurement(accelerometerValues[i]);
