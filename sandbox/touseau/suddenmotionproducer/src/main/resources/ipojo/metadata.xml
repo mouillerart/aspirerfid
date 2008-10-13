@@ -1,0 +1,19 @@
+<ipojo>
+	<!-- declare your component types and instances here -->
+	<component classname="org.ow2.aspirerfid.sensor.motionsensorproducer.MotionSensorProducer"
+				name ="sudden_motion_producer">
+<!-- 		<provides interface="org.osgi.service.wireadmin.Producer">
+			<property name="service.pid" type="java.lang.String" value="org.ow2.aspirerfid.sensor.motionsensorproducer.MotionSensorProducer"/>
+			<property name="wireadmin.producer.flavors" field="m_flavors" value="{}"/>
+		</provides>
+		<property name="flavors">
+		</property>  -->
+		<callback transition="validate" method="activate"/>
+		<callback transition="invalidate" method="deactivate"/>
+	</component>
+	<instance component="sudden_motion_producer">
+<!-- 		<property name="flavors" type="array">
+			<property value="org.osgi.util.Measurement"/>
+		</property>  -->
+	</instance>
+</ipojo>

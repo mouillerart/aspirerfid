@@ -39,9 +39,21 @@
       <artifactId>osgi_R4_compendium</artifactId>
       <version>1.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.ipojo</artifactId>
+      <version>0.9.0-SNAPSHOT</version>
+    </dependency>    
   </dependencies>
   <build>
     <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -51,15 +63,29 @@
             <Bundle-Copyright>OW2 Aspire RFID</Bundle-Copyright>
             <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
             <Bundle-Description>${description}</Bundle-Description>
-            <Export-Package>org.ow2.aspirerfid.sensor.motionsensorproducer.service;specification-version=2.1.0</Export-Package>
-            <Import-Package>org.osgi.service.component</Import-Package>
-            <Private-Package> org.ow2.aspirerfid.sensor.motionsensorproducer.impl,sms, org.ow2.aspirerfid.sensor.motionsensorproducer.client</Private-Package>
+            <Export-Package></Export-Package>
+            <Private-Package> org.ow2.aspirerfid.sensor.motionsensorproducer,sms</Private-Package>
             <Bundle-NativeCode>Mac_OS_X/libUnimotionLib.jnilib;processor=x86;osname=Mac OS X</Bundle-NativeCode>
             <Bundle-ClassPath>.</Bundle-ClassPath>
             <Service-Component>OSGI-INF/components.xml</Service-Component>
           </instructions>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-ipojo-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>ipojo-bundle</goal>
+            </goals>
+            <configuration>
+              <metadata>ipojo/metadata.xml</metadata>
+              <ignoreAnnotations>true</ignoreAnnotations>
+            </configuration>            
+          </execution>
+        </executions>
+      </plugin>      
     </plugins>
   </build>
 </project>
