@@ -1,0 +1,11 @@
+<ipojo>
+	<!-- declare your component types and instances here -->
+	<component classname="org.ow2.aspirerfid.sensor.motionsensorconsumer.MotionSensorConsumer"
+				name ="sudden_motion_consumer">
+		<callback transition="validate" method="activate"/>
+		<callback transition="invalidate" method="deactivate"/>
+	</component>
+	
+	<instance component="sudden_motion_consumer">
+	</instance>
+</ipojo>

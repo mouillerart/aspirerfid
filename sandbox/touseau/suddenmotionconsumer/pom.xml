@@ -5,20 +5,80 @@
   <packaging>bundle</packaging>
   <name>Aspire RFID :: Sensor :: Apple Sudden Motion Sensor Consumer</name>
   <version>0.1.0-SNAPSHOT</version>
+  <build>
+  	<plugins>
+  		<plugin>
+  			<artifactId>maven-compiler-plugin</artifactId>
+	        <configuration>
+	          <source>1.5</source>
+	          <target>1.5</target>
+	        </configuration>
+  		</plugin>
+  		<plugin>
+	        <groupId>org.apache.felix</groupId>
+	        <artifactId>maven-bundle-plugin</artifactId>
+	        <extensions>true</extensions>
+	        <configuration>
+	          <instructions>
+	            <Bundle-Copyright>OW2 Aspire RFID</Bundle-Copyright>
+	            <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+	            <Export-Package></Export-Package>
+	            <Private-Package> org.ow2.aspirerfid.sensor.motionsensorconsumer</Private-Package>
+	          </instructions>
+	        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-ipojo-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>ipojo-bundle</goal>
+            </goals>
+            <configuration>
+              <metadata>ipojo/metadata.xml</metadata>
+              <ignoreAnnotations>true</ignoreAnnotations>
+            </configuration>            
+          </execution>
+        </executions>
+      </plugin>   
+  	</plugins>
+  </build>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>apache.snapshots</id>
+      <name>snapshot plugins</name>
+      <url>
+        http://people.apache.org/repo/m2-snapshot-repository
+      </url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>  
+  
   <dependencies>
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.ipojo</artifactId>
       <version>0.9.0-SNAPSHOT</version>
       <type>bundle</type>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.osgi.compendium</artifactId>
       <version>1.2.0</version>
       <type>bundle</type>
-      <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.osgi.core</artifactId>
+      <version>1.2.0</version>
+      <type>bundle</type>
+    </dependency>    
   </dependencies>
 </project>
