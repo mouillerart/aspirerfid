@@ -52,8 +52,8 @@ import rxtx.sample.SerialParameters;
 /**
  * TODO Javadoc
  * 
- * @author Unknown
- * @version 2006
+ * @author Didier Donsez
+ * @version 2005
  */
 public class Tiris6350Reader implements Tiris6350ReaderMBean, TimedObject,
 		SerialPortEventListener {
