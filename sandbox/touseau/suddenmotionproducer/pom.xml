@@ -69,7 +69,6 @@
             <Private-Package> org.ow2.aspirerfid.sensor.motionsensorproducer,sms</Private-Package>
             <Bundle-NativeCode>Mac_OS_X/libUnimotionLib.jnilib;processor=x86;osname=Mac OS X</Bundle-NativeCode>
             <Bundle-ClassPath>.</Bundle-ClassPath>
-            <Service-Component>OSGI-INF/components.xml</Service-Component>
           </instructions>
         </configuration>
       </plugin>

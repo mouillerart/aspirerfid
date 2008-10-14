@@ -55,7 +55,7 @@ public class MotionSensorProducer implements Producer, Runnable {
 	/**
 	 * Time window in ms between each wire update.
 	 */
-	private final long UPDATE_DELAY = 500;
+	private long UPDATE_DELAY = 200;
 	
 	public void activate() {
 		System.out.println("MotionSensorProducer activated");
