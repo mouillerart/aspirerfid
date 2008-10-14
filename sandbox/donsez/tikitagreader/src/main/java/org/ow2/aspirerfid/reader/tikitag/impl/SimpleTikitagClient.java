@@ -22,7 +22,6 @@
 */
 package org.ow2.aspirerfid.reader.tikitag.impl;
 
-import com.tikitag.client.Parameters;
 import com.tikitag.client.tagservice.ReaderMonitor;
 import com.tikitag.client.tagservice.TagMonitor;
 import com.tikitag.client.tagservice.TagService;
@@ -32,6 +31,11 @@ import com.tikitag.client.tagservice.impl.TagServiceImpl;
 import com.tikitag.ons.model.util.TagEvent;
 
 
+/**
+ * 
+ * @author Didier Donsez
+ *
+ */
 public class SimpleTikitagClient
 {
 
@@ -52,7 +56,7 @@ public class SimpleTikitagClient
         // pollInterval is the time for ???
         tagServiceConfiguration.setPollInterval(100);
         // putThreshold is the time for considering a PUT action 
-        // tagServiceConfiguration.setPutThresholdTime(100);
+        tagServiceConfiguration.setPutThresholdTime(1000);
         
         TagType[] tagTypes=tagServiceConfiguration.getDetectTagTypes();
         for (int i = 0; i < tagTypes.length; i++) {

@@ -7,3 +7,4 @@ It is based on the Tikitag client
 Link:
 http://code.google.com/p/tikitagdev (licence Apache Software Licence v2.0)
 
+http://tikitagdev.googlecode.com/files/tikitag-client-1.0-SNAPSHOT-jar-with-dependencies.jar

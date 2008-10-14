@@ -30,8 +30,12 @@ import com.tikitag.client.tagservice.ReaderMonitor;
 import com.tikitag.client.tagservice.impl.Acr122TagReader;
 import com.tikitag.ons.model.util.NewReaderEvent;
 
-public class SimpleReaderMonitorImpl
-    implements ReaderMonitor
+/**
+ * 
+ * @author Didier Donsez
+ *
+ */
+public class SimpleReaderMonitorImpl implements ReaderMonitor
 {
     private static final Logger log = Logger.getLogger(Acr122TagReader.class.getName());
     private final Preferences prefs = Preferences.userNodeForPackage(SimpleReaderMonitorImpl.class);
@@ -58,6 +62,4 @@ public class SimpleReaderMonitorImpl
             }
         }
     }
-
-
 }

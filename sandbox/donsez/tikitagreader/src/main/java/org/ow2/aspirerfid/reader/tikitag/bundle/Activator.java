@@ -25,19 +25,24 @@ package org.ow2.aspirerfid.reader.tikitag.bundle;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.ow2.aspirerfid.reader.tikitag.impl.SimpleTikitagClient;
 
+
+/**
+ * 
+ * @author Didier Donsez
+ *
+ */
 public class Activator implements BundleActivator {
-
-	private SimpleTikitagClient client;
+	
+	private TikitagEventPublisher eventPublisher;
 	
 	/**
 	 * 
 	 */
     public  void start(BundleContext bundleContext) throws Exception
     {
-        client = new SimpleTikitagClient();
-        client.start();
+        eventPublisher = new TikitagEventPublisher();
+        eventPublisher.start(bundleContext);
     }
 	
     /**
@@ -45,7 +50,6 @@ public class Activator implements BundleActivator {
      */
     public  void stop(BundleContext bundleContext) throws Exception
     {
-        client.stop();
+        eventPublisher.stop(bundleContext);
     }
-	
 }
