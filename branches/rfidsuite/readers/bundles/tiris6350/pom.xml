@@ -109,7 +109,8 @@
       </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
-        <artifactId>maven-ipojo-plugin</artifactId>
+	<artifactId>maven-ipojo-plugin</artifactId>
+	<version>0.8.0</version>
         <executions>
           <execution>
             <goals>
