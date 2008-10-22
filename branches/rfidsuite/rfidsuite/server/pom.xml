@@ -26,7 +26,7 @@
 
 	<artifactId>server</artifactId>
 	<version>2.0.0</version>
-	<name>AspireRFID Server</name>
+	<name>OW2 :: AspireRFID :: Server Modules</name>
 
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
@@ -44,6 +44,42 @@
 
 	<build>
 			<plugins>
+			
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <configuration>
+              <tasks>
+
+             <property environment="env"/>
+             
+             <echo message="Cheching the environment variables for ${project.name}"/>
+
+             <fail message="-> The environment variable GWT_HOME is not setted.">
+              <condition>
+                <not>
+                  <isset property="env.GWT_HOME"/>
+                </not>
+              </condition>
+             </fail>
+
+             
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+			
+			
+			
+			
+			
+			
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
