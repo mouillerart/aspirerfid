@@ -57,10 +57,10 @@
              
              <echo message="Cheching the environment variables for ${project.name}"/>
 
-             <fail message="-> The environment variable GWT_HOME is not setted.">
+             <fail message="-> The environment variable GWT_ROOT is not setted.">
               <condition>
                 <not>
-                  <isset property="env.GWT_HOME"/>
+                  <isset property="env.GWT_ROOT"/>
                 </not>
               </condition>
              </fail>
