@@ -1,1 +1,1 @@
-test commit mail :D
+Test the commit mail service.
