@@ -138,7 +138,7 @@
 					<instructions>
 						<Bundle-Name>AspireRFID-Export-Event-Dispatcher</Bundle-Name>
 						<Bundle-Description>Export Event Dispatcher</Bundle-Description>
-						<Import-Package>!com.sun.javadoc, !com.sun.tools.javadoc,!org.apache.tools.ant.taskdefs,!org.apache.tools.ant.types,!org.apache.tools.ant, !repackage,org.ow2.aspirerfid.event.export.api,javax.jms, fr.dyade.aaa.jndi2.client, *</Import-Package>
+						<Import-Package>!com.sun.javadoc, !com.sun.tools.javadoc,!org.apache.tools.ant.taskdefs,!org.apache.tools.ant.types,!org.apache.tools.ant, !org.apache.xml.*, !org.apache.xmlbeans.*, !repackage,org.ow2.aspirerfid.event.export.api,javax.jms, fr.dyade.aaa.jndi2.client, *</Import-Package>
 						<Private-Package>org.apache.xmlbeans.*,org.ow2.aspirerfid.event.*,schemaorg_apache_xmlbeans.system.*,javax.xml.*,org.ow2.aspirerfid.ale.*, org.ow2.aspirerfid.epcglobal.*</Private-Package>
 						<Export-Service>org.ow2.aspirerfid.event.export.api.ExportEventDispatcher</Export-Service>
 					</instructions>

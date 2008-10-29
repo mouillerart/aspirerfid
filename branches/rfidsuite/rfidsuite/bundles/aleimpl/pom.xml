@@ -111,7 +111,9 @@
                             !com.sun.javadoc, !com.sun.tools.javadoc,
                             !org.apache.tools.ant.taskdefs,
                             !org.apache.tools.ant.types,
-                            !org.apache.tools.ant, org.w3c.dom, *
+                            !org.apache.tools.ant,
+                            !org.apache.xmlbeans.*,
+                            !org.apache.xml.*, org.w3c.dom, *
                         </Import-Package> 
                         <Bundle-Activator>
                             org.ow2.aspirerfid.epc.ale.impl.Activator
@@ -127,7 +129,7 @@
                         <Private-Package>
                             repackage.*,
                             schemaorg_apache_xmlbeans.system.*,
-                            org.apache.xmlbeans.*,
+                            org.apache.*,
                             org.ow2.aspirerfid.epc.ale.*,
                             org.ow2.aspirerfid.epcglobal.*,
                             org.ow2.aspirerfid.ale.*, javax.xml.*
