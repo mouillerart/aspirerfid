@@ -21,16 +21,15 @@
 
 	<groupId>org.ow2.aspirerfid</groupId>
 
-	<artifactId>bundles</artifactId>
+	<artifactId>readers</artifactId>
 	<version>1.0.0</version>
-	<name>Core Reader Protocol</name>
+	<name>Readers that implement the reader protocol</name>
 
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 
   <modules>
-    <module>ReaderProtocol</module>
-    <module>ReaderProtocolImpl</module>
-    <module>impl</module>
+    <module>IntermecIF5</module>
+    <module>Simulator</module>
   </modules>
 </project>

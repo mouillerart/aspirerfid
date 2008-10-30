@@ -29,10 +29,7 @@
 	<packaging>pom</packaging>
 
   <modules>
-    <module>JaxBLib</module>
-    <module>tdt</module>
-    <module>ReaderProtocol</module>
-    <module>ReaderProtocolImpl</module>
+    <module>common</module>
     <module>readers</module>
   </modules>
 </project>

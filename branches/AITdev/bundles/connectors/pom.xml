@@ -23,14 +23,11 @@
 
 	<artifactId>bundles</artifactId>
 	<version>1.0.0</version>
-	<name>Core Reader Protocol</name>
+	<name>AspireRFID connectors</name>
 
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 
   <modules>
-    <module>ReaderProtocol</module>
-    <module>ReaderProtocolImpl</module>
-    <module>impl</module>
   </modules>
 </project>
