@@ -1,7 +1,7 @@
 rem this script illustrates the rxtx command usage
 
 install rxtx.jar
-start rxtx.cmd.jar
+start ${pom.artifactId}-${pom.version}.jar
 
 rxtx help
 rxtx list

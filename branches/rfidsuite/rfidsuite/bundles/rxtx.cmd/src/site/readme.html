@@ -1,12 +1,12 @@
 <html>
 <head>
-<title>RXTX Command</title>
+<title>${pom.name}</title>
 </head>
 <body>
 
 <!-- Start of  Documentation -->
 <hr width="100%" size="2">
-<h1><i><a name="rxtxcmd"></a><font color="#0000aa">rxtxcmd.jar</font></i></h1>
+<h1><i><a name="${pom.artifactId}"></a><font color="#0000aa">${pom.name}</font></i></h1>
 
 <p>
 <b>Description</b><br>
@@ -20,6 +20,14 @@ provides a command to send/receive bytes to/from a serial/parallel port
 <li>Author:OW2 AspireRFID Team</a></li>
 </ul>
 </p>
+
+
+<p>
+<b>Version</b><br>
+${pom.version}
+<br>
+</p>
+
 
 <p>
 <b>License</b><br>
@@ -109,6 +117,7 @@ To run the demo of this bundle, enter the commands in the Felix shell for the sc
 
 <p id="versions">
 <b>Versions history</b><br>
+Last version is : ${pom.version}
 <ul>
 <li>0.1.0, April 11, 2005</li>
 <li>0.2.0, February, 14 2006</li>
