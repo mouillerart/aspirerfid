@@ -1,0 +1,23 @@
+OW2 :: AspireRFID :: License Agreement Ant Task
+Copyright 2008 OW2 AspireRFID Project http://wiki.aspire.objectweb.org
+
+This task display license agreement during ant builds
+
+Usage:
+* task definition
+  <taskdef name="licenseagreement" classname="org.ow2.aspirerfid.deploy.licenseagreementtask.LicenseAgreementTask" classpath="${task.classpath}"/>
+
+* screen displayed until the user agreement
+    <licenseagreement agreementProperty="agreement" imageFile="logo.png" licenseFile="LICENSE"/>
+    <echo>Agreement is ${agreement}</echo>
+    <echo file="AGREEMENT">${env.USER}:  ${agreement} : ${TODAY} </echo>
+
+* screen displayed until a target starting
+    <licenseagreement onStartedTarget="run.server" imageFile="logo.png" licenseFile="LICENSE"/>
+
+* screen displayed until a target completion
+    <licenseagreement onFinishedTarget="run.server" imageFile="logo.png" licenseFile="LICENSE"/>
+
+* screen displayed during 10 seconds  	
+    <licenseagreement duration="10" imageFile="logo.png" licenseFile="LICENSE"/>
+    
