@@ -29,20 +29,35 @@
   <taskdef name="licenseagreement" classname="org.ow2.aspirerfid.deploy.licenseagreementtask.LicenseAgreementTask" classpath="${task.classpath}"/>
   
   <target name="init">
+    <condition property="agreementfile.is.present">
+        <available file="AGREEMENT"/>
+    </condition>	
   </target>
 
-  <target name="run" depends="init">
+  <target name="run" depends="agreement">
+  	<echo>Running ...</echo>
+  	<sleep seconds="2"/>  	
+  </target>
+
+  <target name="agreement" depends="agreement.ifagreementfile,agreement.ifnotagreementfile"/>	
+	
+  <target name="agreement.ifnotagreementfile" depends="init" unless="agreementfile.is.present">
     <licenseagreement agreementProperty="agreement" imageFile="logo.png" licenseFile="LICENSE"/>
     <echo>Agreement is ${agreement}</echo>
-
-  	<echo>Running ...</echo>
-  	<sleep seconds="2"/>
+  	<fail message="You must agree the license before usage">
+  		<condition>
+  			<equals arg1="${agreement}" arg2="false"/>
+  		</condition>
+ 	</fail>
+    <echo file="AGREEMENT">Agreement is ${agreement}</echo>
+  </target>
   	
-    <licenseagreement duration="10" imageFile="logo.png" licenseFile="LICENSE"/>
-
-  	<echo>Running ...</echo>
-  	<sleep seconds="2"/>
+  <target name="agreement.ifagreementfile" depends="init" if="agreementfile.is.present">
+    <licenseagreement duration="5" imageFile="logo.png" licenseFile="LICENSE"/>
   </target>
 
+  <target name="clean">
+  	<delete file="AGREEMENT"/>
+  </target>	
 </project>
 
