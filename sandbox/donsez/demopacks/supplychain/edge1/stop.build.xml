@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<project xmlns:jmx="antlib:org.apache.catalina.ant.jmx" basedir="." default="main" name="supplychain.edge1">
+
+<!--Properties Definitions-->
+<property file="./config.build.properties"/>
+
+<!--Macro Definitions-->
+<macrodef name="openConnection">
+  <attribute name="ref"/>
+  <attribute name="serviceurl"/>
+  <attribute name="username"/>
+  <attribute name="password"/>
+  <sequential>
+  <echo message="Connection @{serviceurl} on @{ref}"/>
+  <jmx:open password="@{password}" username="@{username}" url="@{serviceurl}" ref="@{ref}"/>
+  </sequential>
+</macrodef>
+
+<macrodef name="closeConnection">
+  <attribute name="ref"/>
+  <sequential>
+  <jmx:close ref="@{ref}"/>
+  </sequential>
+</macrodef>
+
+<!--Targets-->
+
+<target depends="init" name="main">
+  <echo>
+            Note: copy your catalina-ant.jar and
+            catalina-ant-jmx.jar from $CATALINA_HOME/server/lib
+            to $ANT_HOME/lib
+          </echo>
+  <parallel>
+    <antcall target="stop.edge1"/>
+  </parallel>
+</target>
+
+<target name="init">
+
+  <tstamp>
+  <format locale="en" pattern="d-MMMM-yyyy hh:mm aa" property="date"/>
+  </tstamp>
+  <property value="Didier DONSEZ" name="author"/>
+</target>
+
+<!--Target for agent edge1 -->
+<target name="stop.edge1">
+
+    <openConnection password="${edge1.jmx.password}" username="${edge1.jmx.username}" serviceurl="${edge1.jmx.serviceurl}" ref="edge1.jmx.connection.ref"/>
+
+    <jmx:invoke
+      ref="edge1.jmx.connection.ref"
+      name="org.osgi:name=AdminMBean"
+      operation="stopBundle"
+    >
+        <arg value="0" type="long"/>
+    </jmx:invoke>
+
+<!--
+	jmx:close was removed from the Tomcat dist !!! ;-(
+
+	<closeConnection ref="edge1.jmx.connection.ref"/>
+-->
+</target>
+</project>
