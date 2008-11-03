@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="Aspire Demopack Launcher" default="start" basedir=".">
+	
+	<!--
+	Aspire Demopack launcher
+	for 1 EPCIS server and 2 edges 
+	
+	
+	(c) OW2 Aspire RFID, 2008 
+	-->
+	
+	
+	<property name="jonas.root" value="JONAS_4_8_5"/>
+	<property name="felix.root" value="felix"/>
+	
+	<property name="ons.base" value="ons"/>
+	<!--<property name="server.base" value="server"/> -->
+	<property name="server.base" value="JONAS_4_8_5"/>
+	<property name="edge1.base" value="edge1"/>
+	<property name="edge2.base" value="edge2"/>
+
+  <property name="epcis.url" value="http://localhost:9000/epcis/org.ow2.aspirerfid.app.epcis.IndexModule/IndexModule.html"/>
+
+	<!--===========================================================-->
+
+	<target name="env">
+		<condition property="sys.is.unix">
+			<os family="unix"/>
+		</condition>
+		<condition property="sys.is.windows">
+			<os family="windows"/>
+		</condition>
+			
+	</target>
+
+	<target name="init" depends="env,init.unix, init.windows">
+	
+	</target>
+		
+	<target name="init.unix" if="sys.is.unix">
+    <property name="jonas.cmd" value="${jonas.root}/bin/unix/jonas"/>
+    <property name="browser" location="firefox"/>
+	</target>
+	
+	<target name="init.windows" if="sys.is.windows">
+    <property name="jonas.cmd" value="${jonas.root}\bin\nt\jonas.bat"/>
+    <property name="browser" location="C:/Program Files/Internet Explorer/iexplore.exe"/>
+	</target>
+
+	<!--===========================================================-->
+	
+	<target name="start" depends="init">
+		<parallel failonany="yes">
+
+			<!--
+			<sequential>
+        <splash imageurl="file://./logo.png"
+            showduration="10000"/>
+			</sequential>
+			-->
+
+			<sequential>
+				<antcall target="start.ons"/>
+			</sequential>
+
+			<sequential>
+				<antcall target="start.server"/>
+			</sequential>
+
+			<sequential>
+				<waitfor maxwait="100" maxwaitunit="second">
+					<http url="${epcis.url}"/>
+				</waitfor>
+				<antcall target="start.edge1"/>
+			</sequential>
+
+			<sequential>
+				<waitfor maxwait="100" maxwaitunit="second">
+					<http url="${epcis.url}"/>
+				</waitfor>
+				<antcall target="start.edge2"/>
+			</sequential>
+			
+			<sequential>
+				<waitfor maxwait="100" maxwaitunit="second">
+					<http url="${epcis.url}"/>
+				</waitfor>
+				<antcall target="start.browser"/>
+			</sequential>
+
+			<sequential>
+				<antcall target="start.jconsole"/>
+			</sequential>
+			
+		</parallel>
+	</target>
+
+	<target name="stop" depends="init">
+		<parallel failonany="yes">
+			<sequential>
+				<antcall target="stop.ons"/>
+			</sequential>
+			<sequential>
+				<antcall target="stop.server"/>
+			</sequential>
+			<sequential>
+				<antcall target="stop.edge1"/>
+			</sequential>
+			<sequential>
+				<antcall target="stop.edge2"/>
+			</sequential>
+			<sequential>
+				<antcall target="stop.browser"/>
+			</sequential>
+			<sequential>
+				<antcall target="stop.jconsole"/>
+			</sequential>
+		</parallel>
+	</target>
+
+	
+
+	<!--========================  ONS    ====================-->
+	
+	<target name="start.ons">
+	<echo>start ons not implemented</echo>
+	</target>
+
+	<target name="stop.ons">
+	<echo>stop ons not implemented</echo>
+	</target>
+
+	<!--========================  SERVER    ====================-->
+
+	<target name="start.server" depends="init">
+      <echo>starting server ...</echo>
+			<exec executable="${jonas.cmd}">
+        <arg line="start"/>
+        <env key="JONAS_BASE" value="${server.base}"/>
+      </exec>
+      
+      
+      <!-- TODO output mapper
+      SEE http://ant.apache.org/manual/CoreTypes/redirector.html
+      SEE http://ant.apache.org/manual/CoreTypes/filterchain.html
+      SEE http://ant.apache.org/manual/CoreTypes/filterchain.html#prefixlines
+      
+      
+      <filterreader classname="org.apache.tools.ant.filters.PrefixLines">
+      <param name="prefix" value="SERVER"/>
+      </filterreader>
+
+      
+      <redirector outputproperty="redirector.out"
+                  errorproperty="redirector.err"
+                  inputstring="blah before blah">
+        <inputfilterchain>
+            <replacestring from="before" to="after"/>
+        </inputfilterchain>
+        <outputmapper type="merge" to="redirector.out"/>
+        <errormapper type="merge" to="redirector.err"/>
+      </redirector>
+      -->
+      
+      
+	</target>
+
+	<target name="stop.server" depends="init">
+      <echo>stopping server ...</echo>
+			<exec executable="${jonas.cmd}">
+        <arg line="stop"/>
+        <env key="JONAS_BASE" value="${server.base}"/>
+      </exec>
+	</target>
+
+	<!--========================  EDGE    ====================-->
+	<target name="start.edge1">
+      <echo>starting edge1 ...</echo>
+      <parallel>
+      <sequential>
+        <java fork="true" jar="${felix.root}/org.apache.felix.main-1.1.0-SNAPSHOT.jar">
+          <jvmarg value="-Dfelix.cache.dir=${edge1.base}"/>
+          <jvmarg value="-Dfelix.cache.profile=edge"/>
+          <jvmarg value="-Dfelix.config.properties=file:${edge1.base}/edge.config.properties"/>
+          
+        <!-- TODO output mapper
+        SEE http://ant.apache.org/manual/CoreTypes/redirector.html
+        -->
+          
+        </java>
+      </sequential>
+		
+		  <sequential>
+        <!-- waiting for JMX connector -->
+        <echo>waiting edge1 JMX connector</echo>
+        <waitfor maxwait="100" maxwaitunit="second">
+           <socket server="127.0.0.1" port="9989"/>
+        </waitfor>
+        <!-- sleep X seconds since with waitfor mbean condition does not exist -->
+        <sleep seconds="10"/>
+        
+        <!-- JMX config script -->
+        <echo>configuring edge1</echo>
+        <ant antfile="${edge1.base}/config.build.xml" inheritrefs="false">
+          <property file="${edge1.base}/config.build.properties"/>
+        </ant>
+        
+      </sequential>
+      </parallel>		
+	</target>
+	
+	<target name="stop.edge1">
+      <echo>stoping edge1 ...</echo>
+      <ant antfile="${edge1.base}/stop.build.xml" inheritrefs="false">
+        <property file="${edge1.base}/config.build.properties"/>
+      </ant>
+  </target>
+
+	<!--========================  EDGE    ====================-->
+	<target name="start.edge2">
+	<echo>stop edge2 not implemented</echo>
+	</target>
+
+	<target name="stop.edge2">
+	<echo>stop edge2 not implemented</echo>
+	</target>
+
+	<!--========================  BROWSER    ====================-->
+	<target name="start.browser">
+      <exec executable="${browser}" spawn="true">
+          <arg value="${epcis.url}"/>
+      </exec>
+	</target>
+
+	<target name="stop.browser">
+	<echo>stop browser not implemented</echo>
+	</target>
+
+	<!--========================  JCONSOLE  ====================-->
+	<target name="start.jconsole">
+	  <!-- waiting for JMX connector -->
+    <echo>waiting edge1 JMX connector</echo>
+    <waitfor maxwait="100" maxwaitunit="second">
+       <socket server="127.0.0.1" port="9989"/>
+    </waitfor>
+
+    <exec executable="jconsole" spawn="true">
+        <arg value="service:jmx:rmi:///jndi/rmi://127.0.0.1:9989/edge"/>
+    </exec>
+	</target>
+
+	<target name="stop.jconsole">
+	<echo>stop jconsole not implemented</echo>
+	</target>
+
+	<!--==========     CLEAN     ==========-->
+	<target name="clean">
+     <echo>cleaning server ...</echo>
+     
+    <delete includeemptydirs="true">
+      <fileset dir="${server.base}" includes="*.log" defaultexcludes="false"/>
+    </delete>
+    <delete includeemptydirs="true">
+      <fileset dir="${server.base}" includes="work" defaultexcludes="false"/>
+    </delete>
+	</target>
+
+</project>
