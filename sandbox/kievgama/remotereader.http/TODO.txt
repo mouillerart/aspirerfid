@@ -1,0 +1,2 @@
+- Create a superclass "AbstractReader" which implements the RfidReaderMBean
+- Use iPOJO to manage dependencies and service arrival/departure  
