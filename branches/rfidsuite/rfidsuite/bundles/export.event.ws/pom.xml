@@ -253,6 +253,7 @@
 							!org.apache.avalon.framework.logger,
 							!org.apache.log, !org.apache.xml.resolver,
 							!org.apache.xml.resolver.readers,
+							!org.apache.commons.*,
 							!com.sun.org.apache.xerces.internal.util,
 							!org.apache.log4j, !com.sun.net.ssl,
 							!org.xmlpull.v1,
