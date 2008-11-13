@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Properties;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.EventConstants;
 import org.osgi.service.log.LogService;
@@ -74,7 +75,7 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean,
 	 * State of the reader.
 	 */
 	private boolean running = false;
-
+	
 	/**
 	 * Default name of the config File where Maximum, and RFID tags list are
 	 * read.
@@ -106,8 +107,10 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean,
 	 *            BundleContext used for service registrations.
 	 */
 	RfidReaderSimulator(BundleContext bc) {
+		System.out.println("{RFIDREADERSIMULATOR}");
 		this.context = bc;
-		new Thread(this).start();
+		Thread reader = new Thread(this,"FictiveReader");
+		reader.start();
 	}
 
 	/*
@@ -129,7 +132,7 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean,
 				"a simple Producer of RFID tags");
 
 		context.registerService(Producer.class.getName(), this, p);
-		while (true) {
+		while (bundleIsActive()) {
 			try {
 				for (int i = 0; wires != null && i < wires.length; i++) {
 					Wire wire = wires[i];
@@ -146,6 +149,10 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean,
 				/* will recheck quit */
 			}
 		}
+	}
+
+	private boolean bundleIsActive() {
+		return context.getBundle().getState() == Bundle.ACTIVE;
 	}
 
 	/*
