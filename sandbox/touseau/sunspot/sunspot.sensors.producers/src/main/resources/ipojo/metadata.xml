@@ -1,0 +1,34 @@
+<ipojo>
+<!-- declare your component types and instances here -->
+	<component classname="org.ow2.aspirerfid.sensor.sunspot.host.HostServer"
+				name="spot-host-serv" immediate="false">
+		<callback transition="validate" method="start"/>
+		<callback transition="invalidate" method="stop"/>
+	</component>
+
+ <!-- 	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.TemperatureProducer"
+				name="spot-temp-prod" immediate="true">
+		<callback transition="validate" method="start"/>
+		<callback transition="invalidate" method="stop"/>
+	</component>
+
+	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.LuminosityProducer"
+				name="spot-lum-prod" immediate="true">
+		<callback transition="validate" method="start"/>
+		<callback transition="invalidate" method="stop"/>
+	</component>
+		 -->
+
+	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.AccelerationProducer"
+				name="spot-accel-prod" immediate="true">
+		<callback transition="validate" method="start"/>
+		<callback transition="invalidate" method="stop"/>
+	</component>
+	
+	<instance component="spot-host-serv" name="spot-host-serv-inst"/>
+	
+<!-- 	<instance component="spot-temp-prod" name="spot-temp-prod-inst"/>
+	<instance component="spot-lum-prod" name="spot-lum-prod-inst"/> -->
+	<instance component="spot-accel-prod" name="spot-accel-prod-inst"/>
+	
+</ipojo>
