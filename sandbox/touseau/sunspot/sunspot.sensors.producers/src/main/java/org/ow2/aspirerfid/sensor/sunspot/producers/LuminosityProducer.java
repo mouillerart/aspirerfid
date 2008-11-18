@@ -66,23 +66,34 @@ public class LuminosityProducer implements Runnable, Producer {
 	
 	public void stop(){
 		m_end = true;
-		m_host.producerRemoved(m_address);	
 		m_sr.unregister();
 		System.out.println("SunSPOT luminosity producer deactivated");		
 	}	
 	
 	public void run() {
 		Measurement lumMeasurement;
+		dataFlow:
 		while (!m_end){
 			// Verify if the luminosity value has been updated
 			long time = m_host.getLastMeasurementTime(m_address);
 			
-			if (time >= m_lastMeasurementTime + m_spotUpdateDelay) { // everything is fine
+			if (time > m_lastMeasurementTime) { // everything is fine
 				m_lastMeasurementTime = time;
 			} else { // no new sensor value has been received from the SPOT
-				// producer must be stopped
-				m_host.producerRemoved(m_address);
-				this.stop();
+				// maybe the producer wants to update more often than the sensor actually can
+				try {
+					Thread.sleep(UPDATE_DELAY - m_spotUpdateDelay);
+					time = m_host.getLastMeasurementTime(m_address);
+				} catch (InterruptedException e) {
+					System.err.println("Luminosity Producer has been interrupted");;
+				}
+				if (time > m_lastMeasurementTime) { // Now everything is fine
+					m_lastMeasurementTime = time;
+				} else {
+					// producer must be stopped
+					m_host.stopProducer(m_address);
+					break dataFlow;
+				}
 			}			
 			
 			int luminosity = m_host.getLuminosity(m_address);

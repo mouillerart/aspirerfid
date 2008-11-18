@@ -13,6 +13,7 @@ import javax.microedition.io.Datagram;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.wireadmin.Producer;
 import org.ow2.aspirerfid.sensor.sunspot.host.config.Configuration;
+import org.ow2.aspirerfid.sensor.sunspot.producers.AccelerationProducer;
 import org.ow2.aspirerfid.sensor.sunspot.producers.LuminosityProducer;
 import org.ow2.aspirerfid.sensor.sunspot.producers.TemperatureProducer;
 
@@ -44,9 +45,10 @@ public class HostServer implements Runnable {
 	
     private boolean m_end;
     
-	private double[] m_acceleration;
-	
-//	private double m_temperature;
+	/**
+	 * Map<IEEEAdress, 3-axis Accelerations>
+	 */
+	private Hashtable<String, double[]> m_accelerations;
 	
 	/**
 	 * Map<IEEEAdress, Temperature>
@@ -57,13 +59,16 @@ public class HostServer implements Runnable {
 	 * Map<IEEEAdress, Luminosity>
 	 */
 	private Hashtable<String, Integer> m_luminosities;
+	
 	/**
 	 * Map<IEEEAdress, Time>
 	 */
 	private Hashtable<String, Long> m_lastMeasurementTimes;
-		
-//	private int m_luminosity;
 	
+	/**
+	 * Map<IEEEAdress, {TemperatureProducer, LuminosityProducer}>
+	 * or Map<IEEEAdress, {AccelerationProducer}>
+	 */
 	private Hashtable<String, Producer[]> m_producers;
 	
 	private BundleContext m_bundleContext;
@@ -84,6 +89,7 @@ public class HostServer implements Runnable {
 			m_producers = new Hashtable<String, Producer[]>();
 			m_temperatures = new Hashtable<String, Double>();
 			m_luminosities = new Hashtable<String, Integer>();
+			m_accelerations = new Hashtable<String, double[]>();
 			m_lastMeasurementTimes = new Hashtable<String, Long>();
 //		}
 		
@@ -135,13 +141,8 @@ public class HostServer implements Runnable {
 		m_listener.doSendData(false);
 		m_listener.doQuit();
 		
-		// stop all producers
-		for (Entry<String, Producer[]> entries : m_producers.entrySet()){
-			Producer[] prods = entries.getValue();
-			((TemperatureProducer) prods[0]).stop();
-			((LuminosityProducer) prods[1]).stop();
-		}
-		m_producers.clear();
+		stopAllProducers();
+		
 	}
 	
 
@@ -185,7 +186,7 @@ public class HostServer implements Runnable {
 	                long time = dg.readLong();      // read time of the reading
 	                int lumVal = dg.readInt();         // read the luminosity sensor value
 	                double tempVal = dg.readDouble();	// read the temperature sensor value
-	                m_lastMeasurementTimes.put(addr, time); // mark the timestamp
+	                m_lastMeasurementTimes.put(addr, time); // memorize the timestamp
 	                updateLuminosity(lumVal, addr);
 	                updateTemperature(tempVal, addr);
 	//                System.out.println(fmt.format(new Date(time)) + "  from: "+ addr
@@ -204,12 +205,22 @@ public class HostServer implements Runnable {
 		return singleton;
 	}
 	
+	public void startAccelerationProducer(String address){
+		AccelerationProducer accelProd = new AccelerationProducer(m_bundleContext, address);
+		m_producers.put(address, new Producer[]{accelProd});
+		accelProd.start();
+	}
+	
+	
 	/**
 	 * Callback method called by the AccelerationListener
 	 * @param accel
+	 * @param timeStamp 
+	 * @param address 
 	 */
-	public void updateAcceleration(double[] accel){
-		m_acceleration = accel;
+	public void updateAcceleration(double[] accel, String address, long timeStamp){
+		m_accelerations.put(address, accel);
+		m_lastMeasurementTimes.put(address, timeStamp);
 	}
 	
 	public void updateLuminosity(int luminosity, String address){
@@ -221,10 +232,11 @@ public class HostServer implements Runnable {
 	}
 	
 	/**
-	 * @return the accel
+	 * @param address, the IEEE address of the SPOT
+	 * @return the 3-axis accelerations of the corresponding SPOT sensor
 	 */
-	public double[] getAcceleration() {
-		return m_acceleration;
+	public double[] getAcceleration(String address) {
+		return (m_accelerations.containsKey(address)) ? m_accelerations.get(address) : new double[]{0,0,0};
 	}
 	
 	/**
@@ -232,7 +244,7 @@ public class HostServer implements Runnable {
 	 * @return the luminosity for the corresponding SPOT sensor
 	 */
 	public int getLuminosity(String address) {
-		return m_luminosities.get(address);
+		return (m_luminosities.containsKey(address)) ? m_luminosities.get(address) : 0;
 	}
 	
 	/**
@@ -251,7 +263,30 @@ public class HostServer implements Runnable {
 		return (m_lastMeasurementTimes.containsKey(address)) ? m_lastMeasurementTimes.get(address) : 0;
 	}
 	
-	public void producerRemoved (String address){
-		m_producers.remove(address);
+	public synchronized void stopProducer (String address){
+		Producer[] prods = m_producers.remove(address);
+		if (prods != null){
+			switch (prods.length) {
+			case 1:
+				((AccelerationProducer) prods[0]).stop();
+				m_listener.reconnect();
+				break;
+			case 2:
+				((TemperatureProducer) prods[0]).stop();
+				((LuminosityProducer) prods[1]).stop();
+				break;	
+			default:
+				break;
+			}
+		}
 	}
+	
+	private synchronized void stopAllProducers(){
+		// stop all producers
+		for (String spotAddress : m_producers.keySet()){
+			stopProducer(spotAddress);
+		}
+		m_producers.clear();
+	}
+	
 }

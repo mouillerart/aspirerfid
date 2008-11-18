@@ -25,14 +25,15 @@
 		<callback transition="invalidate" method="stop"/>
 	</component>
 
-	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.AccelerationProducer"
+<!-- 	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.AccelerationProducer"
 				name="spot-accel-prod" immediate="true">
 		<callback transition="validate" method="start"/>
 		<callback transition="invalidate" method="stop"/>
 	</component>
+	 -->
 	
 	<instance component="spot-host-serv" name="spot-host-serv-inst"/>
 	
-	<instance component="spot-accel-prod" name="spot-accel-prod-inst"/>
+<!-- 	<instance component="spot-accel-prod" name="spot-accel-prod-inst"/>  -->
 	
 </ipojo>

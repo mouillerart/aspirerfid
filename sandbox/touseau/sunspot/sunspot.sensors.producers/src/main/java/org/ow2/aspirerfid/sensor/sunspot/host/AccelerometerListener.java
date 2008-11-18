@@ -51,6 +51,7 @@ public class AccelerometerListener extends Thread implements PacketTypes {
     private boolean running = true;
     private boolean connected = false;
     private long spotAddress = 0;
+    private String stringedSpotAddress;
     private long timeStampOffset = -1;
     private int index = 0;
     private int scaleInUse = 2;
@@ -217,8 +218,7 @@ public class AccelerometerListener extends Thread implements PacketTypes {
     }
 
     /**
-     * Process telemetry data sent by remote SPOT. 
-     * Pass the data gathered to the GraphView to be displayed.
+     * Process telemetry data sent by remote SPOT.
      *
      * @param dg the packet containing the accelerometer data
      * @param twoG the scale that was used to collect the data (true = 2G, false = 6G)
@@ -228,7 +228,8 @@ public class AccelerometerListener extends Thread implements PacketTypes {
         int scale = twoG ? 0 : 1;
         try {
             String address = dg.getAddress();
-            long timeStamp = dg.readLong();
+            long rcvdTimeStamp = dg.readLong();
+            long timeStamp = rcvdTimeStamp;
             if (timeStampOffset <= 0) {
                 timeStampOffset = timeStamp;
                 timeStamp = 0;
@@ -260,7 +261,7 @@ public class AccelerometerListener extends Thread implements PacketTypes {
 
                     double g = Math.sqrt(x*x + y*y + z*z);      // Square vector of the total Gs
 
-                    server.updateAcceleration(new double[]{x,y,z});
+                    server.updateAcceleration(new double[]{x,y,z}, address, rcvdTimeStamp);
                     
                     index++;
                 }
@@ -302,7 +303,7 @@ public class AccelerometerListener extends Thread implements PacketTypes {
         try {
             rcvConn = (RadiogramConnection)Connector.open("radiogram://:" + BROADCAST_PORT);
             rcvConn.setTimeout(10000);             // timeout in 10 seconds
-            Datagram dg = rcvConn.newDatagram(rcvConn.getMaximumLength());            
+            Datagram dg = rcvConn.newDatagram(rcvConn.getMaximumLength());
             while (true) {
                 try {
                     dg.reset();
@@ -319,6 +320,11 @@ public class AccelerometerListener extends Thread implements PacketTypes {
                         rdg.writeLong(macAddress);                        // requestor's ID
                         rcvConn.send(rdg);                                // broadcast it
                         spotAddress = macAddress;
+                        stringedSpotAddress = addr;
+                        
+                        // TODO added Start a wireadmin acceleration producer
+                        server.startAccelerationProducer(stringedSpotAddress);
+                        
                         break;
                     }
                 } catch (TimeoutException ex) {
@@ -409,7 +415,7 @@ public class AccelerometerListener extends Thread implements PacketTypes {
                                     System.out.println();
                                     
                                     //TODO ADDED to start sensor values reading
-                                    doSendData(true);
+                                    doSendData(true);                                 
                                 }
                                 break;
                             case ACCEL_2G_DATA_REPLY:
@@ -440,6 +446,8 @@ public class AccelerometerListener extends Thread implements PacketTypes {
                             conn.close();
                             conn = null;
                         }
+                        // TODO Added
+                        server.stopProducer(stringedSpotAddress);                        
                     } catch (IOException ex) { /* ignore */ }
                 }
             }
