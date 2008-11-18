@@ -21,7 +21,7 @@
 
 	<groupId>org.ow2.aspirerfid</groupId>
 
-	<artifactId>readers</artifactId>
+	<artifactId>impl</artifactId>
 	<version>1.0.0</version>
 	<name>Readers that implement the reader protocol</name>
 
