@@ -36,19 +36,15 @@ import java.io.Reader;
 
 import javax.swing.ImageIcon;
 
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.taskdefs.WaitFor;
 
 /**
- * Creates a license agreement screen.
+ * Display a license agreement screen.
  * The screen is displayed for the duration or until the user agreement
  * @author Didier Donsez
  */
-public class LicenseAgreementTask extends Task implements AgreementItf {
-// TODO extends WaitFor {
-    private static final int TEN_SECONDS = 10000;
+public class LicenseAgreementMain implements AgreementItf {
+
+	private static final int TEN_SECONDS = 10000;
     private static final int ONE_SECOND = 1000;
 
     private File imageFile = null;
@@ -56,11 +52,8 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
     private String agreementProperty = null;
     private int duration = TEN_SECONDS;
 	private boolean end;
-
-	private String onStartedTarget=null;
-	private String onFinishedTarget=null;
 	
-    private static LicenseAgreementTaskScreen screen = null;
+    private LicenseAgreementScreen screen = null;
 
 	/**
 	 * @param imageFile the imageFile to set
@@ -90,26 +83,11 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 		this.agreementProperty = agreementProperty;
 	}
 
-
-	/**
-	 * @param onStartedTarget the onStartedTarget to set
-	 */
-	public void setOnStartedTarget(String onStartedTarget) {
-		this.onStartedTarget = onStartedTarget;
-	}
-
-	/**
-	 * @param onFinishedTarget the onFinishedTarget to set
-	 */
-	public void setOnFinishedTarget(String onFinishedTarget) {
-		this.onFinishedTarget = onFinishedTarget;
-	}
-
 	/**
      * Execute the task.
      * @throws BuildException on error
      */
-    public void execute() throws BuildException {
+    public void execute() throws Exception {
 
         ImageIcon img=null;
         String licenseText=null;
@@ -119,7 +97,7 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 			try {
 				imageStream = new FileInputStream(imageFile);
 			} catch (FileNotFoundException fnfe) {
-				throw new BuildException(fnfe);
+				throw fnfe;
 			}        
 			
 	        if (imageStream != null) {
@@ -133,12 +111,12 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
                     img = new ImageIcon(bout.toByteArray());
 
 	            } catch (Exception e) {
-	                throw new BuildException(e);
+	                throw e;
 	            } finally {
 	                try {
 	                    din.close();
 	                } catch (IOException ioe) {
-	                    throw new BuildException(ioe);
+	                    throw ioe;
 	                }
 	            }
 	        }
@@ -149,7 +127,7 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 			try {
 				licenseReader = new FileReader(licenseFile);
 			} catch (FileNotFoundException fnfe) {
-				throw new BuildException(fnfe);
+				throw fnfe;
 			}        
 	        if (licenseReader != null) {
 	        	BufferedReader bufferedReader = new BufferedReader(licenseReader);
@@ -161,12 +139,12 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 	                }
 	                licenseText=sb.toString();
 	            } catch (Exception e) {
-	                throw new BuildException(e);
+	                throw e;
 	            } finally {
 	                try {
 	                    bufferedReader.close();
 	                } catch (IOException ioe) {
-	                    throw new BuildException(ioe);
+	                    throw ioe;
 	                }
 	            }
 	        }
@@ -174,7 +152,7 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 
         boolean agreement = (agreementProperty!=null);
 
-        screen = new LicenseAgreementTaskScreen(img,licenseText,agreement, this);
+        screen = new LicenseAgreementScreen(img,licenseText,agreement, this);
 
         end=false;
         screen.setVisible(true);
@@ -196,15 +174,24 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
         screen.setVisible(false);
         screen.dispose();
         screen = null;
+        
+        if(agreed) {
+        	System.exit(0);
+        } else {
+        	System.exit(1);
+        }
     }
     
+    private boolean agreed=false;
+    
 	public void agree() {
-		getProject().setProperty(agreementProperty,"true");
+		// Saved a file AGREEMENT;
+		agreed=true;
 		end();
 	}
 	
 	public void dontagree() {
-		getProject().setProperty(agreementProperty,"false");
+		agreed=false;
 		end();
 	}
 	
@@ -212,18 +199,25 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
     	end=true;
     }
 
-	/**
-	 * @return the onStartedTarget
-	 */
-	public String getOnStartedTarget() {
-		return onStartedTarget;
-	}
+    public static void main(String[] args){
+    	LicenseAgreementMain licenseAgreementMain=new LicenseAgreementMain();
+    	if(args.length<2 && args.length>4) {
+    		printUsage();
+    		System.exit(2);
+    	}
+    	licenseAgreementMain.setLicenseFile(new File(args[0]));
+    	licenseAgreementMain.setImageFile(new File(args[1]));
+    	if(args.length>2) licenseAgreementMain.setDuration(Integer.parseInt(args[2]));
+    	if(args.length>3) licenseAgreementMain.setAgreementProperty(args[3]);
+    	
+    	try {
+			licenseAgreementMain.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
-	/**
-	 * @return the onFinishedTarget
-	 */
-	public String getOnFinishedTarget() {
-		return onFinishedTarget;
+	private static void printUsage() {
+		System.err.println("java -jar licenseagreement.jar <licenceFile> <logoFile> <duration> <properties>");
 	}
-
 }

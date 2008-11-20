@@ -20,4 +20,14 @@ Usage:
 
 * screen displayed during 10 seconds  	
     <licenseagreement duration="10" imageFile="logo.png" licenseFile="LICENSE"/>
+
     
+This jar can used in a command line
+
+* screen displayed during 10 seconds  	
+	java -jar licenceagreementtask-X.Y.Z.jar LICENSE logo.png 10
+
+* screen displayed until the user agreement  	
+	java -jar licenceagreementtask-X.Y.Z.jar LICENSE logo.png 10 agreement
+
+The exit code is 0 if the user agree (not 0 else)

@@ -48,20 +48,23 @@ import org.apache.tools.ant.BuildListener;
  * @author Didier Donsez
  */
 
-public class LicenseAgreementScreen extends JWindow
+public class LicenseAgreementTaskScreen extends LicenseAgreementScreen
+	implements ActionListener , BuildListener
 	{
     private static final int FONT_SIZE = 12;
     private JTextArea textarea;
     private JProgressBar progressBar;
-	private AgreementItf licenseAgreement;
+	private LicenseAgreementTask licenseAgreementTask;
 	
     private int total;
     private static final int MIN = 0;
     private static final int MAX = 200;
 
-    public LicenseAgreementScreen(ImageIcon img, String licenseText, boolean requireAgreement, final AgreementItf licenseAgreement) {
+    public LicenseAgreementTaskScreen(ImageIcon img, String licenseText, boolean requireAgreement, final LicenseAgreementTask licenseAgreementTask) {
 
-    	this.licenseAgreement=licenseAgreement;
+    	super(img, licenseText, requireAgreement, licenseAgreementTask);
+    	
+    	this.licenseAgreementTask=licenseAgreementTask;
     	
         JPanel panel1 = (JPanel) getContentPane();
 
@@ -87,14 +90,14 @@ public class LicenseAgreementScreen extends JWindow
         	JButton agree=new JButton("I agree");
         	agree.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent actionevent) {
-					licenseAgreement.agree();
+					licenseAgreementTask.agree();
 				}
         	});
         	
         	JButton dontagree=new JButton("I do not agree");
         	dontagree.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent actionevent) {
-					licenseAgreement.dontagree();
+					licenseAgreementTask.dontagree();
 				}
         	});
         	
@@ -128,6 +131,50 @@ public class LicenseAgreementScreen extends JWindow
             total = MIN;
         }
         progressBar.setValue(total);
-    }    
+    }
+
+    
+    public void buildStarted(BuildEvent event) {
+        actionPerformed(null);
+    }
+
+    public void buildFinished(BuildEvent event) {
+        actionPerformed(null);
+    }
+    
+    /**
+     * end the task when the target is started
+     */
+    public void targetStarted(BuildEvent event) {
+    	if(event.getTarget().getName().equals(licenseAgreementTask.getOnStartedTarget())){
+    		licenseAgreementTask.end();
+    	} else {
+            actionPerformed(null);
+    	}
+    }
+
+    /**
+     * end the task when the target is finished
+     */
+    public void targetFinished(BuildEvent event) {
+    	if(event.getTarget().getName().equals(licenseAgreementTask.getOnFinishedTarget())){
+    		licenseAgreementTask.end();
+    	} else {
+            actionPerformed(null);
+    	}
+    }
+
+    public void taskStarted(BuildEvent event) {
+        actionPerformed(null);
+    }
+
+    public void taskFinished(BuildEvent event) {
+        actionPerformed(null);
+    }
+
+    public void messageLogged(BuildEvent event) {
+        actionPerformed(null);
+    }
+    
 }
 
