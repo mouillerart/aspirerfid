@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns:jmx="antlib:org.apache.catalina.ant.jmx"
+         basedir="."
+         default="main"
+         name="Edge configuration through JMX">
+
+    <!--Properties Definitions-->
+    <property name="edge-properties" value="../edge1/edge.properties" />
+    <property file="${edge-properties}" />
+
+    
+    <!--Macro Definitions-->
+    <macrodef name="openConnection">
+        <attribute name="ref" />
+        <attribute name="serviceurl" />
+        <attribute name="username" />
+        <attribute name="password" />
+        <sequential>
+            <echo message="Connection @{serviceurl} on @{ref}" />
+            <jmx:open password="@{password}"
+                      username="@{username}"
+                      url="@{serviceurl}"
+                      ref="@{ref}" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="closeConnection">
+        <attribute name="ref" />
+        <sequential>
+            <jmx:close ref="@{ref}" />
+        </sequential>
+    </macrodef>
+
+    <!--Targets-->
+    <target depends="init" name="main">
+        <parallel>
+            <antcall target="start.edge" />
+        </parallel>
+    </target>
+
+    <target name="init">
+        <tstamp>
+            <format locale="en"
+                    pattern="d-MMMM-yyyy hh:mm aa"
+                    property="date" />
+        </tstamp>
+        <property value="Didier DONSEZ" name="author" />
+        <echo message="Using property file: ${edge-properties}" />
+    </target>
+
+    <!--Target for agent edge1 -->
+    <target name="start.edge">
+        <openConnection password="${edge.jmx.password}"
+                        username="${edge.jmx.username}"
+                        serviceurl="${edge.jmx.serviceurl}"
+                        ref="edge.jmx.connection.ref" />
+
+        <!-- Reader -->
+        <echo message="Reader Started" />
+        <jmx:invoke ref="edge.jmx.connection.ref"
+                    name="rfid:type=reader,SymbolicName=Fictive"
+                    operation="startReader" />
+
+        <echo message="Reader GPS Coordinates: ${edge.jmx.reader.gps}" />
+        <jmx:set ref="edge.jmx.connection.ref"
+                 name="rfid:type=reader,SymbolicName=Fictive"
+                 echo="true"
+                 type="java.lang.String"
+                 value="${edge.jmx.reader.gps}"
+                 attribute="GpsCoordinates" />
+        
+        <echo message="Reader LogicalName: ${edge.jmx.reader.logicalname}" />
+        <jmx:set ref="edge.jmx.connection.ref"
+                 name="rfid:type=reader,SymbolicName=Fictive"
+                 echo="true"
+                 type="java.lang.String"
+                 value="${edge.jmx.reader.logicalname}"
+                 attribute="LogicalName" />
+
+        <!-- ECSpecFactory -->
+        <echo message="ECSpecFactory GatewayName: ${edge.jmx.ecspecfactory.gatewayname}" />
+        <jmx:set ref="edge.jmx.connection.ref"
+                 name="rfid:type=service,SymbolicName=ECSpecFactory"
+                 echo="true"
+                 type="java.lang.String"
+                 value="${edge.jmx.ecspecfactory.gatewayname}"
+                 attribute="GatewayName" />
+
+        <echo message="ECSpecFactory Logical Reader Added: ${edge.jmx.ecspecfactory.logicalname}" />
+        <jmx:invoke ref="edge.jmx.connection.ref"
+                    name="rfid:type=service,SymbolicName=ECSpecFactory"
+                    operation="addLogicalReaderName">
+            <arg value="${edge.jmx.ecspecfactory.logicalname}" />
+        </jmx:invoke>
+
+        <echo message="ECSpecFactory ReportSpec Added: ${edge.jmx.ecspecfactory.addecreportspec}" />
+        <jmx:invoke ref="edge.jmx.connection.ref"
+                    name="rfid:type=service,SymbolicName=ECSpecFactory"
+                    operation="addECReportSpec">
+            <arg value="${edge.jmx.ecspecfactory.addecreportspec}" />
+            <arg value="true" type="boolean" />
+            <arg value="true" type="boolean" />
+            <arg value="true" type="boolean" />
+            <arg value="true" type="boolean" />
+            <arg value="true" type="boolean" />
+            <arg value="" />
+            <arg value="true" type="boolean" />
+            <arg value="true" type="boolean" />
+            <arg value="true" type="boolean" />
+            <arg value="true" type="boolean" />
+            <arg value="true" type="boolean" />
+        </jmx:invoke>
+
+        <echo message="ECSpecFactory ECSpec Created: ${edge.jmx.ecspecfactory.createecspec}" />
+        <jmx:invoke ref="edge.jmx.connection.ref"
+                    name="rfid:type=service,SymbolicName=ECSpecFactory"
+                    operation="createECSpec">
+            <arg value="${edge.jmx.ecspecfactory.createecspec}" />
+        </jmx:invoke>
+
+        <!-- ALE -->
+        <echo message="ALE Subscription Added ECSpec/URI: ${edge.jmx.ale.subscribe.spec}/${edge.jmx.ale.subscribe.uri}" />
+        <jmx:invoke ref="edge.jmx.connection.ref"
+                    name="rfid:type=service,SymbolicName=ALE"
+                    operation="subscribe">
+            <arg value="${edge.jmx.ale.subscribe.spec}" />
+            <arg value="${edge.jmx.ale.subscribe.uri}" />
+        </jmx:invoke>
+
+    </target>
+</project>
