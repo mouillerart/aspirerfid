@@ -19,7 +19,7 @@
 
 	<groupId>org.ow2.aspirerfid</groupId>
 
-	<artifactId>demo</artifactId>
+	<artifactId>AspireRfidIDE&amp;Plug-ins</artifactId>
 	<version>1.0.0</version>
 	<name>AIT developed demos</name>
 
@@ -27,8 +27,7 @@
 	<packaging>pom</packaging>
 
   <modules>
-    <module>aspireTcpMessageCapturerV0.1m</module>
-    <module>aspireWarehouseDemoV0.2m</module>
-    <module>AspireRfidIDE&amp;Plug-ins</module>
+    <module>aspireRfidIDE</module>
+    <module>AspireRfidIdePlug-ins</module>
   </modules>
 </project>
