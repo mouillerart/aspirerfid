@@ -143,7 +143,6 @@ public class AccelerometerListener extends Thread implements PacketTypes {
      * @param gView the GraphView display to pass the data to
      */
     public void doSendData (boolean sendIt) {
-    	System.out.println("send data called");
         sendCmd(sendIt ? SEND_ACCEL_DATA_REQ : STOP_ACCEL_DATA_REQ);
     }
 
@@ -167,7 +166,7 @@ public class AccelerometerListener extends Thread implements PacketTypes {
     public void doQuit () {
         sendCmd(DISPLAY_SERVER_QUITTING);
         running = false;
-        // ADDED
+        // TODO ADDED
         connected = false;
     }
 
@@ -447,7 +446,8 @@ public class AccelerometerListener extends Thread implements PacketTypes {
                             conn = null;
                         }
                         // TODO Added
-                        server.stopProducer(stringedSpotAddress);                        
+                        if (running)
+                        	server.stopProducer(stringedSpotAddress);                        
                     } catch (IOException ex) { /* ignore */ }
                 }
             }

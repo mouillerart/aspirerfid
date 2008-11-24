@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Hashtable;
 import java.util.Properties;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
@@ -39,7 +39,7 @@ public class HostServer implements Runnable {
 //	private String STATION_SERIAL_PORT = "COM5";
     private String m_serialPort;
 	
-	private AccelerometerListener m_listener;
+	private AccelerometerListener m_listener; // TODO transform into a HashMap
 	
     private RadiogramConnection m_rCon;	
 	
@@ -140,6 +140,7 @@ public class HostServer implements Runnable {
 		m_listener.doBlink();
 		m_listener.doSendData(false);
 		m_listener.doQuit();
+		m_listener = null;
 		
 		stopAllProducers();
 		
@@ -269,7 +270,8 @@ public class HostServer implements Runnable {
 			switch (prods.length) {
 			case 1:
 				((AccelerationProducer) prods[0]).stop();
-				m_listener.reconnect();
+				if (m_listener != null)
+					m_listener.reconnect();
 				break;
 			case 2:
 				((TemperatureProducer) prods[0]).stop();
@@ -281,12 +283,18 @@ public class HostServer implements Runnable {
 		}
 	}
 	
-	private synchronized void stopAllProducers(){
+	private void stopAllProducers(){
 		// stop all producers
+		String[] addresses = new String[m_producers.size()];
+		int i = 0;
 		for (String spotAddress : m_producers.keySet()){
+			addresses[i] = spotAddress;
+			i++;
+		}
+		for (String spotAddress : addresses){
 			stopProducer(spotAddress);
 		}
-		m_producers.clear();
+//		m_producers.clear();
 	}
 	
 }
