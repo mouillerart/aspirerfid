@@ -23,73 +23,37 @@
 
 package org.ow2.aspirerfid.deploy.shutdownhooktask;
 
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildListener;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Target;
-import org.apache.tools.ant.Task;
+import org.apache.tools.ant.taskdefs.CallTarget;
 
 /**
  * Creates a JVM shutdown hook executing a target (and dependencies) if shutdown (ie Ctrl-C).
  * @author Didier Donsez
  */
-public class ShutdownHookTask extends Task implements Runnable, BuildListener {
+public class ShutdownHookTask extends CallTarget implements Runnable, BuildListener {
 
 	private static int hookCounter=0;
 	
-	/**
-	 * the name of target to execute if shutdown
-	 */
-    private String targetName;
-
     /**
      * the message to log if shutdown 
      */
     private String message;
-    
-    private Target target;
     private Thread hook;
 
 	private boolean isHookRunning=false;
     
-    
-    /**
-     * finished targets (do not included the target finished before the task declaration)
-     * <p>the targets set is shared between several shutdownhook task declaration  
-     */
-    private static Set finishedTargets=new HashSet(); // TODO should be shared in the project scope
-    /**
-     * started targets (do not included the target started before the task declaration).
-     * <p>the targets set is shared between several shutdownhook task declaration  
-     */
-    private static Set startedTargets=new HashSet(); // TODO should be shared in the project scope
-
 	/**
      * Execute the task.
      * @throws BuildException on error
      */
     public void execute() throws BuildException {
-        target=(Target)getProject().getTargets().get(targetName);
-        if(target==null) {	        	
-        	throw new BuildException("no target "+targetName+" in this project");
-        }
         hook=new Thread(this);
         hook.setName("ShutdownHookTask-"+(++hookCounter));
 		Runtime.getRuntime().addShutdownHook(hook);
 		getProject().addBuildListener(this);
     }    
-
-	/**
-	 * @param target the target to set
-	 */
-	public void setTarget(String target) {
-		this.targetName = target;
-	}
 
 	/**
 	 * @param message the message to set
@@ -105,42 +69,10 @@ public class ShutdownHookTask extends Task implements Runnable, BuildListener {
 		super.setTaskName(name);
 	}
 
-	
-	/**
-	 * executes the target and its dependencies (previously) 
-	 * @param target the target to execute
-	 */
-	private void recursiveExecute(Target target){
-	    String unlessProperty=target.getUnless();
-	    String ifProperty=target.getIf();
-	    if(unlessProperty!=null && getProject().getProperty(unlessProperty)!=null) {
-	    	return;
-	    }
-	    if(ifProperty!=null && getProject().getProperty(ifProperty)==null) {
-	    	return;
-	    }
-	    Enumeration enumeration=target.getDependencies();
-	    while (enumeration.hasMoreElements()) {
-			String tname = (String) enumeration.nextElement();
-			Target t=(Target)getProject().getTargets().get(tname);
-			if(t==null) {
-	        	throw new BuildException("no target "+tname+" in this project");
-			}
-			if(finishedTargets.contains(t)) {
-				// do nothing since already executed
-			} else if(startedTargets.contains(t)) {
-				log("target" + t.getName() + "was started but not finished : discard this target",Project.MSG_WARN);
-			} else {
-				recursiveExecute(t);
-			}
-		}
-	    target.execute();
-	}
-	
 	public void run() {
 		isHookRunning=true;
 	    if(message!=null) log(message);
-	    recursiveExecute(target);
+	    super.execute();
 	}
 	
 	public void buildFinished(BuildEvent buildEvent) {
@@ -156,15 +88,9 @@ public class ShutdownHookTask extends Task implements Runnable, BuildListener {
 	}
 
 	public void targetFinished(BuildEvent buildEvent) {
-		synchronized (finishedTargets) {
-			finishedTargets.add((Target)buildEvent.getTarget());
-		}
 	}
 
 	public void targetStarted(BuildEvent buildEvent) {
-		synchronized (startedTargets) {
-			startedTargets.add((Target)buildEvent.getTarget());
-		}
 	}
 
 	public void taskFinished(BuildEvent buildEvent) {
