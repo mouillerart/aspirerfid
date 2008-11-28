@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="led-screen/src/main/java"/>
+	<classpathentry kind="src" path="led-screen/src/main/resources"/>
+	<classpathentry kind="src" path="serial-communicator/src/main/java"/>
+	<classpathentry kind="src" path="serial-communicator/src/main/resources"/>
+	<classpathentry kind="src" path="thermometer-dongle/src/main/java"/>
+	<classpathentry kind="src" path="thermometer-dongle/src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="output-eclipse"/>
+</classpath>
