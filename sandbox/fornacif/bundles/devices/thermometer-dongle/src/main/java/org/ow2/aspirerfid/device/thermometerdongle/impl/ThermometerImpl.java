@@ -59,7 +59,7 @@ public class ThermometerImpl implements ThermometerService {
         SerialParameters sp = new SerialParameters();
         sp.setPortName(portId);
         try {
-            serialPort = serialCommunicator.connect(sp, "thermometer", 1000);
+            serialPort = serialCommunicator.connect(sp, "thermometerdongle", 1000);
             
             SDout((byte) 1);
             SDin();

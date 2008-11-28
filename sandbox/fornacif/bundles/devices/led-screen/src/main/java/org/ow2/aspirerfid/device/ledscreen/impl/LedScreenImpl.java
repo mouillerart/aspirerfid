@@ -60,7 +60,7 @@ public class LedScreenImpl implements LedScreenService {
 		sp.setPortName(portId);
 		sp.setBaudRate(1200);
 		try {
-			serialPort = serialCommunicator.connect(sp, "jonas", 1000);
+			serialPort = serialCommunicator.connect(sp, "ledscreen", 1000);
 			
 			serialCommunicator.writeSerialPort(serialPort, message.hello());
 			serialCommunicator.writeSerialPort(serialPort, message.configuration());
