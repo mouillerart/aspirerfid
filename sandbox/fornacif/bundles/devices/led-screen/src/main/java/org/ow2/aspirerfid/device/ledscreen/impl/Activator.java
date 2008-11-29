@@ -32,6 +32,10 @@ import org.osgi.framework.ServiceRegistration;
 import org.ow2.aspirerfid.device.ledscreen.LedScreenService;
 import org.ow2.aspirerfid.device.serialcommunicator.SerialCommunicator;
 
+/**
+ * Register the @{LedScreenService} OSGi service.
+ * @author Francois Fornaciari
+ */
 public class Activator implements BundleActivator, ServiceListener {
 
 	/**

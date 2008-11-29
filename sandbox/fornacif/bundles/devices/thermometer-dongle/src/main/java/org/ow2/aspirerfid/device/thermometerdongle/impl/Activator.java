@@ -32,6 +32,10 @@ import org.osgi.framework.ServiceRegistration;
 import org.ow2.aspirerfid.device.serialcommunicator.SerialCommunicator;
 import org.ow2.aspirerfid.device.thermometerdongle.ThermometerService;
 
+/**
+ * Register the @{ThermometerService} OSGi service.
+ * @author Francois Fornaciari
+ */
 public class Activator implements BundleActivator, ServiceListener {
 
 	/**
@@ -76,7 +80,7 @@ public class Activator implements BundleActivator, ServiceListener {
 	}
 
 	/**
-	 * Register the IWarDeployableMetadataFactory service.
+	 * Register the Thermometer service.
 	 * @throws Exception If the service registration fails
 	 */
 	private void registerService() throws Exception {
