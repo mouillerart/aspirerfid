@@ -46,12 +46,8 @@ public class LedScreenImpl implements LedScreenService {
 	 * Current serial port instance.
 	 */
 	private SerialPort serialPort = null;
-
-	/**
-	 * Constructor.
-	 * @param serialCommunicator
-	 */
-	public LedScreenImpl(final SerialCommunicator serialCommunicator) {
+	
+	public void setSerialCommunicator(SerialCommunicator serialCommunicator) {
 		this.serialCommunicator = serialCommunicator;
 	}
 

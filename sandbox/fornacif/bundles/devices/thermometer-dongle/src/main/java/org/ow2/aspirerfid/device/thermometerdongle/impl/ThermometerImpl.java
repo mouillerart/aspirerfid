@@ -47,13 +47,9 @@ public class ThermometerImpl implements ThermometerService {
      */
     private SerialPort serialPort = null;
 
-    /**
-     * Constructor.
-     * @param serialCommunicator
-     */
-    public ThermometerImpl(SerialCommunicator serialCommunicator) {
-        this.serialCommunicator = serialCommunicator;
-    }
+	public void setSerialCommunicator(SerialCommunicator serialCommunicator) {
+		this.serialCommunicator = serialCommunicator;
+	}
 
     public synchronized double getTemperature(final String portId) {
         SerialParameters sp = new SerialParameters();
@@ -149,4 +145,5 @@ public class ThermometerImpl implements ThermometerService {
         }
         return 1;
     }
+
 }

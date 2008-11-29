@@ -23,6 +23,8 @@
 
 package org.ow2.aspirerfid.device.thermometerdongle;
 
+import org.ow2.aspirerfid.device.serialcommunicator.SerialCommunicator;
+
 /**
  * This interface provides access to the thermometer service.
  * @author Francois Fornaciari
@@ -34,4 +36,10 @@ public interface ThermometerService {
      * @return The current temperature
      */
     double getTemperature(final String portId);
+
+	/**
+	 * Set the {@link SerialCommunicator} service.
+	 * @param serialCommunicator The {@link SerialCommunicator} service
+	 */
+	void setSerialCommunicator(final SerialCommunicator serialCommunicator);
 }

@@ -42,6 +42,11 @@ public class Activator implements BundleActivator, ServiceListener {
 	 * ServiceRegistration for the ThermometerService.
 	 */
 	private ServiceRegistration serviceRegistration = null;
+	
+	/**
+	 * Instance of the {@link ThermometerService} service.
+	 */
+	ThermometerService thermometerService = null;
 
 	/**
 	 * OSGi BundleContext.
@@ -87,8 +92,11 @@ public class Activator implements BundleActivator, ServiceListener {
 		ServiceReference serviceReference = bundleContext.getServiceReference(SerialCommunicator.class.getName());
 		if (serviceReference != null) {
 			SerialCommunicator serialCommunicator = (SerialCommunicator) bundleContext.getService(serviceReference);
+			thermometerService = new ThermometerImpl();
+			thermometerService.setSerialCommunicator(serialCommunicator);
+			
 			serviceRegistration = bundleContext.registerService(ThermometerService.class.getName(),
-					new ThermometerImpl(serialCommunicator), null);
+					thermometerService, null);
 		}
 	}
 
@@ -99,6 +107,7 @@ public class Activator implements BundleActivator, ServiceListener {
 		if (serviceRegistration != null) {
 			serviceRegistration.unregister();
 			serviceRegistration = null;
+			thermometerService = null;
 		}
 	}
 

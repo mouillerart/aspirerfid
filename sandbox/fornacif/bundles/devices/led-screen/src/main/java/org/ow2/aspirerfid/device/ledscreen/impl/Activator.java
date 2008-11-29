@@ -42,6 +42,11 @@ public class Activator implements BundleActivator, ServiceListener {
 	 * ServiceRegistration for the LedScreenService.
 	 */
 	private ServiceRegistration serviceRegistration = null;
+	
+	/**
+	 * Instance of the {@link LedScreenService} service.
+	 */
+	LedScreenService ledScreenService = null;
 
 	/**
 	 * OSGi BundleContext.
@@ -87,7 +92,9 @@ public class Activator implements BundleActivator, ServiceListener {
 		ServiceReference serviceReference = bundleContext.getServiceReference(SerialCommunicator.class.getName());
 		if (serviceReference != null) {
 			SerialCommunicator serialCommunicator = (SerialCommunicator) bundleContext.getService(serviceReference);
-			serviceRegistration = bundleContext.registerService(LedScreenService.class.getName(), new LedScreenImpl(serialCommunicator),
+			ledScreenService = new LedScreenImpl();
+			ledScreenService.setSerialCommunicator(serialCommunicator);
+			serviceRegistration = bundleContext.registerService(LedScreenService.class.getName(), ledScreenService,
 					null);
 		}
 	}
@@ -99,6 +106,7 @@ public class Activator implements BundleActivator, ServiceListener {
 		if (serviceRegistration != null) {
 			serviceRegistration.unregister();
 			serviceRegistration = null;
+			ledScreenService = null;
 		}
 	}
 

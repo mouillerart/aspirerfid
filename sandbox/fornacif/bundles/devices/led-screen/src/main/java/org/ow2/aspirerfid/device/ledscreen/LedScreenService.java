@@ -23,6 +23,8 @@
 
 package org.ow2.aspirerfid.device.ledscreen;
 
+import org.ow2.aspirerfid.device.serialcommunicator.SerialCommunicator;
+
 /**
  * This interface provides access to the led screen service.
  * @author Francois Fornaciari
@@ -34,4 +36,10 @@ public interface LedScreenService {
      * @param message The configuration data
      */
     void configure(final String portId, final LedScreenMessage message);
+    
+	/**
+	 * Set the {@link SerialCommunicator} service.
+	 * @param serialCommunicator The {@link SerialCommunicator} service
+	 */
+	void setSerialCommunicator(final SerialCommunicator serialCommunicator);
 }
