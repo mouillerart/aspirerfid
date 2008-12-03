@@ -12,6 +12,11 @@ Usage:
     <echo>Agreement is ${agreement}</echo>
     <echo file="AGREEMENT">${env.USER}:  ${agreement} : ${TODAY} </echo>
 
+* screen displayed until the user agreement (the license file is a HTML document)
+    <licenseagreement agreementProperty="agreement" url="file:./license.html"/>
+    <echo>Agreement is ${agreement}</echo>
+    <echo file="AGREEMENT">${env.USER}:  ${agreement} : ${TODAY} </echo>
+
 * screen displayed until a target starting
     <licenseagreement onStartedTarget="run.server" imageFile="logo.png" licenseFile="LICENSE"/>
 

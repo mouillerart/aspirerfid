@@ -22,7 +22,8 @@
 */
 package org.ow2.aspirerfid.deploy.licenseagreementtask;
 
-import javax.swing.ImageIcon;
+import java.io.IOException;
+import java.net.URL;
 
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
@@ -32,14 +33,16 @@ import org.apache.tools.ant.BuildListener;
  * @author Didier Donsez
  */
 
-public class LicenseAgreementTaskScreen extends LicenseAgreementScreen implements BuildListener {
+public class LicenseAgreementTaskHtmlScreen extends LicenseAgreementHtmlScreen
+	implements BuildListener
+	{
 	private LicenseAgreementTask licenseAgreementTask;
 	
-    public LicenseAgreementTaskScreen(ImageIcon img, String licenseText, boolean requireAgreement, final LicenseAgreementTask licenseAgreementTask) {
-
-    	super(img, licenseText, requireAgreement, licenseAgreementTask);
+    public LicenseAgreementTaskHtmlScreen(URL url, boolean requireAgreement, final LicenseAgreementTask licenseAgreementTask) throws IOException {
+    	super(url, requireAgreement, licenseAgreementTask);
     	this.licenseAgreementTask=licenseAgreementTask;
     }
+
     
     public void buildStarted(BuildEvent event) {
         actionPerformed(null);

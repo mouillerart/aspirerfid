@@ -56,6 +56,17 @@
     <licenseagreement duration="5" imageFile="logo.png" licenseFile="LICENSE"/>
   </target>
 
+  <target name="agreement.html" depends="init">
+    <licenseagreement agreementProperty="agreement" url="file:./license.html"/>
+    <echo>Agreement is ${agreement}</echo>
+  	<fail message="You must agree the license before usage">
+  		<condition>
+  			<equals arg1="${agreement}" arg2="false"/>
+  		</condition>
+ 	</fail>
+    <echo file="AGREEMENT">Agreement is ${agreement}</echo>
+  </target>
+
   <target name="clean">
   	<delete file="AGREEMENT"/>
   </target>	

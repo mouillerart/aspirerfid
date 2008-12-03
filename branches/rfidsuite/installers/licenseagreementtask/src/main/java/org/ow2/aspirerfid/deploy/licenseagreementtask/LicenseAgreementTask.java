@@ -33,13 +33,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
+import javax.swing.JWindow;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
-import org.apache.tools.ant.taskdefs.WaitFor;
 
 /**
  * Creates a license agreement screen.
@@ -53,6 +53,7 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 
     private File imageFile = null;
     private File licenseFile = null;
+    private URL url = null;
     private String agreementProperty = null;
     private int duration = TEN_SECONDS;
 	private boolean end;
@@ -60,7 +61,7 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 	private String onStartedTarget=null;
 	private String onFinishedTarget=null;
 	
-    private static LicenseAgreementTaskScreen screen = null;
+    private static JWindow screen = null;
 
 	/**
 	 * @param imageFile the imageFile to set
@@ -90,7 +91,6 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 		this.agreementProperty = agreementProperty;
 	}
 
-
 	/**
 	 * @param onStartedTarget the onStartedTarget to set
 	 */
@@ -111,71 +111,79 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
      */
     public void execute() throws BuildException {
 
-        ImageIcon img=null;
-        String licenseText=null;
-        
-        if(imageFile!=null) {
-	        InputStream imageStream;
-			try {
-				imageStream = new FileInputStream(imageFile);
-			} catch (FileNotFoundException fnfe) {
-				throw new BuildException(fnfe);
-			}        
-			
-	        if (imageStream != null) {
-	            DataInputStream din = new DataInputStream(imageStream);
-	            try {
-	                ByteArrayOutputStream bout = new ByteArrayOutputStream();
-	                int data;
-	                while ((data = din.read()) != -1) {
-	                    bout.write((byte) data);
-	                }
-                    img = new ImageIcon(bout.toByteArray());
-
-	            } catch (Exception e) {
-	                throw new BuildException(e);
-	            } finally {
-	                try {
-	                    din.close();
-	                } catch (IOException ioe) {
-	                    throw new BuildException(ioe);
-	                }
-	            }
-	        }
-        }
-        
-        if(licenseFile!=null) {
-	        Reader licenseReader;
-			try {
-				licenseReader = new FileReader(licenseFile);
-			} catch (FileNotFoundException fnfe) {
-				throw new BuildException(fnfe);
-			}        
-	        if (licenseReader != null) {
-	        	BufferedReader bufferedReader = new BufferedReader(licenseReader);
-	            try {
-	                StringBuffer sb=new StringBuffer();
-	                String line;
-	                while ((line = bufferedReader.readLine()) != null) {
-	                	sb.append(line).append('\n');
-	                }
-	                licenseText=sb.toString();
-	            } catch (Exception e) {
-	                throw new BuildException(e);
-	            } finally {
-	                try {
-	                    bufferedReader.close();
-	                } catch (IOException ioe) {
-	                    throw new BuildException(ioe);
-	                }
-	            }
-	        }
-        }
-
         boolean agreement = (agreementProperty!=null);
-
-        screen = new LicenseAgreementTaskScreen(img,licenseText,agreement, this);
-
+    	
+    	if(url!=null) {
+	        try {
+				screen = new LicenseAgreementTaskHtmlScreen(url,agreement, this);
+			} catch (IOException e) {
+				throw new BuildException(e);
+			}
+    	} else {
+	    	
+	        ImageIcon img=null;
+	        String licenseText=null;
+	        
+	        if(imageFile!=null) {
+		        InputStream imageStream;
+				try {
+					imageStream = new FileInputStream(imageFile);
+				} catch (FileNotFoundException fnfe) {
+					throw new BuildException(fnfe);
+				}        
+				
+		        if (imageStream != null) {
+		            DataInputStream din = new DataInputStream(imageStream);
+		            try {
+		                ByteArrayOutputStream bout = new ByteArrayOutputStream();
+		                int data;
+		                while ((data = din.read()) != -1) {
+		                    bout.write((byte) data);
+		                }
+	                    img = new ImageIcon(bout.toByteArray());
+	
+		            } catch (Exception e) {
+		                throw new BuildException(e);
+		            } finally {
+		                try {
+		                    din.close();
+		                } catch (IOException ioe) {
+		                    throw new BuildException(ioe);
+		                }
+		            }
+		        }
+	        }
+	        
+	        if(licenseFile!=null) {
+		        Reader licenseReader;
+				try {
+					licenseReader = new FileReader(licenseFile);
+				} catch (FileNotFoundException fnfe) {
+					throw new BuildException(fnfe);
+				}        
+		        if (licenseReader != null) {
+		        	BufferedReader bufferedReader = new BufferedReader(licenseReader);
+		            try {
+		                StringBuffer sb=new StringBuffer();
+		                String line;
+		                while ((line = bufferedReader.readLine()) != null) {
+		                	sb.append(line).append('\n');
+		                }
+		                licenseText=sb.toString();
+		            } catch (Exception e) {
+		                throw new BuildException(e);
+		            } finally {
+		                try {
+		                    bufferedReader.close();
+		                } catch (IOException ioe) {
+		                    throw new BuildException(ioe);
+		                }
+		            }
+		        }
+	        }
+	        screen = new LicenseAgreementTaskScreen(img,licenseText,agreement, this);
+        }
+    	
         end=false;
         screen.setVisible(true);
         screen.toFront();
@@ -226,4 +234,10 @@ public class LicenseAgreementTask extends Task implements AgreementItf {
 		return onFinishedTarget;
 	}
 
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(URL url) {
+		this.url = url;
+	}
 }
