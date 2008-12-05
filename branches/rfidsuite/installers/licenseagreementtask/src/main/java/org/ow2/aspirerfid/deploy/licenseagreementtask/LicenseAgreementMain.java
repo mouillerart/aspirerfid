@@ -32,21 +32,27 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 
 import javax.swing.ImageIcon;
 
+import org.apache.tools.ant.BuildException;
 
 /**
  * Display a license agreement screen.
  * The screen is displayed for the duration or until the user agreement
  * @author Didier Donsez
+ * TODO display HTML-formatted license
  */
 public class LicenseAgreementMain implements AgreementItf {
 
 	private static final int TEN_SECONDS = 10000;
     private static final int ONE_SECOND = 1000;
 
+	private String licenseRsc=null;
+	private String imageRsc=null;
+    
     private File imageFile = null;
     private File licenseFile = null;
     private String agreementProperty = null;
@@ -83,6 +89,14 @@ public class LicenseAgreementMain implements AgreementItf {
 		this.agreementProperty = agreementProperty;
 	}
 
+	public void setLicenseRessource(String licenseRsc) {
+		this.licenseRsc=licenseRsc;
+	}
+
+	public void setImageRessource(String imageRsc) {
+		this.imageRsc=imageRsc;
+	}
+	
 	/**
      * Execute the task.
      * @throws BuildException on error
@@ -92,13 +106,18 @@ public class LicenseAgreementMain implements AgreementItf {
         ImageIcon img=null;
         String licenseText=null;
         
-        if(imageFile!=null) {
-	        InputStream imageStream;
-			try {
-				imageStream = new FileInputStream(imageFile);
-			} catch (FileNotFoundException fnfe) {
-				throw fnfe;
-			}        
+        if(imageFile!=null || imageRsc!=null) {
+	        InputStream imageStream=null;
+	        
+	        if(imageRsc!=null) {
+				imageStream = getClass().getClassLoader().getResourceAsStream(imageRsc);
+	        } else if(imageFile!=null) {
+				try {
+					imageStream = new FileInputStream(imageFile);
+				} catch (FileNotFoundException fnfe) {
+					throw fnfe;
+				}
+	        }
 			
 	        if (imageStream != null) {
 	            DataInputStream din = new DataInputStream(imageStream);
@@ -122,13 +141,18 @@ public class LicenseAgreementMain implements AgreementItf {
 	        }
         }
         
-        if(licenseFile!=null) {
-	        Reader licenseReader;
-			try {
-				licenseReader = new FileReader(licenseFile);
-			} catch (FileNotFoundException fnfe) {
-				throw fnfe;
-			}        
+        if(licenseFile!=null || licenseRsc!=null) {
+	        Reader licenseReader=null;
+	        if(licenseRsc!=null) {
+	        	licenseReader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream(licenseRsc));
+	        } else if(licenseFile!=null) {
+	        	try {
+	        		licenseReader = new FileReader(licenseFile);
+	        	} catch (FileNotFoundException fnfe) {
+	        		throw fnfe;
+	        	}
+	        }
+	        
 	        if (licenseReader != null) {
 	        	BufferedReader bufferedReader = new BufferedReader(licenseReader);
 	            try {
