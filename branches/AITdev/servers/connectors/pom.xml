@@ -27,7 +27,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
-
-  <modules>
-  </modules>
+	<modules>
+		<module>ConnectorCommons</module>
+		<module>Connector</module>
+		<module>ConnectorClient</module>
+	</modules>
 </project>
