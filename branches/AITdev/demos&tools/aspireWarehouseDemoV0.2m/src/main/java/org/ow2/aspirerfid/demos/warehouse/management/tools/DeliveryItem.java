@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright Â© 2008-2010, Aspire 
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -22,9 +22,10 @@ import java.math.BigInteger;
 
 /**
  * @author nkef (Nikos Kefalakis)
+ * @author Nektarios Leontiadis
  *
  */
-public class DeliveredItem {
+public class DeliveryItem {
 	
 	
 	
@@ -38,7 +39,10 @@ public class DeliveredItem {
 	private String measurementID;
 	private BigInteger quantity;
 	
-	
+	public DeliveryItem()
+	{
+	    quantityDelivered = BigInteger.ZERO;
+	}
 	
 	/**
 	 * @return the company

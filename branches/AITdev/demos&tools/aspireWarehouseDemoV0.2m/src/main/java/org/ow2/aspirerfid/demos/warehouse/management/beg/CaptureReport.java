@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright ï¿½ 2008-2010, Aspire
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -56,7 +56,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import org.ow2.aspirerfid.demos.warehouse.management.UI.WarehouseManagement;
-import org.ow2.aspirerfid.demos.warehouse.management.tools.DeliveredItem;
+import org.ow2.aspirerfid.demos.warehouse.management.tools.DeliveryItem;
 import org.ow2.aspirerfid.demos.warehouse.management.tools.CaptureClient;
 
 import java.math.BigInteger;
@@ -87,7 +87,7 @@ public class CaptureReport extends Thread {
 
 	private ServerSocket ss;
 
-	private DeliveredItem deliveredItem;
+	private DeliveryItem deliveredItem;
 
 	// Data
 	private String zoneID = "";
@@ -264,7 +264,7 @@ public class CaptureReport extends Thread {
 
 									for (ECReportGroupListMember member : group.getGroupList().getMember()) {
 										if (member.getEpc() != null) {
-											deliveredItem = new DeliveredItem();
+											deliveredItem = new DeliveryItem();
 											deliveredItem.setCompany(packetsCompany[i]);
 											deliveredItem.setDeliveryDate(now.getDay() + "/" + now.getMonth() + "/" + now.getYear());
 											deliveredItem.setDescription(packetsDescription[i]);
