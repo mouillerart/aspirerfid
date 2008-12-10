@@ -29,6 +29,6 @@
 	
 	<modules>
     	<module>aspireALE0.3.1m</module>
-    	<module>aspireRfidEpcisRepository</module>
+    	<module>connectors</module>
   	</modules>
 </project>

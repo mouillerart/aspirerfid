@@ -29,7 +29,5 @@
   <modules>
     <module>aspireTcpMessageCapturerV0.1m</module>
     <module>aspireWarehouseDemoV0.2m</module>
-    <module>AspireRfidIDE&amp;Plug-ins</module>
-    <module>aspireRfidEpcisQueryAndCaptureClient</module>
   </modules>
 </project>

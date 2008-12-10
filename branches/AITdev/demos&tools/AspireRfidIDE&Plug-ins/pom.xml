@@ -27,7 +27,6 @@
 	<packaging>pom</packaging>
 
   <modules>
-    <module>aspireRfidIDE</module>
     <module>AspireRfidIdePlug-ins</module>
   </modules>
 </project>

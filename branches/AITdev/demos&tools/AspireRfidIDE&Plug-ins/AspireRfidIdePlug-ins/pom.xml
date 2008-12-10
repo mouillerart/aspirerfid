@@ -25,8 +25,4 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
-
-  <modules>
-    <module>aspireRfidIde_AleServerConfigurator_Plug-in</module>
-  </modules>
 </project>
