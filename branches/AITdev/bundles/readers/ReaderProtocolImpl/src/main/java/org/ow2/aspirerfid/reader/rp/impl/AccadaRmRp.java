@@ -91,11 +91,15 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 			ml.reset();
 	}
 
-	public void start() {
+	public boolean start() {
 		ml = new MessageLayer();
+		return ml.isInitialized();
 	}
 
-	public void stop() {
+	public boolean stop() {
+	    
+	    	boolean ret = false;
+	    
 		if (ml != null) {
 			try {
 				conf.save(configFile);
@@ -103,8 +107,20 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 				log.warn("Problem while saving configuration:"+ e.getMessage());
 			}
 			ml.stop();
+			ret = !ml.isInitialized();
 			ml = null;
 		}
+		
+		return ret;
+		
+	}
+	
+	public boolean isStarted()
+	{
+	    if(ml != null)
+		return ml.isInitialized();
+	    else
+		return false;
 	}
 
 	public void addAlarmChannel(String name, String host, int port) {
@@ -390,7 +406,7 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 		List list = conf.getList("sources.source.name");
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).equals(sourceName)) {
-				return conf.getString("readers.reader(" + i + ").readpoint");
+				return conf.getString("sources.source(" + i + ").readpoint");
 			}
 		}
 
