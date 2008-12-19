@@ -31,7 +31,7 @@
 	</parent>
 
 	<artifactId>ReaderProtocolImpl</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>Reader Protocol implementation</name>
 	<description>
 		EPCglobal reader protocol and reader management implementation
@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>org.ow2.aspirerfid</groupId>
 			<artifactId>ReaderProtocol</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
