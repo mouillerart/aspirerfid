@@ -33,7 +33,7 @@
 	<packaging>bundle</packaging>
 	<name>ReaderProtocol</name>
 	
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>The reader Protocol API</description>
 	
 	<dependencies>

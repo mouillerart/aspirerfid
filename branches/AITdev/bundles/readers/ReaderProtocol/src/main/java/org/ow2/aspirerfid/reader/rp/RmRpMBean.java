@@ -25,10 +25,11 @@ package org.ow2.aspirerfid.reader.rp;
  */
 public interface RmRpMBean {
 
-	public void start();
-	public void stop();
+	public boolean start();
+	public boolean stop();
 	public void loadConfig();
 	public void resetConfig();
+	public boolean isStarted();
 	
 	public void setEPC(String epc);
 	public String getEPC();
