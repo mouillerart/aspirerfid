@@ -104,10 +104,12 @@ public class MessageLayer {
 
 	/** The management agent's properties file */
 	private static final String mgmtAgentPropFile = ReaderDevice.PROPERTIES_FILE;
-   private static final String mgmtAgentDefaultPropFile = ReaderDevice.DEFAULT_PROPERTIES_FILE;
+	private static final String mgmtAgentDefaultPropFile = ReaderDevice.DEFAULT_PROPERTIES_FILE;
 
-   private ReaderDevice readerDevice;
+	private ReaderDevice readerDevice;
    
+	private boolean isInitialized = false;
+	
 	/** The agent type enum */
 	public enum AgentType {
 		SNMP
@@ -124,12 +126,20 @@ public class MessageLayer {
 		this.initialize();
 	}
 
+	public boolean isInitialized()
+	{
+	    return isInitialized;
+	}
 	/**
 	 * Initializes the messaging layer and starts the reader device.
 	 *
 	 * @param reader reference to the ReaderDevice
 	 */
 	private void initialize() {
+	    
+	    if(isInitialized)
+		return;
+	    
 		log.debug("**************************************");
 		log.debug("* MessageLayer is beeing initialized *");
 		log.debug("**************************************");
@@ -268,9 +278,11 @@ public class MessageLayer {
 //				inst.setVisible(true);
 //			}
 			
+			isInitialized = true;
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			isInitialized = false;
 		}
 	}
 
@@ -285,6 +297,8 @@ public class MessageLayer {
 	
 	public void stop()
 	{
+		if(!isInitialized)
+		    return;
 		
 		Source source = readerDevice.getCurrentSource();
 		readerDevice.stopReaders();
@@ -327,6 +341,7 @@ public class MessageLayer {
 		}
 		mbuffer.clean();
 
+		isInitialized = false;
 //		snmpAgent.stop();
 	}
 
