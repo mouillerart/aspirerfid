@@ -32,7 +32,6 @@ import java.util.Vector;
 
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.reader.rp.impl.core.util.ResourceLocator;
 import org.ow2.aspirerfid.reader.rp.impl.hal.AsynchronousIdentifyListener;
 import org.ow2.aspirerfid.reader.rp.impl.hal.HardwareAbstraction;
 import org.ow2.aspirerfid.reader.rp.impl.hal.HardwareException;

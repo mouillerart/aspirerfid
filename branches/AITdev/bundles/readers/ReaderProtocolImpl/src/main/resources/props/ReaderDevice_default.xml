@@ -3,7 +3,7 @@
 
    <!-- Information about the reader -->
       <epc>ReaderEPC</epc>
-      <name>AccadaRPSimulator</name>
+      <name>Aspire reader</name>
       <manufacturer>ReaderManufacturer</manufacturer>
       <manufacturerDescription>ReaderManufacturerDescription</manufacturerDescription>
       <model>ReaderModel</model>

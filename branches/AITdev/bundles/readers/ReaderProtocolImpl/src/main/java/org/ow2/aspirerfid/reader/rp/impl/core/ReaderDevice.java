@@ -354,8 +354,8 @@ public class ReaderDevice {
 	   else
 	   {
 		   instance.stopReaders();
-		   instance.resetToDefaultSettings();
 	   }
+	   instance.resetToDefaultSettings();
 	   return instance;
    }
 
@@ -368,7 +368,7 @@ public class ReaderDevice {
     *            "wrong valueTrigger in property file", "wrong edgeTrigger in
     *            property file"
     */
-   public ReaderDevice(String propetiesFile) throws ReaderProtocolException {
+   private ReaderDevice(String propetiesFile) throws ReaderProtocolException {
       switch (MessageLayer.mgmtAgentType) {
          case SNMP:
             mgmtAgent = SnmpAgent.getInstance();
@@ -388,9 +388,9 @@ public class ReaderDevice {
       reboot(propetiesFile, DEFAULT_PROPERTIES_FILE);
    }
    
-   public ReaderDevice() throws ReaderProtocolException {
+   private ReaderDevice() throws ReaderProtocolException {
 	   
-	   this(PROPERTIES_FILE);
+//	   this(PROPERTIES_FILE);
    }
 
    /**
@@ -402,7 +402,7 @@ public class ReaderDevice {
     *            "wrong valueTrigger in property file", "wrong edgeTrigger in
     *            property file"
     */
-   public ReaderDevice(final String propFile, final String defaultPropFile)
+   private ReaderDevice(final String propFile, final String defaultPropFile)
          throws ReaderProtocolException {
 	  switch (MessageLayer.mgmtAgentType) {
          case SNMP:
@@ -1177,7 +1177,6 @@ public class ReaderDevice {
 
          // reader's name
          String readerName = readerConf.getString(key + ".name");
-         //System.out.println(readerName);
 
          // get reader
          if (!readers.containsKey(readerName)) {
@@ -1260,53 +1259,53 @@ public class ReaderDevice {
       setLocationDescription(conf.getString("locationDescription"));
       setContact(conf.getString("contact"));
       serialNumber = conf.getString("serialNumber");
-      dhcpServerFinder
-				.setMacAddress(DHCPServerFinder.macAddressStringToByteArray(
-						conf.getString("macAddress"), "-"));
+//      dhcpServerFinder
+//				.setMacAddress(DHCPServerFinder.macAddressStringToByteArray(
+//						conf.getString("macAddress"), "-"));
 
-      operStatusAlarmControl = new TTOperationalStatusAlarmControl(
-				"OperStatusAlarmControl", false, AlarmLevel.ERROR, 0,
-				OperationalStatus.ANY, OperationalStatus.ANY);
+//      operStatusAlarmControl = new TTOperationalStatusAlarmControl(
+//				"OperStatusAlarmControl", false, AlarmLevel.ERROR, 0,
+//				OperationalStatus.ANY, OperationalStatus.ANY);
 
-      freeMemoryAlarmControl = new EdgeTriggeredAlarmControl(
-				"FreeMemoryAlarmControl", false, AlarmLevel.CRITICAL, 0, 100,
-				1000, EdgeTriggeredAlarmDirection.FALLING);
-
-      if ((alarmManager == null) && (mgmtAgent != null)) {
-    	  AlarmProcessor alarmProcessor = null;
-    	  switch (MessageLayer.mgmtAgentType) {
-    	  	case SNMP:
-    	  		alarmProcessor = new SnmpAlarmProcessor((SnmpAgent) mgmtAgent);
-    	  		break;
-    	  	// case ...:
-    	  }
-    	  alarmManager = new AlarmManager(alarmProcessor, this);
-    	  alarmManager.start();
-      }
+//      freeMemoryAlarmControl = new EdgeTriggeredAlarmControl(
+//				"FreeMemoryAlarmControl", false, AlarmLevel.CRITICAL, 0, 100,
+//				1000, EdgeTriggeredAlarmDirection.FALLING);
+//
+//      if ((alarmManager == null) && (mgmtAgent != null)) {
+//    	  AlarmProcessor alarmProcessor = null;
+//    	  switch (MessageLayer.mgmtAgentType) {
+//    	  	case SNMP:
+//    	  		alarmProcessor = new SnmpAlarmProcessor((SnmpAgent) mgmtAgent);
+//    	  		break;
+//    	  	// case ...:
+//    	  }
+//    	  alarmManager = new AlarmManager(alarmProcessor, this);
+//    	  alarmManager.start();
+//      }
 
       // configure alarm channels
-      SubnodeConfiguration alarmChanConf = conf.configurationAt("alarmChannels");
-      String host = "";
-      int port = -1;
-      for (int i = 0; i <= alarmChanConf.getMaxIndex("alarmChannel"); i++) {
-         String key = "alarmChannel(" + i + ")";
-         // name of the alarm channel
-         String alarmChanName = alarmChanConf.getString(key + ".name");
-         // get alarm channel
-         try {
-            host = alarmChanConf.getString(key + ".host");
-            port = alarmChanConf.getInt(key + ".port");
-            try {
-               AlarmChannel.create(alarmChanName, new Address("udp://" + host + ":" + port), this);
-            } catch (MalformedURLException mfue) {
-               log.error(alarmChanName + ": invalid address");
-            }
-            host = "";
-            port = -1;
-         } catch (ReaderProtocolException rpe) {
-            // next
-         }
-      }
+//      SubnodeConfiguration alarmChanConf = conf.configurationAt("alarmChannels");
+//      String host = "";
+//      int port = -1;
+//      for (int i = 0; i <= alarmChanConf.getMaxIndex("alarmChannel"); i++) {
+//         String key = "alarmChannel(" + i + ")";
+//         // name of the alarm channel
+//         String alarmChanName = alarmChanConf.getString(key + ".name");
+//         // get alarm channel
+//         try {
+//            host = alarmChanConf.getString(key + ".host");
+//            port = alarmChanConf.getInt(key + ".port");
+//            try {
+//               AlarmChannel.create(alarmChanName, new Address("udp://" + host + ":" + port), this);
+//            } catch (MalformedURLException mfue) {
+//               log.error(alarmChanName + ": invalid address");
+//            }
+//            host = "";
+//            port = -1;
+//         } catch (ReaderProtocolException rpe) {
+//            // next
+//         }
+//      }
 
       // operational status is UP after resetting
 	  setOperStatus(OperationalStatus.UP);
@@ -2114,11 +2113,11 @@ public class ReaderDevice {
 	 * @param args
 	 *            Not used
 	 */
-	public static void main(String[] args) {
-		if (args.length == 1) {
-			PROPERTIES_FILE = args[0];
-		}
-		MessageLayer m;
-		m = new MessageLayer();
-	}
+//	public static void main(String[] args) {
+//		if (args.length == 1) {
+//			PROPERTIES_FILE = args[0];
+//		}
+//		MessageLayer m;
+//		m = new MessageLayer();
+//	}
 }

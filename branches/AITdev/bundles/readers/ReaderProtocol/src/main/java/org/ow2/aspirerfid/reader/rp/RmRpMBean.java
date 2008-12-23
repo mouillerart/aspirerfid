@@ -30,6 +30,8 @@ public interface RmRpMBean {
 	public void loadConfig();
 	public void resetConfig();
 	public boolean isStarted();
+	public void loadConfigurationFile(String serializedFile);
+	public String saveConfigurationFileAs();
 	
 	public void setEPC(String epc);
 	public String getEPC();
