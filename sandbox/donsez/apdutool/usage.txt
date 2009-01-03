@@ -1,0 +1,25 @@
+Usage:
+for interactive mode : java APDUTool
+for batch mode       : java APDUTool <batchfile>
+
+List of commands:
+atr                             : get card ATR detail
+card                            : get card info
+terminals                       : get terminals info
+terminal                        : select a terminal
+waitinsertion                   : wait for any card insertion
+waitinsertion <hex string>      : wait for a card with the following ATR
+atrbank                         : list the known ATRs
+updateatrbank					: update the ATR bank from http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt
+send <hex string>               : send a command APDU
+last							: display the response APDU
+last <format>					: display the response APDU
+                                : in format HEX,byte,short,int,UNICODE,UTF
+applets                         : list the applets in the card (JavaCard, ...)
+select <hex string>             : select the applet by AID
+pause <interger>                : pause in millisec
+help | ?                        : this help
+close							: close current channel, card, terminal
+exit | quit                     : exit APDUTool
+echo <string>                   : echo the string
+# <comment>                     : comment for batch files
