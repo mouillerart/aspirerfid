@@ -54,7 +54,7 @@ import org.ow2.aspirerfid.reader.rp.hal.impl.sim.graphic.Reader;
 import org.ow2.aspirerfid.reader.rp.hal.impl.sim.graphic.SelectionComponent;
 import org.ow2.aspirerfid.reader.rp.hal.impl.sim.graphic.Tag;
 import org.ow2.aspirerfid.reader.rp.hal.impl.sim.graphic.TranslationListener;
-import org.ow2.aspirerfid.reader.rp.impl.core.util.ResourceLocator;
+import org.ow2.aspirerfid.reader.rp.hal.impl.sim.util.ResourceLocator;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;

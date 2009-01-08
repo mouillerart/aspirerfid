@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.ow2.aspirerfid.reader.rp.impl.core.util.ResourceLocator;
+import org.ow2.aspirerfid.reader.rp.hal.impl.sim.util.ResourceLocator;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;

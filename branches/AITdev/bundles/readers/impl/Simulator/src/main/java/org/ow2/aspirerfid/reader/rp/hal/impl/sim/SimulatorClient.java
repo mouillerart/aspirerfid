@@ -31,7 +31,7 @@ import org.ow2.aspirerfid.reader.rp.hal.impl.sim.multi.SimulatorServerException;
 import org.ow2.aspirerfid.reader.rp.hal.impl.sim.multi.SimulatorServerTokens;
 import org.ow2.aspirerfid.reader.rp.hal.impl.sim.SimulatorController;
 import org.ow2.aspirerfid.reader.rp.hal.impl.sim.SimulatorEngine;
-import org.ow2.aspirerfid.reader.rp.impl.core.util.ResourceLocator;
+import org.ow2.aspirerfid.reader.rp.hal.impl.sim.util.ResourceLocator;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
