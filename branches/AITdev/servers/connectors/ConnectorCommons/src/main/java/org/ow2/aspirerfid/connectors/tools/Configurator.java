@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 /**
  * This class handles property loading operations
@@ -33,8 +34,10 @@ public class Configurator {
 
     private static Properties property;
     private static Configurator conf;
+    private static Logger logger;
 
     static {
+	logger = Logger.getLogger(Configurator.class.getName());
 	property = null;
     }
 
@@ -51,15 +54,17 @@ public class Configurator {
      */
     public static void loadProperties(String propertyFile) throws IOException {
 	Properties property = new Properties();
-	
+	if(conf == null)
+	    new Configurator();
+	logger.info("Loading property file: "+propertyFile);
 	try{
 	    FileInputStream file = new FileInputStream(propertyFile);
 		property.load(file);   
 	}
 	catch(FileNotFoundException e)
 	{
-	    URL fileurl = conf.getClass().getResource(propertyFile);
-	    property.load(fileurl.openStream());
+	    URL fileUrl = conf.getClass().getResource(propertyFile);
+	    property.load(fileUrl.openStream());
 	}
 
 	if(Configurator.property == null)

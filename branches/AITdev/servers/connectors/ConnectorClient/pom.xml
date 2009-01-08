@@ -73,7 +73,7 @@
 			<version>3.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.ow2.aspirerfid.connectors</groupId>
+			<groupId>org.ow2.aspirerfid.connector</groupId>
 			<artifactId>ConnectorCommons</artifactId>
 			<version>0.0.1</version>
 			<type>jar</type>

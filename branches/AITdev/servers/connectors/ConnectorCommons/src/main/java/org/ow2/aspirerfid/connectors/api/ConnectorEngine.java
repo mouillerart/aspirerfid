@@ -28,11 +28,12 @@ public interface ConnectorEngine {
 
     /**
      * Register an observator for a transaction
-     * @param tid Transaction identifier 
+     * @param transactionId Transaction identifier 
+     * @param transactionType The transaction type as defined in the EPCIS spec
      * @param sid Subscription identifier
      * @return True if the operations is completed without errors; false otherwise
      */
-    public boolean startObservingTransaction(String tid, String sid);
+    public boolean startObservingTransaction(String transactionId, String transactionType, String sid);
     
     /**
      * Unsubscribe an observator for an already registered transaction 

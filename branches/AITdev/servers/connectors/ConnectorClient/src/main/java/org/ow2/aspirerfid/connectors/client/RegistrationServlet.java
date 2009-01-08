@@ -48,7 +48,7 @@ public class RegistrationServlet extends HttpServlet {
     public RegistrationServlet() {
 	super();
 	try {
-	    Configurator.loadProperties("connector.properties");
+	    Configurator.loadProperties("/application.properties");
 	} catch (IOException e) {
 	    logger.fatal(e);
 	}
@@ -61,13 +61,14 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
 	    HttpServletResponse response) throws ServletException, IOException {
 	// super.doGet(request, response);
-	String tid, sid;
+	String tid, sid, type;
 	boolean resp = false;
 	sid = request.getParameter("sid");
 	if (sid != null) {
 	    tid = request.getParameter("tid");
-	    if (request.getParameter("sub") != null && tid != null) {
-		resp = doRegister(tid, sid);
+	    type = request.getParameter("type");
+	    if (request.getParameter("sub") != null && tid != null && type != null) {
+		resp = doRegister(tid, type, sid);
 	    }
 	    if (request.getParameter("unsub") != null) {
 		resp = doUnregister(sid);
@@ -83,13 +84,14 @@ public class RegistrationServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request,
 	    HttpServletResponse response) throws ServletException, IOException {
-	String tid, sid;
+	String tid, sid, type;
 	boolean resp = false;
 	sid = request.getParameter("sid");
 	if (sid != null) {
 	    tid = request.getParameter("tid");
-	    if (request.getParameter("sub") != null && tid != null) {
-		resp = doRegister(tid, sid);
+	    type = request.getParameter("type");
+	    if (request.getParameter("sub") != null && tid != null && type != null) {
+		resp = doRegister(tid, type, sid);
 	    }
 	    if (request.getParameter("unsub") != null) {
 		resp = doUnregister(sid);
@@ -99,8 +101,8 @@ public class RegistrationServlet extends HttpServlet {
 	response.getWriter().print(resp);
     }
 
-    private boolean doRegister(String tid, String sid) {
-	return RegistrationClient.register(tid, sid);
+    private boolean doRegister(String tid, String type, String sid) {
+	return RegistrationClient.register(tid, type, sid);
     }
 
     private boolean doUnregister(String sid) {

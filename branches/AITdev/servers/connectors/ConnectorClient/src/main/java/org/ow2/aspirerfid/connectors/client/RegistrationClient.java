@@ -43,8 +43,9 @@ public class RegistrationClient {
     static
     {
 	logger = Logger.getLogger(RegistrationClient.class);
-	connectorServerUrl = Configurator.getProperty("connectorServerUrl","http://localhost:8080/ConnectorAPI-0.0.1/subscribe");
+	connectorServerUrl = Configurator.getProperty("connectorServerUrl","http://localhost:8080/connector/subscribe");
 
+	logger.info("Subscribing to:"+connectorServerUrl);
 	XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 	try {
 	    config.setServerURL(new URL(connectorServerUrl));
@@ -55,10 +56,10 @@ public class RegistrationClient {
 	client.setConfig(config);
     }
     
-    public static boolean register(String tid, String sid)
+    public static boolean register(String tid, String transactionType, String sid)
     {
 	boolean result = false;
-	Object[] params = new Object[] { tid, sid };
+	Object[] params = new Object[] { tid, transactionType, sid };
 	try {
 	    synchronized(client)
 	    {

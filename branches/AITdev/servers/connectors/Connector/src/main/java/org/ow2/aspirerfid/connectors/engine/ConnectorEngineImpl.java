@@ -37,19 +37,20 @@ import org.ow2.aspirerfid.connectors.api.ConnectorEngine;
 import org.ow2.aspirerfid.connectors.tools.Configurator;
 
 /**
- * This tis the entry point of the Connector service. This class implements the Connector Engine
- * API and exposes the functionality that implements though XML-RPC.
+ * This is the entry point of the Connector service. This class implements the
+ * Connector Engine API and exposes the functionality that implements though
+ * XML-RPC.
  * 
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
- *
+ * 
  */
 public class ConnectorEngineImpl implements ConnectorEngine {
 
     private static Logger logger;
+    private static boolean loaded = false;
     private String destinationUrl;
     private Query query;
-    private String querySec, queryMin, queryHour, queryDayOfMonth, queryMonth,
-	    quertDayOfWeek;
+    private String querySec, queryMin, queryHour, queryDayOfMonth, queryMonth, quertDayOfWeek;
 
     private static final String queryName;
     private QueryCallbackListener listener;
@@ -60,20 +61,37 @@ public class ConnectorEngineImpl implements ConnectorEngine {
 	logger = Logger.getLogger(ConnectorEngineImpl.class);
 	try {
 	    Configurator.loadProperties("application.properties");
-	} catch (IOException e) {
+	    loaded = true;
+	} catch (Exception e) {
 	    logger.error(e);
 	}
-	queryName = Configurator.getProperty("queryName","SimpleEventQuery");
+	queryName = Configurator.getProperty("queryName", "SimpleEventQuery");
     }
 
     public ConnectorEngineImpl() {
-	
-	this(Configurator.getProperty("epcisQueryIfceUrl", "http://demo.fosstrak.org/epcis/query"));
+	loadProperties();
+	initialize(Configurator.getProperty("epcisQueryIfceUrl", "http://localhost:8080/epcis/query"));
     }
 
     public ConnectorEngineImpl(String queryUrl) {
-	querySec = Configurator.getProperty("querySeconds","1");
-	destinationUrl = Configurator.getProperty("callbackDestinationUrl","http://localhost:8899");
+	loadProperties();
+	initialize(queryUrl);
+    }
+
+    private void loadProperties() {
+	if (!loaded) {
+	    try {
+		Configurator.loadProperties("application.properties");
+	    } catch (Exception e) {
+		logger.error(e);
+	    }
+	    loaded = true;
+	}
+    }
+
+    private void initialize(String queryUrl) {
+	querySec = Configurator.getProperty("querySeconds", "1");
+	destinationUrl = Configurator.getProperty("callbackDestinationUrl", "http://localhost:8899");
 	configureClient(queryUrl);
 
 	try {
@@ -90,11 +108,11 @@ public class ConnectorEngineImpl implements ConnectorEngine {
 	client = new QueryControlClient(queryUrl);
     }
 
-    public boolean startObservingTransaction(String tid, String sid) {
+    public boolean startObservingTransaction(String tid, String transactionType, String sid) {
 
 	logger.info("Registering for tid:" + tid + " with sid:" + sid);
 
-	Subscribe s = prepareSubscription(tid, "ait", sid);
+	Subscribe s = prepareSubscription(tid, transactionType, sid);
 	return subscribe(s);
     }
 
@@ -133,10 +151,12 @@ public class ConnectorEngineImpl implements ConnectorEngine {
 	query.setReturnQuantityEvents(true);
 	query.setReturnTransactionEvents(true);
 
-	if(transactionType != null)
-	    param.setName("EQ_bizTransaction_"+transactionType);
+	if (transactionType != null)
+	    param.setName("EQ_bizTransaction_" + transactionType);
 	else
 	    param.setName("EQ_bizTransaction");
+	logger.info("bizTransactionType:"+param.getName());
+	logger.info("bizTransactionId:"+tid);
 	arr.getString().add(tid);
 	param.setValue(arr);
 
@@ -155,8 +175,7 @@ public class ConnectorEngineImpl implements ConnectorEngine {
 	DatatypeFactory factory;
 	try {
 	    factory = DatatypeFactory.newInstance();
-	    controls.setInitialRecordTime(factory
-		    .newXMLGregorianCalendar(new GregorianCalendar()));
+	    controls.setInitialRecordTime(factory.newXMLGregorianCalendar(new GregorianCalendar()));
 	} catch (DatatypeConfigurationException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -173,39 +192,38 @@ public class ConnectorEngineImpl implements ConnectorEngine {
 	return sub;
     }
 
-//    private void poll(Poll poll) {
-//	try {
-//	    logger.info(client.poll(poll));
-//	} catch (ImplementationExceptionResponse e) {
-//	    // TODO Auto-generated catch block
-//	    e.printStackTrace();
-//	} catch (QueryTooComplexExceptionResponse e) {
-//	    // TODO Auto-generated catch block
-//	    e.printStackTrace();
-//	} catch (QueryTooLargeExceptionResponse e) {
-//	    // TODO Auto-generated catch block
-//	    e.printStackTrace();
-//	} catch (SecurityExceptionResponse e) {
-//	    // TODO Auto-generated catch block
-//	    e.printStackTrace();
-//	} catch (ValidationExceptionResponse e) {
-//	    // TODO Auto-generated catch block
-//	    e.printStackTrace();
-//	} catch (NoSuchNameExceptionResponse e) {
-//	    // TODO Auto-generated catch block
-//	    e.printStackTrace();
-//	} catch (QueryParameterExceptionResponse e) {
-//	    // TODO Auto-generated catch block
-//	    e.printStackTrace();
-//	} catch (Exception e) {
-//	    e.printStackTrace();
-//	}
-//    }
+    // private void poll(Poll poll) {
+    // try {
+    // logger.info(client.poll(poll));
+    // } catch (ImplementationExceptionResponse e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (QueryTooComplexExceptionResponse e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (QueryTooLargeExceptionResponse e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (SecurityExceptionResponse e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (ValidationExceptionResponse e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (NoSuchNameExceptionResponse e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (QueryParameterExceptionResponse e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+    // }
 
     private boolean subscribe(final Subscribe sub) {
 	try {
-	    client.subscribe(sub.getQueryName(), sub.getParams(),
-		    sub.getDest(), sub.getControls(), sub.getSubscriptionID());
+	    client.subscribe(sub.getQueryName(), sub.getParams(), sub.getDest(), sub.getControls(), sub.getSubscriptionID());
 
 	    if (!listener.isRunning())
 		listener.start();
