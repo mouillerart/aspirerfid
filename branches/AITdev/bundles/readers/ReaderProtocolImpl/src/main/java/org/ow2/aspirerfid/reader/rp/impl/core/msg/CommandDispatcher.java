@@ -218,8 +218,6 @@ public class CommandDispatcher {
 		try {
 			Reply reply = replyFactory.createReply();
 
-			log.debug("dispatch command");
-
 			if (command.getReaderDevice() != null) {
 				ReaderDeviceCommand rdCommand = command.getReaderDevice();
 				ReaderDeviceReply rdReply = executeCommand(rdCommand, command
@@ -309,6 +307,7 @@ public class CommandDispatcher {
 			Reply errorReply = handleReaderProtocolException(e, command.getId());
 			return errorReply;
 		} catch (Exception e) {
+		    e.printStackTrace();
 			log.error("Unexpected exception while dispatching commands: " + e);
 			Reply errorReply = handleReaderProtocolException(command.getId(),
 					MessagingConstants.ERROR_UNKNOWN,

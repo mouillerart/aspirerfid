@@ -355,7 +355,7 @@ public class ReaderDevice {
 	   {
 		   instance.stopReaders();
 	   }
-	   instance.resetToDefaultSettings();
+	   instance.reboot();
 	   return instance;
    }
 

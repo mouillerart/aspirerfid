@@ -300,6 +300,9 @@ public class MessageLayer {
 		if(!isInitialized)
 		    return;
 		
+		
+//		log.info("killing worker threads");
+//		ConnectionThreadPool.getInstance().stopRequestAllWorkers();
 		Source source = readerDevice.getCurrentSource();
 		readerDevice.stopReaders();
 		Hashtable triggers = source.getReadTriggers();
@@ -313,33 +316,34 @@ public class MessageLayer {
 			}
 			source.removeReadTriggers(triggerArr);
 		}
-		// Close all server connections
-		List servers = ServerConnection.getServerConnections();
-		for (Iterator it = servers.iterator(); it.hasNext();) {
-			ServerConnection server = (ServerConnection) it.next();
-			try {
-			server.close();
-			}catch(Exception e)
-			{
-				log.error(e);
-			}
-		}
-		
-		// Reset all clients
-		Clients clients = Clients.getInstance();
-		clients.reset();
-
-		// Reset all buffers and dispatchers
-		sDispatcher = null;
+//		// Close all server connections
+//		List servers = ServerConnection.getServerConnections();
+//		for (Iterator it = servers.iterator(); it.hasNext();) {
+//			ServerConnection server = (ServerConnection) it.next();
+//			try {
+//			server.close();
+//			}catch(Exception e)
+//			{
+//				log.error(e);
+//			}
+//		}
+//		
+//		// Reset all clients
+//		Clients clients = Clients.getInstance();
+//		clients.reset();
+//
+//		// Reset all buffers and dispatchers
+//		sDispatcher = null;
 		MessageDispatcher.stopDispatcher();
-
-		for(ListIterator i = ServerConnection.getServerConnections().listIterator(); i.hasNext();)
-		{
-			log.info("Closing a connection");
-			ServerConnection sc = (ServerConnection)i.next();
-			sc.close();
-		}
-		mbuffer.clean();
+		sDispatcher.stop();
+//
+//		for(ListIterator i = ServerConnection.getServerConnections().listIterator(); i.hasNext();)
+//		{
+//			log.info("Closing a connection");
+//			ServerConnection sc = (ServerConnection)i.next();
+//			sc.close();
+//		}
+//		mbuffer.clean();
 
 		isInitialized = false;
 //		snmpAgent.stop();

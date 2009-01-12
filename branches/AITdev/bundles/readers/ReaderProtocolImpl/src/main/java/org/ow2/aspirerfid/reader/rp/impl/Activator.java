@@ -65,10 +65,10 @@ public class Activator implements BundleActivator{
 	}
 
 	public void stop(BundleContext context) throws Exception {
-//		device = null;
 		log.info("Stoping RP...");
 		try{
 			rp.stop();
+			rp = null;
 		}catch(Exception e)
 		{
 			log.warn(e.getMessage());
