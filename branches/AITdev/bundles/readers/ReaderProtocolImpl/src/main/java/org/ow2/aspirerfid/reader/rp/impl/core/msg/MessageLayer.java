@@ -317,16 +317,14 @@ public class MessageLayer {
 			source.removeReadTriggers(triggerArr);
 		}
 //		// Close all server connections
-//		List servers = ServerConnection.getServerConnections();
-//		for (Iterator it = servers.iterator(); it.hasNext();) {
-//			ServerConnection server = (ServerConnection) it.next();
-//			try {
-//			server.close();
-//			}catch(Exception e)
-//			{
-//				log.error(e);
-//			}
-//		}
+		List servers = ServerConnection.getServerConnections();
+		for (Iterator it = servers.iterator(); it.hasNext();) {
+			ServerConnection server = (ServerConnection) it.next();
+			try {
+			    server.close();
+			}catch(Exception e)
+			{}
+		}
 //		
 //		// Reset all clients
 //		Clients clients = Clients.getInstance();
