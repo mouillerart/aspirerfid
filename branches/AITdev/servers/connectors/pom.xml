@@ -21,7 +21,7 @@
 
 	<groupId>org.ow2.aspirerfid</groupId>
 
-	<artifactId>connectors</artifactId>
+	<artifactId>connector</artifactId>
 	<version>1.0.0</version>
 	<name>AspireRFID connectors</name>
 

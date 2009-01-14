@@ -48,7 +48,7 @@ public class RegistrationServlet extends HttpServlet {
     public RegistrationServlet() {
 	super();
 	try {
-	    Configurator.loadProperties("/application.properties");
+	    Configurator.loadProperties("/application.properties", RegistrationServlet.class);
 	} catch (IOException e) {
 	    logger.fatal(e);
 	}

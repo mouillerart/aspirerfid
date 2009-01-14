@@ -22,6 +22,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
@@ -38,6 +39,10 @@ public class Shipment {
 	items = new HashMap<String, DeliveryItem>();
     }
     
+    public Set<String> getItems()
+    {
+	return items.keySet();
+    }
     public final void addItem(DeliveryItem item)
     {
 	items.put(item.getItemCode(), item);

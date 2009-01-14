@@ -52,7 +52,7 @@ public class Configurator {
      * @param propertyFile The full or relative path to the property file
      * @throws IOException
      */
-    public static void loadProperties(String propertyFile) throws IOException {
+    public static void loadProperties(String propertyFile, Class clas) throws IOException {
 	Properties property = new Properties();
 	if(conf == null)
 	    new Configurator();
@@ -63,7 +63,7 @@ public class Configurator {
 	}
 	catch(FileNotFoundException e)
 	{
-	    URL fileUrl = conf.getClass().getResource(propertyFile);
+	    URL fileUrl = clas.getClassLoader().getResource(propertyFile);
 	    property.load(fileUrl.openStream());
 	}
 

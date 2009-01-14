@@ -52,20 +52,14 @@ public class ConnectorEngineImpl implements ConnectorEngine {
     private Query query;
     private String querySec, queryMin, queryHour, queryDayOfMonth, queryMonth, quertDayOfWeek;
 
-    private static final String queryName;
+    private static String queryName;
     private QueryCallbackListener listener;
     private QueryControlClient client;
     private QueryResultsProcessor processor;
 
     static {
 	logger = Logger.getLogger(ConnectorEngineImpl.class);
-	try {
-	    Configurator.loadProperties("application.properties");
-	    loaded = true;
-	} catch (Exception e) {
-	    logger.error(e);
-	}
-	queryName = Configurator.getProperty("queryName", "SimpleEventQuery");
+	
     }
 
     public ConnectorEngineImpl() {
@@ -81,7 +75,7 @@ public class ConnectorEngineImpl implements ConnectorEngine {
     private void loadProperties() {
 	if (!loaded) {
 	    try {
-		Configurator.loadProperties("application.properties");
+		Configurator.loadProperties("application.properties", this.getClass());
 	    } catch (Exception e) {
 		logger.error(e);
 	    }
@@ -90,6 +84,7 @@ public class ConnectorEngineImpl implements ConnectorEngine {
     }
 
     private void initialize(String queryUrl) {
+	queryName = Configurator.getProperty("queryName", "SimpleEventQuery");
 	querySec = Configurator.getProperty("querySeconds", "1");
 	destinationUrl = Configurator.getProperty("callbackDestinationUrl", "http://localhost:8899");
 	configureClient(queryUrl);

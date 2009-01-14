@@ -51,7 +51,7 @@ public class ConnectorManager {
     private static final Logger logger;
 
     static {
-	transactionId = Configurator.getProperty("transactionId", "urn:aspire:wms:demo:shipment");
+	transactionId = Configurator.getProperty("transactionId", "urn:epc:id:gid:");
 	IS_STANDALONE = Configurator.getProperty("isConnectorClientStandaloneModeOn","true").equalsIgnoreCase("true");
 	logger = Logger.getLogger(ConnectorManager.class);
     }
@@ -112,8 +112,8 @@ public class ConnectorManager {
 
 	if (!IS_STANDALONE) {
 
-	    regUrl = endpoint + "register?sub&sid=" + invoiceId + "&tid="
-		    + transactionId;
+	    regUrl = endpoint + "register?sub&sid=" + transactionId + "&tid="
+		    + Configurator.getProperty("transactionId", "urn:epc:id:gid:")+invoiceId;
 	    try {
 		// regUrl = URLEncoder.encode(regUrl, "UTF-8");
 		url = new URL(regUrl);
@@ -137,7 +137,7 @@ public class ConnectorManager {
 	    //Start local XmlRpc servlet
 	    if (!startService())
 		    return false;
-	    if (RegistrationClient.register(transactionId, invoiceId)) {
+	    if (RegistrationClient.register(invoiceId, Configurator.getProperty("bizTransType", "urn:epc:transaction:type:delivery_invoice"), invoiceId)) {
 		subscr.add(invoiceId);
 		return true;
 	    } else
