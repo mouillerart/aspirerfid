@@ -249,6 +249,10 @@ public class SimulatorController implements HardwareAbstraction {
 	{
 		if (simulator instanceof GraphicSimulator)
 			((GraphicSimulator)simulator).setVisible(false);
+		for(int i=0; i<readPointNames.length; i++)
+		{
+		    shutDownReadPoint(readPointNames[i]);
+		}
 	}
 	
 	//-------------------- SimulatorEngine access methods ----------------------------
