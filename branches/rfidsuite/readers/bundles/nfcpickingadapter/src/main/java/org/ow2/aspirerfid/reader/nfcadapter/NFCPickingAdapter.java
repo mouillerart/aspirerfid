@@ -31,6 +31,7 @@ import org.osgi.service.wireadmin.Wire;
 import org.ow2.aspirerfid.nfc.picking.server.PickingEventAdapter;
 import org.ow2.aspirerfid.util.Logger;
 import org.ow2.aspirerfid.util.RFIDConstants;
+import org.ow2.aspirerfid.wires.GpsRead;
 import org.ow2.aspirerfid.wires.RFIDTagRead;
 
 /**
@@ -70,6 +71,7 @@ public class NFCPickingAdapter implements NFCPickingAdapterMBean, Producer {
 	private BundleContext context;
 	
 	private RFIDTagRead lastObject;
+	private String gpsCoordinates;
 
 	/**
 	 * @param bc
@@ -192,6 +194,14 @@ public class NFCPickingAdapter implements NFCPickingAdapterMBean, Producer {
 	public String getLogicalName() {
 		return logicalName;
 	}
+	
+	public String getGpsCoordinates() {
+		return gpsCoordinates;
+	}
+	
+	public void setGpsCoordinates(String coordinates) {
+		this.gpsCoordinates = coordinates;
+	}
 
 	/**
 	 * implementation of RFID Reader MBean interface setter of logicalName
@@ -290,6 +300,9 @@ public class NFCPickingAdapter implements NFCPickingAdapterMBean, Producer {
 				data = getLogicalName();
 				if (data != null)
 					tagProp.put(RFIDConstants.READERNAME_KEY, data);
+				if (gpsCoordinates != null)
+					tagProp.put(RFIDConstants.COORDINATES_KEY, gpsCoordinates);
+				
 				tagProp.put(EventConstants.TIMESTAMP, Long.toString(System.currentTimeMillis()));
 				tagProp.put(RFIDConstants.TAGGUID_KEY, tagID);
 				translatedTags[i] = tagProp;

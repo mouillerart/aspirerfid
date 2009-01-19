@@ -33,5 +33,9 @@ public interface NFCPickingAdapterMBean extends RfidReaderMBean {
 	 *            the fictive value of the reader Guid
 	 */
 	public void setReaderGUId(String readerGuid);
+	
+	public void setGpsCoordinates(String coordinates);
+	
+	public String getGpsCoordinates();
 
 }
