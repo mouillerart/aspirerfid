@@ -28,6 +28,6 @@
 
   <modules>
     <module>aspireTcpMessageCapturerV0.1m</module>
-    <module>aspireWarehouseDemoV0.2m</module>
+    <module>aspireWarehouseALEDemo</module>
   </modules>
 </project>

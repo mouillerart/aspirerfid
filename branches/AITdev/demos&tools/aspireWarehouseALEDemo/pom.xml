@@ -22,7 +22,7 @@
 	<groupId>org.ow2.aspirerfid.demos.warehouse</groupId>
 	<artifactId>aspireWarehouseDemo</artifactId>
 	<packaging>jar</packaging>
-	<name>aspireWarehouseDemoV0.2m</name>
+	<name>aspireWarehouseALEDemo</name>
 	<version>V0.2m</version>
 	<description />
 
