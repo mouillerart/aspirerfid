@@ -462,37 +462,37 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 				.println("The fictive reader has no driver, it can't be disposed.");
 	}
 
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#readTheseTags(java.lang.String[])
-//	 */
-//	public void readTheseTags(String[] tags) {
-//		System.out.println("Received " + tags.length + "tags");
-//		for (int i = 0; i < tags.length; i++) {
-//			readThisTag(tags[i]);
-//		}
-//	}
-//
-//	/*
-//	 * In the props we add only the information related to the tag. The
-//	 * temperature and position values are given by separate producers.
-//	 * 
-//	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#readThisTag(java.lang.String)
-//	 */
-//	public RFIDTagRead readThisTag(String tag) {
-//		RFIDTagRead tagProp = new RFIDTagRead();
-//		String elmts = getReaderGUId();
-//		if (elmts != null)
-//			tagProp.put(RFIDConstants.READERGUID_KEY, elmts);
-//		elmts = getLogicalName();
-//		if (elmts != null)
-//			tagProp.put(RFIDConstants.READERNAME_KEY, elmts);
-//		elmts = Long.toString(System.currentTimeMillis());
-//		if (elmts != null)
-//			tagProp.put(EventConstants.TIMESTAMP, elmts);
-//		tagProp.put(RFIDConstants.TAGGUID_KEY, tag);
-//
-//		return tagProp;
-//	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#readTheseTags(java.lang.String[])
+	 */
+	public void readTheseTags(String[] tags) {
+		System.out.println("Received " + tags.length + "tags");
+		for (int i = 0; i < tags.length; i++) {
+			readThisTag(tags[i]);
+		}
+	}
+
+	/*
+	 * In the props we add only the information related to the tag. The
+	 * temperature and position values are given by separate producers.
+	 * 
+	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#readThisTag(java.lang.String)
+	 */
+	public RFIDTagRead readThisTag(String tag) {
+		RFIDTagRead tagProp = new RFIDTagRead();
+		String elmts = getReaderGUId();
+		if (elmts != null)
+			tagProp.put(RFIDConstants.READERGUID_KEY, elmts);
+		elmts = getLogicalName();
+		if (elmts != null)
+			tagProp.put(RFIDConstants.READERNAME_KEY, elmts);
+		elmts = Long.toString(System.currentTimeMillis());
+		if (elmts != null)
+			tagProp.put(EventConstants.TIMESTAMP, elmts);
+		tagProp.put(RFIDConstants.TAGGUID_KEY, tag);
+
+		return tagProp;
+	}
 }
