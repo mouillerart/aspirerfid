@@ -21,6 +21,7 @@ package org.ow2.aspirerfid.reader.fictive;
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Properties;
+import java.util.Dictionary;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -158,7 +159,7 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 		        e.put(RFIDConstants.TAGGUID_KEY, getTag());
 		        e.put(RFIDConstants.READERGUID_KEY, getReaderGUId());
 		        e.put(RFIDConstants.READERNAME_KEY, getLogicalName());
-		        e.put(EventConstants.TIMESTAMP, System.currentTimeMillis());
+		        e.put(EventConstants.TIMESTAMP, Long.toString(System.currentTimeMillis()));
 
 		        // Send event via iPOJO eventAdmin handler
 		        m_publisher.send(e);
