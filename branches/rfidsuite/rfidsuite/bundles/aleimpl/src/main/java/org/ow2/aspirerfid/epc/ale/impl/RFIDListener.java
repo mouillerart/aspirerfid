@@ -36,11 +36,13 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 import org.osgi.service.event.EventConstants;
+import org.osgi.service.event.EventHandler;
 import org.osgi.service.log.LogService;
 import org.osgi.service.wireadmin.Consumer;
 import org.osgi.service.wireadmin.Wire;
 import org.osgi.service.wireadmin.WireConstants;
 import org.osgi.util.measurement.Measurement;
+import org.osgi.util.measurement.Unit;
 import org.osgi.util.position.Position;
 
 import org.ow2.aspirerfid.ale.ECReports;
@@ -65,10 +67,11 @@ import org.ow2.aspirerfid.common.cron.TimedObject;
  * periodically reports to subscribers.
  * 
  * @author François Fornaciari
- * @version 2007
+ * @author Lionel Touseau
+ * @version 01/2009
  */
 public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
-		ServiceListener {
+		ServiceListener, EventHandler {
 
 	private static final String HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			+ System.getProperty("line.separator");
@@ -90,6 +93,8 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 	private final BundleContext bundleContext;
 
 	private ServiceRegistration listenerServiceRegistration;
+	
+	private ServiceRegistration eventHandlerRegistration;
 
 	private boolean started;
 
@@ -385,6 +390,10 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 				// Stops sending reports
 				this.cronService.remove(this, this.cronName);
 			}
+			if (eventHandlerRegistration != null) {
+				// Unregisters an EventHandler
+				eventHandlerRegistration.unregister();
+			}
 			this.started = false;
 		}
 	}
@@ -501,4 +510,122 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 					+ ": updated null object " + " on wire " + wire.toString());
 		}
 	}
+	
+	/**
+	 * Method called when an OSGi Event is received.
+	 */
+	public synchronized void handleEvent(Event event) {
+		Object obj;
+		String guid, reader, logicalName, timeStamp;
+		final EPCTag epc;
+		
+		obj = event.getProperty(RFIDConstants.TAGGUID_KEY);
+		if (obj != null)
+			guid = (String) obj;
+		epc = EPCTagFactory.getInstance(guid);
+		obj = event.getProperty(RFIDConstants.READERGUID_KEY );
+		if (obj != null)
+			reader = (String) obj;
+		obj = event.getProperty(RFIDConstants.READERNAME_KEY );
+		if (obj != null)
+			logicalName = (String) obj;
+		obj = event.getProperty(EventConstants.TIMESTAMP );
+		if (obj != null)
+			timeStamp = Long.toString(obj);
+		String coordinates = (String) event.getProperty(RFIDConstants.COORDINATES_KEY);
+	
+		// get Measurements related to the read tag
+		final List measurements = new ArrayList();
+		// Get the most recent value of the wires
+		for (int i = 0; (this.wires != null) && (i < this.wires.length); i++) {
+			final Wire w = this.wires[i];
+			// if it is a measurement
+			final Object obj = w.getLastValue();
+			// TemperatureRead and GPSRead will be deleted in the future
+			if (obj instanceof TemperatureRead) {
+				final TemperatureRead temp = (TemperatureRead) obj;
+				logger.log(LogService.LOG_INFO,
+						"Object instance of TemperatureRead");
+				final Measurement m = new Measurement(temp
+						.getTemperature().getValue(), temp
+						.getTemperature().getError(), temp
+						.getTemperature().getUnit(), temp
+						.getTemperature().getTime());
+				final ECMeasurement measurement = new ECMeasurementImpl(
+						m, temp.getAppName(), temp.getSensor());
+				measurements.add(measurement);
+			} else if (obj instanceof Measurement) {
+				final Measurement mes = (Measurement) obj;
+				logger.log(LogService.LOG_INFO,
+						"Object instance of Measurement");
+				
+				String sensorID = w.getProperties().get(WireConstants.WIREADMIN_PRODUCER_PID);
+				String appName;
+				
+				// if the measurement is in Kelvin, it is a temperature
+				if (mes.getUnit().equals(Unit.K)) {
+					logger.log(LogService.LOG_INFO,
+							"Value:" + temp.getValue());
+					appName = "temperature";
+				} else {
+					appName = "unknown";
+					logger.log(LogService.LOG_WARNING, "unknown measurement unit from "+sensorID);
+					// TODO get the data.type property if available
+				}
+				final ECMeasurement measurement = new ECMeasurementImpl(
+						mes, appName, sensorID);
+				measurements.add(measurement);
+			} else if (obj instanceof GpsRead) {
+				final GpsRead gps = (GpsRead) obj;
+				logger.log(LogService.LOG_INFO,
+						"Object instance of GpsRead");
+				Position position = gps.getPosititon();
+
+				final Measurement alt = new Measurement(position
+						.getAltitude().getValue(), position
+						.getAltitude().getError(), position
+						.getAltitude().getUnit(), position
+						.getAltitude().getTime());
+
+				final Measurement lon = new Measurement(position
+						.getLongitude().getValue(), position
+						.getLongitude().getError(), position
+						.getLongitude().getUnit(), position
+						.getLongitude().getTime());
+
+				final Measurement lat = new Measurement(position
+						.getLatitude().getValue(), position
+						.getLatitude().getError(), position
+						.getLatitude().getUnit(), position
+						.getLatitude().getTime());
+
+				final ECMeasurement altitude = new ECMeasurementImpl(
+						alt, gps.getAppNameAlt(), gps.getSensor());
+				final ECMeasurement longitude = new ECMeasurementImpl(
+						lon, gps.getAppNameLon(), gps.getSensor());
+				final ECMeasurement latitude = new ECMeasurementImpl(
+						lat, gps.getAppNameLat(), gps.getSensor());
+
+				measurements.add(altitude);
+				measurements.add(longitude);
+				measurements.add(latitude);
+			} else if (obj instanceof Position) {
+				// TODO
+			}
+		}
+		// to get coord and measurements the producers have been polled
+		final ALEEvent aleEvent = new ALEEvent(epc, reader, timeStamp,
+				logicalName, coordinates, measurements);
+
+		this.epcBuffer.handleALEEvent(aleEvent);		
+		
+	}
+	
+	private void registerEventHandler(){
+		 String[] topics = new String[] {ecSpec.getEventTopic(), "org/ow2/aspirerfid/rfidtopic/*"};
+		 Hashtable ht = new Hashtable();
+		 ht.put(EventConstants.EVENT_TOPIC, topics);
+		 eventHandlerRegistration = context.registerService(EventHandler.class.getName(), this, ht);
+	}
+	
 }
