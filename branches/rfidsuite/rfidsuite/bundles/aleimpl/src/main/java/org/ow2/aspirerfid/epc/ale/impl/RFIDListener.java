@@ -341,6 +341,7 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 	 * @see org.ow2.aspirerfid.epc.ale.impl.RFIDListenerMBean#start()
 	 */
 	public void start() {
+		System.out.println("starting");
 		if (!this.started) {
 			// Register a consumer service
 			final Dictionary registrationProperties = new Hashtable();
@@ -349,7 +350,7 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 			registrationProperties.put(
 					WireConstants.WIREADMIN_CONSUMER_FLAVORS, new Class[] {
 							RFIDTagRead.class, TemperatureRead.class,
-							GpsRead.class });
+							GpsRead.class, Measurement.class });
 			(this.bundleContext).registerService(Consumer.class.getName(),
 					this, registrationProperties);
 
@@ -442,6 +443,16 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 								.getTemperature().getTime());
 						final ECMeasurement measurement = new ECMeasurementImpl(
 								m, temp.getAppName(), temp.getSensor());
+						measurements.add(measurement);
+					} else if (obj instanceof Measurement) {
+						final Measurement temp = (Measurement) obj;
+						logger.log(LogService.LOG_INFO,
+								"Object instance of Measurement");
+						logger.log(LogService.LOG_INFO,
+						"Value:" + temp.getValue());
+				
+						final ECMeasurement measurement = new ECMeasurementImpl(
+								temp, "temperature", "thermocron");
 						measurements.add(measurement);
 					} else if (obj instanceof GpsRead) {
 						final GpsRead gps = (GpsRead) obj;
