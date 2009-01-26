@@ -515,23 +515,26 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 	 * Method called when an OSGi Event is received.
 	 */
 	public synchronized void handleEvent(Event event) {
-		Object obj;
-		String guid, reader, logicalName, timeStamp;
+		Object o;
+		String guid="";
+		String reader="";
+		String logicalName="";
+		String  timeStamp="";
 		final EPCTag epc;
 		
-		obj = event.getProperty(RFIDConstants.TAGGUID_KEY);
-		if (obj != null)
-			guid = (String) obj;
+		o = event.getProperty(RFIDConstants.TAGGUID_KEY);
+		if (o != null)
+			guid = (String) o;
 		epc = EPCTagFactory.getInstance(guid);
-		obj = event.getProperty(RFIDConstants.READERGUID_KEY );
-		if (obj != null)
-			reader = (String) obj;
-		obj = event.getProperty(RFIDConstants.READERNAME_KEY );
-		if (obj != null)
-			logicalName = (String) obj;
-		obj = event.getProperty(EventConstants.TIMESTAMP );
-		if (obj != null)
-			timeStamp = (String) obj;
+		o = event.getProperty(RFIDConstants.READERGUID_KEY );
+		if (o != null)
+			reader = (String) o;
+		o = event.getProperty(RFIDConstants.READERNAME_KEY );
+		if (o != null)
+			logicalName = (String) o;
+		o = event.getProperty(EventConstants.TIMESTAMP );
+		if (o != null)
+			timeStamp = (String) o;
 		String coordinates = (String) event.getProperty(RFIDConstants.COORDINATES_KEY);
 	
 		// get Measurements related to the read tag
@@ -540,7 +543,7 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 		for (int i = 0; (this.wires != null) && (i < this.wires.length); i++) {
 			final Wire w = this.wires[i];
 			// if it is a measurement
-			final Object obj = w.getLastValue();
+			Object obj = w.getLastValue();
 			// TemperatureRead and GPSRead will be deleted in the future
 			if (obj instanceof TemperatureRead) {
 				final TemperatureRead temp = (TemperatureRead) obj;
@@ -559,13 +562,13 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 				logger.log(LogService.LOG_INFO,
 						"Object instance of Measurement");
 				
-				String sensorID = w.getProperties().get(WireConstants.WIREADMIN_PRODUCER_PID);
+				String sensorID = (String)w.getProperties().get(WireConstants.WIREADMIN_PRODUCER_PID);
 				String appName;
 				
 				// if the measurement is in Kelvin, it is a temperature
 				if (mes.getUnit().equals(Unit.K)) {
 					logger.log(LogService.LOG_INFO,
-							"Value:" + temp.getValue());
+							"Value:" + mes.getValue());
 					appName = "temperature";
 				} else {
 					appName = "unknown";
@@ -625,7 +628,7 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 		 String[] topics = new String[] {ecSpec.getEventTopic(), "org/ow2/aspirerfid/rfidtopic/*"};
 		 Hashtable ht = new Hashtable();
 		 ht.put(EventConstants.EVENT_TOPIC, topics);
-		 eventHandlerRegistration = context.registerService(EventHandler.class.getName(), this, ht);
+		 eventHandlerRegistration = bundleContext.registerService(EventHandler.class.getName(), this, ht);
 	}
 	
 }
