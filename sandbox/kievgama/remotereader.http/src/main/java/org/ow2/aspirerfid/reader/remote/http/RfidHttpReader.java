@@ -66,6 +66,8 @@ public class RfidHttpReader implements  RfidHttpReaderMBean,
 	 */
 	private BundleContext context;
 	
+	private String gpsCoordinates;
+	
 	private static RfidHttpReader instance;
 	
 	private RFIDTagRead lastValue;
@@ -88,7 +90,7 @@ public class RfidHttpReader implements  RfidHttpReaderMBean,
 				"an HTTP interface that forwards RFID tag readings");
 
 		context.registerService(Producer.class.getName(), this, p);
-		System.out.println("starting RFID HTTP reader");
+		System.out.println("Starting RFID HTTP reader");
 		instance = this;
 	}
 	
@@ -96,10 +98,21 @@ public class RfidHttpReader implements  RfidHttpReaderMBean,
 		return instance;
 	}
 	
-
+	public String getGpsCoordinates() {
+		return gpsCoordinates;
+	}
+	
+	public void setGpsCoordinates(String coordinates) {
+		this.gpsCoordinates = coordinates;
+	}
+	
 	void sendEvent(RFIDTagRead tagRead) {
 		tagRead.put(RFIDConstants.READERNAME_KEY, this.getLogicalName());
+		if (this.gpsCoordinates != null) {
+			tagRead.put(RFIDConstants.COORDINATES_KEY,this.gpsCoordinates);
+		}
 		lastValue = tagRead;
+		
 		for (int i = 0; wires != null && i < wires.length; i++) {
 			Wire wire = wires[i];
 			// check if wire is valid and connected

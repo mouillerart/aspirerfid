@@ -35,8 +35,22 @@
 		<callback transition="INVALIDATE" method="stopReader" />
 
 	</component>
+	
+	<component
+		classname="org.ow2.aspirerfid.reader.remote.http.ReaderServlet"
+		factory="false" immediate="false">
+
+		
+	<requires field="httpService" />
+	<callback transition="validate" method="bind" />
+
+	</component>	
 
 	<instance
 		component="org.ow2.aspirerfid.reader.remote.http.RfidHttpReader"
 		name="HTTP RFID Reader" />
+		
+	<instance
+		component="org.ow2.aspirerfid.reader.remote.http.ReaderServlet"
+		name="HTTP RFID Servlet" />
 </ipojo>

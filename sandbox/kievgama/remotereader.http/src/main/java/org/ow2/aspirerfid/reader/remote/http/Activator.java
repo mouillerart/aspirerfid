@@ -20,29 +20,13 @@ package org.ow2.aspirerfid.reader.remote.http;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.http.HttpService;
-import org.osgi.util.tracker.ServiceTracker;
 
 public class Activator implements BundleActivator {
-	private static String SERVLET_NAME = "/HttpTagReader";
-	private ServiceTracker tracker;
 	
 	public void start(BundleContext context) throws Exception {
-		//TODO 
-		tracker = new ServiceTracker(context,HttpService.class.getName(),null);
-		tracker.open();
-		HttpService httpService = (HttpService)tracker.getService();
-		//TODO change to logger
-		if (httpService == null) {
-			System.out.println("HttpService not found");
-		} else {
-			System.out.println("STARTED --> " + (httpService == null));
-			httpService.registerServlet(SERVLET_NAME, new ReaderServlet(), null, null);
-		}
 	}
 
 	public void stop(BundleContext context) throws Exception {
-		tracker.close();
 	}
 
 }

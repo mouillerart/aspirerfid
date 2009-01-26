@@ -26,6 +26,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.http.HttpService;
+import org.osgi.service.http.NamespaceException;
 /**
  * Servlet that works as a simple HTTP interface for receiving
  * RFID tag reading from external applications. <br>
@@ -34,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  */
 public class ReaderServlet extends HttpServlet {
-
+	private HttpService httpService;
 	private static final String SEPARATOR = " ";
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -74,5 +77,18 @@ public class ReaderServlet extends HttpServlet {
 			sb.delete(sb.length() - 1, sb.length());
 		}
 		return sb.toString();
+	}
+	private void bind() {
+		System.out.println("binding to: " + httpService);
+		// TODO Auto-generated method stub
+		try {
+			httpService.registerServlet("/HttpTagReader", new ReaderServlet(), null, null);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NamespaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
