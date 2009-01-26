@@ -531,7 +531,7 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 			logicalName = (String) obj;
 		obj = event.getProperty(EventConstants.TIMESTAMP );
 		if (obj != null)
-			timeStamp = Long.toString(obj);
+			timeStamp = (String) obj;
 		String coordinates = (String) event.getProperty(RFIDConstants.COORDINATES_KEY);
 	
 		// get Measurements related to the read tag
