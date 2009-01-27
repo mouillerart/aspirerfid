@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LogicalReaders xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/resources/LogicalReaders.xsd">
+	<LogicalReader name="SmartLabImpinjSpeedwayLogicalReader">
+		<LRSpec isComposite="false" readerType="org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor">
+			<LRProperty name="Description" value="This Logical Reader consists of read point 1,2,3"/>
+<!-- 		<LRProperty name="ConnectionPoint" value="192.168.212.238:5084"/>
+			<LRProperty name="NotificationPoint" value="http://localhost:9090"/>
+ -->
+			<LRProperty name="ConnectionPointAddress" value="192.168.212.238"/>
+			<LRProperty name="ConnectionPointPort" value="5084"/>
+			<LRProperty name="EncryptedConnectionPointAddress" value="192.168.212.238"/> <!-- Not curently used -->
+			<LRProperty name="EncryptedConnectionPointPort" value="5085"/> <!-- Not curently used -->
+			<LRProperty name="ReadTimeInterval" value="1000"/><!-- the interval you want minus 150 ms the polling method is waiting for the reader report to get ready -->
+			<LRProperty name="AdaptorClass" value="LowLevelReaderProtocol"/>
+			<LRProperty name="ImplClass" value="org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor"/>
+<!-- 			
+			<LRProperty name="PhysicalReaderName" value="ImpinjSpeedway"/>
+ -->			
+			<LRProperty name="DescriptiveReaderSource" value="Antenna1,Antenna2,Antenna3"/> <!-- Not curently used -->
+			<LRProperty name="PhysicalReaderSource" value="3"/> <!-- Usualy from 1 to 4 (Antennas) -->
+			<LRProperty name="RoSpecID" value="1"/> <!-- Set the value of the ROSpecID you will use to program the reader-->
+		</LRSpec>
+	</LogicalReader>
+</LogicalReaders>
