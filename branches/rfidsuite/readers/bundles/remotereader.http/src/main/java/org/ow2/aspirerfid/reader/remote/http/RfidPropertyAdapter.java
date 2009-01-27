@@ -18,8 +18,10 @@
  */
 package org.ow2.aspirerfid.reader.remote.http;
 
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.osgi.service.event.EventConstants;
 import org.ow2.aspirerfid.util.RFIDConstants;
@@ -32,20 +34,29 @@ public class RfidPropertyAdapter {
 	private static Map<String, String> equivalenceMap = new HashMap<String,String>();
 	static final String[] MANDATORY_FIELDS = new String[]{ID,TIMESTAMP, READER_ID};
 	private boolean valid;
-	private RFIDTagRead tagProp;
+//	private RFIDTagRead tagProp;
+	
+	//Added to use event instead of RFIDTagRead WireAdmin
+	private String id, timestamp, readerId;
 	 
-	public RfidPropertyAdapter(Map valuesToAdapt) {
-		if (validate(valuesToAdapt)) {
-			adaptValues(valuesToAdapt);
+//	public RfidPropertyAdapter(Map valuesToAdapt) {
+//		if (validate(valuesToAdapt)) {
+//			adaptValues(valuesToAdapt);
+//		}
+//	}
+
+	public RfidPropertyAdapter(Map values) {
+		if (validate(values)) {
+			setTagInfo(values);
 		}
 	}
-
-	private void adaptValues(Map values) {
-		tagProp = new RFIDTagRead();
-		tagProp.put(RFIDConstants.READERGUID_KEY, values.get(READER_ID));
-		tagProp.put(EventConstants.TIMESTAMP, values.get(TIMESTAMP));
-		tagProp.put(RFIDConstants.TAGGUID_KEY, values.get(ID));
-	}
+	
+//	private void adaptValues(Map values) {
+//		tagProp = new RFIDTagRead();
+//		tagProp.put(RFIDConstants.READERGUID_KEY, values.get(READER_ID));
+//		tagProp.put(EventConstants.TIMESTAMP, values.get(TIMESTAMP));
+//		tagProp.put(RFIDConstants.TAGGUID_KEY, values.get(ID));
+//	}
 	
 	private boolean validate(Map valuesToAdapt) {
 		this.valid = true;
@@ -64,7 +75,28 @@ public class RfidPropertyAdapter {
 		return valid;
 	}
 	
-	RFIDTagRead getTagRead() {
-		return tagProp;
+//	RFIDTagRead getTagRead() {
+//		return tagProp;
+//	}
+	
+	/**
+	 * @return a dictionary containing a tagId, a timestamp and a readerId 
+	 */
+	public Dictionary getTagInfo(){
+		Properties tagInfo = new Properties();
+		tagInfo.put(RFIDConstants.TAGGUID_KEY, id);
+		tagInfo.put(EventConstants.TIMESTAMP, timestamp);
+		tagInfo.put(RFIDConstants.READERGUID_KEY, readerId);
+		return tagInfo;
+	}	
+	
+	/**
+	 * @param values, a tagID, a timestamp and the readerID
+	 */
+	public void setTagInfo(Map values){
+		id = (String)values.get(ID);
+		timestamp = (String)values.get(TIMESTAMP);
+		readerId = (String)values.get(READER_ID);
 	}
+	
 }

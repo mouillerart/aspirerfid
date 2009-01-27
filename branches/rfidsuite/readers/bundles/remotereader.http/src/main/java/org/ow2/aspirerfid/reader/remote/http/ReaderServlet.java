@@ -47,7 +47,8 @@ public class ReaderServlet extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, 
 					"MandatoryFieldSetIncomplete " + getMandatoryParamString());
 		} else {
-			RfidHttpReader.getInstance().sendEvent(propAdapter.getTagRead()); 
+//			RfidHttpReader.getInstance().sendEvent(propAdapter.getTagRead());
+			RfidHttpReader.getInstance().sendEvent(propAdapter.getTagInfo());
 		}
 	}
 

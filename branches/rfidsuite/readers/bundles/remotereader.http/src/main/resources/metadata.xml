@@ -18,7 +18,7 @@
    License for the specific language governing rights and limitations.
 -->
 
-<ipojo>
+<ipojo xmlns:ev="org.apache.felix.ipojo.handlers.event">
 	<component
 		classname="org.ow2.aspirerfid.reader.remote.http.RfidHttpReader"
 		factory="false" immediate="false">
@@ -33,6 +33,11 @@
 		</provides>
 
 		<callback transition="INVALIDATE" method="stopReader" />
+
+		<ev:publisher
+			name="HttpTagPublisher"
+			field="httpPublisher"
+			topics="org/ow2/aspirerfid/rfidtopic/*"/>
 
 	</component>
 	

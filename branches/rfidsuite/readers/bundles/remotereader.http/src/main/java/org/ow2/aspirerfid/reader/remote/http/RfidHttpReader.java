@@ -18,23 +18,31 @@
  */
 package org.ow2.aspirerfid.reader.remote.http;
 
-import java.util.Hashtable;
+import java.util.Dictionary;
+//import java.util.Hashtable;
 import java.util.Properties;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.event.EventConstants;
+import org.apache.felix.ipojo.handlers.event.publisher.Publisher;
+//import org.osgi.framework.BundleContext;
+//import org.osgi.service.event.EventConstants;
 import org.osgi.service.log.LogService;
-import org.osgi.service.wireadmin.Producer;
-import org.osgi.service.wireadmin.Wire;
+//import org.osgi.service.wireadmin.Producer;
+//import org.osgi.service.wireadmin.Wire;
 import org.ow2.aspirerfid.util.Logger;
 import org.ow2.aspirerfid.util.RFIDConstants;
-import org.ow2.aspirerfid.wires.RFIDTagRead;
+//import org.ow2.aspirerfid.wires.RFIDTagRead;
 
 /**
  * Propagates tag reading events
+ * 
+ * @author Kiev Gama
+ * @author Lionel Touseau 2009
+ *
+ * TODO the "period" field and methods are not useful for this reader
+ * TODO redo the comments and methods that are not suited for this HttpReader
  */
-public class RfidHttpReader implements  RfidHttpReaderMBean,
-		Producer {
+public class RfidHttpReader implements  RfidHttpReaderMBean/*,
+		Producer*/ {
 	/**
 	 * Time between two polls in milliseconds.
 	 */
@@ -51,45 +59,52 @@ public class RfidHttpReader implements  RfidHttpReaderMBean,
 	private String readerGUId = "httpguid";
 
 
-	/**
-	 * Set of wires between this producer and different consumers.
-	 */
-	private Wire[] wires;
+//	/**
+//	 * Set of wires between this producer and different consumers.
+//	 */
+//	private Wire[] wires;
 
 	/**
 	 * Logger used to record errors, warnings, information and debug messages.
 	 */
 	private Logger logger;
 
-	/**
-	 * BundleContext used for service registrations.
-	 */
-	private BundleContext context;
+//	/**
+//	 * BundleContext used for service registrations.
+//	 */
+//	private BundleContext context;
 	
 	private String gpsCoordinates;
 	
 	private static RfidHttpReader instance;
 	
-	private RFIDTagRead lastValue;
+//	private RFIDTagRead lastValue;
+	
+//	private Dictionary lastValue;
+	
+	/**
+	 * iPOJO eventAdmin handler publisher
+	 */
+	private Publisher httpPublisher;
 
 	/**
 	 * @param bc
 	 *            BundleContext used for service registrations.
 	 */
-	RfidHttpReader(BundleContext bc) {
-		//TODO Do adequate OSGi code
-		this.context = bc;
+	RfidHttpReader(/*BundleContext bc*/) {
+//		//TODO Do adequate OSGi code
+//		this.context = bc;
 		logger = new Logger("HTTPReader", Logger.INFO);
-		// Register a producer
-		Hashtable<String,Object> p = new Hashtable<String,Object>();
-		p.put(org.osgi.service.wireadmin.WireConstants.WIREADMIN_PRODUCER_FLAVORS,
-			new Class[] { RFIDTagRead.class });
-		p.put(org.osgi.framework.Constants.SERVICE_PID,
-				"org.ow2.aspirerfid.osgi.util.rfidtagproducer");
-		p.put(org.osgi.framework.Constants.SERVICE_DESCRIPTION,
-				"an HTTP interface that forwards RFID tag readings");
-
-		context.registerService(Producer.class.getName(), this, p);
+//		// Register a producer
+//		Hashtable<String,Object> p = new Hashtable<String,Object>();
+//		p.put(org.osgi.service.wireadmin.WireConstants.WIREADMIN_PRODUCER_FLAVORS,
+//			new Class[] { RFIDTagRead.class });
+//		p.put(org.osgi.framework.Constants.SERVICE_PID,
+//				"org.ow2.aspirerfid.osgi.util.rfidtagproducer");
+//		p.put(org.osgi.framework.Constants.SERVICE_DESCRIPTION,
+//				"an HTTP interface that forwards RFID tag readings");
+//
+//		context.registerService(Producer.class.getName(), this, p);
 		System.out.println("Starting RFID HTTP reader");
 		instance = this;
 	}
@@ -106,61 +121,72 @@ public class RfidHttpReader implements  RfidHttpReaderMBean,
 		this.gpsCoordinates = coordinates;
 	}
 	
-	void sendEvent(RFIDTagRead tagRead) {
-		tagRead.put(RFIDConstants.READERNAME_KEY, this.getLogicalName());
+//	void sendEvent(RFIDTagRead tagRead) {
+//		tagRead.put(RFIDConstants.READERNAME_KEY, this.getLogicalName());
+//		if (this.gpsCoordinates != null) {
+//			tagRead.put(RFIDConstants.COORDINATES_KEY,this.gpsCoordinates);
+//		}
+//		lastValue = tagRead;
+//		
+//		for (int i = 0; wires != null && i < wires.length; i++) {
+//			Wire wire = wires[i];
+//			// check if wire is valid and connected
+//			if (!wire.isConnected() || !wire.isValid())
+//				continue;
+//			Object obj = polled(wire, tagRead);
+//			if (obj != null)
+//				wire.update(obj);
+//		}
+//	}
+	
+	void sendEvent(Dictionary tagInfo) {
+		// add complementary information to the tag reading
+		tagInfo.put(RFIDConstants.READERNAME_KEY, this.getLogicalName());
 		if (this.gpsCoordinates != null) {
-			tagRead.put(RFIDConstants.COORDINATES_KEY,this.gpsCoordinates);
+			tagInfo.put(RFIDConstants.COORDINATES_KEY,this.gpsCoordinates);
 		}
-		lastValue = tagRead;
-		
-		for (int i = 0; wires != null && i < wires.length; i++) {
-			Wire wire = wires[i];
-			// check if wire is valid and connected
-			if (!wire.isConnected() || !wire.isValid())
-				continue;
-			Object obj = polled(wire, tagRead);
-			if (obj != null)
-				wire.update(obj);
-		}
+		// send the Event using iPOJO eventAdmin handler
+		httpPublisher.send(tagInfo);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.osgi.service.wireadmin.Producer#consumersConnected(org.osgi.service.wireadmin.Wire[])
-	 */
-	public synchronized void consumersConnected(Wire[] wires) {
-		this.wires = wires;
-	}
+	
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see org.osgi.service.wireadmin.Producer#consumersConnected(org.osgi.service.wireadmin.Wire[])
+//	 */
+//	public synchronized void consumersConnected(Wire[] wires) {
+//		this.wires = wires;
+//	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.osgi.service.wireadmin.Producer#polled(org.osgi.service.wireadmin.Wire)
-	 */
-	public Object polled(Wire wire) {
-		return polled(wire, lastValue);
-	}
-
-	/**
-	 * Analyzes the wire's flavors and returns the appropriate object.
-	 * 
-	 * @param wire
-	 *            A connected and valid wire.
-	 * @param prop
-	 *            The object to be sent through the wire.
-	 * @return null if none of its ancestors or implemented interfaces is the
-	 *         same as one the wire's flavors
-	 */
-	private Object polled(Wire wire, RFIDTagRead prop) {
-		Class[] clazzes = wire.getFlavors();
-		for (int i = 0; i < clazzes.length; i++) {
-			Class clazz = clazzes[i];
-			if (clazz.isAssignableFrom(RFIDTagRead.class))
-				return prop;
-		}
-		return null;
-	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see org.osgi.service.wireadmin.Producer#polled(org.osgi.service.wireadmin.Wire)
+//	 */
+//	public Object polled(Wire wire) {
+//		return polled(wire, lastValue);
+//	}
+//
+//	/**
+//	 * Analyzes the wire's flavors and returns the appropriate object.
+//	 * 
+//	 * @param wire
+//	 *            A connected and valid wire.
+//	 * @param prop
+//	 *            The object to be sent through the wire.
+//	 * @return null if none of its ancestors or implemented interfaces is the
+//	 *         same as one the wire's flavors
+//	 */
+//	private Object polled(Wire wire, RFIDTagRead prop) {
+//		Class[] clazzes = wire.getFlavors();
+//		for (int i = 0; i < clazzes.length; i++) {
+//			Class clazz = clazzes[i];
+//			if (clazz.isAssignableFrom(RFIDTagRead.class))
+//				return prop;
+//		}
+//		return null;
+//	}
 
 
 	// __________________________________________________
@@ -276,24 +302,24 @@ public class RfidHttpReader implements  RfidHttpReaderMBean,
 				.println("The HTTP reader has no driver, it can't be disposed.");
 	}
 
-	/*
-	 * In the props we add only the information related to the tag. The
-	 * temperature and position values are given by separate producers.
-	 * 
-	 */
-	public RFIDTagRead readThisTag(String tag) {
-		RFIDTagRead tagProp = new RFIDTagRead();
-		String elmts = getReaderGUId();
-		if (elmts != null)
-			tagProp.put(RFIDConstants.READERGUID_KEY, elmts);
-		elmts = getLogicalName();
-		if (elmts != null)
-			tagProp.put(RFIDConstants.READERNAME_KEY, elmts);
-		elmts = Long.toString(System.currentTimeMillis());
-		if (elmts != null)
-			tagProp.put(EventConstants.TIMESTAMP, elmts);
-		tagProp.put(RFIDConstants.TAGGUID_KEY, tag);
-
-		return tagProp;
-	}
+//	/*
+//	 * In the props we add only the information related to the tag. The
+//	 * temperature and position values are given by separate producers.
+//	 * 
+//	 */
+//	public RFIDTagRead readThisTag(String tag) {
+//		RFIDTagRead tagProp = new RFIDTagRead();
+//		String elmts = getReaderGUId();
+//		if (elmts != null)
+//			tagProp.put(RFIDConstants.READERGUID_KEY, elmts);
+//		elmts = getLogicalName();
+//		if (elmts != null)
+//			tagProp.put(RFIDConstants.READERNAME_KEY, elmts);
+//		elmts = Long.toString(System.currentTimeMillis());
+//		if (elmts != null)
+//			tagProp.put(EventConstants.TIMESTAMP, elmts);
+//		tagProp.put(RFIDConstants.TAGGUID_KEY, tag);
+//
+//		return tagProp;
+//	}
 }
