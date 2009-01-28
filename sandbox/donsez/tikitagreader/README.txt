@@ -1,8 +1,11 @@
 Tikitag Reader
------------------
+--------------
 
 This bundle generate ALE events from NFC tags data read from a Tikitag reader
 It is based on the Tikitag client
+
+The patched version of the Tikitag client (in ./src/java/com/tikitag/client)
+calls the remotereader.http thru the HttpAdapterProxy class in order to convert Tikitag tagEvent in ALE events.
 
 Link:
 http://code.google.com/p/tikitagdev (licence Apache Software Licence v2.0)

@@ -4,7 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="var" path="OSGI_CORE"/>
-	<classpathentry kind="lib" path="target/org.ow2.aspirerfid.reader.tikitag-0.1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/tikitag-client-1.0-SNAPSHOT-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

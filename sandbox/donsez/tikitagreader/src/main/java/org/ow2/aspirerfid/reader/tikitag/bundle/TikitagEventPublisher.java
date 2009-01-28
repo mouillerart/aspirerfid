@@ -102,14 +102,7 @@ public class TikitagEventPublisher implements BundleActivator
 		                	eventAdmin.postEvent(rfidEvent);
 		                }
 		            }
-	                StringBuffer sb = new StringBuffer();
-	                sb.append("\nDetected tags: ");
-	                sb.append("\n  Type        = ").append(tagEvent.getTagEventType()).toString();                
-	                sb.append("\n  Client      = ").append(tagEvent.getClientId()).toString();                
-	                sb.append("\n  ReaderId    = ").append(tagEvent.getReaderId()).toString();                
-	                sb.append("\n  Action  Tag = ").append(tagEvent.getActionTag()).toString();
-	                sb.append("\n  Context Tag = ").append(tagEvent.getContextTag()).toString();
-	                String msg=sb.toString();
+	                String msg=printTagEvent(tagEvent);
 	                log.debug(msg);
 	                System.out.println(msg);
 	            }
@@ -123,4 +116,28 @@ public class TikitagEventPublisher implements BundleActivator
         tagService.shutdown();
         serviceTracker.close();
     }
+    
+    private String printTagEvent(TagEvent tagEvent){
+	    StringBuffer sb = new StringBuffer();
+	    sb.append("\nDetected tag: ");
+	    sb.append("\n  Type        = ").append(tagEvent.getTagEventType()).toString();                
+	    sb.append("\n  Client      = ").append(tagEvent.getClientId()).toString();                
+	    sb.append("\n  ReaderId    = ").append(tagEvent.getReaderId()).toString();                
+	    sb.append("\n  Action  Tag = ").append(tagEvent.getActionTag()).toString();
+	    sb.append("\n  Context Tag = ").append(tagEvent.getContextTag()).toString();
+    	return sb.toString();
+    }
+
+    private String dumpTagEvent(TagEvent tagEvent){
+	    StringBuffer sb = new StringBuffer();
+	    sb.append("EventTag[");
+	    sb.append("type=").append(tagEvent.getTagEventType()).toString();                
+	    sb.append(";client=").append(tagEvent.getClientId()).toString();                
+	    sb.append(";readerId=").append(tagEvent.getReaderId()).toString();                
+	    sb.append(";actionTag=").append(tagEvent.getActionTag()).toString();
+	    sb.append("contextTag=").append(tagEvent.getContextTag()).toString();
+	    sb.append("]");
+    	return sb.toString();
+    }
+    
 }

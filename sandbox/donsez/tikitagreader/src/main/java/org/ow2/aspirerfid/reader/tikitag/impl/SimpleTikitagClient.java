@@ -29,6 +29,7 @@ import com.tikitag.client.tagservice.TagServiceConfiguration;
 import com.tikitag.client.tagservice.TagType;
 import com.tikitag.client.tagservice.impl.TagServiceImpl;
 import com.tikitag.ons.model.util.TagEvent;
+import com.tikitag.util.HexFormatter;
 
 
 /**
@@ -80,6 +81,7 @@ public class SimpleTikitagClient
                 sb.append((new StringBuilder()).append("\n  ReaderId    = ").append(tagEvent.getReaderId()).toString());                
                 sb.append((new StringBuilder()).append("\n  Action  Tag = ").append(tagEvent.getActionTag()).toString());
                 sb.append((new StringBuilder()).append("\n  Context Tag = ").append(tagEvent.getContextTag()).toString());
+                sb.append((new StringBuilder()).append(HexFormatter.pageView(HexFormatter.toHexString(tagEvent.getActionTag().getTagData()))));
                 System.out.println((new StringBuilder()).append("Detected tags: ").append(sb.toString()).toString());
             }
 
