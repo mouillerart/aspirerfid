@@ -24,13 +24,13 @@ import java.util.Properties;
 
 import org.apache.felix.ipojo.handlers.event.publisher.Publisher;
 //import org.osgi.framework.BundleContext;
-//import org.osgi.service.event.EventConstants;
+import org.osgi.service.event.EventConstants;
 import org.osgi.service.log.LogService;
 //import org.osgi.service.wireadmin.Producer;
 //import org.osgi.service.wireadmin.Wire;
 import org.ow2.aspirerfid.util.Logger;
 import org.ow2.aspirerfid.util.RFIDConstants;
-//import org.ow2.aspirerfid.wires.RFIDTagRead;
+import org.ow2.aspirerfid.wires.RFIDTagRead;
 
 /**
  * Propagates tag reading events
@@ -302,24 +302,24 @@ public class RfidHttpReader implements  RfidHttpReaderMBean/*,
 				.println("The HTTP reader has no driver, it can't be disposed.");
 	}
 
-//	/*
-//	 * In the props we add only the information related to the tag. The
-//	 * temperature and position values are given by separate producers.
-//	 * 
-//	 */
-//	public RFIDTagRead readThisTag(String tag) {
-//		RFIDTagRead tagProp = new RFIDTagRead();
-//		String elmts = getReaderGUId();
-//		if (elmts != null)
-//			tagProp.put(RFIDConstants.READERGUID_KEY, elmts);
-//		elmts = getLogicalName();
-//		if (elmts != null)
-//			tagProp.put(RFIDConstants.READERNAME_KEY, elmts);
-//		elmts = Long.toString(System.currentTimeMillis());
-//		if (elmts != null)
-//			tagProp.put(EventConstants.TIMESTAMP, elmts);
-//		tagProp.put(RFIDConstants.TAGGUID_KEY, tag);
-//
-//		return tagProp;
-//	}
+	/*
+	 * In the props we add only the information related to the tag. The
+	 * temperature and position values are given by separate producers.
+	 * 
+	 */
+	public RFIDTagRead readThisTag(String tag) {
+		RFIDTagRead tagProp = new RFIDTagRead();
+		String elmts = getReaderGUId();
+		if (elmts != null)
+			tagProp.put(RFIDConstants.READERGUID_KEY, elmts);
+		elmts = getLogicalName();
+		if (elmts != null)
+			tagProp.put(RFIDConstants.READERNAME_KEY, elmts);
+		elmts = Long.toString(System.currentTimeMillis());
+		if (elmts != null)
+			tagProp.put(EventConstants.TIMESTAMP, elmts);
+		tagProp.put(RFIDConstants.TAGGUID_KEY, tag);
+
+		return tagProp;
+	}
 }

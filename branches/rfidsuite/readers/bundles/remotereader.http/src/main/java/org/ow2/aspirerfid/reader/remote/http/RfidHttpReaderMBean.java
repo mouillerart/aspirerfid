@@ -19,14 +19,12 @@
 package org.ow2.aspirerfid.reader.remote.http;
 
 import org.ow2.aspirerfid.reader.RfidReaderMBean;
-import org.ow2.aspirerfid.wires.RFIDTagRead;
 
 /**
- * Define the configuration interface for a fictive Rfid reader
+ * Define the configuration interface for a http Rfid reader
  * 
- * @author Anne Robert
- * @author Guillaume Surrel
- * @version 2.0 2007
+ * @author Kiev Gama
+ * @version 1.0 2009
  */
 public interface RfidHttpReaderMBean extends RfidReaderMBean {
 
