@@ -79,7 +79,8 @@ public class NDEFSmartPosterMessage extends NDEFMessage{
     	        this.appendRecord(new NDEFTextRecord(langs[i], texts[i]));		
     		}
 	}
-				
+	
+	// TODO should be removed and add as a JUnit test or as an utility class
 	public static void main(String args[]) throws IOException{
 
 		NDEFSmartPosterMessage message;

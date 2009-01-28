@@ -109,12 +109,12 @@ public class NDEFURIRecord extends NDEFRecord {
         super.appendPayload(urlBytes);
 	}
 	
-			
+	// TODO should be removed and add as a JUnit test			
 	public static void main(String args[]){
 		
 	    NDEFMessage message = new NDEFMessage();
 	    message.appendRecord(new NDEFURIRecord(args[0]));
 		
-		System.out.println(HexUtility.toHexString(message.toByteArray()," "));		
+		System.out.println(HexUtility.toHexString(message.toByteArray(),""));		
 	}
 }

@@ -48,7 +48,7 @@ public class NDEFTextRecord extends NDEFRecord {
         this.appendPayload(lang.getBytes());
         this.appendPayload(text.getBytes());
 	}
-				
+	// TODO should be removed and add as a JUnit test			
 	public static void main(String args[]){
 		
 		StringBuffer sb=new StringBuffer();

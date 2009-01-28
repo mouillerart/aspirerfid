@@ -43,4 +43,37 @@ public class HexUtility {
 		}
 		return sb.toString(); 
 	}
+	
+    public static byte[] fromHexString(String s) {
+        int len = s.length();
+        if((len & 1) != 0)
+        {
+            s = (new StringBuilder()).append("0").append(s).toString();
+            len = s.length();
+        }
+        byte b[] = new byte[len / 2];
+        int i = 0;
+        for(int j = 0; i < len; j++)
+        {
+            int high = charToNibble(s.charAt(i));
+            int low = charToNibble(s.charAt(i + 1));
+            b[j] = (byte)(high << 4 | low);
+            i += 2;
+        }
+
+        return b;
+    }
+
+    private static int charToNibble(char c)
+    {
+        if('0' <= c && c <= '9')
+            return c - 48;
+        if('a' <= c && c <= 'f')
+            return (c - 97) + 10;
+        if('A' <= c && c <= 'F')
+            return (c - 65) + 10;
+        else
+            throw new IllegalArgumentException((new StringBuilder()).append("Invalid hex character: ").append(c).toString());
+    }
+
 }
