@@ -19,8 +19,8 @@
 
 	<groupId>org.ow2.aspirerfid</groupId>
 
-	<artifactId>demo</artifactId>
-	<version>1.0.0</version>
+	<artifactId>demos&amp;tools</artifactId>
+	<version>0.1.0</version>
 	<name>AIT developed demos</name>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -28,6 +28,8 @@
 
   <modules>
     <module>aspireTcpMessageCapturerV0.1m</module>
-    <module>aspireWarehouseALEDemo</module>
+    <module>aspireRfidEpcisQueryAndCaptureClient</module>
+    <module>aspireWarehouseAleDemo</module>
+    <module>aspireWarehouseEpcisDemo</module>
   </modules>
 </project>
