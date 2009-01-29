@@ -18,19 +18,21 @@
    License for the specific language governing rights and limitations.
 -->
 
-<ipojo xmlns:ev="org.apache.felix.ipojo.handlers.event">
+<ipojo xmlns:ev="org.apache.felix.ipojo.handlers.event"
+		xmlns:jmx="org.apache.felix.ipojo.handlers.jmx">
+	
 	<component
 		classname="org.ow2.aspirerfid.reader.remote.http.RfidHttpReader"
 		factory="false" immediate="false">
 
-		<provides
+<!-- 		<provides
 			interface="{org.ow2.aspirerfid.reader.remote.http.RfidHttpReaderMBean}">
 			<property name="Bundle-Description" value="HTTP RFID Reader"
 				type="java.lang.String" />
 			<property name="jmxagent.objectname"
 				value="rfid:type=reader,SymbolicName=HTTP"
 				type="java.lang.String" />
-		</provides>
+		</provides> -->
 
 		<callback transition="INVALIDATE" method="stopReader" />
 
@@ -38,16 +40,31 @@
 			name="HttpTagPublisher"
 			field="httpPublisher"
 			topics="org/ow2/aspirerfid/rfidtopic/*"/>
+			
+		<jmx:config>
+		    <jmx:method name="setLogicalName"/>
+		    <jmx:method name="getLogicalName"/>
+		    <jmx:method name="setRepeatPeriod"/>
+		    <jmx:method name="getRepeatPeriod"/>
+		    <jmx:method name="setReaderGUId"/>
+		    <jmx:method name="getReaderGUId"/>
+		    <jmx:method name="setGpsCoordinates"/>
+		    <jmx:method name="getGpsCoordinates"/>
+		    <jmx:method name="startReader"/>
+		    <jmx:method name="stopReader"/>
+		    <jmx:method name="dispose"/>
+		</jmx:config>
+
+
 
 	</component>
 	
 	<component
 		classname="org.ow2.aspirerfid.reader.remote.http.ReaderServlet"
 		factory="false" immediate="false">
-
 		
-	<requires field="httpService" />
-	<callback transition="validate" method="bind" />
+		<requires field="httpService" />
+		<callback transition="validate" method="bind" />
 
 	</component>	
 

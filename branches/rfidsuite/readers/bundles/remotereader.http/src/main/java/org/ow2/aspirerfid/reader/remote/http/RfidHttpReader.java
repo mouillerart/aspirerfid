@@ -41,7 +41,7 @@ import org.ow2.aspirerfid.wires.RFIDTagRead;
  * TODO the "period" field and methods are not useful for this reader
  * TODO redo the comments and methods that are not suited for this HttpReader
  */
-public class RfidHttpReader implements  RfidHttpReaderMBean/*,
+public class RfidHttpReader /*implements  RfidHttpReaderMBean,
 		Producer*/ {
 	/**
 	 * Time between two polls in milliseconds.
