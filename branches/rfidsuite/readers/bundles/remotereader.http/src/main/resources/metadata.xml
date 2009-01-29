@@ -41,7 +41,8 @@
 			field="httpPublisher"
 			topics="org/ow2/aspirerfid/rfidtopic/*"/>
 			
-		<jmx:config>
+		<jmx:config
+			objectName="rfid:type=reader,SymbolicName=HTTP">
 		    <jmx:method name="setLogicalName"/>
 		    <jmx:method name="getLogicalName"/>
 		    <jmx:method name="setRepeatPeriod"/>
