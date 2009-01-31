@@ -1,0 +1,4 @@
+obr add-url file:C:\Docume~1\Donsez\.m2\repository\repository.xml
+obr start "OSGi R4 Compendium Bundle"
+obr start "OW2 :: Aspire RFID :: RXTX library"
+obr start "OW2 :: Aspire RFID :: TEMPer Producer" 
