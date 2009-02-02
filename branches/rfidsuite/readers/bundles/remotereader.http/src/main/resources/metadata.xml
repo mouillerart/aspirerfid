@@ -23,7 +23,8 @@
 	
 	<component
 		classname="org.ow2.aspirerfid.reader.remote.http.RfidHttpReader"
-		factory="false" immediate="false">
+		factory="false" architecture="true"
+		immediate="false">
 
 <!-- 		<provides
 			interface="{org.ow2.aspirerfid.reader.remote.http.RfidHttpReaderMBean}">
@@ -39,10 +40,10 @@
 		<ev:publisher
 			name="HttpTagPublisher"
 			field="httpPublisher"
-			topics="org/ow2/aspirerfid/rfidtopic/*"/>
+			topics="org/ow2/aspirerfid/rfidtopic/rfid"/>
 			
 		<jmx:config
-			objectName="rfid:type=reader,SymbolicName=HTTP">
+			objectName="rfid:type=reader,SymbolicName=HTTP" usesMOSGi="true">
 		    <jmx:method name="setLogicalName"/>
 		    <jmx:method name="getLogicalName"/>
 		    <jmx:method name="setRepeatPeriod"/>
