@@ -23,8 +23,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+
 /**
- * @author nkef
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
 public class ExitAspireRfidIdeHandler extends AbstractHandler implements

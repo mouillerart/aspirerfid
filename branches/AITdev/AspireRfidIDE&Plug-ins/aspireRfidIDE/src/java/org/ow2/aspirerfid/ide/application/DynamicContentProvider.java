@@ -25,10 +25,9 @@ import org.eclipse.ui.forms.widgets.*;
 import org.eclipse.ui.intro.config.*;
 import org.w3c.dom.*;
 
-//
 
 /**
- * @author nkef
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
 public class DynamicContentProvider implements IIntroXHTMLContentProvider {

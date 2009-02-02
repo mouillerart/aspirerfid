@@ -38,105 +38,27 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.ow2.aspirerfid.ide.views.*;
 
 
+
 /**
- * @author nkef
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
 public class OpenConsoleViewHandler extends AbstractHandler implements IHandler {
-
-//	IOConsoleOutputStream standarDebugOutputConsole;
-//	IOConsole standarDebugConsole;
-//	IConsoleManager manager;
-//	IConsole[] consolesx;
-	
-	
 	
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-//		initiateConsole();
+
 		try {
 			HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().showView("org.eclipse.ui.console.ConsoleView");//ConsoleView.ID
 		} catch (PartInitException e) {
 			throw new ExecutionException("Error while opening view", e);
 		}
 		
-//		OutputStream out = new OutputStream() {
-//			private StringBuffer buffer = new StringBuffer();
-//			private final Object obj = new Object();
-//
-//			@Override
-//			public void write(final int b) throws IOException {
-//				synchronized (obj) {
-//					if (debugStyledText.isDisposed())
-//						return;
-//
-//					buffer.append((char) b);
-//				}
-//			}
-//			@Override
-//			public void write(byte[] b, int off, int len) throws IOException {
-//				super.write(b, off, len);
-//				flush();
-//			}
-//			@Override
-//			public void flush() throws IOException {
-//				synchronized (obj) {
-//					final String newText = buffer.toString();
-//					writeToConsole(newText);
-//					buffer = new StringBuffer();
-//				}
-//			}
-//
-//		};
-//		final PrintStream oldOut = System.out;
-//		System.setOut(new PrintStream(out));
-//		debugStyledText.addDisposeListener(new DisposeListener() {
-//			public void widgetDisposed(DisposeEvent e) {
-//				System.setOut(oldOut);
-//			}
-//		});
 
 		return null;
 	}
 	
-//	/**
-//	 * Initiate the Ale Server Configurator Console
-//	 */
-//	private void initiateConsole() {
-//		manager = ConsolePlugin.getDefault().getConsoleManager();
-//		consolesx = manager.getConsoles();
-//		boolean exist = false;
-//		for (int i = 0; i < consolesx.length; i++) {
-//			if (consolesx[i].getName().equals("Standar Debug Out"))
-//				standarDebugConsole = (IOConsole) consolesx[i];
-//			exist = true;
-//		}
-//		if (!exist) {
-//			standarDebugConsole = new IOConsole(
-//					"Standar Debug Out", null);
-//			manager
-//					.addConsoles(new IConsole[] { standarDebugConsole });
-//		}
-//		manager.showConsoleView(standarDebugConsole);
-//		standarDebugConsole.clearConsole();
-//		standarDebugOutputConsole = standarDebugConsole
-//				.newOutputStream();
-//	}
-//	
-//	/**
-//	 * Write to the IDE Console
-//	 * 
-//	 * @param message
-//	 */
-//	private void writeToConsole(String message) {
-//
-//		try {
-//			standarDebugOutputConsole.write(message + "\n");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 
 }

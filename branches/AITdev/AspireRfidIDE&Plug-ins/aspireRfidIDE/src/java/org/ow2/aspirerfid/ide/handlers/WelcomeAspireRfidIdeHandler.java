@@ -26,8 +26,9 @@ import org.eclipse.ui.PlatformUI;
 
 
 
+
 /**
- * @author nkef
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
 public class WelcomeAspireRfidIdeHandler extends AbstractHandler implements

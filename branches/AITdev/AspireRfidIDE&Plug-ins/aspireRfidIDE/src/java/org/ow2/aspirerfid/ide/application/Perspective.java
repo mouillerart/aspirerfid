@@ -20,8 +20,9 @@ package org.ow2.aspirerfid.ide.application;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 
+
 /**
- * @author nkef
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
 public class Perspective implements IPerspectiveFactory {

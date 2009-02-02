@@ -28,8 +28,9 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 
+
 /**
- * @author nkef
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {

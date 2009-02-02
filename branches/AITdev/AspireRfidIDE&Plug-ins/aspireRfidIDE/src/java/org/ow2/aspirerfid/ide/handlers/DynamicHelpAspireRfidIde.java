@@ -24,8 +24,9 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+
 /**
- * @author nkef
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
 public class DynamicHelpAspireRfidIde extends AbstractHandler implements
