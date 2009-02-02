@@ -4,6 +4,5 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/java"/>
 	<classpathentry kind="lib" path="lib/ReaderProtocol-1.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/BundleManager-0.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

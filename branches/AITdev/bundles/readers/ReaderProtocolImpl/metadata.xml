@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iPOJO xmlns:jmx="org.apache.felix.ipojo.handlers.jmx">
-    <component className="org.ow2.aspirerfid.reader.rp.impl.AccadaRmRp"
+    <component className="org.ow2.aspirerfid.reader.rp.impl.ReaderProtocol"
       architecture="true"
       immediate="true">
 
@@ -15,7 +15,7 @@
       component="comp"/>
       
       <!--  
-      <instance component="org.ow2.aspirerfid.reader.rp.impl.AccadaRmRp"/>
+      <instance component="org.ow2.aspirerfid.reader.rp.impl.ReaderProtocol"/>
       -->
 </iPOJO>
 

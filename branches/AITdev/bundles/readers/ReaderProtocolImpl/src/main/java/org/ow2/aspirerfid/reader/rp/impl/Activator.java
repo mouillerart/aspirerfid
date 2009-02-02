@@ -42,7 +42,7 @@ public class Activator implements BundleActivator{
 	public static Bundle bundle;
 	private static ServiceTracker sTracker = null;
 	private static Logger log;
-	private AccadaRmRpMBean rp;
+	private ReaderProtocolMBean rp;
 	private ServiceRegistration rpServiceRegistration;
 	
 	static  {
@@ -59,9 +59,9 @@ public class Activator implements BundleActivator{
 			sTracker = new ServiceTracker(context,TDT.class.getName(),null);
 		}
 		sTracker.open();
-		rp = new AccadaRmRp();
+		rp = new ReaderProtocol();
 		props.put("jmxagent.objectname", "rfid:type=service,SymbolicName=RPreader");
-		rpServiceRegistration = context.registerService(AccadaRmRpMBean.class.getName(), rp, props);
+		rpServiceRegistration = context.registerService(ReaderProtocolMBean.class.getName(), rp, props);
 	}
 
 	public void stop(BundleContext context) throws Exception {

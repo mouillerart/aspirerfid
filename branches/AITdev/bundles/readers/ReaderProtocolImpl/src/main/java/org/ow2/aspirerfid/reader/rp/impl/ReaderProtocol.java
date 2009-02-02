@@ -26,7 +26,6 @@ import org.ow2.aspirerfid.reader.rp.impl.core.msg.MessageLayer;
 import org.ow2.aspirerfid.reader.rp.impl.core.util.ResourceLocator;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.ow2.aspirerfid.reader.rp.RmRpMBean;
 import java.io.File;
 import java.io.StringWriter;
 import java.io.ByteArrayInputStream;
@@ -35,21 +34,19 @@ import java.io.ByteArrayInputStream;
  * @author Nektarios Leontiadis nele@ait.edu.gr
  * 
  */
-public class AccadaRmRp implements AccadaRmRpMBean {
+public class ReaderProtocol implements ReaderProtocolMBean {
 
     private static XMLConfiguration conf;
-
-    private ReaderDevice device;
     private MessageLayer ml;
     private static Logger log;
     private static File configFile;
 
     static {
-	log = Logger.getLogger(AccadaRmRp.class);
+	log = Logger.getLogger(ReaderProtocol.class);
 	configFile = new File(System.getProperty("user.home"), ReaderDevice.PROPERTIES_FILE);
     }
 
-    public AccadaRmRp() {
+    public ReaderProtocol() {
 
 	conf = new XMLConfiguration();
 	try {
@@ -148,12 +145,6 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 	    return false;
     }
 
-    public void addAlarmChannel(String name, String host, int port) {
-	conf.addProperty("alarmChannels.alarmChannel(-1).name", name);
-	conf.addProperty("alarmChannels.alarmChannel.host", host);
-	conf.addProperty("alarmChannels.alarmChannel.port", port);
-    }
-
     public void addIOEdgeTriggerPortManager(String port) {
 	conf.addProperty("IOEdgeTriggerPortManager.port(-1)", port);
     }
@@ -185,43 +176,6 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 	conf.addProperty("sources.source(-1).name", name);
 	conf.addProperty("sources.source.fixed", fixed);
 	conf.addProperty("sources.source.readpoint", readpoint);
-    }
-
-    public String getAlarmChannelHost(String channelName) {
-	List list = conf.getList("alarmChannels");
-	for (int i = 0; i < list.size(); i++) {
-	    if (list.get(i).equals(channelName)) {
-		return conf.getString("alarmChannels.alarmChannel(" + i + ").host");
-	    }
-	}
-
-	return null;
-    }
-
-    public int getAlarmChannelPort(String channelName) {
-	List list = conf.getList("alarmChannels");
-	for (int i = 0; i < list.size(); i++) {
-	    if (list.get(i).equals(channelName)) {
-		return conf.getInt("alarmChannels.alarmChannel(" + i + ").port");
-	    }
-	}
-
-	return -1;
-    }
-
-    public String[] getAlarmChannels() {
-	List list = conf.getList("alarmChannels");
-	final String COMMA = ",";
-	String channels[] = new String[list.size()];
-	String name, host, port;
-	for (int i = 0; i < list.size(); i++) {
-	    name = conf.getString("alarmChannels.alarmChannel(" + i + ").name");
-	    host = conf.getString("alarmChannels.alarmChannel(" + i + ").host");
-	    port = conf.getString("alarmChannels.alarmChannel(" + i + ").port");
-	    channels[i] = name + COMMA + host + COMMA + port;
-	}
-
-	return channels;
     }
 
     public String getCurrentSource() {
@@ -279,10 +233,6 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 	return conf.getLong("lostTimeout");
     }
 
-    public String getMacAddress() {
-	return conf.getString("macAddress");
-    }
-
     public String getManufacturer() {
 	return conf.getString("manufacturer");
     }
@@ -325,34 +275,6 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 
     public long getObservedTimeout() {
 	return conf.getLong("observedTimeout");
-    }
-
-    public String getRMAgentAddress() {
-	return conf.getString("mgmtAgentAddress");
-    }
-
-    public int getRMAgentPort() {
-	return conf.getInt("mgmtAgentPort");
-    }
-
-    public String getRMAgentType() {
-	return conf.getString("mgmtAgentType");
-    }
-
-    public String getRMContact() {
-	return conf.getString("contact");
-    }
-
-    public String getRMDescription() {
-	return conf.getString("description");
-    }
-
-    public String getRMLocationDescription() {
-	return conf.getString("locationDescription");
-    }
-
-    public String getRMSerialNumber() {
-	return conf.getString("serialNumber");
     }
 
     public int getReadCyclesPerTrigger() {
@@ -477,10 +399,6 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 	conf.setProperty("lostTimeout", timeout);
     }
 
-    public void setMacAddress(String mac) {
-	conf.setProperty("macAddress", mac);
-    }
-
     public void setManufacturer(String manufacturer) {
 	conf.setProperty("manufacturer", manufacturer);
     }
@@ -523,30 +441,6 @@ public class AccadaRmRp implements AccadaRmRpMBean {
 
     public void setObservedTimeout(long timeout) {
 	conf.setProperty("observedTimeout", timeout);
-    }
-
-    public void setRMAgentAddress(String address) {
-	conf.setProperty("mgmtAgentAddress", address);
-    }
-
-    public void setRMAgentType(String type) {
-	conf.setProperty("mgmtAgentType", type);
-    }
-
-    public void setRMContact(String contact) {
-	conf.setProperty("contact", contact);
-    }
-
-    public void setRMDescription(String description) {
-	conf.setProperty("description", description);
-    }
-
-    public void setRMLocationDescription(String desc) {
-	conf.setProperty("description", desc);
-    }
-
-    public void setRMSerialNumber(String serial) {
-	conf.setProperty("serialNumber", serial);
     }
 
     public void setReadCyclesPerTrigger(int cycles) {

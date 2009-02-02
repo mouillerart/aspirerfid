@@ -20,6 +20,7 @@
 package org.ow2.aspirerfid.reader.rp;
 
 /**
+ * Provides a common interface for Reader Protocol implementations 
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
  *
  */
@@ -73,27 +74,6 @@ public interface RmRpMBean {
 	public String [] getIOEdgeTriggerPortManager();
 	public void addIOValueTriggerPortManager(String port);
 	public String [] getIOValueTriggerPortManager();
-	
-	public void setRMDescription(String description);
-	public String getRMDescription();
-	public void setRMLocationDescription(String desc);
-	public String getRMLocationDescription();
-	public void setRMContact(String contact);
-	public String getRMContact();
-	public void setRMSerialNumber(String serial);
-	public String getRMSerialNumber();
-	public void setRMAgentType(String type);
-	public String getRMAgentType();
-	public void setRMAgentAddress(String address);
-	public String getRMAgentAddress();
-	public int getRMAgentPort();
-	public void setMacAddress(String mac);
-	public String getMacAddress();
-	
-	public void addAlarmChannel(String name, String host, int port);
-	public String [] getAlarmChannels();
-	public String getAlarmChannelHost(String channelName);
-	public int getAlarmChannelPort(String channelName);
 	
 	public void setTcpServerConnection(boolean isEnabled);
 	public boolean getTcpServerConnection();

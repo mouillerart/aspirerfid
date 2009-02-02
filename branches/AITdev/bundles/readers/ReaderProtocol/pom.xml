@@ -24,7 +24,7 @@
 
 	<parent>
 		<groupId>org.ow2.aspirerfid</groupId>
-		<artifactId>bundles</artifactId>
+		<artifactId>readers</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	

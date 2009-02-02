@@ -24,6 +24,6 @@ import org.ow2.aspirerfid.reader.rp.RmRpMBean;
  * @author Nektarios Leontiadis
  *
  */
-public interface AccadaRmRpMBean extends RmRpMBean{
+public interface ReaderProtocolMBean extends RmRpMBean{
 
 }

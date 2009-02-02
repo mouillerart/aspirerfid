@@ -26,8 +26,6 @@ import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
-
-import org.ow2.aspirerfid.commons.BundleManagerMBean;
 import org.ow2.aspirerfid.ide.jmx.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.reader.rp.RmRpMBean;
 
@@ -134,17 +132,6 @@ public class ConfigurationManager implements RmRpMBean {
     public void addSource(String name, boolean fixed, String readpoint) {
 	connect();
 	handler.addSource(name, fixed, readpoint);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getAlarmChannels()
-     */
-    @Override
-    public String[] getAlarmChannels() {
-	connect();
-	return handler.getAlarmChannels();
     }
 
     /*
@@ -258,17 +245,6 @@ public class ConfigurationManager implements RmRpMBean {
     public long getLostTimeout() {
 	connect();
 	return handler.getLostTimeout();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getMacAddress()
-     */
-    @Override
-    public String getMacAddress() {
-	connect();
-	return handler.getMacAddress();
     }
 
     /*
@@ -391,83 +367,6 @@ public class ConfigurationManager implements RmRpMBean {
     public long getObservedTimeout() {
 	connect();
 	return handler.getObservedTimeout();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getRMAgentAddress()
-     */
-    @Override
-    public String getRMAgentAddress() {
-	connect();
-	return handler.getRMAgentAddress();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getRMAgentPort()
-     */
-    @Override
-    public int getRMAgentPort() {
-	connect();
-	return handler.getRMAgentPort();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getRMAgentType()
-     */
-    @Override
-    public String getRMAgentType() {
-	connect();
-	return handler.getRMAgentType();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getRMContact()
-     */
-    @Override
-    public String getRMContact() {
-	connect();
-	return handler.getRMContact();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getRMDescription()
-     */
-    @Override
-    public String getRMDescription() {
-	connect();
-	return handler.getRMDescription();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getRMLocationDescription()
-     */
-    @Override
-    public String getRMLocationDescription() {
-	connect();
-	return handler.getRMLocationDescription();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.ow2.aspirerfid.reader.rp.RmRpMBean#getRMSerialNumber()
-     */
-    @Override
-    public String getRMSerialNumber() {
-	connect();
-	return handler.getRMSerialNumber();
     }
 
     /*
@@ -634,18 +533,6 @@ public class ConfigurationManager implements RmRpMBean {
      * (non-Javadoc)
      * 
      * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#addAlarmChannel(java.lang.String,
-     * java.lang.String, int)
-     */
-    @Override
-    public void addAlarmChannel(String name, String host, int port) {
-	// TODO Auto-generated method stub
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
      * org.ow2.aspirerfid.reader.rp.RmRpMBean#addIOEdgeTriggerPortManager(java
      * .lang.String)
      */
@@ -654,33 +541,7 @@ public class ConfigurationManager implements RmRpMBean {
 	connect();
 	handler.addIOEdgeTriggerPortManager(port);
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#getAlarmChannelHost(java.lang.
-     * String)
-     */
-    @Override
-    public String getAlarmChannelHost(String channelName) {
-	connect();
-	return handler.getAlarmChannelHost(channelName);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#getAlarmChannelPort(java.lang.
-     * String)
-     */
-    @Override
-    public int getAlarmChannelPort(String channelName) {
-	connect();
-	return handler.getAlarmChannelPort(channelName);
-    }
-
+    
     /*
      * (non-Javadoc)
      * 
@@ -792,18 +653,6 @@ public class ConfigurationManager implements RmRpMBean {
     public void setLostTimeout(long timeout) {
 	connect();
 	handler.setLostTimeout(timeout);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#setMacAddress(java.lang.String)
-     */
-    @Override
-    public void setMacAddress(String mac) {
-	connect();
-	handler.setMacAddress(mac);
     }
 
     /*
@@ -929,81 +778,6 @@ public class ConfigurationManager implements RmRpMBean {
     public void setObservedTimeout(long timeout) {
 	connect();
 	handler.setObservedTimeout(timeout);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#setRMAgentAddress(java.lang.String
-     * )
-     */
-    @Override
-    public void setRMAgentAddress(String address) {
-	connect();
-	handler.setRMAgentAddress(address);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#setRMAgentType(java.lang.String)
-     */
-    @Override
-    public void setRMAgentType(String type) {
-	connect();
-	handler.setRMAgentType(type);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#setRMContact(java.lang.String)
-     */
-    @Override
-    public void setRMContact(String contact) {
-	connect();
-	handler.setRMContact(contact);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#setRMDescription(java.lang.String)
-     */
-    @Override
-    public void setRMDescription(String description) {
-	connect();
-	handler.setRMDescription(description);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#setRMLocationDescription(java.
-     * lang.String)
-     */
-    @Override
-    public void setRMLocationDescription(String desc) {
-	connect();
-	handler.setRMLocationDescription(desc);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.ow2.aspirerfid.reader.rp.RmRpMBean#setRMSerialNumber(java.lang.String
-     * )
-     */
-    @Override
-    public void setRMSerialNumber(String serial) {
-	connect();
-	handler.setRMSerialNumber(serial);
     }
 
     /*

@@ -30,6 +30,5 @@
 	<modules>
     	<module>connectors</module>
     	<module>aspireRfidALE</module>
-    	<module>aspireRfidEpcisRepository</module>
   	</modules>
 </project>

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire
+ * Copyright ï¿½ 2008-2010, Aspire
  * 
  * Aspire is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License version 2.1 as published by
@@ -18,22 +18,17 @@
 
 package org.ow2.aspirerfid.ide.jmx.views;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -51,8 +46,6 @@ import org.eclipse.ui.part.ViewPart;
 import org.ow2.aspirerfid.ide.jmx.Activator;
 import org.ow2.aspirerfid.ide.jmx.ConfigurationManager;
 import org.ow2.aspirerfid.ide.jmx.preferences.PreferenceConstants;
-
-import swing2swt.layout.FlowLayout;
 
 
 
