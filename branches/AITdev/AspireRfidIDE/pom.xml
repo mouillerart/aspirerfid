@@ -19,7 +19,7 @@
 
 	<groupId>org.ow2.aspirerfid</groupId>
 
-	<artifactId>AspireRfidIDE&amp;Plug-ins</artifactId>
+	<artifactId>AspireRfidIDE</artifactId>
 	<version>0.1.0</version>
 	<name>AIT developed demos</name>
 

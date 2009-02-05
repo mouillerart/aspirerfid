@@ -29,7 +29,8 @@
   <modules>
     <module>bundles</module>
     <module>servers</module>
-    <module>demos&amp;tools</module>
-    <module>AspireRfidIDE&amp;Plug-ins</module>
+    <module>demos</module>
+    <module>AspireRfidIDE</module>
+    <module>standaloneTools</module>
   </modules>
 </project>

@@ -29,5 +29,8 @@
 		<module>aspireRfidIde-beg</module>
 		<module>aspireRfidIde-jmx</module>
 		<module>aspireRfidIde-TcpMC</module>
+		<module>aspireRfidIde-AleSerConfig</module>
+		<module>aspireRfidIde-ECSpecEditor</module>
+		<module>aspireRfidIde-LRSpecEditor</module>
 	</modules>
 </project>

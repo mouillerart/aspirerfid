@@ -20,16 +20,14 @@
 
 	<groupId>org.ow2.aspirerfid</groupId>
 
-	<artifactId>servers</artifactId>
+	<artifactId>standaloneTools</artifactId>
+	<name>Standalone Tools</name>
 	<version>0.1.0</version>
-	<name>AIT developed servers</name>
 
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
-	
 	<modules>
-    	<module>connectors</module>
-    	<module>aspireRfidEpcisRepository</module>
-    	<module>aspireRfidALE</module>
-  	</modules>
+		<module>aspireRfidEpcisQueryAndCaptureClient</module>
+		<module>aspireTcpMessageCapturerV0.1m</module>
+	</modules>
 </project>
