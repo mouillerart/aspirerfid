@@ -1,5 +1,5 @@
 /*
- * Copyright © 2008-2010, Aspire 
+ * Copyright (c) 2008-2010, Aspire 
  *
  * This file contains the source code of the Accada library by ETH Zurich (www.accada.org),
  * licensed under the terms of the GNU Lesser General Public License version 2.1 in 2007
