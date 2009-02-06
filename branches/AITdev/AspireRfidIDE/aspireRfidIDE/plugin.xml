@@ -273,6 +273,12 @@
             locationURI="toolbar:org.eclipse.ui.main.toolbar">
          <toolbar
                id="org.ow2.aspirerfid.ide.main.toolbar">
+            <command
+                  commandId="org.ow2.aspirerfid.ide.openconsole.command"
+                  icon="icons/notepad_16.gif"
+                  label="Open Console"
+                  style="push">
+            </command>
          </toolbar>
       </menuContribution>
    </extension>
