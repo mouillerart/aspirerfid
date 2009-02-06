@@ -828,7 +828,9 @@ public class LogicalReaderEditorView extends ViewPart {
 
 		RPConnectionPointCombo.removeAll();
 		for (int i = 0; i < connectionPointArray.length; i++) {
+			if (!(connectionPointArray[i].equals(""))){
 			RPConnectionPointCombo.add(connectionPointArray[i]);
+			}
 		}
 
 		// load values to RPNotificationPointCombo
@@ -838,7 +840,9 @@ public class LogicalReaderEditorView extends ViewPart {
 
 		RPNotificationPointCombo.removeAll();
 		for (int i = 0; i < notificationPointArray.length; i++) {
+			if (!(notificationPointArray[i].equals(""))){
 			RPNotificationPointCombo.add(notificationPointArray[i]);
+			}
 		}
 	}
 
@@ -1349,6 +1353,9 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						RPReaderSaveButton.setEnabled(false);
 
+						addNewConnectionPointValueIfNotPresent();
+						addNewNotificationPointValueIfNotPresent();
+						
 						resetRPReaderFields();
 					}
 					catch (IOException e1) {
@@ -1449,12 +1456,13 @@ public class LogicalReaderEditorView extends ViewPart {
 
 					RPReaderSaveButton.setEnabled(false);
 
+					addNewConnectionPointValueIfNotPresent();
+					addNewNotificationPointValueIfNotPresent();
+					
 					resetRPReaderFields();
 				}
 			}
 
-			addNewConnectionPointValueIfNotPresent();
-			addNewNotificationPointValueIfNotPresent();
 		}
 	}
 
@@ -1484,7 +1492,9 @@ public class LogicalReaderEditorView extends ViewPart {
 
 			RPConnectionPointCombo.removeAll();
 			for (int i = 0; i < connectionPointArray.length; i++) {
+				if(!(connectionPointArray[i].equals(""))){
 				RPConnectionPointCombo.add(connectionPointArray[i]);
+				}
 			}
 		}
 	}
@@ -1515,7 +1525,9 @@ public class LogicalReaderEditorView extends ViewPart {
 
 			RPNotificationPointCombo.removeAll();
 			for (int i = 0; i < notificationPointArray.length; i++) {
+				if(!(notificationPointArray[i].equals(""))){
 				RPNotificationPointCombo.add(notificationPointArray[i]);
+				}
 			}
 		}
 	}
@@ -3733,6 +3745,9 @@ public class LogicalReaderEditorView extends ViewPart {
 					try {
 						rpLrSpecBuilder.generateXml(existingRPReaderFileToBeSaved);
 
+						addNewConnectionPointValueIfNotPresent();
+						addNewNotificationPointValueIfNotPresent();
+						
 						resetRPReaderFields();
 					}
 					catch (IOException e1) {
@@ -3816,12 +3831,13 @@ public class LogicalReaderEditorView extends ViewPart {
 					// generate RP Reader Static Definition XML
 					generateRPReaderStaticDefinitionXML(rpLrSpecBuilder, existingRPReaderFileToBeSaved);
 
+					addNewConnectionPointValueIfNotPresent();
+					addNewNotificationPointValueIfNotPresent();
+					
 					resetRPReaderFields();
 				}
 			}
 
-			addNewConnectionPointValueIfNotPresent();
-			addNewNotificationPointValueIfNotPresent();
 		}
 	}
 

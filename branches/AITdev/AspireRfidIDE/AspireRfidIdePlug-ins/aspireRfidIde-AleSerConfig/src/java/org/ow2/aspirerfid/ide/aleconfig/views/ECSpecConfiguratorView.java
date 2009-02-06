@@ -809,7 +809,9 @@ public class ECSpecConfiguratorView extends ViewPart {
 				PreferenceConstants.P_ECSpecNames).split(",");
 
 		for (int i = 0; i < specNamesArray.length; i++) {
+			if(!(specNamesArray[i].equals(""))){
 			ecSpecNameCombo.add(specNamesArray[i]);
+			}
 		}
 	}
 
@@ -913,8 +915,10 @@ public class ECSpecConfiguratorView extends ViewPart {
 				PreferenceConstants.P_NotificationURI).split(",");
 
 		for (int i = 0; i < subscribeNotificationURIArray.length; i++) {
+			if (!(subscribeNotificationURIArray[i].equals(""))){
 			subscribeECSpecNotificationURIListCombo
 					.add(subscribeNotificationURIArray[i]);
+			}
 		}
 
 	}
@@ -946,8 +950,10 @@ public class ECSpecConfiguratorView extends ViewPart {
 				PreferenceConstants.P_NotificationURI).split(",");
 
 		for (int i = 0; i < unsubscribeNotificationURIArray.length; i++) {
+			if(!(unsubscribeNotificationURIArray[i].equals(""))){
 			unsubscribeECSpecNotificationURIListCombo
 					.add(unsubscribeNotificationURIArray[i]);
+			}
 		}
 	}
 
@@ -1086,7 +1092,9 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 			ecSpecNameCombo.removeAll();
 			for (int i = 0; i < specNameArray.length; i++) {
+				if(!(specNameArray[i].equals(""))){
 				ecSpecNameCombo.add(specNameArray[i]);
+				}
 			}
 		}
 	}
@@ -1310,8 +1318,10 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 			subscribeECSpecNotificationURIListCombo.removeAll();
 			for (int i = 0; i < notificationURIArray.length; i++) {
+				if(!(notificationURIArray[i].equals(""))){
 				subscribeECSpecNotificationURIListCombo
 						.add(notificationURIArray[i]);
+				}
 			}
 		}
 	}
@@ -1431,8 +1441,10 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 			unsubscribeECSpecNotificationURIListCombo.removeAll();
 			for (int i = 0; i < notificationURIArray.length; i++) {
+				if(!(notificationURIArray[i].equals(""))){
 				unsubscribeECSpecNotificationURIListCombo
 						.add(notificationURIArray[i]);
+				}
 			}
 		}
 	}

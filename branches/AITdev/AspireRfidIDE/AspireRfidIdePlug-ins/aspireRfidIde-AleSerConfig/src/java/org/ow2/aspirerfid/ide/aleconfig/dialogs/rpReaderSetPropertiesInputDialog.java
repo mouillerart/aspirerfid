@@ -148,7 +148,9 @@ public class rpReaderSetPropertiesInputDialog extends Dialog {
 
 		RPConnectionPointCombo.removeAll();
 		for (int i = 0; i < connectionPointArray.length; i++) {
+			if(!(connectionPointArray[i].equals(""))){
 			RPConnectionPointCombo.add(connectionPointArray[i]);
+			}
 		}
 
 		// load values to RPNotificationPointCombo
@@ -159,7 +161,9 @@ public class rpReaderSetPropertiesInputDialog extends Dialog {
 
 		RPNotificationPointCombo.removeAll();
 		for (int i = 0; i < notificationPointArray.length; i++) {
+			if(!(notificationPointArray[i].equals(""))){
 			RPNotificationPointCombo.add(notificationPointArray[i]);
+			}
 		}
 
 		Display display = getParent().getDisplay();
@@ -434,7 +438,9 @@ public class rpReaderSetPropertiesInputDialog extends Dialog {
 
 			RPConnectionPointCombo.removeAll();
 			for (int i = 0; i < connectionPointArray.length; i++) {
+				if(!(connectionPointArray[i].equals(""))){
 				RPConnectionPointCombo.add(connectionPointArray[i]);
+				}
 			}
 		}
 	}
@@ -472,7 +478,9 @@ public class rpReaderSetPropertiesInputDialog extends Dialog {
 
 			RPNotificationPointCombo.removeAll();
 			for (int i = 0; i < notificationPointArray.length; i++) {
+				if(!(notificationPointArray[i].equals(""))){
 				RPNotificationPointCombo.add(notificationPointArray[i]);
+				}
 			}
 		}
 	}

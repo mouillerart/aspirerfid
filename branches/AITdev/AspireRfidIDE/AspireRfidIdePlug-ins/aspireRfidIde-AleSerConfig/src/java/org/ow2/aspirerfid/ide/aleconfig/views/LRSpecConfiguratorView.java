@@ -1945,7 +1945,9 @@ public class LRSpecConfiguratorView extends ViewPart {
 				PreferenceConstants.P_ReaderNames).split(",");
 
 		for (int i = 0; i < readerNamesArray.length; i++) {
+			if(!(readerNamesArray[i].equals(""))){
 			lrDefineReaderNameCombo.add(readerNamesArray[i]);
+			}
 		}
 
 	}
@@ -2585,7 +2587,9 @@ public class LRSpecConfiguratorView extends ViewPart {
 
 			lrDefineReaderNameCombo.removeAll();
 			for (int i = 0; i < readerNamesArray.length; i++) {
+				if(!(readerNamesArray[i].equals(""))){
 				lrDefineReaderNameCombo.add(readerNamesArray[i]);
+				}
 			}
 		}
 	}
