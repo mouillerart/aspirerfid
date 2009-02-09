@@ -111,7 +111,7 @@ public class RfidSimulator {
 		try {
 			// read initial value of attributes in properties
 			tagList = loadTagList(properties);
-			String maxStr = properties.getProperty("maxRaedRFID");
+			String maxStr = properties.getProperty("maxReadRFID");
 			if (maxStr == null) {
 				max = tagList.length / 3;
 				if ((tagList.length > 0) && (max == 0))

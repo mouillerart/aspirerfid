@@ -24,7 +24,7 @@
 		factory="false" immediate="false">
 
 		<provides
-			interface="{org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean}">
+			specification="{org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean}">
 			<property name="Bundle-Description" value="Fictive Reader"
 				type="java.lang.String" />
 			<property name="jmxagent.objectname"
@@ -32,16 +32,16 @@
 				type="java.lang.String" />
 		</provides>
 
+		<callback transition="VALIDATE" method="startReader" />
 		<callback transition="INVALIDATE" method="stopReader" />
 		
 		<ev:publisher
 			name="fictiveTagPublisher"
 			field="m_publisher"
-			topics="org/ow2/aspirerfid/rfidtopic/*"/>		
+			topics="org/ow2/aspirerfid/rfidtopic/rfid"/>		
 
 	</component>
 
-	<instance
-		component="org.ow2.aspirerfid.reader.fictive.RfidReaderSimulator"
-		name="Fictive Reader" />
+	<instance component="org.ow2.aspirerfid.reader.fictive.RfidReaderSimulator"
+		name="fictivereader" />
 </ipojo>

@@ -19,22 +19,15 @@
 package org.ow2.aspirerfid.reader.fictive;
 
 import java.io.InputStream;
-import java.util.Hashtable;
-import java.util.Properties;
 import java.util.Dictionary;
+import java.util.Properties;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
+import org.apache.felix.ipojo.handlers.event.publisher.Publisher;
 import org.osgi.service.event.EventConstants;
 import org.osgi.service.log.LogService;
-import org.osgi.service.wireadmin.Producer;
-import org.osgi.service.wireadmin.Wire;
 import org.ow2.aspirerfid.reader.util.config.Configuration;
 import org.ow2.aspirerfid.util.Logger;
 import org.ow2.aspirerfid.util.RFIDConstants;
-import org.ow2.aspirerfid.wires.RFIDTagRead;
-
-import org.apache.felix.ipojo.handlers.event.publisher.Publisher;
 
 /**
  * This class implements a fictive RFID reader. On each step, it choose a random
@@ -52,8 +45,7 @@ import org.apache.felix.ipojo.handlers.event.publisher.Publisher;
  * @author Lionel Touseau
  * @version 3.0.0 01/2009
  */
-public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*,
-		Producer*/ {
+public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean {
 
 	/**
 	 * Time between two polls in milliseconds.
@@ -86,11 +78,6 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	 */
 	private String configFile = "/STATE-INF/initialstate.properties";
 
-//	/**
-//	 * Set of wires between this producer and different consumers.
-//	 */
-//	private Wire[] wires;
-
 	/**
 	 * List of tags read from the properties file.
 	 */
@@ -102,24 +89,16 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	private Logger logger;
 
 	/**
-	 * BundleContext used for service registrations.
-	 */
-	private BundleContext context;
-
-	/**
 	 * iPOJO EventAdmin Handler publisher.
 	 */
 	private Publisher m_publisher;		
 	
 	/**
-	 * @param bc
-	 *            BundleContext used for service registrations.
+	 * Constructor called by iPOJO
 	 */
-	RfidReaderSimulator(BundleContext bc) {
+	private RfidReaderSimulator() {
 		System.out.println("{RFIDREADERSIMULATOR}");
-		this.context = bc;
-		Thread reader = new Thread(this,"FictiveReader");
-		reader.start();
+		logger = new Logger("FictiveReader", Logger.INFO);
 	}
 
 	/*
@@ -127,33 +106,11 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	 * 
 	 * @see java.lang.Runnable#run()
 	 */
-	public synchronized void run() {
-		logger = new Logger("FictiveReader", Logger.INFO);
-//		// Register a producer
-//		Hashtable p = new Hashtable();
-//		p
-//				.put(
-//						org.osgi.service.wireadmin.WireConstants.WIREADMIN_PRODUCER_FLAVORS,
-//						new Class[] { RFIDTagRead.class });
-//		p.put(org.osgi.framework.Constants.SERVICE_PID,
-//				"org.ow2.aspirerfid.osgi.util.rfidtagproducer");
-//		p.put(org.osgi.framework.Constants.SERVICE_DESCRIPTION,
-//				"a simple Producer of RFID tags");
-//
-//		context.registerService(Producer.class.getName(), this, p);
-		while (bundleIsActive()) {
-			try {
-//				for (int i = 0; wires != null && i < wires.length; i++) {
-//					Wire wire = wires[i];
-//					// check if wire is valid and connected
-//					if (!wire.isConnected() || !wire.isValid()
-//							|| running == false)
-//						continue;
-//					Object obj = polled(wire, getMeasurement());
-//					if (obj != null)
-//						wire.update(obj);
-//				}
-				
+	public synchronized void run() {		
+
+		while (running /*bundleIsActive()*/) {
+
+			if (tl!=null) {
 		        Dictionary e = new Properties();
 		        // Fill out the event
 		        e.put(RFIDConstants.TAGGUID_KEY, getTag());
@@ -163,7 +120,8 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 
 		        // Send event via iPOJO eventAdmin handler
 		        m_publisher.send(e);
-				
+			}
+			try {				
 				wait(period);
 			} catch (InterruptedException ie) {
 				/* will recheck quit */
@@ -171,53 +129,6 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 		}
 	}
 
-	private boolean bundleIsActive() {
-		return context.getBundle().getState() == Bundle.ACTIVE;
-	}
-
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see org.osgi.service.wireadmin.Producer#consumersConnected(org.osgi.service.wireadmin.Wire[])
-//	 */
-//	public synchronized void consumersConnected(Wire[] wires) {
-//		this.wires = wires;
-//	}
-//
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see org.osgi.service.wireadmin.Producer#polled(org.osgi.service.wireadmin.Wire)
-//	 */
-//	public Object polled(Wire wire) {
-//		return polled(wire, getMeasurement());
-//	}
-//
-//	/**
-//	 * Analyzes the wire's flavors and returns the appropriate object.
-//	 * 
-//	 * @param wire
-//	 *            A connected and valid wire.
-//	 * @param prop
-//	 *            The object to be sent through the wire.
-//	 * @return null if none of its ancestors or implemented interfaces is the
-//	 *         same as one the wire's flavors
-//	 */
-//	private Object polled(Wire wire, RFIDTagRead prop) {
-//		Class[] clazzes = wire.getFlavors();
-//		for (int i = 0; i < clazzes.length; i++) {
-//			Class clazz = clazzes[i];
-//			if (clazz.isAssignableFrom(RFIDTagRead.class))
-//				return prop;
-//		}
-//		return null;
-//	}
-//
-//	private RFIDTagRead getMeasurement() {
-//		RFIDTagRead tagProp = readThisTag(getTag());
-//		return tagProp;
-//	}
-	
 	/**
 	 * This method replace the getMeasurement that works only for RFIDTagRead structure
 	 * @return a random Tag
@@ -367,6 +278,7 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	 * @param properties
 	 */
 	public void init(Properties properties) {
+		
 		// initialize attributes
 		logger.log(LogService.LOG_INFO, "create the rfid simulator");
 		reader = new RfidSimulator(properties);
@@ -401,7 +313,11 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	 */
 	private void restart() {
 		logger.log(LogService.LOG_INFO, "fictive reader restart");
-		running = true;
+		if (!running) {
+			running = true;
+			Thread readerThread = new Thread(this,"FictiveReader");
+			readerThread.start();
+		}
 	}
 
 	/**
@@ -413,6 +329,7 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	public void startReader(Properties properties) {
 		// First read its parameters in properties
 		init(properties);
+		// Then start the periodically read
 		restart();
 	}
 
@@ -423,7 +340,6 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	 * @see org.ow2.aspirerfid.reader.RfidReaderMBean#startReader()
 	 */
 	public void startReader() {
-
 		Properties properties;
 		// Load properties from configLocation file
 		InputStream is = getClass().getResourceAsStream(configFile);
@@ -434,11 +350,9 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 		// analyze the config file to build properties
 		else
 			properties = Configuration.loadProperties(is);
-
-		// First read its parameters in properties
-		init(properties);
-		// Then start the periodically read
-		restart();
+		
+		startReader(properties);
+		
 	}
 
 	/**
@@ -447,9 +361,6 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	 * @see org.ow2.aspirerfid.reader.RfidReaderMBean#stopReader()
 	 */
 	public void stopReader() {
-		if ((running)) {
-			running = false;
-		}
 		running = false;
 	}
 
@@ -460,40 +371,7 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean/*
 	 */
 	public void dispose() {
 		System.err
-				.println("The fictive reader has no driver, it can't be disposed.");
+				.println("The fictive reader has no driver, it cannot be disposed.");
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#readTheseTags(java.lang.String[])
-	 */
-	public void readTheseTags(String[] tags) {
-		System.out.println("Received " + tags.length + "tags");
-		for (int i = 0; i < tags.length; i++) {
-			readThisTag(tags[i]);
-		}
-	}
-
-	/*
-	 * In the props we add only the information related to the tag. The
-	 * temperature and position values are given by separate producers.
-	 * 
-	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#readThisTag(java.lang.String)
-	 */
-	public RFIDTagRead readThisTag(String tag) {
-		RFIDTagRead tagProp = new RFIDTagRead();
-		String elmts = getReaderGUId();
-		if (elmts != null)
-			tagProp.put(RFIDConstants.READERGUID_KEY, elmts);
-		elmts = getLogicalName();
-		if (elmts != null)
-			tagProp.put(RFIDConstants.READERNAME_KEY, elmts);
-		elmts = Long.toString(System.currentTimeMillis());
-		if (elmts != null)
-			tagProp.put(EventConstants.TIMESTAMP, elmts);
-		tagProp.put(RFIDConstants.TAGGUID_KEY, tag);
-
-		return tagProp;
-	}
+	
 }

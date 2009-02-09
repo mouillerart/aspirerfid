@@ -19,7 +19,6 @@
 package org.ow2.aspirerfid.reader.fictive;
 
 import org.ow2.aspirerfid.reader.RfidReaderMBean;
-import org.ow2.aspirerfid.wires.RFIDTagRead;
 
 /**
  * Define the configuration interface for a fictive Rfid reader
@@ -69,22 +68,5 @@ public interface RfidReaderSimulatorMBean extends RfidReaderMBean {
 	 *            the fictive value of the reader Guid
 	 */
 	public void setReaderGUId(String readerGuid);
-
-	/**
-	 * Tells the fictitious reader to read a tag
-	 * 
-	 * @param tag
-	 *            the tag to read
-	 * @return TODO Javadoc
-	 */
-	public RFIDTagRead readThisTag(String tag);
-
-	/**
-	 * Tells the fictitious reader to read a tag list
-	 * 
-	 * @param tags
-	 *            the list of tags
-	 */
-	public void readTheseTags(String[] tags);
 
 }
