@@ -61,7 +61,8 @@ public class BegPreferencePage
 	public void createFieldEditors() {
 		final StringFieldEditor stringEpcisRepositoryCaptureURL = new StringFieldEditor(PreferenceConstants.P_EpcisRepositoryCaptureURL, "EPCIS Repository URL:", getFieldEditorParent());
 		final StringFieldEditor stringEpcisRepositoryQueryURL = new StringFieldEditor(PreferenceConstants.P_EpcisRepositoryQueryURL, "EPCIS Repository URL:", getFieldEditorParent());	
-		final StringListEditor listOfEventPortsBindings = new StringListEditor(PreferenceConstants.P_EventPortsBindings,"Events/Ports Bindings:","Event/Port Binding:",getFieldEditorParent());
+		final StringListEditor listOfEventPortsBindings = new StringListEditor(PreferenceConstants.P_EventPortsBindings, "Events/Ports Bindings:",
+				"Event/Port Binding:","Insert in \"Event@Port\" Format", getFieldEditorParent());
 		
 		
 

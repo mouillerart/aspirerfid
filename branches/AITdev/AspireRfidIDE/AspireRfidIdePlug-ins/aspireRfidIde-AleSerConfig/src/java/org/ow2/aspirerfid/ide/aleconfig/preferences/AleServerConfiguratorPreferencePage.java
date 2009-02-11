@@ -35,10 +35,9 @@ import org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants;
  * 
  * @author Vasso Koletti e-mail: vkol@ait.edu.gr
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
-public class AleServerConfiguratorPreferencePage extends
-		FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class AleServerConfiguratorPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	public AleServerConfiguratorPreferencePage() {
 		super(GRID);
@@ -54,75 +53,62 @@ public class AleServerConfiguratorPreferencePage extends
 	public void createFieldEditors() {
 
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_ECSpecsPATH, "EC Specs Directory:",
-					getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_ECSpecsPATH, "EC Specs Directory:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new StringFieldEditor(
-					PreferenceConstants.P_ALEClientEndPointSTRING,
-					"ALE Client End Point:", getFieldEditorParent()));
+			addField(new StringFieldEditor(PreferenceConstants.P_ALEClientEndPointSTRING, "ALE Client End Point:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_HAL_LRSpecsPATH,
-					"HAL LR Specs Directory:", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_HAL_LRSpecsPATH, "HAL LR Specs Directory:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_RP_LRSpecsPATH,
-					"RP LR Specs Directory:", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_RP_LRSpecsPATH, "RP LR Specs Directory:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_LLRP_LRSpecsPATH,
-					"LLRP LR Specs Directory:", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_LLRP_LRSpecsPATH, "LLRP LR Specs Directory:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_Composite_LRSpecsPATH,
-					"Composite LR Specs Directory:", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_Composite_LRSpecsPATH, "Composite LR Specs Directory:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new StringFieldEditor(
-					PreferenceConstants.P_ALELRClientEndPointSTRING,
-					"ALE LR Client End Point", getFieldEditorParent()));
+			addField(new StringFieldEditor(PreferenceConstants.P_ALELRClientEndPointSTRING, "ALE LR Client End Point", getFieldEditorParent()));
 		}
 
-		final StringListEditor listOfNotificationURIs = new StringListEditor(
-				PreferenceConstants.P_NotificationURI,
-				"List of Notification URIs:", "List of Notification URIs:",
-				getFieldEditorParent());
-		addField(listOfNotificationURIs);
+		{
+			final StringListEditor listOfNotificationURIs = new StringListEditor(PreferenceConstants.P_NotificationURI, "List of Notification URIs:",
+					"Notification URI Dialog", "Insert Notification URI:", getFieldEditorParent());
+			addField(listOfNotificationURIs);
+		}
 
-		final StringListEditor listOfReaderNames = new StringListEditor(
-				PreferenceConstants.P_ReaderNames, "List of Reader Names:",
-				"List of Reader Names:", getFieldEditorParent());
-		addField(listOfReaderNames);
+		{
+			final StringListEditor listOfReaderNames = new StringListEditor(PreferenceConstants.P_ReaderNames, "List of Reader Names:",
+					"Reader Name Dialog", "Insert Reader Name:", getFieldEditorParent());
+			addField(listOfReaderNames);
+		}
 
-		final StringListEditor listOfConnectionPoints = new StringListEditor(
-				PreferenceConstants.P_ConnectionPoints,
-				"List of Connection points:", "List of Connection points:",
-				getFieldEditorParent());
-		addField(listOfConnectionPoints);
+		{
+			final StringListEditor listOfConnectionPoints = new StringListEditor(PreferenceConstants.P_ConnectionPoints,
+					"List of Connection points:", "Connection point Dialog", "Insert Connection point:", getFieldEditorParent());
+			addField(listOfConnectionPoints);
+		}
 
-		final StringListEditor listOfNotificationPoints = new StringListEditor(
-				PreferenceConstants.P_NotificationPoints,
-				"List of Notification points:", "List of Notification points:",
-				getFieldEditorParent());
-		addField(listOfNotificationPoints);
-		
-		final StringListEditor listOfECSpecNames = new StringListEditor(
-				PreferenceConstants.P_ECSpecNames,
-				"List of ECSpec Names:", "List of ECSpec Names:",
-				getFieldEditorParent());
-		addField(listOfECSpecNames);
+		{
+			final StringListEditor listOfNotificationPoints = new StringListEditor(PreferenceConstants.P_NotificationPoints,
+					"Notification point Dialog", "Insert Notification point:", "List of Notification points:", getFieldEditorParent());
+			addField(listOfNotificationPoints);
+		}
+
+		{
+			final StringListEditor listOfECSpecNames = new StringListEditor(PreferenceConstants.P_ECSpecNames, "List of ECSpec Names:",
+					"ECSpec Name Dialog", "Insert ECSpec Name:", getFieldEditorParent());
+			addField(listOfECSpecNames);
+		}
 	}
 
 	/*

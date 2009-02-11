@@ -12,6 +12,16 @@
 
    <windowImages i16="icons/alt_window_16.gif" i32="icons/alt_window_32.gif"/>
 
+   <launcher name="aspireRfidIDE">
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
    <plugins>
       <plugin id="aspireRfidIDE"/>
       <plugin id="com.ibm.icu"/>

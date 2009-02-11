@@ -237,7 +237,7 @@ public class LogicalReaderEditorView extends ViewPart {
 		container.setLayout(new FillLayout());
 
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setAlwaysShowScrollBars(true);
+		scrolledComposite.setAlwaysShowScrollBars(false);
 
 		final Composite composite_2 = new Composite(scrolledComposite, SWT.NONE);
 		composite_2.setLocation(0, 0);

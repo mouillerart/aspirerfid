@@ -15,7 +15,6 @@
  * for the specific language governing rights and limitations.
  */
 
-
 package org.ow2.aspirerfid.ide.lrspec.preferences;
 
 import org.eclipse.jface.preference.*;
@@ -34,12 +33,11 @@ import org.ow2.aspirerfid.ide.lrspec.Activator;
  * This page is used to modify preferences only. They are stored in the
  * preference store that belongs to the main plug-in class. That way,
  * preferences can be accessed directly via the preference store.
- *
+ * 
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  * @author Vasso Koletti e-mail: vkol@ait.edu.gr
  */
-public class LRSpecPreferencePage extends FieldEditorPreferencePage implements
-		IWorkbenchPreferencePage {
+public class LRSpecPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	public LRSpecPreferencePage() {
 		super(GRID);
@@ -55,45 +53,32 @@ public class LRSpecPreferencePage extends FieldEditorPreferencePage implements
 
 	public void createFieldEditors() {
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_HAL_LRSpecsPATH,
-					"HAL LR Specs Directory:", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_HAL_LRSpecsPATH, "HAL LR Specs Directory:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_RP_LRSpecsPATH,
-					"RP LR Specs Directory:", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_RP_LRSpecsPATH, "RP LR Specs Directory:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_LLRP_LRSpecsPATH,
-					"LLRP LR Specs Directory:", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_LLRP_LRSpecsPATH, "LLRP LR Specs Directory:", getFieldEditorParent()));
 		}
 
 		{
-			addField(new DirectoryFieldEditor(
-					PreferenceConstants.P_Composite_LRSpecsPATH,
-					"Composite LR Specs Directory:", getFieldEditorParent()));
+			addField(new DirectoryFieldEditor(PreferenceConstants.P_Composite_LRSpecsPATH, "Composite LR Specs Directory:", getFieldEditorParent()));
 		}
 
-		final StringListEditor listOfConnectionPoints = new StringListEditor(
-				PreferenceConstants.P_ConnectionPoints,
-				"List of Connection points:", "List of Connection points:",
+		final StringListEditor listOfConnectionPoints = new StringListEditor(PreferenceConstants.P_ConnectionPoints,
+				"List of RP Readers Connection points:", "RP Reader Connection point Dialog", "Insert RP Reader Connection point:",
 				getFieldEditorParent());
 		addField(listOfConnectionPoints);
 
-		final StringListEditor listOfNotificationPoints = new StringListEditor(
-				PreferenceConstants.P_NotificationPoints,
-				"List of Notification points:", "List of Notification points:",
-				getFieldEditorParent());
+		final StringListEditor listOfNotificationPoints = new StringListEditor(PreferenceConstants.P_NotificationPoints,
+				"List of RP Readers Notification points:", "RP Reader Notification point Dialog", "Insert RP Reader Notification point:",getFieldEditorParent());
 		addField(listOfNotificationPoints);
 
-		final StringListEditor listOfDynamicReaders = new StringListEditor(
-				PreferenceConstants.P_DynamicReaders,
-				"List of Dynamic Readers:", "List of Dynamic Readers:",
-				getFieldEditorParent());
+		final StringListEditor listOfDynamicReaders = new StringListEditor(PreferenceConstants.P_DynamicReaders,
+				"List of Available Dynamic Readers:", "Available Dynamic Reader Dialog","Insert Available Dynamic Reader:", getFieldEditorParent());
 		addField(listOfDynamicReaders);
 	}
 

@@ -42,6 +42,8 @@ public class PreferenceConstants {
 	public static final String P_ReaderNames = "AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader,SmartLabIntermecLogicalReader";
 
 	public static final String P_ConnectionPoints = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
+	
 	public static final String P_NotificationPoints = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
+	
 	public static final String P_ECSpecNames = "ECSpec_additions,ECSpec_current,ECSpec_deletions";
 }

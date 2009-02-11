@@ -24,10 +24,9 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.preference.ListEditor;
 import org.eclipse.swt.widgets.Composite;
 
-
 /**
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class StringListEditor extends ListEditor {
 
@@ -36,13 +35,15 @@ public class StringListEditor extends ListEditor {
 	 */
 	@SuppressWarnings("unused")
 	private String lastPath;
+	
 
 	/**
 	 * The special label text for directory chooser, or <code>null</code> if
 	 * none.
 	 */
-	@SuppressWarnings("unused")
-	private String dirChooserLabelText;
+
+	private String dialogtitle;
+	private String inputStringtitle;
 
 	/**
 	 * Creates a new path field editor
@@ -57,16 +58,19 @@ public class StringListEditor extends ListEditor {
 	 *            the name of the preference this field editor works on
 	 * @param labelText
 	 *            the label text of the field editor
-	 * @param dirChooserLabelText
-	 *            the label text displayed for the directory chooser
+	 * @param dialogtitle
+	 *            the label text displayed for the input dialog
+	 * @param inputStringtitle
+	 *            the label text displayed for the input string
 	 * @param parent
 	 *            the parent of the field editor's control
 	 */
-	public StringListEditor(String name, String labelText,
-			String dirChooserLabelText, Composite parent) {
+	public StringListEditor(String name, String labelText, String dialogtitle,String inputStringtitle, Composite parent) {
 		init(name, labelText);
-		this.dirChooserLabelText = dirChooserLabelText;
+		this.dialogtitle = dialogtitle;
+		this.inputStringtitle = inputStringtitle;
 		createControl(parent);
+
 	}
 
 	/*
@@ -89,8 +93,7 @@ public class StringListEditor extends ListEditor {
 	 * by means of a directory dialog.
 	 */
 	protected String getNewInputObject() {
-		InputDialog inputDialog = new InputDialog(getShell(),
-				"Port/Event Binding", "Insert EventName@PortNumber", "", null);
+		InputDialog inputDialog = new InputDialog(getShell(), dialogtitle, inputStringtitle, "", null);
 		inputDialog.open();
 		String input = inputDialog.getValue();
 		return input;
