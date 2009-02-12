@@ -113,6 +113,8 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 	private long messageIdCounter;
 
 	private Wire[] wires = null;
+	
+	private final String rfidTopic = "org/ow2/aspirerfid/rfidtopic/*";
 
 	/**
 	 * TODO Javadoc
@@ -359,6 +361,9 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 			(this.bundleContext).registerService(Consumer.class.getName(),
 					this, registrationProperties);
 
+			// TODO added
+			registerEventHandler();
+			
 			// Don't send anything if there is no cron service
 			if (this.cronService != null) {
 				long cronRepeatPeriod;
@@ -625,7 +630,7 @@ public class RFIDListener implements Consumer, RFIDListenerMBean, TimedObject,
 	}
 	
 	private void registerEventHandler(){
-		 String[] topics = new String[] {ecSpec.getEventTopic(), "org/ow2/aspirerfid/rfidtopic/*"};
+		 String[] topics = new String[] {ecSpec.getEventTopic(), rfidTopic};
 		 Hashtable ht = new Hashtable();
 		 ht.put(EventConstants.EVENT_TOPIC, topics);
 		 eventHandlerRegistration = bundleContext.registerService(EventHandler.class.getName(), this, ht);
