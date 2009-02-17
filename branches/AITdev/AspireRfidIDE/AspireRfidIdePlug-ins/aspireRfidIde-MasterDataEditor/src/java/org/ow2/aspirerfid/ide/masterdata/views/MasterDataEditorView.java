@@ -31,6 +31,7 @@ import java.util.TreeMap;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.preference.IPreferenceStore;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -69,6 +70,7 @@ import org.ow2.aspirerfid.ide.masterdata.classes.EditReadPoint;
 import org.ow2.aspirerfid.ide.masterdata.classes.EpcisConstants;
 import org.ow2.aspirerfid.ide.masterdata.classes.Key_Map;
 
+import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.masterdata.swtdesigner.ResourceManager;
 import org.ow2.aspirerfid.ide.masterdata.swtdesigner.SWTResourceManager;
 import org.ow2.aspirerfid.ide.masterdata.tools.MasterDataCaptureClient;
@@ -138,6 +140,9 @@ public class MasterDataEditorView extends ViewPart {
 	public static final String ID = "org.ow2.aspirerfid.ide.masterdata.views.MasterDataEditorView"; //$NON-NLS-1$
 	private QueryClientGuiHelper client = null;
 	private static final String PROPERTY_FILE = "/queryclient.properties";
+	
+	/** Returns the preference store for this UI plug-in */
+	IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
 
 	private static final String PROPERTY_QUERY_URL = "default.url";
 	
@@ -181,12 +186,7 @@ public class MasterDataEditorView extends ViewPart {
 	/**
 	 * The query client instance. Has methods to actually execute a query.
 	 */
-	
 
-
-
-
-	 
 	 Label youMustFillLabel_1;
 	 boolean displayEventTypes = false;
 	
@@ -215,13 +215,6 @@ public class MasterDataEditorView extends ViewPart {
 
 	 Label bizLoc_info_label;
 
-
-
-	 
-	 
-	 
-	 
-	 
 	 public boolean editing = false;
 	 String BizLoc_edit_name;
 	 String BizLoc_edit_epc;
@@ -269,7 +262,10 @@ public class MasterDataEditorView extends ViewPart {
 	}
 	@Override
 	public void createPartControl(Composite parent) {
-		setEpcisRepositoryURL();
+//		setEpcisRepositoryURL();
+		this.queryUrl = preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryQueryURL);
+		
+		
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(new FillLayout());
 
@@ -3361,7 +3357,7 @@ public class MasterDataEditorView extends ViewPart {
 		initializeVariusParameters();
 		initializeMenu();
 		//initEPC();
-		this.dataManager = new DataManagerModule("http://localhost:8080/aspireRfidEpcisRepository/capture",queryUrl);
+		this.dataManager = new DataManagerModule(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL),queryUrl);
 
 		populateBizLocTree(BizLoc_tree_v2,"no","icons/house_16.gif");
 		populateBizLocTree(BizLoc_depr_tree_v2,"yes","icons/img/s_cancel.png");
@@ -4087,7 +4083,7 @@ public class MasterDataEditorView extends ViewPart {
 	{
 		String selectionURI = (String)fromTree.getSelection()[0].getData();
 		TreeItem[] children = fromTree.getSelection()[0].getItems();
-		MasterDataCaptureClient cedit = new MasterDataCaptureClient("http://localhost:8080/aspireRfidEpcisRepository/capture");
+		MasterDataCaptureClient cedit = new MasterDataCaptureClient(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL));
 		cedit.simpleMasterDataAndAttributeEdit("urn:epcglobal:epcis:vtype:BusinessLocation", selectionURI, "deprecated",deprecated, "2");
 		if(children != null)
 		{
@@ -4146,7 +4142,7 @@ public class MasterDataEditorView extends ViewPart {
 		if(!((String)baseTree.getSelection()[0].getData()).equals("attribute") && !((String)baseTree.getSelection()[0].getData()).equals("value"))
 			return;
 		//Remove attribute from DB
-		MasterDataCaptureClient cedit = new MasterDataCaptureClient("http://localhost:8080/aspireRfidEpcisRepository/capture");
+		MasterDataCaptureClient cedit = new MasterDataCaptureClient(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL));
 //		String epc = (String)disposition_tree.getItems()[0].getData();
 		String epc = (String)baseTree.getItems()[0].getData();
 		String attribute;
@@ -4181,7 +4177,7 @@ public class MasterDataEditorView extends ViewPart {
 		if(attribute.equals("") || value.equals(""))
 			return;
 			
-		MasterDataCaptureClient cedit = new MasterDataCaptureClient("http://localhost:8080/aspireRfidEpcisRepository/capture");
+		MasterDataCaptureClient cedit = new MasterDataCaptureClient(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL));
 		cedit.simpleMasterDataAndAttributeEdit(vocabulary, epcID, attribute, value, mode);//"1");
 	}
 	
@@ -4230,7 +4226,7 @@ public class MasterDataEditorView extends ViewPart {
 		}
 		
 		String epc = (String)baseTree.getItems()[0].getData();
-		MasterDataCaptureClient cedit = new MasterDataCaptureClient("http://localhost:8080/aspireRfidEpcisRepository/capture");
+		MasterDataCaptureClient cedit = new MasterDataCaptureClient(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL));
 		cedit.simpleMasterDataAndAttributeEdit(vocabulary, epc, attribute, value, mode);//"1");
 		if(mode == "2")
 		{

@@ -1,21 +1,22 @@
 /*
- * Copyright (C) 2007 ETH Zurich
+ * Copyright (c) 2008-2010, Aspire 
  *
- * This file is part of Accada (www.accada.org).
+ * This file contains the source code of the Accada library by ETH Zurich (www.accada.org),
+ * licensed under the terms of the GNU Lesser General Public License version 2.1 in 2007
+ * and modified for the needs of the Aspire project.
  *
- * Accada is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License version 2.1, as published by the Free Software Foundation.
+ * Aspire is free software; you can redistribute it and/or 
+ * modify it under  the terms of the GNU Lesser General Public 
+ * License version 2.1 as published by the Free Software Foundation (the 
+ * "LGPL"). 
  *
- * Accada is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
+ * You should have received a copy of the GNU Lesser General Public 
+ * License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with Accada; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA  02110-1301  USA
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
+ * OF ANY KIND, either express or implied. See the GNU Lesser General Public 
+ * License for the specific language governing rights and limitations. 
  */
 
 package org.ow2.aspirerfid.ide.masterdata.tools;
@@ -41,6 +42,7 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.soap.SOAPBinding;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.fosstrak.epcis.model.EmptyParms;
 import org.fosstrak.epcis.model.GetSubscriptionIDs;
 import org.fosstrak.epcis.model.Poll;
@@ -62,6 +64,8 @@ import org.fosstrak.epcis.soap.SecurityExceptionResponse;
 import org.fosstrak.epcis.soap.SubscribeNotPermittedExceptionResponse;
 import org.fosstrak.epcis.soap.SubscriptionControlsExceptionResponse;
 import org.fosstrak.epcis.soap.ValidationExceptionResponse;
+import org.ow2.aspirerfid.ide.masterdata.Activator;
+import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.CXFBusFactory;
 import org.apache.cxf.endpoint.Client;
@@ -76,8 +80,13 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
  * given in XML form.
  * 
  * @author Marco Steybe
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class QueryControlClient implements QueryControlInterface {
+	
+	/** Returns the preference store for this UI plug-in */
+	IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
 
     private static final String PROPERTY_FILE = "/queryclient.properties";
     private static final String PROP_QUERY_URL = "default.url";
@@ -118,8 +127,9 @@ public class QueryControlClient implements QueryControlInterface {
 
     private void configureService(final String queryUrl) {
         if (queryUrl == null) {
-            Properties props = loadProperties();
-            endpointAddress = props.getProperty(PROP_QUERY_URL, DEFAULT_QUERY_URL);
+//            Properties props = loadProperties();
+//            endpointAddress = props.getProperty(PROP_QUERY_URL, DEFAULT_QUERY_URL);
+        	endpointAddress = preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryQueryURL);
         } else {
             endpointAddress = queryUrl;
         }

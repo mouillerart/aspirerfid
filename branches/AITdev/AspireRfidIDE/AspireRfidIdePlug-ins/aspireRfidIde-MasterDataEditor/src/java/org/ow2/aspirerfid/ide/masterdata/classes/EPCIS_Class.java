@@ -19,17 +19,23 @@
 package org.ow2.aspirerfid.ide.masterdata.classes;
 import java.util.*;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.fosstrak.epcis.model.QueryParam;
 
-import org.ow2.aspirerfid.ide.masterdata.tools.QueryClientGuiHelper;
+import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
+import org.ow2.aspirerfid.ide.masterdata.Activator;
 import org.ow2.aspirerfid.ide.masterdata.tools.*;
 
 /**
  * @author Eystathios Mertikas e-mail: efme@ait.edu.gr
- * 
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class EPCIS_Class {
 	
+	/** Returns the preference store for this UI plug-in */
+	IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
+
 	private String EPC_Tag;
 	private String Name;
 	private List<Attribute> attributes;
@@ -138,7 +144,7 @@ public class EPCIS_Class {
 	}
 	public void setClient(MasterDataCaptureClient client)
 	{
-		this.newClient = new MasterDataCaptureClient("http://localhost:8080/aspireRfidEpcisRepository/capture");
+		this.newClient = new MasterDataCaptureClient(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL));
 	}
 	public MasterDataCaptureClient getClient2()
 	{

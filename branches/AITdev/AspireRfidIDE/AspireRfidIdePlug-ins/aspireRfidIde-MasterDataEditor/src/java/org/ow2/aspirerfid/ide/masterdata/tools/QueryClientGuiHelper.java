@@ -36,6 +36,8 @@ import java.util.TimeZone;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBElement;
+
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.custom.StyledText;
 
 import org.fosstrak.epcis.model.AggregationEventType;
@@ -58,6 +60,8 @@ import org.fosstrak.epcis.model.Subscribe;
 import org.fosstrak.epcis.model.TransactionEventType;
 import org.fosstrak.epcis.model.Unsubscribe;
 import org.fosstrak.epcis.utils.TimeParser;
+import org.ow2.aspirerfid.ide.masterdata.Activator;
+import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
 
 /**
  * Implements a Class to interface with the EPCIS query client. Also offers some
@@ -68,10 +72,13 @@ import org.fosstrak.epcis.utils.TimeParser;
  *
  */
 public class QueryClientGuiHelper {
+	
+	/** Returns the preference store for this UI plug-in */
+	IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
 
 	private static final String PROPERTY_FILE = "/queryclient.properties";
 	private static final String PROP_QUERY_URL = "default.url";
-	private static final String DEFAULT_QUERY_URL = "http://demo.accada.org/epcis/query";
+	private static final String DEFAULT_QUERY_URL = "http://localhost:8080/aspireRfidEpcisRepository/query";
 
 	private QueryControlClient queryClient;
 
@@ -96,8 +103,9 @@ public class QueryClientGuiHelper {
 	public String updateEndpointAddress(final String address) {
 		String endpointAddress;
 		if (address == null) {
-			Properties props = loadProperties();
-			endpointAddress = props.getProperty(PROP_QUERY_URL, DEFAULT_QUERY_URL);
+//			Properties props = loadProperties();
+//			endpointAddress = props.getProperty(PROP_QUERY_URL, DEFAULT_QUERY_URL);
+			endpointAddress = preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryQueryURL);
 		} else {
 			endpointAddress = address;
 		}

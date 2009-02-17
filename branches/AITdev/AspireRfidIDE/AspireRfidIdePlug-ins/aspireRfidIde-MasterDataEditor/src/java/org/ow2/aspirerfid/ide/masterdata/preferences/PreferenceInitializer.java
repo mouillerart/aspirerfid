@@ -20,7 +20,6 @@ package org.ow2.aspirerfid.ide.masterdata.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import org.ow2.aspirerfid.ide.masterdata.Activator;
 
 /**
@@ -38,9 +37,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		store.setDefault(PreferenceConstants.P_BOOLEAN, true);
-		store.setDefault(PreferenceConstants.P_CHOICE, "choice2");
-		store.setDefault(PreferenceConstants.P_STRING,"Default value");
+		store.setDefault(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL,"http://localhost:8080/aspireRfidEpcisRepository/capture");
+		store.setDefault(PreferenceConstants.P_MdeEpcisRepositoryQueryURL,"http://localhost:8080/aspireRfidEpcisRepository/query");	
 		store.setDefault(PreferenceConstants.P_teststringdata,"1,2,3");
 	}
 

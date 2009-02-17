@@ -18,13 +18,21 @@
 
 package org.ow2.aspirerfid.ide.masterdata.classes;
 import java.util.*;
+
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.ow2.aspirerfid.ide.masterdata.Activator;
+import org.ow2.aspirerfid.ide.masterdata.preferences.PreferenceConstants;
 import org.ow2.aspirerfid.ide.masterdata.tools.*;
 
 /**
  * @author Eystathios Mertikas e-mail: efme@ait.edu.gr
- * 
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class UpdateDB {
+	
+	/** Returns the preference store for this UI plug-in */
+	IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
 	
 	private List<ModifiedUnit> units;
 	
@@ -48,7 +56,7 @@ public class UpdateDB {
 	{
 		String mode = "2";
 		System.out.println("Query url is "+queryUrl);
-		MasterDataCaptureClient cedit = new MasterDataCaptureClient("http://localhost:8080/aspireRfidEpcisRepository/capture");
+		MasterDataCaptureClient cedit = new MasterDataCaptureClient(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL));
 		Iterator<ModifiedUnit>it = this.units.iterator();
 		while(it.hasNext())
 		{
@@ -75,7 +83,7 @@ public class UpdateDB {
 	{
 		String mode = "2";
 		System.out.println("Query url is "+queryUrl);
-		MasterDataCaptureClient cedit = new MasterDataCaptureClient("http://localhost:8080/aspireRfidEpcisRepository/capture");
+		MasterDataCaptureClient cedit = new MasterDataCaptureClient(preferences.getString(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL));
 		Iterator<ModifiedUnit>it = this.units.iterator();
 		while(it.hasNext())
 		{

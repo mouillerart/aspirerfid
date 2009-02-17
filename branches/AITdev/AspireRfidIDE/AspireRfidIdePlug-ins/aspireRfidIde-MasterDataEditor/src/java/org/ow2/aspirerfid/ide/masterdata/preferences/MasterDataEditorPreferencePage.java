@@ -56,24 +56,14 @@ public class MasterDataEditorPreferencePage
 	 * restore itself.
 	 */
 	public void createFieldEditors() {
-		addField(new DirectoryFieldEditor(PreferenceConstants.P_PATH, 
-				"&Directory preference:", getFieldEditorParent()));
-		addField(
-			new BooleanFieldEditor(
-				PreferenceConstants.P_BOOLEAN,
-				"&An example of a boolean preference",
-				getFieldEditorParent()));
-
-		addField(new RadioGroupFieldEditor(
-				PreferenceConstants.P_CHOICE,
-			"An example of a multiple-choice preference",
-			1,
-			new String[][] { { "&Choice 1", "choice1" }, {
-				"C&hoice 2", "choice2" }
-		}, getFieldEditorParent()));
-		addField(
-			new StringFieldEditor(PreferenceConstants.P_STRING, "A &text preference:", getFieldEditorParent()));
-		
+		{
+		final StringFieldEditor stringEpcisRepositoryCaptureURL = new StringFieldEditor(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL, "EPCIS Repository URL:", getFieldEditorParent());
+		addField(stringEpcisRepositoryCaptureURL);
+		}
+		{
+		final StringFieldEditor stringEpcisRepositoryQueryURL = new StringFieldEditor(PreferenceConstants.P_MdeEpcisRepositoryQueryURL, "EPCIS Repository URL:", getFieldEditorParent());	
+		addField(stringEpcisRepositoryQueryURL);
+		}
 		{
 			final StringListEditor listOfNotificationURIs = new StringListEditor(PreferenceConstants.P_teststringdata, "List of Notification URIs:",
 					"Notification URI Dialog", "Insert Notification URI:", getFieldEditorParent());
