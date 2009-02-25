@@ -1,5 +1,5 @@
 /**
- * Copyright © 2008-2010, Aspire 
+ * Copyright (c) 2008-2010, Aspire 
  * 
  * Aspire is free software; you can redistribute it and/or 
  * modify it under  the terms of the GNU Lesser General Public 
@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
 import org.ow2.aspirerfid.connectors.tools.Configurator;
 
 /**
- * A simple servlet to handle registration operations via POST or GET requests
+ * A servlet to handle simple registration operations via POST or GET requests
  * when the connector client is deployed within an application server context.
  * 
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
@@ -48,7 +48,7 @@ public class RegistrationServlet extends HttpServlet {
     public RegistrationServlet() {
 	super();
 	try {
-	    Configurator.loadProperties("/application.properties", RegistrationServlet.class);
+	    Configurator.loadProperties("application.properties", RegistrationServlet.class);
 	} catch (IOException e) {
 	    logger.fatal(e);
 	}
@@ -102,10 +102,10 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     private boolean doRegister(String tid, String type, String sid) {
-	return RegistrationClient.register(tid, type, sid);
+	return RegistrationManager.register(tid, type, sid);
     }
 
     private boolean doUnregister(String sid) {
-	return RegistrationClient.unregister(sid);
+	return RegistrationManager.unregister(sid);
     }
 }
