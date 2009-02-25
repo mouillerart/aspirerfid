@@ -1,5 +1,5 @@
 /**
- * Copyright © 2008-2010, Aspire 
+ * Copyright (c) 2008-2010, Aspire 
  * 
  * Aspire is free software; you can redistribute it and/or 
  * modify it under  the terms of the GNU Lesser General Public 
@@ -18,18 +18,22 @@
 
 package org.ow2.aspirerfid.connectors.api;
 
+import javax.jws.WebService;
+
 /**
- * This interface should be implemented by the applications that require Events to be received
+ * This is the interface that define the client part of the Connector components. It is also used
+ * as the definition the the client's Web Service
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
- *
+ * 
  */
+@WebService
 public interface ConnectorClient {
 
     /**
-     * This operation should be implemented in an application (WMS) specific manner. The connector will forward 
-     * the events to the application using this operations and then the application is responsible to handle it in a way 
-     * that fits to the specific application. 
-     * @param event The event to be processed
+     * Signals that a new event has been received and should be processed
+     * @param evt The event object
+     * @return True if the operation has been completed sucessfully; false otherwise
      */
-    public void handleEvent(Event event);
+    public void transactionObserved(Event event);
+
 }

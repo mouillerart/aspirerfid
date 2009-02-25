@@ -19,18 +19,18 @@
 package org.ow2.aspirerfid.connectors.api;
 
 /**
- * This defines an interface that should be implemented by a class that will handle
- * incoming EPCIS events
- * 
+ * This interface should be implemented by the applications that require Events to be received
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
  *
  */
-public interface QueryResultsProcessorIfce {
+
+public interface ClientEventHandler {
 
     /**
-     * This method should be called when a new EPCIS event is generated
-     * @param result The EPCISEvent in XML representation
+     * This operation should be implemented in an application (WMS) specific manner. The connector will forward 
+     * the events to the application using this operations and then the application is responsible to handle it in a way 
+     * that fits to the specific application. 
+     * @param event The event to be processed
      */
-    public void fetchQueryResult(String result);
-
+    public void handleEvent(Event event);
 }

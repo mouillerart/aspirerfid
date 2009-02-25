@@ -1,5 +1,5 @@
 /**
- * Copyright © 2008-2010, Aspire 
+ * Copyright (c) 2008-2010, Aspire 
  * 
  * Aspire is free software; you can redistribute it and/or 
  * modify it under  the terms of the GNU Lesser General Public 
@@ -18,27 +18,30 @@
 
 package org.ow2.aspirerfid.connectors.api;
 
+import javax.jws.WebService;
+
 /**
  * This interface define the endpoints that the connector client should invoke
  * when it wants to register or unregister for a specific transaction.
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
  *
  */
+@WebService
 public interface ConnectorEngine {
 
     /**
      * Register an observator for a transaction
-     * @param transactionId Transaction identifier 
-     * @param transactionType The transaction type as defined in the EPCIS spec
-     * @param sid Subscription identifier
+     * @param parameters The subscription parameters
      * @return True if the operations is completed without errors; false otherwise
      */
-    public boolean startObservingTransaction(String transactionId, String transactionType, String sid);
+    public boolean startObservingTransaction(SubscriptionParameters parameters);
     
     /**
      * Unsubscribe an observator for an already registered transaction 
-     * @param sid The subscription identifier that should be unsubscribed
+     * @param parameters The subscription that should be unsubscribed
+     * @param isComplete Indicates whether we stop observing a transaction because it has been completed or for other reasons. If
+     * it is complete we need to signal the EPCIS repository with a new TransactionEvent to delete the transaction.
      * @return True if the operation completes withour errors; false otherwise (e.g. there is no such subscription)
      */
-    public boolean stopObservingTransaction(String sid);
+    public boolean stopObservingTransaction(SubscriptionParameters parameters, boolean isComplete);
 }
