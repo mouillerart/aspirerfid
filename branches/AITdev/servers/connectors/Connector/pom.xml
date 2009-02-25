@@ -1,5 +1,5 @@
 <!--
-	Copyright © 2008-2010, Aspire 
+	Copyright (c) 2008-2010, Aspire 
 	
 	Aspire is free software; you can redistribute it and/or 
 	modify it under  the terms of the GNU Lesser General Public 
@@ -19,10 +19,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ow2.aspirerfid.connector</groupId>
-	<artifactId>ConnectorAPI</artifactId>
+	<artifactId>Connector</artifactId>
 	<packaging>war</packaging>
 	<name>AspireRFID Connector</name>
-	<version>0.0.1</version>
+	<version>1.0</version>
 	<description>AspireRFID Connector</description>
 	<dependencies>
 		<dependency>
@@ -55,12 +55,15 @@
 		<dependency>
 			<groupId>org.ow2.aspirerfid.connector</groupId>
 			<artifactId>ConnectorCommons</artifactId>
-			<version>0.0.1</version>
+			<version>1.0</version>
 		</dependency>
-		<!--
-			CXF dependencies - only minimal set of transitive dependencies
-			included
-		-->
+		<dependency>
+			<groupId>org.fosstrak.epcis</groupId>
+			<artifactId>epcis-captureclient</artifactId>
+			<version>0.4.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

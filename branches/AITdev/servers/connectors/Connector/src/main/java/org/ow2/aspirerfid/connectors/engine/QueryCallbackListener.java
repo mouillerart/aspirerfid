@@ -1,5 +1,5 @@
 /**
- * Copyright © 2008-2010, Aspire 
+ * Copyright (c) 2008-2010, Aspire 
  * 
  * This file contains the source code of the Accada library by ETH Zurich (www.accada.org), 
  * licensed under the terms of the GNU Lesser General Public License version 2.1 in 2007 
@@ -50,13 +50,13 @@ public final class QueryCallbackListener extends Thread {
 
     private static QueryCallbackListener instance = null;
 
-    private ServerSocket server = null;
+    private static ServerSocket server = null;
 
-    private boolean isRunning = false;
+    private static boolean isRunning = false;
 
     private String response = null;
     
-    private QueryResultsProcessorIfce resultProcessor;
+    private static QueryResultsProcessorIfce resultProcessor;
 
     static
     {
@@ -179,7 +179,6 @@ public final class QueryCallbackListener extends Thread {
      *            The response from which the XML contents should be extracted.
      */
     private void parseResponse(final String resp) {
-	logger.debug(resp);
         if (resp.startsWith("<?xml")) {
             // remove xml declaration
             int index = resp.indexOf("?>") + 2;

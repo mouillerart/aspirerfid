@@ -1,5 +1,5 @@
 /**
- * Copyright © 2008-2010, Aspire 
+ * Copyright (c) 2008-2010, Aspire 
  * 
  * Aspire is free software; you can redistribute it and/or 
  * modify it under  the terms of the GNU Lesser General Public 
@@ -70,23 +70,15 @@ public class QueryResultsProcessor extends Thread implements QueryResultsProcess
     public void run() {
 	parse(result);
     }
-
-    /**
-     * Parses a given element from the EPCIS repository which is in XML String format, and encapsulates it in an Event object.
-     * @param result The event in XML format
-     */
-    public void parse(String result) {
-	Event event = new Event();
+    
+    public boolean parse(QueryResults results, String clientEndpoint)
+    {
 	EPCISEventType e;
+	Event event = new Event();
 	ArrayList<String> list;
-	logger.debug(result);
-	try {
+	event.setSubscriptionId(results.getSubscriptionID());
 
-	    QueryResults qr = QueryResultsParser.parseQueryDocResults(new StringReader(result));
-
-	    event.setSubscriptionId(qr.getSubscriptionID());
-
-	    List<Object> eventList = qr.getResultsBody().getEventList().getObjectEventOrAggregationEventOrQuantityEvent();
+	    List<Object> eventList = results.getResultsBody().getEventList().getObjectEventOrAggregationEventOrQuantityEvent();
 
 	    for (Object o : eventList) {
 
@@ -169,11 +161,29 @@ public class QueryResultsProcessor extends Thread implements QueryResultsProcess
 		    event.setEventTime(evt.getEventTime().toGregorianCalendar().getTimeInMillis());
 		}
 		logger.info("Transmitting event");
-		logger.debug(event.toString());
-		// Send the report to the connector client
-		ConnectorTransport.transmit(event);
+		logger.debug("Event: "+event.toString());
+		// Send the report to the client
+		ConnectorTransport.transmit(event, clientEndpoint);
 	    }
+	    return true;
+    }
 
+    /**
+     * Parses a given element from the EPCIS repository which is in XML String format, and encapsulates it in an Event object.
+     * @param result The event in XML format
+     */
+    public void parse(String result) {
+	String sid,replyEndpoint;
+	try {
+	    QueryResults qr = QueryResultsParser.parseQueryDocResults(new StringReader(result));
+	    sid = qr.getSubscriptionID();
+	    replyEndpoint = SubscriptionManager.get(sid);
+	    if(replyEndpoint == null)
+	    {
+		logger.error("No valid reply endpoint");
+		return;
+	    }
+	    parse(qr, replyEndpoint);
 	} catch (Exception ex) {
 	    logger.error(ex);
 	    ex.printStackTrace();

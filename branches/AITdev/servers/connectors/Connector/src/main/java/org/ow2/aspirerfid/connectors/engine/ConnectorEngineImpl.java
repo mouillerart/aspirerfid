@@ -1,5 +1,5 @@
 /**
- * Copyright © 2008-2010, Aspire 
+ * Copyright (c) 2008-2010, Aspire 
  * 
  * Aspire is free software; you can redistribute it and/or 
  * modify it under  the terms of the GNU Lesser General Public 
@@ -21,19 +21,23 @@ package org.ow2.aspirerfid.connectors.engine;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 
+import javax.jws.WebService;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
 import org.apache.log4j.Logger;
 import org.fosstrak.epcis.model.ArrayOfString;
+import org.fosstrak.epcis.model.Poll;
 import org.fosstrak.epcis.model.QueryParam;
 import org.fosstrak.epcis.model.QueryParams;
+import org.fosstrak.epcis.model.QueryResults;
 import org.fosstrak.epcis.model.QuerySchedule;
 import org.fosstrak.epcis.model.Subscribe;
 import org.fosstrak.epcis.model.SubscriptionControls;
 import org.fosstrak.epcis.queryclient.Query;
 import org.fosstrak.epcis.queryclient.QueryControlClient;
 import org.ow2.aspirerfid.connectors.api.ConnectorEngine;
+import org.ow2.aspirerfid.connectors.api.SubscriptionParameters;
 import org.ow2.aspirerfid.connectors.tools.Configurator;
 
 /**
@@ -44,22 +48,19 @@ import org.ow2.aspirerfid.connectors.tools.Configurator;
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
  * 
  */
+@WebService(endpointInterface = "org.ow2.aspirerfid.connectors.api.ConnectorEngine")
 public class ConnectorEngineImpl implements ConnectorEngine {
 
     private static Logger logger;
     private static boolean loaded = false;
     private String destinationUrl;
-    private Query query;
-    private String querySec, queryMin, queryHour, queryDayOfMonth, queryMonth, quertDayOfWeek;
 
     private static String queryName;
-    private QueryCallbackListener listener;
     private QueryControlClient client;
     private QueryResultsProcessor processor;
 
     static {
 	logger = Logger.getLogger(ConnectorEngineImpl.class);
-	
     }
 
     public ConnectorEngineImpl() {
@@ -85,14 +86,12 @@ public class ConnectorEngineImpl implements ConnectorEngine {
 
     private void initialize(String queryUrl) {
 	queryName = Configurator.getProperty("queryName", "SimpleEventQuery");
-	querySec = Configurator.getProperty("querySeconds", "1");
 	destinationUrl = Configurator.getProperty("callbackDestinationUrl", "http://localhost:8899");
 	configureClient(queryUrl);
 
 	try {
-	    listener = QueryCallbackListener.getInstance();
 	    processor = QueryResultsProcessor.getInstance();
-	    listener.setResultsProcessor(processor);
+	    QueryCallbackListener.getInstance().setResultsProcessor(processor);
 	} catch (IOException e) {
 	    logger.error(e);
 	}
@@ -103,26 +102,36 @@ public class ConnectorEngineImpl implements ConnectorEngine {
 	client = new QueryControlClient(queryUrl);
     }
 
-    public boolean startObservingTransaction(String tid, String transactionType, String sid) {
+    public boolean startObservingTransaction(SubscriptionParameters parameters) {
 
-	logger.info("Registering for tid:" + tid + " with sid:" + sid);
-
-	Subscribe s = prepareSubscription(tid, transactionType, sid);
-	return subscribe(s);
+	QueryParams params = prepareQuery(parameters);
+	if (parameters.isDoPoll()) {
+	    logger.debug("Polling for tid:" + parameters.getTransactionId());
+	    QueryResults results = poll(params);
+	    return QueryResultsProcessor.getInstance().parse(results, parameters.getReplyEndpoint());
+	} else {
+	    logger.debug("Registering for tid:" + parameters.getTransactionId() + " with sid:" + parameters.getSubscriptionId());
+	    SubscriptionManager.add(parameters.getSubscriptionId(), parameters.getReplyEndpoint());
+	    Subscribe s = prepareSubscription(parameters, params);
+	    return subscribe(s);
+	}
     }
 
-    public boolean stopObservingTransaction(String sid) {
+    public boolean stopObservingTransaction(SubscriptionParameters parameters, boolean isComplete) {
 
 	boolean result = false;
 
 	try {
-	    if (sid != null) {
-		client.unsubscribe(sid);
-
-		result = true;
-
+	    if (parameters.getSubscriptionId() != null) {
+		client.unsubscribe(parameters.getSubscriptionId());
+		result = true;		
+		SubscriptionManager.remove(parameters.getSubscriptionId());
+		
+		if(isComplete)
+		    TransactionDeleter.signalTransactionDelete(parameters);
+		    
 		if (client.getSubscriptionIds(queryName).size() == 0)
-		    listener.stopRunning();
+		    QueryCallbackListener.getInstance().stopRunning();
 	    }
 	} catch (Exception e) {
 	    logger.error(e);
@@ -130,98 +139,95 @@ public class ConnectorEngineImpl implements ConnectorEngine {
 	return result;
     }
 
-    private Subscribe prepareSubscription(String tid, String transactionType, String sid) {
-	Subscribe sub = new Subscribe();
+    private QueryParams prepareQuery(SubscriptionParameters parameters) {
+	Query query = new Query();
+	ArrayOfString parameterArray = new ArrayOfString();
 	QueryParam param = new QueryParam();
-	ArrayOfString arr = new ArrayOfString();
-	logger.info("Preparing subscription");
-	sub.setDest(destinationUrl);
-	sub.setQueryName("SimpleEventQuery");
-	sub.setSubscriptionID(sid);
-
-	query = new Query();
+	QueryParams queryParams = new QueryParams();
 
 	query.setReturnAggregationEvents(true);
 	query.setReturnObjectEvents(true);
 	query.setReturnQuantityEvents(true);
 	query.setReturnTransactionEvents(true);
 
-	if (transactionType != null)
-	    param.setName("EQ_bizTransaction_" + transactionType);
+	if (!parameters.getTransactionType().equals("-1"))
+	    param.setName("EQ_bizTransaction_" + parameters.getTransactionType());
 	else
 	    param.setName("EQ_bizTransaction");
-	logger.info("bizTransactionType:"+param.getName());
-	logger.info("bizTransactionId:"+tid);
-	arr.getString().add(tid);
-	param.setValue(arr);
 
+	logger.debug("bizTransactionType: " + param.getName());
+	logger.debug("bizTransactionId: " + parameters.getTransactionId());
+	parameterArray.getString().add(parameters.getTransactionId());
+	param.setValue(parameterArray);
 	query.getQueryParameters().add(param);
-	QueryParams queryParams = new QueryParams();
 	queryParams.getParam().add(param);
-	sub.setParams(queryParams);
 
-	// Poll poll = new Poll();
-	// poll.setQueryName("SimpleEventQuery");
-	// poll.setParams(queryParams);
-	// poll(poll);
+	return queryParams;
+    }
 
-	SubscriptionControls controls = new SubscriptionControls();
-
+    private Subscribe prepareSubscription(SubscriptionParameters parameters, QueryParams queryParams) {
+	final String nullTime = "-1";
 	DatatypeFactory factory;
+	QuerySchedule sched = new QuerySchedule();
+	Subscribe sub = new Subscribe();
+	SubscriptionControls controls = new SubscriptionControls();
+	
+	sub.setDest(destinationUrl);
+	sub.setQueryName(queryName);
+	sub.setSubscriptionID(parameters.getSubscriptionId());
+	sub.setParams(queryParams);
+	
+
+	if (!parameters.getQueryDayOfMonth().equals(nullTime))
+	    sched.setDayOfMonth(parameters.getQueryDayOfMonth());
+	if (!parameters.getQueryDayOfWeek().equals(nullTime))
+	    sched.setDayOfWeek(parameters.getQueryDayOfWeek());
+	if (!parameters.getQueryHour().equals(nullTime))
+	    sched.setHour(parameters.getQueryHour());
+	if (!parameters.getQueryMin().equals(nullTime))
+	    sched.setMinute(parameters.getQueryMin());
+	if (!parameters.getQuerySec().equals(nullTime))
+	    sched.setSecond(parameters.getQuerySec());
+	if (!parameters.getQueryMonth().equals(nullTime))
+	    sched.setMonth(parameters.getQueryMonth());
+
+	controls.setSchedule(sched);
+
 	try {
 	    factory = DatatypeFactory.newInstance();
-	    controls.setInitialRecordTime(factory.newXMLGregorianCalendar(new GregorianCalendar()));
+	    
+	    if (parameters.getInitialTime() != null)
+		controls.setInitialRecordTime(factory.newXMLGregorianCalendar(parameters.getInitialTime()));
+	    else
+		controls.setInitialRecordTime(factory.newXMLGregorianCalendar(new GregorianCalendar()));
 	} catch (DatatypeConfigurationException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    logger.error(e);
 	}
 
-	controls.setReportIfEmpty(true);
-
-	QuerySchedule sched = new QuerySchedule();
-
-	sched.setSecond(querySec);
-	controls.setSchedule(sched);
+	controls.setReportIfEmpty(parameters.isReportIfEmpty());
 	sub.setControls(controls);
 
 	return sub;
     }
 
-    // private void poll(Poll poll) {
-    // try {
-    // logger.info(client.poll(poll));
-    // } catch (ImplementationExceptionResponse e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (QueryTooComplexExceptionResponse e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (QueryTooLargeExceptionResponse e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (SecurityExceptionResponse e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (ValidationExceptionResponse e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (NoSuchNameExceptionResponse e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (QueryParameterExceptionResponse e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-    // }
+    private QueryResults poll(final QueryParams params) {
+	try {
+	    Poll poll = new Poll();
+	    poll.setQueryName("SimpleEventQuery");
+	    poll.setParams(params);
+	    return client.poll(poll);
+	} catch (Exception e) {
+	    logger.error(e);
+	    return null;
+	}
+    }
 
     private boolean subscribe(final Subscribe sub) {
 	try {
 	    client.subscribe(sub.getQueryName(), sub.getParams(), sub.getDest(), sub.getControls(), sub.getSubscriptionID());
 
-	    if (!listener.isRunning())
-		listener.start();
+	    if (!QueryCallbackListener.getInstance().isRunning())
+		QueryCallbackListener.getInstance().start();
 
 	    return true;
 
