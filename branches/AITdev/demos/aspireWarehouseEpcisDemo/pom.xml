@@ -23,7 +23,7 @@
 	<artifactId>aspireWarehouseEpcisDemo</artifactId>
 	<packaging>jar</packaging>
 	<name>aspireWarehouseEpcisDemo</name>
-	<version>0.5</version>
+	<version>0.9</version>
 	<description />
 
 	<!-- =========================================================== -->
@@ -73,21 +73,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ow2.aspirerfid.connector</groupId>
-			<artifactId>ConnectorCommons</artifactId>
-			<version>0.0.1</version>
-			<type>jar</type>
+			<artifactId>ConnectorClient</artifactId>
+			<version>1.0</version>
+			<type>war</type>
 			<scope>compile</scope>
-		</dependency>
-				<dependency>
-			<groupId>org.apache.xmlrpc</groupId>
-			<artifactId>xmlrpc-server</artifactId>
-			<version>3.1</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.xmlrpc</groupId>
-			<artifactId>xmlrpc-client</artifactId>
-			<version>3.1</version>
 		</dependency>
 	</dependencies>
 
@@ -172,7 +161,7 @@
 						</manifestEntries>
 						<manifest>
 							<mainClass>
-								org.ow2.aspirerfid.demos.warehouse.management.UI.WarehouseManagement
+								org.ow2.aspirerfid.demos.warehouse.management.UI.WMS
 							</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>./lib</classpathPrefix>
@@ -194,7 +183,7 @@
 					<archive>
 						<manifest>
 							<mainClass>
-								org.ow2.aspirerfid.demos.warehouse.management.UI.WarehouseManagement
+								org.ow2.aspirerfid.demos.warehouse.management.UI.WMS
 							</mainClass>
 							<packageName>
 								org.ow2.aspirerfid.demos.warehouse.management.UI

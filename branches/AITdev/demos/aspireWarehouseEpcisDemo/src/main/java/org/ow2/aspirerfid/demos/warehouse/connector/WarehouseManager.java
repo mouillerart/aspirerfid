@@ -23,10 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.connectors.api.ConnectorClient;
+import org.ow2.aspirerfid.connectors.api.ClientEventHandler;
 import org.ow2.aspirerfid.connectors.api.Event;
-import org.ow2.aspirerfid.connectors.tools.Configurator;
-import org.ow2.aspirerfid.demos.warehouse.management.UI.WarehouseManagement;
+import org.ow2.aspirerfid.demos.warehouse.management.UI.WMS;
 import org.ow2.aspirerfid.demos.warehouse.management.tools.DeliveryItem;
 import org.ow2.aspirerfid.demos.warehouse.management.tools.Shipment;
 
@@ -36,11 +35,10 @@ import org.ow2.aspirerfid.demos.warehouse.management.tools.Shipment;
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
  *
  */
-public class WarehouseManager implements ConnectorClient {
+public class WarehouseManager implements ClientEventHandler {
 
     private HashMap<String, Shipment> shipments;
-    private static ConnectorManager connector;
-    
+    private static ConnectorManager connectorManager;
     private static final Logger logger;
 
     static
@@ -50,9 +48,8 @@ public class WarehouseManager implements ConnectorClient {
     
     public WarehouseManager() {
 	shipments = new HashMap<String, Shipment>();
-	connector = ConnectorManager.getInstance();
-	connector.setConnectorClient(this);
-	connector.setEndpoint(Configurator.getProperty("queryEndpoint"));
+	connectorManager = ConnectorManager.getInstance();
+	connectorManager.setConnectorEventClient(this);
     }
 
     /*
@@ -81,25 +78,25 @@ public class WarehouseManager implements ConnectorClient {
 		    item.setQuantityRemain(remaining);
 
 		    s.updateItemDeliveredQuantity(epc, delivered);
-		    WarehouseManagement.updateDeliveryTableModel(item);
+		    WMS.updateDeliveryTableModel(item);
 		}
 	    }
 	    Calendar c = Calendar.getInstance();
 	    c.setTimeInMillis(event.getEventTime());
 
-	    WarehouseManagement.setInvoiceIDTextField(invoice);
+	    WMS.setInvoiceIDTextField(invoice);
 	    
 	    if(s.isComplete())
 	    {
 		finalizeShipment(invoice);
-		WarehouseManagement.showDeliveredInfo(invoice);
+		WMS.showDeliveredInfo(invoice);
 	    }
 	}
     }
 
     public boolean addShipmentInfo(Shipment shipment) {
 
-	if (connector.registerForTransaction(shipment.getInvoiceId())) {
+	if (connectorManager.registerForTransaction(shipment.getInvoiceId())) {
 	    logger.info("Registered for invoice "+shipment.getInvoiceId());
 	    shipments.put(shipment.getInvoiceId(), shipment);
 	    return true;
@@ -109,7 +106,7 @@ public class WarehouseManager implements ConnectorClient {
     
     private void finalizeShipment(String invoiceId)
     {
-	connector.unregisterForTransaction(invoiceId);
+	connectorManager.unregisterForTransaction(invoiceId, true);
 	shipments.remove(invoiceId);
     }
 

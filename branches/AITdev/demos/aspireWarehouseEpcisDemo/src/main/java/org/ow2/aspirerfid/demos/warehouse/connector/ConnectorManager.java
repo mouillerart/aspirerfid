@@ -18,181 +18,150 @@
 
 package org.ow2.aspirerfid.demos.warehouse.connector;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashSet;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import org.apache.log4j.Logger;
-import org.ow2.aspirerfid.connectors.api.ConnectorClient;
-import org.ow2.aspirerfid.connectors.client.RegistrationClient;
-import org.ow2.aspirerfid.connectors.client.TransportService;
+import org.ow2.aspirerfid.connectors.api.ClientEventHandler;
+import org.ow2.aspirerfid.connectors.api.SubscriptionParameters;
+import org.ow2.aspirerfid.connectors.client.ConnectorClientImpl;
+import org.ow2.aspirerfid.connectors.client.RegistrationManager;
 import org.ow2.aspirerfid.connectors.tools.Configurator;
 
 /**
- * This class contains operations to communicate with the connector client module
+ * This class contains operations to communicate with the connector client
+ * module
+ * 
  * @author Nektarios Leontiadis (nele@ait.edu.gr)
  * 
  */
 public class ConnectorManager {
 
-    private String endpoint;
+    private static String responseEndpoint, sec, min, hour, week, month;
     private boolean started;
-    private HashSet<String> subscr;
-    private TransportService service;
-    
+    private ConnectorClientImpl connectorClient;
+
+    private static HashMap<String, SubscriptionParameters> subscriptions;
+
     private static ConnectorManager manager;
-    
+    private static int port;
     public static final String transactionId;
-    public static final boolean IS_STANDALONE;
     private static final int DEFAULT_STANDALONE_PORT = 8089;
     private static final Logger logger;
 
     static {
 	transactionId = Configurator.getProperty("transactionId", "urn:epc:id:gid:");
-	IS_STANDALONE = Configurator.getProperty("isConnectorClientStandaloneModeOn","true").equalsIgnoreCase("true");
 	logger = Logger.getLogger(ConnectorManager.class);
+	subscriptions = new HashMap<String, SubscriptionParameters>();
+	try {
+	    port = Integer.parseInt(Configurator.getProperty("standaloneConnectorClientPort"));
+	} catch (Exception e) {
+	    port = DEFAULT_STANDALONE_PORT;
+	}
+	String hostname = Configurator.getProperty("host", "localhost");
+	responseEndpoint = "http://"+hostname+":" + port + "/ConnectorClient/connectorClient";
+	
+	sec = Configurator.getProperty("subSec", "1,31");
+	min = Configurator.getProperty("subMin", "-1");
+	hour = Configurator.getProperty("subHour", "-1");
+	week = Configurator.getProperty("subWeek", "-1");
+	month = Configurator.getProperty("subMonth", "-1");
+	
     }
 
     public static ConnectorManager getInstance() {
 	if (manager == null) {
 	    manager = new ConnectorManager();
 	}
-
 	return manager;
     }
 
     private ConnectorManager() {
-	endpoint = null;
 	started = false;
-	subscr = new HashSet<String>();
-	service = new TransportService();
+	connectorClient = new ConnectorClientImpl();
 
     }
 
-    public void setEndpoint(String queryEndpoint) {
-	endpoint = queryEndpoint;
-    }
-
-    public void setConnectorClient(ConnectorClient client) {
-	service.setTransactionHandler(client);
+    public void setConnectorEventClient(ClientEventHandler client) {
+	connectorClient.setEventHandler(client);
     }
 
     private boolean startService() {
-	int port;
-	
 	if (started)
 	    return true;
-	try
-	{
-	    port = Integer.parseInt(Configurator.getProperty("standaloneConnectorClientPort"));
-	}catch (Exception e)
-	{
-	    port = DEFAULT_STANDALONE_PORT;
-	}
-	started = service.startStandaloneMode(port);
+	started = connectorClient.startStandaloneMode(port);
 	return started;
     }
 
     /**
-     * Sends a registration message either to the embedded or the remote connector client 
-     * @param invoiceId The invoice ID to be registered.
+     * Sends a registration message either to the embedded or the remote
+     * connector client
+     * 
+     * @param invoiceId
+     *            The invoice ID to be registered.
      * @return True if operation suceeds; false otherwise.
      */
     public boolean registerForTransaction(String invoiceId) {
-	boolean response = false;
-	HttpURLConnection conn;
-	URL url;
-	String regUrl;
 
-	if (subscr.contains(invoiceId))
+	SubscriptionParameters params = new SubscriptionParameters();
+
+	if (subscriptions.containsKey(invoiceId)) {
 	    return true;
-
-	if (!IS_STANDALONE) {
-
-	    regUrl = endpoint + "register?sub&sid=" + transactionId + "&tid="
-		    + Configurator.getProperty("transactionId", "urn:epc:id:gid:")+invoiceId;
-	    try {
-		// regUrl = URLEncoder.encode(regUrl, "UTF-8");
-		url = new URL(regUrl);
-		conn = (HttpURLConnection) url.openConnection();
-		conn.connect();
-		BufferedReader reader = new BufferedReader(
-			new InputStreamReader(conn.getInputStream()));
-		char respCh = (char) reader.read();
-		if (respCh == 't') {
-		    subscr.add(invoiceId);
-		    response = true;
-		}
-		reader.close();
-		conn.disconnect();
-
-	    } catch (Exception e) {
-		logger.error(e);
-	    }
-	    return response;
-	} else {
-	    //Start local XmlRpc servlet
-	    if (!startService())
-		    return false;
-	    if (RegistrationClient.register(invoiceId, Configurator.getProperty("bizTransType", "urn:epcglobal:fmcg:btt:receiving"), invoiceId)) {
-		subscr.add(invoiceId);
-		return true;
-	    } else
-		return false;
 	}
-
+	params.setSubscriptionId(invoiceId);
+	params.setTransactionType(Configurator.getProperty("bizTransType", "urn:epcglobal:fmcg:btt:receiving"));
+	params.setTransactionId(invoiceId);
+	params.setInitialTime((GregorianCalendar) Calendar.getInstance());
+	params.setQuerySec(sec);
+	params.setQueryDayOfWeek(week);
+	params.setQueryDayOfMonth(month);
+	params.setQueryHour(hour);
+	params.setQueryMin(min);
+	params.setReplyEndpoint(responseEndpoint);
+	// Start local CXF HTTP transport
+	if (!startService())
+	    return false;
+	if (RegistrationManager.register(params)) {
+	    subscriptions.put(invoiceId, params);
+	    return true;
+	} else
+	    return false;
     }
 
     /**
-     * Sends an unregister message either to the embedded or the remote connector client 
-     * @param invoiceId The registered invoice ID
+     * Sends an unregister message either to the embedded or the remote
+     * connector client
+     * 
+     * @param invoiceId
+     *            The registered invoice ID
      * @return True if operation suceeds; false otherwise.
      */
-    public boolean unregisterForTransaction(String invoiceId) {
-	boolean response = false;
-	HttpURLConnection conn;
-	URL url;
-	String regUrl;
+    public boolean unregisterForTransaction(String invoiceId, boolean isComplete) {
 
-	if (!subscr.contains(invoiceId))
-	    return false;
+	synchronized (subscriptions) {
+	    if (!subscriptions.containsKey(invoiceId))
+		return false;
 
-	if (!IS_STANDALONE) {
-	    regUrl = endpoint + "register?unsub&sid=" + invoiceId;
-	    try {
-		regUrl = URLEncoder.encode(regUrl, "UTF-8");
-		url = new URL(regUrl);
-		conn = (HttpURLConnection) url.openConnection();
-		BufferedReader reader = new BufferedReader(
-			new InputStreamReader(conn.getInputStream()));
-		char respCh = (char) reader.read();
-		if (respCh == 't') {
-		    subscr.remove(invoiceId);
-		    response = true;
-		}
-		reader.close();
-		conn.disconnect();
-
-	    } catch (Exception e) {
-		logger.error(e);
-	    }
-	    return response;
-	} else {
-	    if (RegistrationClient.unregister(invoiceId)) {
-		subscr.remove(invoiceId);
+	    if (RegistrationManager.unregister(subscriptions.get(invoiceId), isComplete)) {
+		subscriptions.remove(invoiceId);
 		return true;
 	    } else
 		return false;
 	}
     }
 
+    /**
+     * Used when closing application to unregister all pending subscriptions without sending a transaction delete signal to 
+     * the EPCIS repository
+     */
     public void cancelAllSubscriptions() {
 	logger.warn("Unsubscribing from all pending subscriptions");
-	for (String ids : subscr) {
-	    unregisterForTransaction(ids);
+	synchronized (subscriptions) {
+	    for (Iterator<SubscriptionParameters> i = subscriptions.values().iterator(); i.hasNext();) {
+		RegistrationManager.unregister(i.next(), false);
+	    }
 	}
     }
 

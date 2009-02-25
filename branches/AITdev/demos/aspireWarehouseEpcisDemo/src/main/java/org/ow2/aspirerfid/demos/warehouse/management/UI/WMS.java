@@ -30,8 +30,8 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import javax.swing.DefaultComboBoxModel;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -46,9 +46,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration; //import org.apache.commons.logging.Log;
-//import org.apache.commons.logging.LogFactory;
+import org.apache.commons.configuration.XMLConfiguration;
+import org.ow2.aspirerfid.connectors.tools.Configurator;
 import org.ow2.aspirerfid.demos.warehouse.connector.ConnectorManager;
 import org.ow2.aspirerfid.demos.warehouse.connector.WarehouseManager;
 import org.ow2.aspirerfid.demos.warehouse.management.tools.DeliveryItem;
@@ -59,14 +58,14 @@ import org.ow2.aspirerfid.demos.warehouse.management.tools.Shipment;
  * @author Nektarios Leontiadis
  * 
  */
-public class WarehouseManagement {
+public class WMS {
 
     private JTable deliveryInfo;
     private JComboBox shipmentsCb;
     /**
      * The logger.
      */
-    // private static Log log = LogFactory.getLog(WarehouseManagement.class);
+    // private static Log log = LogFactory.getLog(WMS.class);
     private static JTextField offeringDateTextField;
     private static JTextField invoiceIDTextField;
     private static JFrame frame;
@@ -81,9 +80,10 @@ public class WarehouseManagement {
      */
     public static void main(String args[]) {
 	try {
-	    WarehouseManagement window = new WarehouseManagement();
-	    connectorClient = new WarehouseManager();
-	    window.frame.setVisible(true);
+	    new WMS();
+	    frame.setVisible(true);
+	    Configurator.loadProperties("application.properties", WMS.class);
+	    connectorClientEventHandler = new WarehouseManager();
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -93,7 +93,7 @@ public class WarehouseManagement {
     /**
      * Create the application
      */
-    public WarehouseManagement() {
+    public WMS() {
 	initialize();
 	loadShipmentInfo();
 
@@ -243,41 +243,6 @@ public class WarehouseManagement {
 
     /**
      * @param String
-     *            warehouseID
-     */
-    public static void setWarehouseIDTextField(String warehouseID) {
-    }
-
-    /**
-     * @param String
-     *            zoneID
-     */
-    public static void setZoneIDTextField(String zoneID) {
-    }
-
-    /**
-     * @param String
-     *            userID
-     */
-    public static void setUserIDTextField(String userID) {
-    }
-
-    /**
-     * @param String
-     *            entryDate
-     */
-    public static void setEntryDateTextField(String entryDate) {
-    }
-
-    /**
-     * @param String
-     *            entryHour
-     */
-    public static void setEntryHourTextField(String entryHour) {
-    }
-
-    /**
-     * @param String
      *            offeringDate
      */
     public static void setOfferingDateTextField(String offeringDate) {
@@ -343,7 +308,7 @@ public class WarehouseManagement {
 	    if (s == null)
 		return;
 
-	    if (connectorClient.addShipmentInfo(s)) {
+	    if (connectorClientEventHandler.addShipmentInfo(s)) {
 		setOfferingDateTextField((DateFormat.getInstance().format(Calendar.getInstance().getTime())));
 		tabbedPane.setSelectedIndex(1);
 		submitShipmentButton.setEnabled(false);
@@ -437,7 +402,7 @@ public class WarehouseManagement {
 	}
     }
 
-    private static WarehouseManager connectorClient;
+    private static WarehouseManager connectorClientEventHandler;
 
     private HashMap<String, Shipment> shipments;
     private static JTabbedPane tabbedPane;
