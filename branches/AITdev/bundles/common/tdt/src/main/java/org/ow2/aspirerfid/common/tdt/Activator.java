@@ -18,11 +18,9 @@
  */
 package org.ow2.aspirerfid.common.tdt;
 
-import java.util.Hashtable;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.ow2.aspirerfid.common.tdt.*;
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
 
