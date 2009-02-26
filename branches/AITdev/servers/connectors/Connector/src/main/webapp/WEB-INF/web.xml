@@ -4,16 +4,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 	<display-name>Connector</display-name>
-	<servlet>
-		<description></description>
-		<display-name>XmlRpcServlet</display-name>
-		<servlet-name>XmlRpcServlet</servlet-name>
-		<servlet-class>org.apache.xmlrpc.webserver.XmlRpcServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>XmlRpcServlet</servlet-name>
-		<url-pattern>/subscribe</url-pattern>
-	</servlet-mapping>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>WEB-INF/beans.xml</param-value>
