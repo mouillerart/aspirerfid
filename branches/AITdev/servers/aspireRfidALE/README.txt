@@ -14,5 +14,3 @@ or Webclient module.
 
 3. The configuration of the server can be changed in the property files InputGenerators.properties
 and LogicalReaders.xml.
-
-For more information,  please see http://www.accada.org/fc/
