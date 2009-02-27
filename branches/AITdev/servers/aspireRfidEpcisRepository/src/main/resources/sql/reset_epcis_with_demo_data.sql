@@ -1,4 +1,4 @@
---Copyright © 2008-2010, Aspire 
+-- Copyright (c) 2008-2010, Aspire 
 --
 -- This file contains the source code of the Accada library by ETH Zurich (www.accada.org),
 -- licensed under the terms of the GNU Lesser General Public License version 2.1 in 2007
@@ -16,6 +16,7 @@
 -- This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
 -- OF ANY KIND, either express or implied. See the GNU Lesser General Public 
 -- License for the specific language governing rights and limitations. 
+
 
 
 
@@ -37,11 +38,11 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ epcis;
 USE epcis;
 
 --
--- Table structure for table `epcis`.`biztransaction`
+-- Table structure for table `epcis`.`BizTransaction`
 --
 
-DROP TABLE IF EXISTS `biztransaction`;
-CREATE TABLE `biztransaction` (
+DROP TABLE IF EXISTS `BizTransaction`;
+CREATE TABLE `BizTransaction` (
   `id` bigint(20) NOT NULL auto_increment,
   `bizTrans` bigint(20) NOT NULL,
   `type` bigint(20) default NULL,
@@ -49,19 +50,19 @@ CREATE TABLE `biztransaction` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`biztransaction`
+-- Dumping data for table `epcis`.`BizTransaction`
 --
 
-/*!40000 ALTER TABLE `biztransaction` DISABLE KEYS */;
-/*!40000 ALTER TABLE `biztransaction` ENABLE KEYS */;
+/*!40000 ALTER TABLE `BizTransaction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `BizTransaction` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_aggregationevent`
+-- Table structure for table `epcis`.`event_AggregationEvent`
 --
 
-DROP TABLE IF EXISTS `event_aggregationevent`;
-CREATE TABLE `event_aggregationevent` (
+DROP TABLE IF EXISTS `event_AggregationEvent`;
+CREATE TABLE `event_AggregationEvent` (
   `id` bigint(20) NOT NULL auto_increment,
   `eventTime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `recordTime` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -76,19 +77,19 @@ CREATE TABLE `event_aggregationevent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_aggregationevent`
+-- Dumping data for table `epcis`.`event_AggregationEvent`
 --
 
-/*!40000 ALTER TABLE `event_aggregationevent` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_aggregationevent` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_AggregationEvent` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_AggregationEvent` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_aggregationevent_biztrans`
+-- Table structure for table `epcis`.`event_AggregationEvent_BizTrans`
 --
 
-DROP TABLE IF EXISTS `event_aggregationevent_biztrans`;
-CREATE TABLE `event_aggregationevent_biztrans` (
+DROP TABLE IF EXISTS `event_AggregationEvent_BizTrans`;
+CREATE TABLE `event_AggregationEvent_BizTrans` (
   `event_id` bigint(20) NOT NULL,
   `bizTrans_id` bigint(20) NOT NULL,
   `idx` int(11) NOT NULL,
@@ -96,19 +97,19 @@ CREATE TABLE `event_aggregationevent_biztrans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_aggregationevent_biztrans`
+-- Dumping data for table `epcis`.`event_AggregationEvent_BizTrans`
 --
 
-/*!40000 ALTER TABLE `event_aggregationevent_biztrans` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_aggregationevent_biztrans` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_AggregationEvent_BizTrans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_AggregationEvent_BizTrans` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_aggregationevent_epcs`
+-- Table structure for table `epcis`.`event_AggregationEvent_EPCs`
 --
 
-DROP TABLE IF EXISTS `event_aggregationevent_epcs`;
-CREATE TABLE `event_aggregationevent_epcs` (
+DROP TABLE IF EXISTS `event_AggregationEvent_EPCs`;
+CREATE TABLE `event_AggregationEvent_EPCs` (
   `event_id` bigint(20) NOT NULL,
   `epc` varchar(1023) NOT NULL,
   `idx` int(11) NOT NULL,
@@ -116,19 +117,19 @@ CREATE TABLE `event_aggregationevent_epcs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_aggregationevent_epcs`
+-- Dumping data for table `epcis`.`event_AggregationEvent_EPCs`
 --
 
-/*!40000 ALTER TABLE `event_aggregationevent_epcs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_aggregationevent_epcs` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_AggregationEvent_EPCs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_AggregationEvent_EPCs` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_aggregationevent_extensions`
+-- Table structure for table `epcis`.`event_AggregationEvent_extensions`
 --
 
-DROP TABLE IF EXISTS `event_aggregationevent_extensions`;
-CREATE TABLE `event_aggregationevent_extensions` (
+DROP TABLE IF EXISTS `event_AggregationEvent_extensions`;
+CREATE TABLE `event_AggregationEvent_extensions` (
   `id` bigint(20) NOT NULL auto_increment,
   `event_id` bigint(20) NOT NULL,
   `fieldname` varchar(128) NOT NULL,
@@ -142,19 +143,19 @@ CREATE TABLE `event_aggregationevent_extensions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_aggregationevent_extensions`
+-- Dumping data for table `epcis`.`event_AggregationEvent_extensions`
 --
 
-/*!40000 ALTER TABLE `event_aggregationevent_extensions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_aggregationevent_extensions` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_AggregationEvent_extensions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_AggregationEvent_extensions` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_objectevent`
+-- Table structure for table `epcis`.`event_ObjectEvent`
 --
 
-DROP TABLE IF EXISTS `event_objectevent`;
-CREATE TABLE `event_objectevent` (
+DROP TABLE IF EXISTS `event_ObjectEvent`;
+CREATE TABLE `event_ObjectEvent` (
   `id` bigint(20) NOT NULL auto_increment,
   `eventTime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `recordTime` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -168,19 +169,19 @@ CREATE TABLE `event_objectevent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_objectevent`
+-- Dumping data for table `epcis`.`event_ObjectEvent`
 --
 
-/*!40000 ALTER TABLE `event_objectevent` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_objectevent` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_ObjectEvent` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_ObjectEvent` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_objectevent_biztrans`
+-- Table structure for table `epcis`.`event_ObjectEvent_BizTrans`
 --
 
-DROP TABLE IF EXISTS `event_objectevent_biztrans`;
-CREATE TABLE `event_objectevent_biztrans` (
+DROP TABLE IF EXISTS `event_ObjectEvent_BizTrans`;
+CREATE TABLE `event_ObjectEvent_BizTrans` (
   `event_id` bigint(20) NOT NULL,
   `bizTrans_id` bigint(20) NOT NULL,
   `idx` int(11) NOT NULL,
@@ -188,19 +189,19 @@ CREATE TABLE `event_objectevent_biztrans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_objectevent_biztrans`
+-- Dumping data for table `epcis`.`event_ObjectEvent_BizTrans`
 --
 
-/*!40000 ALTER TABLE `event_objectevent_biztrans` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_objectevent_biztrans` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_ObjectEvent_BizTrans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_ObjectEvent_BizTrans` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_objectevent_epcs`
+-- Table structure for table `epcis`.`event_ObjectEvent_EPCs`
 --
 
-DROP TABLE IF EXISTS `event_objectevent_epcs`;
-CREATE TABLE `event_objectevent_epcs` (
+DROP TABLE IF EXISTS `event_ObjectEvent_EPCs`;
+CREATE TABLE `event_ObjectEvent_EPCs` (
   `event_id` bigint(20) NOT NULL,
   `epc` varchar(1023) NOT NULL,
   `idx` int(11) NOT NULL,
@@ -208,19 +209,19 @@ CREATE TABLE `event_objectevent_epcs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_objectevent_epcs`
+-- Dumping data for table `epcis`.`event_ObjectEvent_EPCs`
 --
 
-/*!40000 ALTER TABLE `event_objectevent_epcs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_objectevent_epcs` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_ObjectEvent_EPCs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_ObjectEvent_EPCs` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_objectevent_extensions`
+-- Table structure for table `epcis`.`event_ObjectEvent_extensions`
 --
 
-DROP TABLE IF EXISTS `event_objectevent_extensions`;
-CREATE TABLE `event_objectevent_extensions` (
+DROP TABLE IF EXISTS `event_ObjectEvent_extensions`;
+CREATE TABLE `event_ObjectEvent_extensions` (
   `id` bigint(20) NOT NULL auto_increment,
   `event_id` bigint(20) NOT NULL,
   `fieldname` varchar(128) NOT NULL,
@@ -234,19 +235,19 @@ CREATE TABLE `event_objectevent_extensions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_objectevent_extensions`
+-- Dumping data for table `epcis`.`event_ObjectEvent_extensions`
 --
 
-/*!40000 ALTER TABLE `event_objectevent_extensions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_objectevent_extensions` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_ObjectEvent_extensions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_ObjectEvent_extensions` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_quantityevent`
+-- Table structure for table `epcis`.`event_QuantityEvent`
 --
 
-DROP TABLE IF EXISTS `event_quantityevent`;
-CREATE TABLE `event_quantityevent` (
+DROP TABLE IF EXISTS `event_QuantityEvent`;
+CREATE TABLE `event_QuantityEvent` (
   `id` bigint(20) NOT NULL auto_increment,
   `eventTime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `recordTime` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -261,19 +262,19 @@ CREATE TABLE `event_quantityevent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_quantityevent`
+-- Dumping data for table `epcis`.`event_QuantityEvent`
 --
 
-/*!40000 ALTER TABLE `event_quantityevent` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_quantityevent` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_QuantityEvent` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_QuantityEvent` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_quantityevent_biztrans`
+-- Table structure for table `epcis`.`event_QuantityEvent_BizTrans`
 --
 
-DROP TABLE IF EXISTS `event_quantityevent_biztrans`;
-CREATE TABLE `event_quantityevent_biztrans` (
+DROP TABLE IF EXISTS `event_QuantityEvent_BizTrans`;
+CREATE TABLE `event_QuantityEvent_BizTrans` (
   `event_id` bigint(20) NOT NULL,
   `bizTrans_id` bigint(20) NOT NULL,
   `idx` int(11) NOT NULL,
@@ -281,19 +282,19 @@ CREATE TABLE `event_quantityevent_biztrans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_quantityevent_biztrans`
+-- Dumping data for table `epcis`.`event_QuantityEvent_BizTrans`
 --
 
-/*!40000 ALTER TABLE `event_quantityevent_biztrans` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_quantityevent_biztrans` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_QuantityEvent_BizTrans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_QuantityEvent_BizTrans` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_quantityevent_extensions`
+-- Table structure for table `epcis`.`event_QuantityEvent_extensions`
 --
 
-DROP TABLE IF EXISTS `event_quantityevent_extensions`;
-CREATE TABLE `event_quantityevent_extensions` (
+DROP TABLE IF EXISTS `event_QuantityEvent_extensions`;
+CREATE TABLE `event_QuantityEvent_extensions` (
   `id` bigint(20) NOT NULL auto_increment,
   `event_id` bigint(20) NOT NULL,
   `fieldname` varchar(128) NOT NULL,
@@ -307,19 +308,19 @@ CREATE TABLE `event_quantityevent_extensions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_quantityevent_extensions`
+-- Dumping data for table `epcis`.`event_QuantityEvent_extensions`
 --
 
-/*!40000 ALTER TABLE `event_quantityevent_extensions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_quantityevent_extensions` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_QuantityEvent_extensions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_QuantityEvent_extensions` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_transactionevent`
+-- Table structure for table `epcis`.`event_TransactionEvent`
 --
 
-DROP TABLE IF EXISTS `event_transactionevent`;
-CREATE TABLE `event_transactionevent` (
+DROP TABLE IF EXISTS `event_TransactionEvent`;
+CREATE TABLE `event_TransactionEvent` (
   `id` bigint(20) NOT NULL auto_increment,
   `eventTime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `recordTime` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -334,19 +335,19 @@ CREATE TABLE `event_transactionevent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_transactionevent`
+-- Dumping data for table `epcis`.`event_TransactionEvent`
 --
 
-/*!40000 ALTER TABLE `event_transactionevent` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_transactionevent` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_TransactionEvent` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_TransactionEvent` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_transactionevent_biztrans`
+-- Table structure for table `epcis`.`event_TransactionEvent_BizTrans`
 --
 
-DROP TABLE IF EXISTS `event_transactionevent_biztrans`;
-CREATE TABLE `event_transactionevent_biztrans` (
+DROP TABLE IF EXISTS `event_TransactionEvent_BizTrans`;
+CREATE TABLE `event_TransactionEvent_BizTrans` (
   `event_id` bigint(20) NOT NULL,
   `bizTrans_id` bigint(20) NOT NULL,
   `idx` int(11) NOT NULL,
@@ -354,19 +355,19 @@ CREATE TABLE `event_transactionevent_biztrans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_transactionevent_biztrans`
+-- Dumping data for table `epcis`.`event_TransactionEvent_BizTrans`
 --
 
-/*!40000 ALTER TABLE `event_transactionevent_biztrans` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_transactionevent_biztrans` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_TransactionEvent_BizTrans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_TransactionEvent_BizTrans` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_transactionevent_epcs`
+-- Table structure for table `epcis`.`event_TransactionEvent_EPCs`
 --
 
-DROP TABLE IF EXISTS `event_transactionevent_epcs`;
-CREATE TABLE `event_transactionevent_epcs` (
+DROP TABLE IF EXISTS `event_TransactionEvent_EPCs`;
+CREATE TABLE `event_TransactionEvent_EPCs` (
   `event_id` bigint(20) NOT NULL,
   `epc` varchar(1023) NOT NULL,
   `idx` int(11) NOT NULL,
@@ -374,19 +375,19 @@ CREATE TABLE `event_transactionevent_epcs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_transactionevent_epcs`
+-- Dumping data for table `epcis`.`event_TransactionEvent_EPCs`
 --
 
-/*!40000 ALTER TABLE `event_transactionevent_epcs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_transactionevent_epcs` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_TransactionEvent_EPCs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_TransactionEvent_EPCs` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`event_transactionevent_extensions`
+-- Table structure for table `epcis`.`event_TransactionEvent_extensions`
 --
 
-DROP TABLE IF EXISTS `event_transactionevent_extensions`;
-CREATE TABLE `event_transactionevent_extensions` (
+DROP TABLE IF EXISTS `event_TransactionEvent_extensions`;
+CREATE TABLE `event_TransactionEvent_extensions` (
   `id` bigint(20) NOT NULL auto_increment,
   `event_id` bigint(20) NOT NULL,
   `fieldname` varchar(128) NOT NULL,
@@ -400,11 +401,11 @@ CREATE TABLE `event_transactionevent_extensions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`event_transactionevent_extensions`
+-- Dumping data for table `epcis`.`event_TransactionEvent_extensions`
 --
 
-/*!40000 ALTER TABLE `event_transactionevent_extensions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_transactionevent_extensions` ENABLE KEYS */;
+/*!40000 ALTER TABLE `event_TransactionEvent_extensions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `event_TransactionEvent_extensions` ENABLE KEYS */;
 
 
 --
@@ -434,11 +435,11 @@ CREATE TABLE `subscription` (
 
 
 --
--- Table structure for table `epcis`.`voc_any`
+-- Table structure for table `epcis`.`voc_Any`
 --
 
-DROP TABLE IF EXISTS `voc_any`;
-CREATE TABLE `voc_any` (
+DROP TABLE IF EXISTS `voc_Any`;
+CREATE TABLE `voc_Any` (
   `id` bigint(20) NOT NULL auto_increment,
   `uri` varchar(1023) NOT NULL,
   `vtype` varchar(1023) NOT NULL,
@@ -446,73 +447,73 @@ CREATE TABLE `voc_any` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_any`
+-- Dumping data for table `epcis`.`voc_Any`
 --
 
-/*!40000 ALTER TABLE `voc_any` DISABLE KEYS */;
-/*!40000 ALTER TABLE `voc_any` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_Any` DISABLE KEYS */;
+/*!40000 ALTER TABLE `voc_Any` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_any_attr`
+-- Table structure for table `epcis`.`voc_Any_attr`
 --
 
-DROP TABLE IF EXISTS `voc_any_attr`;
-CREATE TABLE `voc_any_attr` (
+DROP TABLE IF EXISTS `voc_Any_attr`;
+CREATE TABLE `voc_Any_attr` (
   `id` bigint(20) NOT NULL,
   `attribute` varchar(1023) NOT NULL,
   `value` varchar(1023) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_any_attr`
+-- Dumping data for table `epcis`.`voc_Any_attr`
 --
 
-/*!40000 ALTER TABLE `voc_any_attr` DISABLE KEYS */;
-/*!40000 ALTER TABLE `voc_any_attr` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_Any_attr` DISABLE KEYS */;
+/*!40000 ALTER TABLE `voc_Any_attr` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_bizloc`
+-- Table structure for table `epcis`.`voc_BizLoc`
 --
 
-DROP TABLE IF EXISTS `voc_bizloc`;
-CREATE TABLE `voc_bizloc` (
+DROP TABLE IF EXISTS `voc_BizLoc`;
+CREATE TABLE `voc_BizLoc` (
   `id` bigint(20) NOT NULL auto_increment,
   `uri` varchar(1023) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_bizloc`
+-- Dumping data for table `epcis`.`voc_BizLoc`
 --
 
-/*!40000 ALTER TABLE `voc_bizloc` DISABLE KEYS */;
-INSERT INTO `voc_bizloc` (`id`,`uri`) VALUES 
+/*!40000 ALTER TABLE `voc_BizLoc` DISABLE KEYS */;
+INSERT INTO `voc_BizLoc` (`id`,`uri`) VALUES 
  (3,'urn:epcglobal:fmcg:loc:greece:pireus:mainacme'),
  (4,'urn:epcglobal:fmcg:loc:greece:pireus:mainacme,urn:epcglobal:fmcg:loc:acme:warehouse1'),
  (5,'urn:epcglobal:fmcg:loc:greece:pireus:mainacme,urn:epcglobal:fmcg:loc:acme:warehouse2'),
  (7,'urn:epcglobal:fmcg:loc:greece:pireus:mainacme,urn:epcglobal:fmcg:loc:acme:warehouse3');
-/*!40000 ALTER TABLE `voc_bizloc` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_BizLoc` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_bizloc_attr`
+-- Table structure for table `epcis`.`voc_BizLoc_attr`
 --
 
-DROP TABLE IF EXISTS `voc_bizloc_attr`;
-CREATE TABLE `voc_bizloc_attr` (
+DROP TABLE IF EXISTS `voc_BizLoc_attr`;
+CREATE TABLE `voc_BizLoc_attr` (
   `id` bigint(20) NOT NULL,
   `attribute` varchar(1023) NOT NULL,
   `value` varchar(1023) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_bizloc_attr`
+-- Dumping data for table `epcis`.`voc_BizLoc_attr`
 --
 
-/*!40000 ALTER TABLE `voc_bizloc_attr` DISABLE KEYS */;
-INSERT INTO `voc_bizloc_attr` (`id`,`attribute`,`value`) VALUES 
+/*!40000 ALTER TABLE `voc_BizLoc_attr` DISABLE KEYS */;
+INSERT INTO `voc_BizLoc_attr` (`id`,`attribute`,`value`) VALUES 
  (3,'urn:epcglobal:epcis:mda:Name','Acme'),
  (3,'urn:epcglobal:epcis:mda:Address','Akadimias 3'),
  (3,'urn:epcglobal:epcis:mda:City','Pireus'),
@@ -524,26 +525,26 @@ INSERT INTO `voc_bizloc_attr` (`id`,`attribute`,`value`) VALUES
  (5,'urn:epcglobal:epcis:mda:Read Point','urn:epcglobal:fmcg:loc:06141.Warehouse2DocDoor'),
  (7,'urn:epcglobal:epcis:mda:Name','AcmeWarehouse3'),
  (7,'urn:epcglobal:epcis:mda:Read Point','urn:epcglobal:fmcg:loc:rp:warehouse3docdoor_');
-/*!40000 ALTER TABLE `voc_bizloc_attr` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_BizLoc_attr` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_bizstep`
+-- Table structure for table `epcis`.`voc_BizStep`
 --
 
-DROP TABLE IF EXISTS `voc_bizstep`;
-CREATE TABLE `voc_bizstep` (
+DROP TABLE IF EXISTS `voc_BizStep`;
+CREATE TABLE `voc_BizStep` (
   `id` bigint(20) NOT NULL auto_increment,
   `uri` varchar(1023) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_bizstep`
+-- Dumping data for table `epcis`.`voc_BizStep`
 --
 
-/*!40000 ALTER TABLE `voc_bizstep` DISABLE KEYS */;
-INSERT INTO `voc_bizstep` (`id`,`uri`) VALUES 
+/*!40000 ALTER TABLE `voc_BizStep` DISABLE KEYS */;
+INSERT INTO `voc_BizStep` (`id`,`uri`) VALUES 
  (1,'urn:epcglobal:fmcg:bizstep:receiving'),
  (2,'urn:epcglobal:fmcg:bizstep:picking'),
  (3,'urn:epcglobal:fmcg:bizstep:shipping'),
@@ -557,26 +558,26 @@ INSERT INTO `voc_bizstep` (`id`,`uri`) VALUES
  (11,'urn:fosstrak:demo:bizstep:fmcg:commissioning'),
  (12,'urn:fosstrak:demo:bizstep:fmcg:decommissioning'),
  (13,'urn:fosstrak:demo:bizstep:fmcg:destroying');
-/*!40000 ALTER TABLE `voc_bizstep` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_BizStep` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_bizstep_attr`
+-- Table structure for table `epcis`.`voc_BizStep_attr`
 --
 
-DROP TABLE IF EXISTS `voc_bizstep_attr`;
-CREATE TABLE `voc_bizstep_attr` (
+DROP TABLE IF EXISTS `voc_BizStep_attr`;
+CREATE TABLE `voc_BizStep_attr` (
   `id` bigint(20) NOT NULL,
   `attribute` varchar(1023) NOT NULL,
   `value` varchar(1023) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_bizstep_attr`
+-- Dumping data for table `epcis`.`voc_BizStep_attr`
 --
 
-/*!40000 ALTER TABLE `voc_bizstep_attr` DISABLE KEYS */;
-INSERT INTO `voc_bizstep_attr` (`id`,`attribute`,`value`) VALUES 
+/*!40000 ALTER TABLE `voc_BizStep_attr` DISABLE KEYS */;
+INSERT INTO `voc_BizStep_attr` (`id`,`attribute`,`value`) VALUES 
  (1,'urn:epcglobal:epcis:mda:Name','receiving'),
  (2,'urn:epcglobal:epcis:mda:Name','picking'),
  (3,'urn:epcglobal:epcis:mda:Name','shipping'),
@@ -590,50 +591,49 @@ INSERT INTO `voc_bizstep_attr` (`id`,`attribute`,`value`) VALUES
  (11,'urn:epcglobal:epcis:mda:Name','commissioning'),
  (12,'urn:epcglobal:epcis:mda:Name','decommissioning'),
  (13,'urn:epcglobal:epcis:mda:Name','destroying');
-/*!40000 ALTER TABLE `voc_bizstep_attr` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_BizStep_attr` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_biztrans`
+-- Table structure for table `epcis`.`voc_BizTrans`
 --
 
-DROP TABLE IF EXISTS `voc_biztrans`;
-CREATE TABLE `voc_biztrans` (
+DROP TABLE IF EXISTS `voc_BizTrans`;
+CREATE TABLE `voc_BizTrans` (
   `id` bigint(20) NOT NULL auto_increment,
   `uri` varchar(1023) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_biztrans`
+-- Dumping data for table `epcis`.`voc_BizTrans`
 --
 
-/*!40000 ALTER TABLE `voc_biztrans` DISABLE KEYS */;
-INSERT INTO `voc_biztrans` (`id`,`uri`) VALUES 
+/*!40000 ALTER TABLE `voc_BizTrans` DISABLE KEYS */;
+INSERT INTO `voc_BizTrans` (`id`,`uri`) VALUES 
  (5,'urn:epcglobal:fmcg:bti:acmesupplying'),
  (6,'urn:epcglobal:fmcg:bte:acmewarehouse1receive'),
- (7,'urn:epc:id:gid:145.12.76427'),
- (8,'urn:epcglobal:fmcg:bte:acmewarehouse2ship');
-/*!40000 ALTER TABLE `voc_biztrans` ENABLE KEYS */;
+ (7,'urn:epcglobal:fmcg:bte:acmewarehouse2ship');
+/*!40000 ALTER TABLE `voc_BizTrans` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_biztrans_attr`
+-- Table structure for table `epcis`.`voc_BizTrans_attr`
 --
 
-DROP TABLE IF EXISTS `voc_biztrans_attr`;
-CREATE TABLE `voc_biztrans_attr` (
+DROP TABLE IF EXISTS `voc_BizTrans_attr`;
+CREATE TABLE `voc_BizTrans_attr` (
   `id` bigint(20) NOT NULL,
   `attribute` varchar(1023) NOT NULL,
   `value` varchar(1023) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_biztrans_attr`
+-- Dumping data for table `epcis`.`voc_BizTrans_attr`
 --
 
-/*!40000 ALTER TABLE `voc_biztrans_attr` DISABLE KEYS */;
-INSERT INTO `voc_biztrans_attr` (`id`,`attribute`,`value`) VALUES 
+/*!40000 ALTER TABLE `voc_BizTrans_attr` DISABLE KEYS */;
+INSERT INTO `voc_BizTrans_attr` (`id`,`attribute`,`value`) VALUES 
  (5,'urn:epcglobal:epcis:mda:Name','AcmeSupplyingTrans'),
  (6,'urn:epcglobal:epcis:mda:ecreport_names','bizTransactionIDs_1234,transactionItems_1234'),
  (5,'urn:epcglobal:epcis:mda:Children','urn:epcglobal:fmcg:bte:acmewarehouse1receive,urn:epcglobal:fmcg:bte:acmewarehouse2ship'),
@@ -646,81 +646,81 @@ INSERT INTO `voc_biztrans_attr` (`id`,`attribute`,`value`) VALUES
  (6,'urn:epcglobal:epcis:mda:read_point','urn:epcglobal:fmcg:loc:45632.Warehouse1DocDoor'),
  (6,'urn:epcglobal:epcis:mda:transaction_type','urn:epcglobal:fmcg:btt:receiving'),
  (6,'urn:epcglobal:epcis:mda:action','ADD'),
- (8,'urn:epcglobal:epcis:mda:ecreport_names','transactionItems_6734,bizTransactionIDs_6734');
-INSERT INTO `voc_biztrans_attr` (`id`,`attribute`,`value`) VALUES 
- (8,'urn:epcglobal:epcis:mda:event_name','Warehouse2DocDoorShipping'),
- (8,'urn:epcglobal:epcis:mda:event_type','ObjectEvent'),
- (8,'urn:epcglobal:epcis:mda:business_step','urn:epcglobal:fmcg:bizstep:shipping'),
- (8,'urn:epcglobal:epcis:mda:business_location','urn:epcglobal:fmcg:loc:acme:warehouse2'),
- (8,'urn:epcglobal:epcis:mda:disposition','urn:epcglobal:fmcg:disp:in_transit'),
- (8,'urn:epcglobal:epcis:mda:ecspec_name','ECSpecShipping'),
- (8,'urn:epcglobal:epcis:mda:read_point','urn:epcglobal:fmcg:loc:06141.Warehouse2DocDoor'),
- (8,'urn:epcglobal:epcis:mda:transaction_type','urn:epcglobal:fmcg:btt:shipping'),
- (8,'urn:epcglobal:epcis:mda:action','ADD');
-/*!40000 ALTER TABLE `voc_biztrans_attr` ENABLE KEYS */;
+ (7,'urn:epcglobal:epcis:mda:ecreport_names','transactionItems_6734,bizTransactionIDs_6734');
+INSERT INTO `voc_BizTrans_attr` (`id`,`attribute`,`value`) VALUES
+ (7,'urn:epcglobal:epcis:mda:event_name','Warehouse2DocDoorShipping'),
+ (7,'urn:epcglobal:epcis:mda:event_type','ObjectEvent'),
+ (7,'urn:epcglobal:epcis:mda:business_step','urn:epcglobal:fmcg:bizstep:shipping'),
+ (7,'urn:epcglobal:epcis:mda:business_location','urn:epcglobal:fmcg:loc:acme:warehouse2'),
+ (7,'urn:epcglobal:epcis:mda:disposition','urn:epcglobal:fmcg:disp:in_transit'),
+ (7,'urn:epcglobal:epcis:mda:ecspec_name','ECSpecShipping'),
+ (7,'urn:epcglobal:epcis:mda:read_point','urn:epcglobal:fmcg:loc:06141.Warehouse2DocDoor'),
+ (7,'urn:epcglobal:epcis:mda:transaction_type','urn:epcglobal:fmcg:btt:shipping'),
+ (7,'urn:epcglobal:epcis:mda:action','ADD');
+/*!40000 ALTER TABLE `voc_BizTrans_attr` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_biztranstype`
+-- Table structure for table `epcis`.`voc_BizTransType`
 --
 
-DROP TABLE IF EXISTS `voc_biztranstype`;
-CREATE TABLE `voc_biztranstype` (
+DROP TABLE IF EXISTS `voc_BizTransType`;
+CREATE TABLE `voc_BizTransType` (
   `id` bigint(20) NOT NULL auto_increment,
   `uri` varchar(1023) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_biztranstype`
+-- Dumping data for table `epcis`.`voc_BizTransType`
 --
 
-/*!40000 ALTER TABLE `voc_biztranstype` DISABLE KEYS */;
-INSERT INTO `voc_biztranstype` (`id`,`uri`) VALUES 
+/*!40000 ALTER TABLE `voc_BizTransType` DISABLE KEYS */;
+INSERT INTO `voc_BizTransType` (`id`,`uri`) VALUES 
  (2,'urn:epcglobal:fmcg:btt:shipping'),
  (3,'urn:epcglobal:fmcg:btt:receiving');
-/*!40000 ALTER TABLE `voc_biztranstype` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_BizTransType` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_biztranstype_attr`
+-- Table structure for table `epcis`.`voc_BizTransType_attr`
 --
 
-DROP TABLE IF EXISTS `voc_biztranstype_attr`;
-CREATE TABLE `voc_biztranstype_attr` (
+DROP TABLE IF EXISTS `voc_BizTransType_attr`;
+CREATE TABLE `voc_BizTransType_attr` (
   `id` bigint(20) NOT NULL,
   `attribute` varchar(1023) NOT NULL,
   `value` varchar(1023) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_biztranstype_attr`
+-- Dumping data for table `epcis`.`voc_BizTransType_attr`
 --
 
-/*!40000 ALTER TABLE `voc_biztranstype_attr` DISABLE KEYS */;
-INSERT INTO `voc_biztranstype_attr` (`id`,`attribute`,`value`) VALUES 
+/*!40000 ALTER TABLE `voc_BizTransType_attr` DISABLE KEYS */;
+INSERT INTO `voc_BizTransType_attr` (`id`,`attribute`,`value`) VALUES 
  (2,'urn:epcglobal:epcis:mda:Name','shipping'),
  (3,'urn:epcglobal:epcis:mda:Name','receiving');
-/*!40000 ALTER TABLE `voc_biztranstype_attr` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_BizTransType_attr` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_disposition`
+-- Table structure for table `epcis`.`voc_Disposition`
 --
 
-DROP TABLE IF EXISTS `voc_disposition`;
-CREATE TABLE `voc_disposition` (
+DROP TABLE IF EXISTS `voc_Disposition`;
+CREATE TABLE `voc_Disposition` (
   `id` bigint(20) NOT NULL auto_increment,
   `uri` varchar(1023) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_disposition`
+-- Dumping data for table `epcis`.`voc_Disposition`
 --
 
-/*!40000 ALTER TABLE `voc_disposition` DISABLE KEYS */;
-INSERT INTO `voc_disposition` (`id`,`uri`) VALUES 
+/*!40000 ALTER TABLE `voc_Disposition` DISABLE KEYS */;
+INSERT INTO `voc_Disposition` (`id`,`uri`) VALUES 
  (1,'urn:epcglobal:fmcg:disp:active'),
  (2,'urn:epcglobal:fmcg:disp:inactive'),
  (3,'urn:epcglobal:fmcg:disp:reserved'),
@@ -729,26 +729,26 @@ INSERT INTO `voc_disposition` (`id`,`uri`) VALUES
  (6,'urn:epcglobal:fmcg:disp:non_sellable'),
  (7,'urn:epcglobal:fmcg:disp:in_progress'),
  (8,'urn:epcglobal:fmcg:disp:sold');
-/*!40000 ALTER TABLE `voc_disposition` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_Disposition` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_disposition_attr`
+-- Table structure for table `epcis`.`voc_Disposition_attr`
 --
 
-DROP TABLE IF EXISTS `voc_disposition_attr`;
-CREATE TABLE `voc_disposition_attr` (
+DROP TABLE IF EXISTS `voc_Disposition_attr`;
+CREATE TABLE `voc_Disposition_attr` (
   `id` bigint(20) NOT NULL,
   `attribute` varchar(1023) NOT NULL,
   `value` varchar(1023) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_disposition_attr`
+-- Dumping data for table `epcis`.`voc_Disposition_attr`
 --
 
-/*!40000 ALTER TABLE `voc_disposition_attr` DISABLE KEYS */;
-INSERT INTO `voc_disposition_attr` (`id`,`attribute`,`value`) VALUES 
+/*!40000 ALTER TABLE `voc_Disposition_attr` DISABLE KEYS */;
+INSERT INTO `voc_Disposition_attr` (`id`,`attribute`,`value`) VALUES 
  (1,'urn:epcglobal:epcis:mda:Name','active'),
  (2,'urn:epcglobal:epcis:mda:Name','inactive'),
  (3,'urn:epcglobal:epcis:mda:Name','reserved'),
@@ -757,91 +757,91 @@ INSERT INTO `voc_disposition_attr` (`id`,`attribute`,`value`) VALUES
  (6,'urn:epcglobal:epcis:mda:Name','non_sellable'),
  (7,'urn:epcglobal:epcis:mda:Name','in_progress'),
  (8,'urn:epcglobal:epcis:mda:Name','sold');
-/*!40000 ALTER TABLE `voc_disposition_attr` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_Disposition_attr` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_epcclass`
+-- Table structure for table `epcis`.`voc_EPCClass`
 --
 
-DROP TABLE IF EXISTS `voc_epcclass`;
-CREATE TABLE `voc_epcclass` (
+DROP TABLE IF EXISTS `voc_EPCClass`;
+CREATE TABLE `voc_EPCClass` (
   `id` bigint(20) NOT NULL auto_increment,
   `uri` varchar(1023) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_epcclass`
+-- Dumping data for table `epcis`.`voc_EPCClass`
 --
 
-/*!40000 ALTER TABLE `voc_epcclass` DISABLE KEYS */;
-/*!40000 ALTER TABLE `voc_epcclass` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_EPCClass` DISABLE KEYS */;
+/*!40000 ALTER TABLE `voc_EPCClass` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_epcclass_attr`
+-- Table structure for table `epcis`.`voc_EPCClass_attr`
 --
 
-DROP TABLE IF EXISTS `voc_epcclass_attr`;
-CREATE TABLE `voc_epcclass_attr` (
+DROP TABLE IF EXISTS `voc_EPCClass_attr`;
+CREATE TABLE `voc_EPCClass_attr` (
   `id` bigint(20) NOT NULL,
   `attribute` varchar(1023) NOT NULL,
   `value` varchar(1023) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_epcclass_attr`
+-- Dumping data for table `epcis`.`voc_EPCClass_attr`
 --
 
-/*!40000 ALTER TABLE `voc_epcclass_attr` DISABLE KEYS */;
-/*!40000 ALTER TABLE `voc_epcclass_attr` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_EPCClass_attr` DISABLE KEYS */;
+/*!40000 ALTER TABLE `voc_EPCClass_attr` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_readpoint`
+-- Table structure for table `epcis`.`voc_ReadPoint`
 --
 
-DROP TABLE IF EXISTS `voc_readpoint`;
-CREATE TABLE `voc_readpoint` (
+DROP TABLE IF EXISTS `voc_ReadPoint`;
+CREATE TABLE `voc_ReadPoint` (
   `id` bigint(20) NOT NULL auto_increment,
   `uri` varchar(1023) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_readpoint`
+-- Dumping data for table `epcis`.`voc_ReadPoint`
 --
 
-/*!40000 ALTER TABLE `voc_readpoint` DISABLE KEYS */;
-INSERT INTO `voc_readpoint` (`id`,`uri`) VALUES 
+/*!40000 ALTER TABLE `voc_ReadPoint` DISABLE KEYS */;
+INSERT INTO `voc_ReadPoint` (`id`,`uri`) VALUES 
  (1,'urn:epcglobal:fmcg:loc:45632.Warehouse1DocDoor'),
  (2,'urn:epcglobal:fmcg:loc:06141.Warehouse2DocDoor'),
  (3,'urn:epcglobal:fmcg:loc:rp:warehouse3docdoor');
-/*!40000 ALTER TABLE `voc_readpoint` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_ReadPoint` ENABLE KEYS */;
 
 
 --
--- Table structure for table `epcis`.`voc_readpoint_attr`
+-- Table structure for table `epcis`.`voc_ReadPoint_attr`
 --
 
-DROP TABLE IF EXISTS `voc_readpoint_attr`;
-CREATE TABLE `voc_readpoint_attr` (
+DROP TABLE IF EXISTS `voc_ReadPoint_attr`;
+CREATE TABLE `voc_ReadPoint_attr` (
   `id` bigint(20) NOT NULL,
   `attribute` varchar(1023) NOT NULL,
   `value` varchar(1023) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `epcis`.`voc_readpoint_attr`
+-- Dumping data for table `epcis`.`voc_ReadPoint_attr`
 --
 
-/*!40000 ALTER TABLE `voc_readpoint_attr` DISABLE KEYS */;
-INSERT INTO `voc_readpoint_attr` (`id`,`attribute`,`value`) VALUES 
+/*!40000 ALTER TABLE `voc_ReadPoint_attr` DISABLE KEYS */;
+INSERT INTO `voc_ReadPoint_attr` (`id`,`attribute`,`value`) VALUES 
  (1,'urn:epcglobal:epcis:mda:Name','Warehouse1DocDoor'),
  (2,'urn:epcglobal:epcis:mda:Name','Warehouse2DocDoor'),
  (3,'urn:epcglobal:epcis:mda:Name','Warehouse3DocDoor');
-/*!40000 ALTER TABLE `voc_readpoint_attr` ENABLE KEYS */;
+/*!40000 ALTER TABLE `voc_ReadPoint_attr` ENABLE KEYS */;
 
 
 --
