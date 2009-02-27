@@ -26,7 +26,6 @@
 			<includes>
 				<include>InputGenerators.properties</include>
 				<include>log4j.properties</include>
-				<include>log4j.xml</include>
 				<include>LogicalReaders.xml</include>
 				<include>LogicalReaders.xsd</include>
 				<include>ReaderProtocolStaticLogicalReader.xml</include>
@@ -44,7 +43,6 @@
 				<include>EPCTransponderModels_default.xml</include>
 				<include>GraphicSimulator.xml</include>
 				<include>IDTypes_default.xml</include>
-				<include>log4j.xml</include>
 				<include>SimulatorController.xml</include>
 			</includes>
 		</fileSet>
