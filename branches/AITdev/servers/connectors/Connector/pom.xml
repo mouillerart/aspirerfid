@@ -24,33 +24,23 @@
 	<name>AspireRFID Connector</name>
 	<version>1.0</version>
 	<description>AspireRFID Connector</description>
+	<repositories>
+		<repository>
+			<id>fosstrak-repository</id>
+			<url>http://maven-repository.fosstrak.org/releases</url>
+			<releases>
+				<updatePolicy>daily</updatePolicy>
+				<checksumPolicy>ignore</checksumPolicy>
+			</releases>
+		</repository>
+	</repositories>
 	<dependencies>
-		<dependency>
-			<groupId>org.fosstrak.epcis</groupId>
-			<artifactId>epcis-commons</artifactId>
-			<version>0.4.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.fosstrak.epcis</groupId>
-			<artifactId>epcis-queryclient</artifactId>
-			<version>0.4.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlrpc</groupId>
-			<artifactId>xmlrpc-client</artifactId>
-			<version>3.1</version>
-		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<type>jar</type>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xmlrpc</groupId>
-			<artifactId>xmlrpc-server</artifactId>
-			<version>3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ow2.aspirerfid.connector</groupId>
