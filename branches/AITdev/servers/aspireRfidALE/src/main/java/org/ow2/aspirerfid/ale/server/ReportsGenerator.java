@@ -57,7 +57,8 @@ import org.apache.log4j.Logger;
  * It validates the ec specifications, starts and stops the event cycles and manages the subscribers.  
  * 
  * @author regli
- * @author nkef@ait.edu.gr
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class ReportsGenerator implements Runnable {
 

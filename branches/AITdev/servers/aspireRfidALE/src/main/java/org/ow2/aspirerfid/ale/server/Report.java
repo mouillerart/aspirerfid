@@ -52,7 +52,8 @@ import org.accada.tdt.types.LevelTypeList;
  * 
  * @author regli
  * @author sawielan
- * @author nkef@ait.edu.gr
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class Report {
 

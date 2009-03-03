@@ -28,31 +28,19 @@ import org.accada.tdt.types.LevelTypeList;
 
 
 /**
- * @author Nikos Kefalakis
- * 
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class EpcUriFactory {
-
-	private static String TDT_RESOURCE = "C:\\ASPIRE_APPLICATION_FILES\\props\\";    // EpcUriFactory.class.getResource("/props/").getPath();
 	
-	//EpcUriFactory.class.getResource("WEB-INF/classes/props").
-	//this.getClass().getClassLoader().getResource("myConfig.xml");
-	//EpcUriFactory.class.getResource("WEB-INF/classes/props").getAuthority();
-	//EpcUriFactory.class.getResource("classes/props").getPath();
-
-//	static {
-//		TDT_RESOURCE = EpcUriFactory.class.getClassLoader().getResource("/props").getPath();
-//	}
 	
+
+	//private static String TDT_RESOURCE = "C:\\ASPIRE_APPLICATION_FILES\\props\\";    // EpcUriFactory.class.getResource("/props/").getPath();
+
+	
+	private String TDT_RESOURCE = this.getClass().getResource("/props").getPath().replace("%20", " ");
 	
 	public String rawDecimal(byte[] tag) {
-
-		// HexUtil.byteArrayToHexString(tag);
-		// new BigInteger(HexUtil.byteArrayToHexString(tag),
-		// 16).toByteArray().toString();
-		// new BigInteger(tag).toString(2);
-		// new BigInteger(tag).toString(2).toUpperCase();
-		// Create a BigInteger using the byte array
 		BigInteger bi = new BigInteger(tag);
 		// Format to binary
 		String tagInBinary = bi.toString(2);
@@ -71,8 +59,10 @@ public class EpcUriFactory {
 		// String tagInHex = HexUtil.byteArrayToHexString(tag);
 		rawDecimal = "urn:epc:raw:";
 		try {
+			
+			System.out.println("TDT_RESOURCE file URI is at:"+TDT_RESOURCE);
 			tdtEngine = new TDTEngine(TDT_RESOURCE);
-			System.out.println("TDT_RESOURCE file URI is at:"+EpcUriFactory.class.getResource("/props").toString());
+
 
 			HashMap<String, String> param = new HashMap<String, String>();
 			LevelTypeList levelType = LevelTypeList.BINARY;

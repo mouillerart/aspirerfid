@@ -56,7 +56,8 @@ import org.apache.log4j.PropertyConfigurator;
  * @author regli
  * @author sawielan
  * @author haennimi
- * @author nkef@ait.edu.gr
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class ALE {
 

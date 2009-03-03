@@ -57,7 +57,8 @@ import com.sun.org.apache.xerces.internal.jaxp.datatype.DatatypeFactoryImpl;
  * 
  * @author regli
  * @author sawielan
- * @author nkef@ait.edu.gr
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class EventCycle implements Runnable, Observer {
 

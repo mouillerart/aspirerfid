@@ -38,8 +38,8 @@ import org.accada.reader.rp.proxy.RPProxyException;
 /**
  * represents an adaptor to the LLRP reader.
  * 
- * @author nkef
- * 
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class LLRPAdaptor extends BaseReader {
 

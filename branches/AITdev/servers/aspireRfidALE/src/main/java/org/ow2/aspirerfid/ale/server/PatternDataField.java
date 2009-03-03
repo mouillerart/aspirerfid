@@ -30,7 +30,8 @@ import org.accada.ale.wsdl.ale.epcglobal.ImplementationExceptionResponse;
  * This clas represents a data field of a tag, filter or group pattern.
  * 
  * @author regli
- * @author nkef@ait.edu.gr
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class PatternDataField {
 

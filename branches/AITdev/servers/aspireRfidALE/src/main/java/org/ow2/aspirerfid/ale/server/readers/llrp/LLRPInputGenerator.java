@@ -109,7 +109,8 @@ import org.jdom.filter.ContentFilter;
  * This class is the connector between the reader protocol and the ALE. It
  * creates the necessary objects on the reader device to get all required data.
  * 
- * @author nkef
+ * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
+ *
  */
 public class LLRPInputGenerator implements NotificationChannelListener {
 
