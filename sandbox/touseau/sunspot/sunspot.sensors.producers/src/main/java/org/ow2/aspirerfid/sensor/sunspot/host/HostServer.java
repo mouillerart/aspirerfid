@@ -110,7 +110,7 @@ public class HostServer implements Runnable {
 		}
 		
 		String serialPortProperty = (String)configurationProperties.get(Configuration.STATION_SERIAL_PORT);
-		m_serialPort = "COM5"; // default
+		m_serialPort = "COM8"; // default
 		if (serialPortProperty != null) {
 			m_serialPort = serialPortProperty;
 		}
