@@ -15,7 +15,6 @@
  * for the specific language governing rights and limitations.
  */
 
-
 package org.ow2.aspirerfid.ide.aleconfig.views;
 
 import java.io.BufferedWriter;
@@ -84,11 +83,10 @@ import org.ow2.aspirerfid.ide.aleconfig.utils.*;
 import org.ow2.aspirerfid.ide.aleconfig.utils.swtdesigner.ResourceManager;
 import org.ow2.aspirerfid.ide.aleconfig.utils.swtdesigner.SWTResourceManager;
 
-
 /**
  * @author Vasso Koletti e-mail: vkol@ait.edu.gr
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class LRSpecConfiguratorView extends ViewPart {
 	private Combo lrDefineReaderNameCombo;
@@ -1523,6 +1521,11 @@ public class LRSpecConfiguratorView extends ViewPart {
 		String folderPath = ecspecPreferences
 				.getString(PreferenceConstants.P_ECSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdir();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
@@ -1780,6 +1783,11 @@ public class LRSpecConfiguratorView extends ViewPart {
 		String folderPath = lrspecConfigPreferences
 				.getString(PreferenceConstants.P_HAL_LRSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdir();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
@@ -1789,6 +1797,11 @@ public class LRSpecConfiguratorView extends ViewPart {
 		String folderPath = lrspecConfigPreferences
 				.getString(PreferenceConstants.P_RP_LRSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdir();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
@@ -1798,6 +1811,11 @@ public class LRSpecConfiguratorView extends ViewPart {
 		String folderPath = lrspecConfigPreferences
 				.getString(PreferenceConstants.P_LLRP_LRSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdir();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
@@ -1807,6 +1825,11 @@ public class LRSpecConfiguratorView extends ViewPart {
 		String folderPath = lrspecConfigPreferences
 				.getString(PreferenceConstants.P_Composite_LRSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdir();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
@@ -1945,8 +1968,8 @@ public class LRSpecConfiguratorView extends ViewPart {
 				PreferenceConstants.P_ReaderNames).split(",");
 
 		for (int i = 0; i < readerNamesArray.length; i++) {
-			if(!(readerNamesArray[i].equals(""))){
-			lrDefineReaderNameCombo.add(readerNamesArray[i]);
+			if (!(readerNamesArray[i].equals(""))) {
+				lrDefineReaderNameCombo.add(readerNamesArray[i]);
 			}
 		}
 
@@ -2587,8 +2610,8 @@ public class LRSpecConfiguratorView extends ViewPart {
 
 			lrDefineReaderNameCombo.removeAll();
 			for (int i = 0; i < readerNamesArray.length; i++) {
-				if(!(readerNamesArray[i].equals(""))){
-				lrDefineReaderNameCombo.add(readerNamesArray[i]);
+				if (!(readerNamesArray[i].equals(""))) {
+					lrDefineReaderNameCombo.add(readerNamesArray[i]);
 				}
 			}
 		}
@@ -3203,7 +3226,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 	private class DefineToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleLrProxy();
-			removeConsole();
+			//removeConsole();
 
 			alelrMethodGroup.setVisible(true);
 			alelrMethodGroup.setText("Define");
@@ -3214,7 +3237,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 	private class UpdateToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleLrProxy();
-			removeConsole();
+			//removeConsole();
 
 			alelrMethodGroup.setVisible(true);
 			alelrMethodGroup.setText("Update");
@@ -3225,7 +3248,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 	private class UndefineToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleLrProxy();
-			removeConsole();
+			//removeConsole();
 
 			alelrMethodGroup.setVisible(true);
 			alelrMethodGroup.setText("Undefine");
@@ -3236,7 +3259,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 	private class AddReadersToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleLrProxy();
-			removeConsole();
+			//removeConsole();
 
 			alelrMethodGroup.setVisible(true);
 			alelrMethodGroup.setText("AddReaders");
@@ -3247,7 +3270,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 	private class SetReadersToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleLrProxy();
-			removeConsole();
+			//removeConsole();
 
 			alelrMethodGroup.setVisible(true);
 			alelrMethodGroup.setText("SetReaders");
@@ -3259,7 +3282,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 			SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleLrProxy();
-			removeConsole();
+			//removeConsole();
 
 			alelrMethodGroup.setVisible(true);
 			alelrMethodGroup.setText("RemoveReaders");
@@ -3271,7 +3294,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 			SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleLrProxy();
-			removeConsole();
+			//removeConsole();
 
 			alelrMethodGroup.setVisible(true);
 			alelrMethodGroup.setText("SetProperties");

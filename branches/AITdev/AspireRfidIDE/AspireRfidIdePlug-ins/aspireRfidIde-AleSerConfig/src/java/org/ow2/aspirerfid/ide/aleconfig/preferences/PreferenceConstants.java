@@ -33,17 +33,15 @@ public class PreferenceConstants {
 	public static final String P_LLRP_LRSpecsPATH = "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
 	public static final String P_Composite_LRSpecsPATH = "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\Composite\\";
 
-	public static final String P_ALEClientEndPointSTRING = "http://localhost:8080/aspireRfidALE/services/ALEService";
+	public static final String P_ALEClientEndPointSTRING = "http://localhost:8080/aspireALE0.3.1m/services/ALEService";
 
-	public static final String P_ALELRClientEndPointSTRING = "http://localhost:8080/aspireRfidALE/services/ALELRService";
+	public static final String P_ALELRClientEndPointSTRING = "http://localhost:8080/aspireALE0.3.1m/services/ALELRService";
 
 	public static final String P_NotificationURI = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
 
-	public static final String P_ReaderNames = "AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader,SmartLabIntermecLogicalReader";
+	public static final String P_ReaderNames = "AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader";
 
 	public static final String P_ConnectionPoints = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
-	
 	public static final String P_NotificationPoints = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
-	
 	public static final String P_ECSpecNames = "ECSpec_additions,ECSpec_current,ECSpec_deletions";
 }

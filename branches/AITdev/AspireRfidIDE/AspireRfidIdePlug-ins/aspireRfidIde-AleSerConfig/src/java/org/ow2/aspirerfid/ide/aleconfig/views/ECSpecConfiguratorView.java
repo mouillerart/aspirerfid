@@ -77,7 +77,7 @@ import org.ow2.aspirerfid.ide.aleconfig.utils.swtdesigner.SWTResourceManager;
 /**
  * @author Vasso Koletti e-mail: vkol@ait.edu.gr
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class ECSpecConfiguratorView extends ViewPart {
 	private Combo ecSpecNameCombo;
@@ -779,6 +779,11 @@ public class ECSpecConfiguratorView extends ViewPart {
 		String folderPath = aleConfigPreferences
 				.getString(PreferenceConstants.P_ECSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdir();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
@@ -809,8 +814,8 @@ public class ECSpecConfiguratorView extends ViewPart {
 				PreferenceConstants.P_ECSpecNames).split(",");
 
 		for (int i = 0; i < specNamesArray.length; i++) {
-			if(!(specNamesArray[i].equals(""))){
-			ecSpecNameCombo.add(specNamesArray[i]);
+			if (!(specNamesArray[i].equals(""))) {
+				ecSpecNameCombo.add(specNamesArray[i]);
 			}
 		}
 	}
@@ -915,9 +920,9 @@ public class ECSpecConfiguratorView extends ViewPart {
 				PreferenceConstants.P_NotificationURI).split(",");
 
 		for (int i = 0; i < subscribeNotificationURIArray.length; i++) {
-			if (!(subscribeNotificationURIArray[i].equals(""))){
-			subscribeECSpecNotificationURIListCombo
-					.add(subscribeNotificationURIArray[i]);
+			if (!(subscribeNotificationURIArray[i].equals(""))) {
+				subscribeECSpecNotificationURIListCombo
+						.add(subscribeNotificationURIArray[i]);
 			}
 		}
 
@@ -950,9 +955,9 @@ public class ECSpecConfiguratorView extends ViewPart {
 				PreferenceConstants.P_NotificationURI).split(",");
 
 		for (int i = 0; i < unsubscribeNotificationURIArray.length; i++) {
-			if(!(unsubscribeNotificationURIArray[i].equals(""))){
-			unsubscribeECSpecNotificationURIListCombo
-					.add(unsubscribeNotificationURIArray[i]);
+			if (!(unsubscribeNotificationURIArray[i].equals(""))) {
+				unsubscribeECSpecNotificationURIListCombo
+						.add(unsubscribeNotificationURIArray[i]);
 			}
 		}
 	}
@@ -967,6 +972,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 		setPollECSpecCompositeVisible(true);
 		setImmediateECSpecCompositeVisible(false);
 
+		pollSpecNameCombo.removeAll();
 		List<String> ecSpecNames = getDefinedECSpecNames();
 		if (ecSpecNames != null) {
 			for (String specName : ecSpecNames) {
@@ -1005,6 +1011,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 		setPollECSpecCompositeVisible(false);
 		setImmediateECSpecCompositeVisible(false);
 
+		getSubscribersSpecNameCombo.removeAll();
 		List<String> ecSpecNames = getDefinedECSpecNames();
 		if (ecSpecNames != null) {
 			for (String specName : ecSpecNames) {
@@ -1092,8 +1099,8 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 			ecSpecNameCombo.removeAll();
 			for (int i = 0; i < specNameArray.length; i++) {
-				if(!(specNameArray[i].equals(""))){
-				ecSpecNameCombo.add(specNameArray[i]);
+				if (!(specNameArray[i].equals(""))) {
+					ecSpecNameCombo.add(specNameArray[i]);
 				}
 			}
 		}
@@ -1167,8 +1174,6 @@ public class ECSpecConfiguratorView extends ViewPart {
 				return;
 			}
 
-			showECSpecConfiguratorResult(ecSpecConfiguratorResult);
-
 			addNewSpecNameIfNotPresent();
 
 			ecSpecNameCombo.deselectAll();
@@ -1221,8 +1226,6 @@ public class ECSpecConfiguratorView extends ViewPart {
 								.getMessage());
 				e1.printStackTrace();
 			}
-
-			showECSpecConfiguratorResult(ecSpecConfiguratorResult);
 
 			undefineECSpecListcombo.removeAll();
 
@@ -1318,9 +1321,9 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 			subscribeECSpecNotificationURIListCombo.removeAll();
 			for (int i = 0; i < notificationURIArray.length; i++) {
-				if(!(notificationURIArray[i].equals(""))){
-				subscribeECSpecNotificationURIListCombo
-						.add(notificationURIArray[i]);
+				if (!(notificationURIArray[i].equals(""))) {
+					subscribeECSpecNotificationURIListCombo
+							.add(notificationURIArray[i]);
 				}
 			}
 		}
@@ -1400,8 +1403,6 @@ public class ECSpecConfiguratorView extends ViewPart {
 				e1.printStackTrace();
 			}
 
-			showECSpecConfiguratorResult(ecSpecConfiguratorResult);
-
 			addNewNotificationURIIfNotPresent();
 
 			subscribeECSpecListcombo.deselectAll();
@@ -1441,9 +1442,9 @@ public class ECSpecConfiguratorView extends ViewPart {
 
 			unsubscribeECSpecNotificationURIListCombo.removeAll();
 			for (int i = 0; i < notificationURIArray.length; i++) {
-				if(!(notificationURIArray[i].equals(""))){
-				unsubscribeECSpecNotificationURIListCombo
-						.add(notificationURIArray[i]);
+				if (!(notificationURIArray[i].equals(""))) {
+					unsubscribeECSpecNotificationURIListCombo
+							.add(notificationURIArray[i]);
 				}
 			}
 		}
@@ -1526,8 +1527,6 @@ public class ECSpecConfiguratorView extends ViewPart {
 				e1.printStackTrace();
 			}
 
-			showECSpecConfiguratorResult(ecSpecConfiguratorResult);
-
 			unsubscribeECSpecListcombo.deselectAll();
 			unsubscribeECSpecNotificationURIListCombo.deselectAll();
 		}
@@ -1570,8 +1569,6 @@ public class ECSpecConfiguratorView extends ViewPart {
 								.getMessage());
 				e1.printStackTrace();
 			}
-
-			showECSpecConfiguratorResult(ecSpecConfiguratorResult);
 
 			pollSpecNameCombo.deselectAll();
 		}
@@ -1616,8 +1613,6 @@ public class ECSpecConfiguratorView extends ViewPart {
 				e1.printStackTrace();
 				return;
 			}
-
-			showECSpecConfiguratorResult(ecSpecConfiguratorResult);
 
 			immediateECSpecCombo.deselectAll();
 		}
@@ -1675,7 +1670,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 	private class DefineToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleProxy();
-			removeConsole();
+			//removeConsole();
 
 			aleMethodGroup.setVisible(true);
 			aleMethodGroup.setText("Define");
@@ -1686,7 +1681,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 	private class UndefineToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleProxy();
-			removeConsole();
+			//removeConsole();
 
 			aleMethodGroup.setVisible(true);
 			aleMethodGroup.setText("Undefine");
@@ -1697,7 +1692,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 	private class SubscribeToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleProxy();
-			removeConsole();
+			//removeConsole();
 
 			aleMethodGroup.setVisible(true);
 			aleMethodGroup.setText("Subscribe");
@@ -1708,7 +1703,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 	private class UnsubscribeToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleProxy();
-			removeConsole();
+			//removeConsole();
 
 			aleMethodGroup.setVisible(true);
 			aleMethodGroup.setText("Unsubscribe");
@@ -1719,7 +1714,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 	private class ImmediateToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleProxy();
-			removeConsole();
+			//removeConsole();
 
 			aleMethodGroup.setVisible(true);
 			aleMethodGroup.setText("Immediate");
@@ -1730,7 +1725,7 @@ public class ECSpecConfiguratorView extends ViewPart {
 	private class PollToolItemSelectionListener extends SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			initializeAleProxy();
-			removeConsole();
+			//removeConsole();
 
 			aleMethodGroup.setVisible(true);
 			aleMethodGroup.setText("Poll");

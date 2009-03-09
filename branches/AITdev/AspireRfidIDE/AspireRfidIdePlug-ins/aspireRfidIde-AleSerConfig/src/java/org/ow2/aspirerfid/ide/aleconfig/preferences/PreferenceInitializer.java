@@ -52,9 +52,9 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(PreferenceConstants.P_Composite_LRSpecsPATH,
 				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\Composite\\");
 		store.setDefault(PreferenceConstants.P_ALEClientEndPointSTRING,
-				"http://localhost:8080/aspireRfidALE/services/ALEService");
+				"http://localhost:8080/aspireALE0.3.1m/services/ALEService");
 		store.setDefault(PreferenceConstants.P_ALELRClientEndPointSTRING,
-				"http://localhost:8080/aspireRfidALE/services/ALELRService");
+				"http://localhost:8080/aspireALE0.3.1m/services/ALELRService");
 		store
 				.setDefault(PreferenceConstants.P_NotificationURI,
 						"http://localhost:8080,http://localhost:7070,http://localhost:6060");
@@ -62,7 +62,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store
 				.setDefault(
 						PreferenceConstants.P_ReaderNames,
-						"AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader,SmartLabIntermecLogicalReader");
+						"AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader");
 
 		store
 				.setDefault(PreferenceConstants.P_ConnectionPoints,
