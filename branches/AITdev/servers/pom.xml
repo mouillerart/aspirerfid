@@ -29,5 +29,6 @@
 	
 	<modules>
     	<module>aspireRfidALE</module>
+    	<module>aspireRfidEpcisRepository</module>
   	</modules>
 </project>

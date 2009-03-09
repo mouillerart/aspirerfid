@@ -195,7 +195,7 @@ public class MasterDataCaptureClient {
      *  with the "#" sign between them (e.g. "urn:epcglobal:old#urn:epcglobal:new").
      * @param mode
      *        1: insert
-     *        2: alterURI (does not currently work)
+     *        2: alterURI
      *        3: singleDelete
      *        4: Delete element with it's direct or indirect descendants
      * @return true if the method Succeeds false otherwise

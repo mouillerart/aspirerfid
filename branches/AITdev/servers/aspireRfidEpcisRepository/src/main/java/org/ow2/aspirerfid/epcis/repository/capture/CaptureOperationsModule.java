@@ -956,9 +956,6 @@ public class CaptureOperationsModule {
                 // zero-arg constructor to avoid problems here
 
                 if(alterURI){
-//                	VocabularyElement vocabularyElement = (VocabularyElement)session.get(c, vocabularyElementID);
-//                	vocabularyElement.setUri(vocabularyElementURI.split("#")[1]);
-//                	session.merge(vocabularyElement);
                 	ve.setUri(vocabularyElementURI.split("#")[1]);
                 	session.update(ve);
                 	session.flush();
