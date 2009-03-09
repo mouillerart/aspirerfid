@@ -954,18 +954,16 @@ public class CaptureOperationsModule {
             } else {
                 // VocabularyElement subclasses should always have public
                 // zero-arg constructor to avoid problems here
-                try {
-                    ve = (VocabularyElement) c.newInstance();
-                } catch (InstantiationException e) {
-                    throw new RuntimeException(e);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
 
                 if(alterURI){
-                	VocabularyElement vocabularyElement = (VocabularyElement)session.get(c, vocabularyElementID);
-                	vocabularyElement.setUri(vocabularyElementURI.split("#")[1]);
-                	session.update(vocabularyElement);
+//                	VocabularyElement vocabularyElement = (VocabularyElement)session.get(c, vocabularyElementID);
+//                	vocabularyElement.setUri(vocabularyElementURI.split("#")[1]);
+//                	session.merge(vocabularyElement);
+                	ve.setUri(vocabularyElementURI.split("#")[1]);
+                	session.update(ve);
+                	session.flush();
+                	return ve;
+                	
                 }else if(singleDelete){
                 	Object vocabularyElementObject = session.get(c, vocabularyElementID);
                 	if(vocabularyElementObject!= null)
@@ -983,6 +981,15 @@ public class CaptureOperationsModule {
                 	return null;
 
                 }else{
+                	
+                    try {
+                        ve = (VocabularyElement) c.newInstance();
+                    } catch (InstantiationException e) {
+                        throw new RuntimeException(e);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                	
                 	ve.setUri(vocabularyElementURI);
                 	session.save(ve);
                 }

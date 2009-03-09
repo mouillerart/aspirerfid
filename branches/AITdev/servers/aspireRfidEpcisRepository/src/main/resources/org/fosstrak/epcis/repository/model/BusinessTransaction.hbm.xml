@@ -15,10 +15,10 @@
 		
 		<natural-id mutable="true">
 			<many-to-one name="bizTransaction" class="org.ow2.aspirerfid.epcis.repository.model.BusinessTransactionId"
-				index="BizTransaction_bizTransaction_ix" update="false" insert="true"
+				index="BizTransaction_bizTransaction_ix" update="true" insert="true"
 				access="property" not-null="true" column="bizTrans"/>
 			<many-to-one name="type" class="org.ow2.aspirerfid.epcis.repository.model.BusinessTransactionTypeId"
-				index="BizTransaction_type_ix" update="false" insert="true"
+				index="BizTransaction_type_ix" update="true" insert="true"
 				access="property" not-null="true" column="type" />
 		</natural-id>
 

@@ -13,7 +13,7 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>src/main/sql</directory>
+      <directory>src/main/resources/sql</directory>
       <outputDirectory></outputDirectory>
       <includes>
       <include>epcis_clean_all.sql</include>

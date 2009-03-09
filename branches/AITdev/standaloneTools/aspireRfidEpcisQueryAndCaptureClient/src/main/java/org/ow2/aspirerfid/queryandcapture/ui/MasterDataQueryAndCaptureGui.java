@@ -328,7 +328,7 @@ public class MasterDataQueryAndCaptureGui {
 			else if (deleteWdButton.getSelection()) {
 				elementEditorMode = "4";
 			}
-			simpleMasterDataInsertionSucceeded = captureClient.simpleMasterDataEdit(EpcisConstants.BUSINESS_STEP_ID,
+			simpleMasterDataInsertionSucceeded = captureClient.simpleMasterDataEdit(captureVocabularyTypeCombo.getText(),
 					buissnessStepUriText.getText(), elementEditorMode);
 
 		}
