@@ -42,15 +42,15 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		
 		store.setDefault(PreferenceConstants.P_ECSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\ECSpecs\\");
+				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\ECSpecs\\");
 		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\");
+				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\HAL\\");
 		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\");
+				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\RP\\");
 		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\");
+				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\");
 		store.setDefault(PreferenceConstants.P_Composite_LRSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\Composite\\");
+				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\Composite\\");
 		store.setDefault(PreferenceConstants.P_ALEClientEndPointSTRING,
 				"http://localhost:8080/aspireALE0.3.1m/services/ALEService");
 		store.setDefault(PreferenceConstants.P_ALELRClientEndPointSTRING,

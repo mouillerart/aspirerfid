@@ -27,9 +27,9 @@ package org.ow2.aspirerfid.ide.masterdata.preferences;
 public class PreferenceConstants {
 
 
-	public static final String P_teststringdata = "1,2,3,4";
+	public static final String P_teststringdata = "P_teststringdata"; //"1,2,3,4";
 	
-	public static final String P_MdeEpcisRepositoryCaptureURL = "http://localhost:8080/aspireRfidEpcisRepository/capture";
-	public static final String P_MdeEpcisRepositoryQueryURL = "http://localhost:8080/aspireRfidEpcisRepository/query";
+	public static final String P_MdeEpcisRepositoryCaptureURL = "P_MdeEpcisRepositoryCaptureURL"; //"http://localhost:8080/aspireRfidEpcisRepository/capture";
+	public static final String P_MdeEpcisRepositoryQueryURL = "P_MdeEpcisRepositoryQueryURL"; //"http://localhost:8080/aspireRfidEpcisRepository/query";
 	
 }

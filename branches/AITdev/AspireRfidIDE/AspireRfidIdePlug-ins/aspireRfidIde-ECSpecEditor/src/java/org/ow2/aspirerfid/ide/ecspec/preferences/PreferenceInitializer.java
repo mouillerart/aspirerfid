@@ -41,10 +41,10 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		store.setDefault(PreferenceConstants.P_ECSpecsPATH, "C:\\ASPIRE_APPLICATION_FILES\\ECSpecs\\");
-		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH, "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\");
-		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH, "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\");
-		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH, "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\");
+		store.setDefault(PreferenceConstants.P_ECSpecsPATH, System.getProperty("user.home")+ "\\AspireRFID\\IDE\\ECSpecs\\");
+		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH, System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\HAL\\");
+		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH, System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\RP\\");
+		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH, System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\");
 	}
 
 }

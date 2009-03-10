@@ -57,11 +57,11 @@ public class MasterDataEditorPreferencePage
 	 */
 	public void createFieldEditors() {
 		{
-		final StringFieldEditor stringEpcisRepositoryCaptureURL = new StringFieldEditor(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL, "EPCIS Repository URL:", getFieldEditorParent());
+		final StringFieldEditor stringEpcisRepositoryCaptureURL = new StringFieldEditor(PreferenceConstants.P_MdeEpcisRepositoryCaptureURL, "EPCIS Repository Capture URL:", getFieldEditorParent());
 		addField(stringEpcisRepositoryCaptureURL);
 		}
 		{
-		final StringFieldEditor stringEpcisRepositoryQueryURL = new StringFieldEditor(PreferenceConstants.P_MdeEpcisRepositoryQueryURL, "EPCIS Repository URL:", getFieldEditorParent());	
+		final StringFieldEditor stringEpcisRepositoryQueryURL = new StringFieldEditor(PreferenceConstants.P_MdeEpcisRepositoryQueryURL, "EPCIS Repository Query URL:", getFieldEditorParent());	
 		addField(stringEpcisRepositoryQueryURL);
 		}
 		{

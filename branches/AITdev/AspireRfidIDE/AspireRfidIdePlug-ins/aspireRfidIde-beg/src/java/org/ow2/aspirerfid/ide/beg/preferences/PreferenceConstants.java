@@ -28,11 +28,11 @@ import org.ow2.aspirerfid.ide.beg.capture.BegConfiguration;
  */
 public class PreferenceConstants {
 
-	public static final String P_AleListeningPORT = "9999";
-	public static final String P_EpcisRepositoryCaptureURL = "http://localhost:8080/aspireRfidEpcisRepository/capture";
-	public static final String P_EpcisRepositoryQueryURL = "http://localhost:8080/aspireRfidEpcisRepository/query";
-	public static final String P_EventPortsBindings = "1,2,3";
-	public static final String P_ObservatorRefreshRate = "2";
+	public static final String P_AleListeningPORT = "P_AleListeningPORT"; //"9999";
+	public static final String P_EpcisRepositoryCaptureURL = "P_EpcisRepositoryCaptureURL"; //"http://localhost:8080/aspireRfidEpcisRepository/capture";
+	public static final String P_EpcisRepositoryQueryURL = "P_EpcisRepositoryQueryURL"; //"http://localhost:8080/aspireRfidEpcisRepository/query";
+	public static final String P_EventPortsBindings = "P_EventPortsBindings"; //"1,2,3";
+	public static final String P_ObservatorRefreshRate = "P_ObservatorRefreshRate"; //"2";
 	public static BegConfiguration begConfiguration = null;
 	
 }

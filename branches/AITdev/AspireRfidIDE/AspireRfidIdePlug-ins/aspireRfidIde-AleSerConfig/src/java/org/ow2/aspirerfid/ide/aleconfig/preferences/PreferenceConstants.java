@@ -24,24 +24,27 @@ package org.ow2.aspirerfid.ide.aleconfig.preferences;
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
  *
  */
+
+
+
 public class PreferenceConstants {
 
-	public static final String P_ECSpecsPATH = "C:\\ASPIRE_APPLICATION_FILES\\ECSpecs\\";
+	public static final String P_ECSpecsPATH = "P_ECSpecsPATH";//"C:\\ASPIRE_APPLICATION_FILES\\ECSpecs\\";
+	
+	public static final String P_HAL_LRSpecsPATH = "P_HAL_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\";
+	public static final String P_RP_LRSpecsPATH = "P_RP_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\";
+	public static final String P_LLRP_LRSpecsPATH = "P_LLRP_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
+	public static final String P_Composite_LRSpecsPATH = "P_Composite_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\Composite\\";
 
-	public static final String P_HAL_LRSpecsPATH = "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\";
-	public static final String P_RP_LRSpecsPATH = "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\";
-	public static final String P_LLRP_LRSpecsPATH = "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
-	public static final String P_Composite_LRSpecsPATH = "C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\Composite\\";
+	public static final String P_ALEClientEndPointSTRING = "P_ALEClientEndPointSTRING"; //"http://localhost:8080/aspireALE0.3.1m/services/ALEService";
 
-	public static final String P_ALEClientEndPointSTRING = "http://localhost:8080/aspireALE0.3.1m/services/ALEService";
+	public static final String P_ALELRClientEndPointSTRING = "P_ALELRClientEndPointSTRING"; //"http://localhost:8080/aspireALE0.3.1m/services/ALELRService";
 
-	public static final String P_ALELRClientEndPointSTRING = "http://localhost:8080/aspireALE0.3.1m/services/ALELRService";
+	public static final String P_NotificationURI = "P_NotificationURI"; //"http://localhost:8080,http://localhost:7070,http://localhost:6060";
 
-	public static final String P_NotificationURI = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
+	public static final String P_ReaderNames = "P_ReaderNames"; //"AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader";
 
-	public static final String P_ReaderNames = "AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader";
-
-	public static final String P_ConnectionPoints = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
-	public static final String P_NotificationPoints = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
-	public static final String P_ECSpecNames = "ECSpec_additions,ECSpec_current,ECSpec_deletions";
+	public static final String P_ConnectionPoints = "P_ConnectionPoints"; //"http://localhost:8080,http://localhost:7070,http://localhost:6060";
+	public static final String P_NotificationPoints = "P_NotificationPoints"; //"http://localhost:8080,http://localhost:7070,http://localhost:6060";
+	public static final String P_ECSpecNames = "P_ECSpecNames"; //"ECSpec_additions,ECSpec_current,ECSpec_deletions";
 }

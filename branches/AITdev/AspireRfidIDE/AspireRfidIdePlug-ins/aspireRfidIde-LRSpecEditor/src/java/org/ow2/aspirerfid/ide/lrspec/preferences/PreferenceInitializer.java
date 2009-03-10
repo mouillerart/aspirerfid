@@ -15,7 +15,6 @@
  * for the specific language governing rights and limitations.
  */
 
-
 package org.ow2.aspirerfid.ide.lrspec.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
@@ -30,7 +29,7 @@ import org.ow2.aspirerfid.ide.lrspec.Activator;
 /**
  * @author Vasso Koletti e-mail: vkol@ait.edu.gr
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
@@ -42,24 +41,13 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\");
-		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\");
-		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\");
-		store.setDefault(PreferenceConstants.P_Composite_LRSpecsPATH,
-				"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\Composite\\");
-		store
-				.setDefault(PreferenceConstants.P_ConnectionPoints,
-						"http://localhost:8080,http://localhost:7070,http://localhost:6060");
-		store
-				.setDefault(PreferenceConstants.P_NotificationPoints,
-						"http://localhost:8080,http://localhost:7070,http://localhost:6060");
-		store
-				.setDefault(
-						PreferenceConstants.P_DynamicReaders,
-						"DynamicImpinjLlrpReader,DynamicAccadaSimulatorRpReader,DynamicIntermecRpReader");
+		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\HAL\\");
+		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\RP\\");
+		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\");
+		store.setDefault(PreferenceConstants.P_Composite_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\Composite\\");
+		store.setDefault(PreferenceConstants.P_ConnectionPoints, "http://localhost:8080,http://localhost:7070,http://localhost:6060");
+		store.setDefault(PreferenceConstants.P_NotificationPoints, "http://localhost:8080,http://localhost:7070,http://localhost:6060");
+		store.setDefault(PreferenceConstants.P_DynamicReaders, "DynamicImpinjLlrpReader,DynamicAccadaSimulatorRpReader,DynamicIntermecRpReader");
 	}
 
 }
