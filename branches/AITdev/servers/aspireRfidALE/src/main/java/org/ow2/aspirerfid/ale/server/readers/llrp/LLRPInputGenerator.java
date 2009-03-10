@@ -1,18 +1,18 @@
 /**
- * Copyright (C) 2008-2010, Aspire 
- *
- * Aspire is free software; you can redistribute it and/or 
- * modify it under  the terms of the GNU Lesser General Public 
- * License version 2.1 as published by the Free Software Foundation (the 
- * "LGPL"). 
- *
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this library in the file COPYING-LGPL-2.1; if not, write to the Free Software 
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA. 
- *
- * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY 
- * OF ANY KIND, either express or implied. See the GNU Lesser General Public 
- * License for the specific language governing rights and limitations. 
+ * Copyright (C) 2008-2010, Aspire
+ * 
+ * Aspire is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License version 2.1 as published by
+ * the Free Software Foundation (the "LGPL").
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library in the file COPYING-LGPL-2.1; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
+ * KIND, either express or implied. See the GNU Lesser General Public License
+ * for the specific language governing rights and limitations.
  */
 
 package org.ow2.aspirerfid.ale.server.readers.llrp;
@@ -110,7 +110,7 @@ import org.jdom.filter.ContentFilter;
  * creates the necessary objects on the reader device to get all required data.
  * 
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class LLRPInputGenerator implements NotificationChannelListener {
 
@@ -119,7 +119,9 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 
 	/** indicates if this input generator is ready or not. */
 	private boolean isReady = false;
-	/** indicates if the initialization of this input generator is failed or not. */
+	/**
+	 * indicates if the initialization of this input generator is failed or not.
+	 */
 	private boolean isFailed = false;
 
 	/** adaptor to which the input generator belongs. */
@@ -166,10 +168,9 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 	 * where to store the Reader Sources from where we will read the tags
 	 */
 	short[] readerSource = null;
-	
+
 	/**
-	 * The Duration that the RO Spec will be active and then send
-	 * its report
+	 * The Duration that the RO Spec will be active and then send its report
 	 */
 	int roSpecDuration = -1;// default value
 
@@ -194,7 +195,8 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 		// start Initializer Thread
 		try {
 			new Initializer(this).start();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new ImplementationExceptionResponse(e.getMessage());
 		}
 
@@ -273,7 +275,8 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 			if (o instanceof Element) {
 				Element child = (Element) o;
 				process(child);
-			} else { // Due to filter, the only other possibility is Text
+			}
+			else { // Due to filter, the only other possibility is Text
 				Text text = (Text) o;
 
 				if (element.getParentElement().getName().equals("EPC_96")) {
@@ -296,9 +299,11 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 		try {
 			LOG.info(" Sending message: \n" + msg.toXMLString());
 			out.write(msg.encodeBinary());
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			LOG.error("Couldn't send Command ", e);
-		} catch (InvalidLLRPMessageException e) {
+		}
+		catch (InvalidLLRPMessageException e) {
 			LOG.error("Couldn't send Command", e);
 		}
 	}
@@ -312,9 +317,17 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 	private void pause(long ms) {
 		try {
 			Thread.sleep(ms);
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void startRoSpec() {
+		// Create a START_ROSPEC message and send it to the reader
+		START_ROSPEC startROSpec = new START_ROSPEC();
+		startROSpec.setROSpecID(new UnsignedInteger(ROSPEC_ID));
+		write(startROSpec, "START_ROSPEC");
 	}
 
 	/**
@@ -325,13 +338,10 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 	 */
 	public void poll() throws RPProxyException {
 
-		// Create a START_ROSPEC message and send it to the reader
-		START_ROSPEC startROSpec = new START_ROSPEC();
-		startROSpec.setROSpecID(new UnsignedInteger(ROSPEC_ID));
-		write(startROSpec, "START_ROSPEC");
-		
-		//wait till the reader collects the data + 90 and then continue to read them
-		pause(roSpecDuration + 150);
+		startRoSpec();
+		// wait till the reader collects the data + 90 and then continue to read
+		// them
+		// pause(roSpecDuration + 150);
 
 		if (readerSource.length != 0) {
 
@@ -364,22 +374,27 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 								if (o instanceof Element) {
 									Element child = (Element) o;
 									process(child);
-									tagsToNotify.add(new Tag(adaptor.getName(), HexUtil.hexStringToByteArray(hexEPC), hexEPC, System.currentTimeMillis()));
+									tagsToNotify.add(new Tag(adaptor.getName(), HexUtil.hexStringToByteArray(hexEPC), hexEPC, System
+											.currentTimeMillis()));
 									hexEPC = "";
 									// antennaID = "";
 								}
 							}
 						}
-					} else {
+					}
+					else {
 						LOG.info("closing socket");
 						connection.close();
 					}
 
-				} catch (IOException e) {
+				}
+				catch (IOException e) {
 					LOG.error("Error while reading message", e);
-				} catch (InvalidLLRPMessageException e) {
+				}
+				catch (InvalidLLRPMessageException e) {
 					LOG.error("Error while reading message", e);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e) {
 					LOG.error("Error while reading message", e);
 				}
 
@@ -389,11 +404,11 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 			if (tagsToNotify.size() > 0) {
 				adaptor.addTags(tagsToNotify);
 			}
-		} else {
+		}
+		else {
 			LOG.debug("sources null");
 		}
 	}
-
 
 	/**
 	 * Read everything from the stream until the socket is closed
@@ -418,7 +433,8 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 		try {
 			// calculate message length
 			msgLength = calculateLLRPMessageLength(first);
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e) {
 			throw new IOException("Incorrect Message Length");
 		}
 
@@ -505,7 +521,8 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 
 		if (msgLength < 0) {
 			throw new IllegalArgumentException("LLRP message length is less than 0");
-		} else {
+		}
+		else {
 			return (int) msgLength;
 		}
 	}
@@ -530,10 +547,27 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 		LLRPMessage m = null;
 		try {
 			m = queue.take();
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			// nothing
 		}
 		return m;
+	}
+
+	public void clearPreviusRoSpecs() {
+		LOG.debug("Try to clearPreviusRoSpec with ROSPEC_ID: " + ROSPEC_ID);
+
+		// Create a DISABLE_ROSPEC message and send it to the reader
+		DISABLE_ROSPEC disableROSpec = new DISABLE_ROSPEC();
+		disableROSpec.setROSpecID(new UnsignedInteger(ROSPEC_ID));
+		write(disableROSpec, "DISABLE_ROSPEC");
+		pause(250);
+
+		// Create a DELTE_ROSPEC message and send it to the reader
+		DELETE_ROSPEC deleteROSpec = new DELETE_ROSPEC();
+		deleteROSpec.setROSpecID(new UnsignedInteger(ROSPEC_ID));
+		write(deleteROSpec, "DELETE_ROSPEC");
+		// pause(550);
 	}
 
 	/**
@@ -564,8 +598,11 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 		public void run() {
 
 			try {
+
 				initialize();
-			} catch (IOException e) {
+
+			}
+			catch (IOException e) {
 				isFailed(e);
 			}
 
@@ -583,8 +620,8 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 			LOG.debug("Start initializing InputGenerator...");
 			LOG.info("Try connecting to reader devices...");
 
-			roSpecDuration = 500;// default value
-			
+			// roSpecDuration = 500;// default value
+
 			try {
 				ROSPEC_ID = adaptor.getRoSpecID();
 
@@ -601,16 +638,21 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 
 				roSpecDuration = adaptor.getReadTimeInterval();
 
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				LOG.error("Error while Initializing LLRPInput Generator", e);
 			}
 
 			queue = new LinkedBlockingQueue<LLRPMessage>();
 			try {
 				inStream = new DataInputStream(connection.getInputStream());
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				LOG.error("Cannot get input stream", e);
 			}
+			
+			clearPreviusRoSpecs();
+			generator.pause(800);
 
 			// Create a SET_READER_CONFIG Message and send it to the reader
 			SET_READER_CONFIG setReaderConfig = createSetReaderConfig();
@@ -764,7 +806,7 @@ public class LLRPInputGenerator implements NotificationChannelListener {
 			// keepaliveSpec
 			KeepaliveSpec keepaliveSpec = new KeepaliveSpec();
 			keepaliveSpec.setKeepaliveTriggerType(new KeepaliveTriggerType(KeepaliveTriggerType.Null));
-			keepaliveSpec.setPeriodicTriggerValue(new UnsignedInteger(500));
+			keepaliveSpec.setPeriodicTriggerValue(new UnsignedInteger(1000));
 			setReaderConfig.setKeepaliveSpec(keepaliveSpec);
 
 			// eventsAndReports

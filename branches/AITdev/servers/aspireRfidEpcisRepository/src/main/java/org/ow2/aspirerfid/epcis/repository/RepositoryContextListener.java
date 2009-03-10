@@ -73,7 +73,7 @@ public class RepositoryContextListener implements ServletContextListener {
         // set a system property to configure CXF to use LOG4J
         System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4jLogger");
 
-        LOG.info("Starting Fosstrak EPCIS Repository application");
+        LOG.info("Starting Fosstrak/Aspire EPCIS Repository application");
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Logging application context init-parameters:");
@@ -91,7 +91,7 @@ public class RepositoryContextListener implements ServletContextListener {
      * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent event) {
-        LOG.info("Fosstrak EPCIS Repository application shut down\n######################################");
+        LOG.info("Fosstrak/Aspire EPCIS Repository application shut down\n######################################");
         LogFactory.releaseAll();
     }
 }
