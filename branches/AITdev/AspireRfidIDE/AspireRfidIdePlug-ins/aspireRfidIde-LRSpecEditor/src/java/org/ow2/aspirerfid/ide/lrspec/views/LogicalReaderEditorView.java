@@ -236,8 +236,9 @@ public class LogicalReaderEditorView extends ViewPart {
 		container = new Composite(parent, SWT.NONE);
 		container.setLayout(new FillLayout());
 
-		final ScrolledComposite scrolledComposite = new ScrolledComposite(container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setAlwaysShowScrollBars(false);
+		final ScrolledComposite scrolledComposite = new ScrolledComposite(
+				container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setAlwaysShowScrollBars(true);
 
 		final Composite composite_2 = new Composite(scrolledComposite, SWT.NONE);
 		composite_2.setLocation(0, 0);
@@ -247,8 +248,10 @@ public class LogicalReaderEditorView extends ViewPart {
 		composite.setBackground(SWTResourceManager.getColor(255, 255, 255));
 
 		final Button button = new Button(composite, SWT.FLAT);
-		button.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/RFID-logo2.gif"));
-		button.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/RFID-logo2.gif"));
+		button.setImage(ResourceManager.getPluginImage(Activator.getDefault(),
+				"icons/RFID-logo2.gif"));
+		button.setImage(ResourceManager.getPluginImage(Activator.getDefault(),
+				"icons/RFID-logo2.gif"));
 		button.setBackground(SWTResourceManager.getColor(255, 255, 255));
 		button.setBounds(5, 6, 144, 67);
 
@@ -257,19 +260,23 @@ public class LogicalReaderEditorView extends ViewPart {
 		lrspecTree.addMouseListener(new LrspecTreeMouseListener());
 
 		HALReadersNode = new TreeItem(lrspecTree, SWT.NONE, 0);
-		HALReadersNode.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/HAL.jpg"));
+		HALReadersNode.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/HAL.jpg"));
 		HALReadersNode.setText("HAL Readers");
 
 		RPReadersNode = new TreeItem(lrspecTree, SWT.NONE);
-		RPReadersNode.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/Red_R_icon.gif"));
+		RPReadersNode.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/Red_R_icon.gif"));
 		RPReadersNode.setText("RP Readers");
 
 		LLRPReadersNode = new TreeItem(lrspecTree, SWT.NONE);
-		LLRPReadersNode.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon-l.jpg"));
+		LLRPReadersNode.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/icon-l.jpg"));
 		LLRPReadersNode.setText("LLRP Readers");
 
 		CompositeReadersNode = new TreeItem(lrspecTree, SWT.NONE);
-		CompositeReadersNode.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon-c.jpg"));
+		CompositeReadersNode.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/icon-c.jpg"));
 		CompositeReadersNode.setText("Composite Readers");
 
 		final Composite composite_1 = new Composite(composite_2, SWT.BORDER);
@@ -277,22 +284,29 @@ public class LogicalReaderEditorView extends ViewPart {
 		composite_1.setBackground(SWTResourceManager.getColor(255, 255, 255));
 
 		final Button lrspecTreeRefreshButton = new Button(composite_1, SWT.NONE);
-		lrspecTreeRefreshButton.addMouseListener(new LrspecTreeRefreshButtonMouseListener());
-		lrspecTreeRefreshButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon_refresh3.png"));
+		lrspecTreeRefreshButton
+				.addMouseListener(new LrspecTreeRefreshButtonMouseListener());
+		lrspecTreeRefreshButton.setImage(ResourceManager.getPluginImage(
+				Activator.getDefault(), "icons/icon_refresh3.png"));
 		lrspecTreeRefreshButton.setText("Refresh");
 		lrspecTreeRefreshButton.setBounds(49, 10, 85, 26);
 
 		compositeOpenFile = new Composite(composite_2, SWT.BORDER);
 		compositeOpenFile.setBounds(0, 392, 182, 107);
-		compositeOpenFile.setBackground(SWTResourceManager.getColor(255, 255, 255));
+		compositeOpenFile.setBackground(SWTResourceManager.getColor(255, 255,
+				255));
 
-		final Group openExistingFileGroup = new Group(compositeOpenFile, SWT.NONE);
+		final Group openExistingFileGroup = new Group(compositeOpenFile,
+				SWT.NONE);
 		openExistingFileGroup.setText("Open existing file");
-		openExistingFileGroup.setBackground(SWTResourceManager.getColor(255, 255, 255));
+		openExistingFileGroup.setBackground(SWTResourceManager.getColor(255,
+				255, 255));
 		openExistingFileGroup.setBounds(10, 9, 158, 83);
 
-		final Button openFileButton = new Button(openExistingFileGroup, SWT.NONE);
-		openFileButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/secure_file_transfer_icon.jpg"));
+		final Button openFileButton = new Button(openExistingFileGroup,
+				SWT.NONE);
+		openFileButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/secure_file_transfer_icon.jpg"));
 		openFileButton.setBounds(38, 34, 85, 26);
 		openFileButton.addMouseListener(new OpenFileButtonMouseListener());
 		openFileButton.setText("Open file");
@@ -301,7 +315,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		tabFolder.setBounds(182, 0, 555, 500);
 
 		lrspecHALTabItem = new TabItem(tabFolder, SWT.NONE);
-		lrspecHALTabItem.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/HAL.jpg"));
+		lrspecHALTabItem.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/HAL.jpg"));
 		lrspecHALTabItem.setText("HAL Protocol Logical Reader");
 
 		compositeHAL = new Composite(tabFolder, SWT.NONE);
@@ -315,7 +330,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		HALReaderNameLabel.setText("Reader Name:");
 
 		HALReaderNameText = new Text(HALGroup, SWT.BORDER);
-		HALReaderNameText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		HALReaderNameText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		HALReaderNameText.setBounds(96, 21, 421, 22);
 		HALReaderNameText.setEnabled(false);
 
@@ -328,7 +344,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		HALPhysicalReaderNameLabel.setText("Physical Reader Name:");
 
 		HALPhysicalReaderNameText = new Text(HALPropertiesGroup, SWT.BORDER);
-		HALPhysicalReaderNameText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		HALPhysicalReaderNameText.setBackground(SWTResourceManager.getColor(
+				230, 230, 230));
 		HALPhysicalReaderNameText.setBounds(146, 106, 351, 22);
 
 		HALDescriptionLabel = new Label(HALPropertiesGroup, SWT.NONE);
@@ -336,7 +353,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		HALDescriptionLabel.setText("Description:");
 
 		HALDescriptionText = new Text(HALPropertiesGroup, SWT.BORDER);
-		HALDescriptionText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		HALDescriptionText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		HALDescriptionText.setBounds(146, 50, 351, 22);
 
 		HALReadTimeIntervalLabel = new Label(HALPropertiesGroup, SWT.NONE);
@@ -344,8 +362,10 @@ public class LogicalReaderEditorView extends ViewPart {
 		HALReadTimeIntervalLabel.setText("Read Time Interval:");
 
 		HALReadTimeIntervalText = new Text(HALPropertiesGroup, SWT.BORDER);
-		HALReadTimeIntervalText.addVerifyListener(new HALReadTimeIntervalTextVerifyListener());
-		HALReadTimeIntervalText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		HALReadTimeIntervalText
+				.addVerifyListener(new HALReadTimeIntervalTextVerifyListener());
+		HALReadTimeIntervalText.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		HALReadTimeIntervalText.setBounds(146, 134, 351, 22);
 
 		HALReadPointsLabel = new Label(HALPropertiesGroup, SWT.NONE);
@@ -353,7 +373,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		HALReadPointsLabel.setText("Read Points:");
 
 		HALReadPointsText = new Text(HALPropertiesGroup, SWT.BORDER);
-		HALReadPointsText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		HALReadPointsText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		HALReadPointsText.setBounds(146, 162, 351, 22);
 
 		HALPropertiesFileLabel = new Label(HALPropertiesGroup, SWT.NONE);
@@ -362,7 +383,8 @@ public class LogicalReaderEditorView extends ViewPart {
 
 		HALPropertiesFileText = new Text(HALPropertiesGroup, SWT.BORDER);
 		HALPropertiesFileText.setEditable(false);
-		HALPropertiesFileText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		HALPropertiesFileText.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		HALPropertiesFileText.setBounds(146, 190, 324, 22);
 
 		HALAdaptorClassLabel = new Label(HALPropertiesGroup, SWT.NONE);
@@ -374,44 +396,56 @@ public class LogicalReaderEditorView extends ViewPart {
 		HALReaderTypeLabel.setBounds(10, 25, 78, 16);
 
 		HALReaderTypeText = new Combo(HALPropertiesGroup, SWT.READ_ONLY);
-		HALReaderTypeText.setItems(new String[] { "org.ow2.aspirerfid.ale.server.readers.hal.HALAdaptor" });
-		HALReaderTypeText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		HALReaderTypeText
+				.setItems(new String[] { "org.ow2.aspirerfid.ale.server.readers.hal.HALAdaptor" });
+		HALReaderTypeText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		HALReaderTypeText.setBounds(146, 20, 351, 22);
 
 		HALAdaptorClassText = new Text(HALPropertiesGroup, SWT.BORDER);
-		HALAdaptorClassText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		HALAdaptorClassText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		HALAdaptorClassText.setBounds(146, 78, 351, 22);
 
-		final Button HALBrowsePropertiesFileButton = new Button(HALPropertiesGroup, SWT.NONE);
-		HALBrowsePropertiesFileButton.addMouseListener(new HALBrowsePropertiesFileButtonMouseListener());
+		final Button HALBrowsePropertiesFileButton = new Button(
+				HALPropertiesGroup, SWT.NONE);
+		HALBrowsePropertiesFileButton
+				.addMouseListener(new HALBrowsePropertiesFileButtonMouseListener());
 		HALBrowsePropertiesFileButton.setText("...");
 		HALBrowsePropertiesFileButton.setBounds(476, 190, 21, 22);
 
 		final Button HALGenerateXMLButton = new Button(HALGroup, SWT.NONE);
-		HALGenerateXMLButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/recording-launch.gif"));
-		HALGenerateXMLButton.addMouseListener(new HALGenerateXMLButtonMouseListener());
+		HALGenerateXMLButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/recording-launch.gif"));
+		HALGenerateXMLButton
+				.addMouseListener(new HALGenerateXMLButtonMouseListener());
 		HALGenerateXMLButton.setBounds(10, 290, 89, 26);
 		HALGenerateXMLButton.setText("Save as...");
 
 		final Button HALResetButton = new Button(HALGroup, SWT.NONE);
-		HALResetButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon_delete_tag.gif"));
+		HALResetButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/icon_delete_tag.gif"));
 		HALResetButton.addMouseListener(new HALResetButtonMouseListener());
 		HALResetButton.setBounds(178, 290, 65, 26);
 		HALResetButton.setText("Reset");
 
 		HALStaticDefinitionCheck = new Button(HALGroup, SWT.CHECK);
-		HALStaticDefinitionCheck.addSelectionListener(new HALStaticDefinitionCheckSelectionListener());
+		HALStaticDefinitionCheck
+				.addSelectionListener(new HALStaticDefinitionCheckSelectionListener());
 		HALStaticDefinitionCheck.setText("Static Definition");
 		HALStaticDefinitionCheck.setBounds(413, 295, 104, 16);
 
 		HALReaderSaveButton = new Button(HALGroup, SWT.NONE);
-		HALReaderSaveButton.addMouseListener(new HALReaderSaveButtonMouseListener());
-		HALReaderSaveButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_save.png"));
+		HALReaderSaveButton
+				.addMouseListener(new HALReaderSaveButtonMouseListener());
+		HALReaderSaveButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/img/b_save.png"));
 		HALReaderSaveButton.setText("Save");
 		HALReaderSaveButton.setBounds(105, 290, 67, 26);
 
 		lrspecRPTabItem = new TabItem(tabFolder, SWT.NONE);
-		lrspecRPTabItem.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/Red_R_icon.gif"));
+		lrspecRPTabItem.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/Red_R_icon.gif"));
 		lrspecRPTabItem.setText("RP Logical Reader");
 
 		compositeRP = new Composite(tabFolder, SWT.NONE);
@@ -425,7 +459,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		RPReaderNameLabel.setText("Reader Name:");
 
 		RPReaderNameText = new Text(RPGroup, SWT.BORDER);
-		RPReaderNameText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPReaderNameText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		RPReaderNameText.setBounds(96, 21, 421, 22);
 		RPReaderNameText.setEnabled(false);
 
@@ -438,7 +473,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		RPDescriptionLabel.setText("Description:");
 
 		RPDescriptionText = new Text(RPPropertiesGroup, SWT.BORDER);
-		RPDescriptionText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPDescriptionText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		RPDescriptionText.setBounds(144, 50, 353, 22);
 
 		RPConnectionPointLabel = new Label(RPPropertiesGroup, SWT.NONE);
@@ -454,8 +490,10 @@ public class LogicalReaderEditorView extends ViewPart {
 		RPReadTimeIntervalLabel.setText("Read Time Interval:");
 
 		RPReadTimeIntervalText = new Text(RPPropertiesGroup, SWT.BORDER);
-		RPReadTimeIntervalText.addVerifyListener(new RPReadTimeIntervalTextVerifyListener());
-		RPReadTimeIntervalText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPReadTimeIntervalText
+				.addVerifyListener(new RPReadTimeIntervalTextVerifyListener());
+		RPReadTimeIntervalText.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		RPReadTimeIntervalText.setBounds(144, 134, 353, 22);
 
 		RPAdaptorClassLabel = new Label(RPPropertiesGroup, SWT.NONE);
@@ -467,7 +505,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		RPImplClassLabel.setText("Implementation Class:");
 
 		RPImplClassText = new Text(RPPropertiesGroup, SWT.BORDER);
-		RPImplClassText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPImplClassText.setBackground(SWTResourceManager
+				.getColor(230, 230, 230));
 		RPImplClassText.setBounds(144, 190, 353, 22);
 
 		RPPhysicalReaderNameLabel = new Label(RPPropertiesGroup, SWT.NONE);
@@ -479,11 +518,13 @@ public class LogicalReaderEditorView extends ViewPart {
 		RPPhysicalReaderSourceLabel.setText("Physical Reader Source:");
 
 		RPPhysicalReaderNameText = new Text(RPPropertiesGroup, SWT.BORDER);
-		RPPhysicalReaderNameText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPPhysicalReaderNameText.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		RPPhysicalReaderNameText.setBounds(144, 218, 353, 22);
 
 		RPPhysicalReaderSourceText = new Text(RPPropertiesGroup, SWT.BORDER);
-		RPPhysicalReaderSourceText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPPhysicalReaderSourceText.setBackground(SWTResourceManager.getColor(
+				230, 230, 230));
 		RPPhysicalReaderSourceText.setBounds(144, 246, 353, 22);
 
 		RPReaderTypeLabel = new Label(RPPropertiesGroup, SWT.NONE);
@@ -491,49 +532,61 @@ public class LogicalReaderEditorView extends ViewPart {
 		RPReaderTypeLabel.setBounds(10, 25, 98, 16);
 
 		RPReaderTypeText = new Combo(RPPropertiesGroup, SWT.READ_ONLY);
-		RPReaderTypeText.setItems(new String[] { "org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor" });
-		RPReaderTypeText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPReaderTypeText
+				.setItems(new String[] { "org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor" });
+		RPReaderTypeText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		RPReaderTypeText.setBounds(144, 20, 353, 22);
 
 		RPAdaptorClassText = new Text(RPPropertiesGroup, SWT.BORDER);
-		RPAdaptorClassText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPAdaptorClassText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		RPAdaptorClassText.setBounds(144, 162, 353, 22);
 
 		RPConnectionPointCombo = new Combo(RPPropertiesGroup, SWT.NONE);
 		RPConnectionPointCombo.setVisibleItemCount(10);
-		RPConnectionPointCombo.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPConnectionPointCombo.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		RPConnectionPointCombo.setBounds(144, 78, 353, 24);
 
 		RPNotificationPointCombo = new Combo(RPPropertiesGroup, SWT.NONE);
 		RPNotificationPointCombo.setVisibleItemCount(10);
-		RPNotificationPointCombo.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		RPNotificationPointCombo.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		RPNotificationPointCombo.setBounds(144, 106, 353, 24);
 
 		final Button RPGenerateXMLButton = new Button(RPGroup, SWT.NONE);
-		RPGenerateXMLButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/recording-launch.gif"));
-		RPGenerateXMLButton.addMouseListener(new RPGenerateXMLButtonMouseListener());
+		RPGenerateXMLButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/recording-launch.gif"));
+		RPGenerateXMLButton
+				.addMouseListener(new RPGenerateXMLButtonMouseListener());
 		RPGenerateXMLButton.setBounds(10, 346, 89, 26);
 		RPGenerateXMLButton.setText("Save as...");
 
 		final Button RPResetButton = new Button(RPGroup, SWT.NONE);
-		RPResetButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon_delete_tag.gif"));
+		RPResetButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/icon_delete_tag.gif"));
 		RPResetButton.addMouseListener(new RPResetButtonMouseListener());
 		RPResetButton.setBounds(178, 346, 65, 26);
 		RPResetButton.setText("Reset");
 
 		RPStaticDefinitionCheck = new Button(RPGroup, SWT.CHECK);
-		RPStaticDefinitionCheck.addSelectionListener(new RPStaticDefinitionCheckSelectionListener());
+		RPStaticDefinitionCheck
+				.addSelectionListener(new RPStaticDefinitionCheckSelectionListener());
 		RPStaticDefinitionCheck.setText("Static definition");
 		RPStaticDefinitionCheck.setBounds(415, 351, 102, 16);
 
 		RPReaderSaveButton = new Button(RPGroup, SWT.NONE);
-		RPReaderSaveButton.addMouseListener(new RPReaderSaveButtonMouseListener());
-		RPReaderSaveButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_save.png"));
+		RPReaderSaveButton
+				.addMouseListener(new RPReaderSaveButtonMouseListener());
+		RPReaderSaveButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/img/b_save.png"));
 		RPReaderSaveButton.setText("Save");
 		RPReaderSaveButton.setBounds(105, 346, 67, 26);
 
 		lrspecLLRPTabItem = new TabItem(tabFolder, SWT.NONE);
-		lrspecLLRPTabItem.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon-l.jpg"));
+		lrspecLLRPTabItem.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/icon-l.jpg"));
 		lrspecLLRPTabItem.setText("LLRP Logical Reader");
 
 		compositeLLRP = new Composite(tabFolder, SWT.NONE);
@@ -547,18 +600,22 @@ public class LogicalReaderEditorView extends ViewPart {
 		LLRPReaderNameLabel.setText("Reader Name:");
 
 		LLRPReaderNameText = new Text(LLRPGroup, SWT.BORDER);
-		LLRPReaderNameText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPReaderNameText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		LLRPReaderNameText.setBounds(96, 21, 421, 22);
 		LLRPReaderNameText.setEnabled(false);
 
 		final Button LLRPGenerateXMLButton = new Button(LLRPGroup, SWT.NONE);
-		LLRPGenerateXMLButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/recording-launch.gif"));
-		LLRPGenerateXMLButton.addMouseListener(new LLRPGenerateXMLButtonMouseListener());
+		LLRPGenerateXMLButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/recording-launch.gif"));
+		LLRPGenerateXMLButton
+				.addMouseListener(new LLRPGenerateXMLButtonMouseListener());
 		LLRPGenerateXMLButton.setBounds(10, 430, 89, 26);
 		LLRPGenerateXMLButton.setText("Save as...");
 
 		final Button LLRPResetButton = new Button(LLRPGroup, SWT.NONE);
-		LLRPResetButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon_delete_tag.gif"));
+		LLRPResetButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/icon_delete_tag.gif"));
 		LLRPResetButton.addMouseListener(new LLRPResetButtonMouseListener());
 		LLRPResetButton.setBounds(178, 430, 65, 26);
 		LLRPResetButton.setText("Reset");
@@ -572,15 +629,19 @@ public class LogicalReaderEditorView extends ViewPart {
 		LLRPDescriptionLabel.setText("Description:");
 
 		LLRPDescriptionText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPDescriptionText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPDescriptionText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		LLRPDescriptionText.setBounds(216, 52, 281, 22);
 
-		LLRPConnectionPointAddressLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
+		LLRPConnectionPointAddressLabel = new Label(LLRPPropertiesGroup,
+				SWT.NONE);
 		LLRPConnectionPointAddressLabel.setBounds(10, 83, 143, 16);
 		LLRPConnectionPointAddressLabel.setText("Connection Point Address:");
 
-		LLRPConnectionPointAddressText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPConnectionPointAddressText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPConnectionPointAddressText = new Text(LLRPPropertiesGroup,
+				SWT.BORDER);
+		LLRPConnectionPointAddressText.setBackground(SWTResourceManager
+				.getColor(230, 230, 230));
 		LLRPConnectionPointAddressText.setBounds(216, 80, 281, 22);
 
 		LLRPConnectionPointPortLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
@@ -588,25 +649,36 @@ public class LogicalReaderEditorView extends ViewPart {
 		LLRPConnectionPointPortLabel.setText("Connection Point Port:");
 
 		LLRPConnectionPointPortText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPConnectionPointPortText.addVerifyListener(new LLRPConnectionPointPortTextVerifyListener());
-		LLRPConnectionPointPortText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPConnectionPointPortText
+				.addVerifyListener(new LLRPConnectionPointPortTextVerifyListener());
+		LLRPConnectionPointPortText.setBackground(SWTResourceManager.getColor(
+				230, 230, 230));
 		LLRPConnectionPointPortText.setBounds(216, 108, 281, 22);
 
-		LLRPEncryptedConnectionPointAddressLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
+		LLRPEncryptedConnectionPointAddressLabel = new Label(
+				LLRPPropertiesGroup, SWT.NONE);
 		LLRPEncryptedConnectionPointAddressLabel.setBounds(10, 139, 200, 16);
-		LLRPEncryptedConnectionPointAddressLabel.setText("Encrypted Connection Point Address:");
+		LLRPEncryptedConnectionPointAddressLabel
+				.setText("Encrypted Connection Point Address:");
 
-		LLRPEncryptedConnectionPointAddressText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPEncryptedConnectionPointAddressText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPEncryptedConnectionPointAddressText = new Text(LLRPPropertiesGroup,
+				SWT.BORDER);
+		LLRPEncryptedConnectionPointAddressText
+				.setBackground(SWTResourceManager.getColor(230, 230, 230));
 		LLRPEncryptedConnectionPointAddressText.setBounds(216, 136, 281, 22);
 
-		LLRPEncryptedConnectionPointPortLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
+		LLRPEncryptedConnectionPointPortLabel = new Label(LLRPPropertiesGroup,
+				SWT.NONE);
 		LLRPEncryptedConnectionPointPortLabel.setBounds(10, 167, 200, 16);
-		LLRPEncryptedConnectionPointPortLabel.setText("Encrypted Connection Point Port:");
+		LLRPEncryptedConnectionPointPortLabel
+				.setText("Encrypted Connection Point Port:");
 
-		LLRPEncryptedConnectionPointPortText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPEncryptedConnectionPointPortText.addVerifyListener(new LLRPEncryptedConnectionPointPortTextVerifyListener());
-		LLRPEncryptedConnectionPointPortText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPEncryptedConnectionPointPortText = new Text(LLRPPropertiesGroup,
+				SWT.BORDER);
+		LLRPEncryptedConnectionPointPortText
+				.addVerifyListener(new LLRPEncryptedConnectionPointPortTextVerifyListener());
+		LLRPEncryptedConnectionPointPortText.setBackground(SWTResourceManager
+				.getColor(230, 230, 230));
 		LLRPEncryptedConnectionPointPortText.setBounds(216, 164, 281, 22);
 
 		LLRPReadTimeIntervalLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
@@ -614,8 +686,10 @@ public class LogicalReaderEditorView extends ViewPart {
 		LLRPReadTimeIntervalLabel.setText("Read Time Interval:");
 
 		LLRPReadTimeIntervalText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPReadTimeIntervalText.addVerifyListener(new LLRPReadTimeIntervalTextVerifyListener());
-		LLRPReadTimeIntervalText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPReadTimeIntervalText
+				.addVerifyListener(new LLRPReadTimeIntervalTextVerifyListener());
+		LLRPReadTimeIntervalText.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		LLRPReadTimeIntervalText.setBounds(216, 192, 281, 22);
 
 		LLRPAdaptorClassLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
@@ -627,7 +701,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		LLRPImplClassLabel.setText("Implementation Class:");
 
 		LLRPImplClassText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPImplClassText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPImplClassText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		LLRPImplClassText.setBounds(216, 248, 281, 22);
 
 		LLRPPhysicalReaderSourceLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
@@ -635,25 +710,34 @@ public class LogicalReaderEditorView extends ViewPart {
 		LLRPPhysicalReaderSourceLabel.setText("Physical Reader Source:");
 
 		LLRPPhysicalReaderSourceText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPPhysicalReaderSourceText.addVerifyListener(new LLRPPhysicalReaderSourceTextVerifyListener());
-		LLRPPhysicalReaderSourceText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPPhysicalReaderSourceText
+				.addVerifyListener(new LLRPPhysicalReaderSourceTextVerifyListener());
+		LLRPPhysicalReaderSourceText.setBackground(SWTResourceManager.getColor(
+				230, 230, 230));
 		LLRPPhysicalReaderSourceText.setBounds(216, 276, 281, 22);
 
-		LLRPDescriptiveReaderSourceLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
+		LLRPDescriptiveReaderSourceLabel = new Label(LLRPPropertiesGroup,
+				SWT.NONE);
 		LLRPDescriptiveReaderSourceLabel.setBounds(10, 307, 154, 16);
 		LLRPDescriptiveReaderSourceLabel.setText("Descriptive Reader Source:");
 
-		LLRPDescriptiveReaderSourceText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPDescriptiveReaderSourceText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPDescriptiveReaderSourceText = new Text(LLRPPropertiesGroup,
+				SWT.BORDER);
+		LLRPDescriptiveReaderSourceText.setBackground(SWTResourceManager
+				.getColor(230, 230, 230));
 		LLRPDescriptiveReaderSourceText.setBounds(216, 304, 281, 22);
 
-		LLRPReaderOperationSpecIDLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
+		LLRPReaderOperationSpecIDLabel = new Label(LLRPPropertiesGroup,
+				SWT.NONE);
 		LLRPReaderOperationSpecIDLabel.setBounds(10, 335, 154, 16);
 		LLRPReaderOperationSpecIDLabel.setText("Reader Operation Spec ID:");
 
-		LLRPReaderOperationSpecIDText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPReaderOperationSpecIDText.addVerifyListener(new LLRPReaderOperationSpecIDTextVerifyListener());
-		LLRPReaderOperationSpecIDText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPReaderOperationSpecIDText = new Text(LLRPPropertiesGroup,
+				SWT.BORDER);
+		LLRPReaderOperationSpecIDText
+				.addVerifyListener(new LLRPReaderOperationSpecIDTextVerifyListener());
+		LLRPReaderOperationSpecIDText.setBackground(SWTResourceManager
+				.getColor(230, 230, 230));
 		LLRPReaderOperationSpecIDText.setBounds(216, 332, 281, 22);
 
 		LLRPReaderTypeLabel = new Label(LLRPPropertiesGroup, SWT.NONE);
@@ -661,27 +745,34 @@ public class LogicalReaderEditorView extends ViewPart {
 		LLRPReaderTypeLabel.setBounds(10, 25, 79, 16);
 
 		LLRPReaderTypeText = new Combo(LLRPPropertiesGroup, SWT.READ_ONLY);
-		LLRPReaderTypeText.setItems(new String[] { "org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor" });
-		LLRPReaderTypeText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPReaderTypeText
+				.setItems(new String[] { "org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor" });
+		LLRPReaderTypeText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		LLRPReaderTypeText.setBounds(216, 22, 281, 22);
 
 		LLRPAdaptorClassText = new Text(LLRPPropertiesGroup, SWT.BORDER);
-		LLRPAdaptorClassText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		LLRPAdaptorClassText.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		LLRPAdaptorClassText.setBounds(216, 220, 281, 22);
 
 		LLRPStaticDefinitionCheck = new Button(LLRPGroup, SWT.CHECK);
-		LLRPStaticDefinitionCheck.addSelectionListener(new LLRPStaticDefinitionCheckSelectionListener());
+		LLRPStaticDefinitionCheck
+				.addSelectionListener(new LLRPStaticDefinitionCheckSelectionListener());
 		LLRPStaticDefinitionCheck.setText("Static Definition");
 		LLRPStaticDefinitionCheck.setBounds(413, 435, 104, 16);
 
 		LLRPReaderSaveButton = new Button(LLRPGroup, SWT.NONE);
-		LLRPReaderSaveButton.addMouseListener(new LLRPReaderSaveButtonMouseListener());
-		LLRPReaderSaveButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_save.png"));
+		LLRPReaderSaveButton
+				.addMouseListener(new LLRPReaderSaveButtonMouseListener());
+		LLRPReaderSaveButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/img/b_save.png"));
 		LLRPReaderSaveButton.setText("Save");
 		LLRPReaderSaveButton.setBounds(105, 430, 67, 26);
 
 		lrspecCompositeTabItem = new TabItem(tabFolder, SWT.NONE);
-		lrspecCompositeTabItem.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon-c.jpg"));
+		lrspecCompositeTabItem.setImage(ResourceManager.getPluginImage(
+				Activator.getDefault(), "icons/icon-c.jpg"));
 		lrspecCompositeTabItem.setText("Composite Logical Reader");
 
 		compositeComposite = new Composite(tabFolder, SWT.NONE);
@@ -690,18 +781,24 @@ public class LogicalReaderEditorView extends ViewPart {
 		final Group CompositeGroup = new Group(compositeComposite, SWT.NONE);
 		CompositeGroup.setBounds(10, 0, 527, 415);
 
-		final Button CompGenerateXMLButton = new Button(CompositeGroup, SWT.NONE);
-		CompGenerateXMLButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/recording-launch.gif"));
-		CompGenerateXMLButton.addMouseListener(new CompGenerateXMLButtonMouseListener());
+		final Button CompGenerateXMLButton = new Button(CompositeGroup,
+				SWT.NONE);
+		CompGenerateXMLButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/recording-launch.gif"));
+		CompGenerateXMLButton
+				.addMouseListener(new CompGenerateXMLButtonMouseListener());
 		CompGenerateXMLButton.setBounds(10, 376, 89, 26);
 		CompGenerateXMLButton.setText("Save as...");
 
-		final Group lrspecLogicalReadersGroup = new Group(CompositeGroup, SWT.NONE);
+		final Group lrspecLogicalReadersGroup = new Group(CompositeGroup,
+				SWT.NONE);
 		lrspecLogicalReadersGroup.setText("Logical Readers");
 		lrspecLogicalReadersGroup.setBounds(10, 159, 507, 211);
 
-		lrspecIncludedReadersList = new List(lrspecLogicalReadersGroup, SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER);
-		lrspecIncludedReadersList.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		lrspecIncludedReadersList = new List(lrspecLogicalReadersGroup,
+				SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER);
+		lrspecIncludedReadersList.setBackground(SWTResourceManager.getColor(
+				230, 230, 230));
 		lrspecIncludedReadersList.setBounds(318, 82, 179, 85);
 
 		lrspecIncludedReadersList.addSelectionListener(new SelectionAdapter() {
@@ -711,8 +808,10 @@ public class LogicalReaderEditorView extends ViewPart {
 			}
 		});
 
-		lrspecLogicalReadersList = new List(lrspecLogicalReadersGroup, SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER);
-		lrspecLogicalReadersList.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		lrspecLogicalReadersList = new List(lrspecLogicalReadersGroup,
+				SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER);
+		lrspecLogicalReadersList.setBackground(SWTResourceManager.getColor(230,
+				230, 230));
 		lrspecLogicalReadersList.setBounds(12, 82, 179, 85);
 
 		lrspecLogicalReadersList.addSelectionListener(new SelectionAdapter() {
@@ -722,55 +821,71 @@ public class LogicalReaderEditorView extends ViewPart {
 			}
 		});
 
-		final Button lrspecAddReaderButton = new Button(lrspecLogicalReadersGroup, SWT.NONE);
-		lrspecAddReaderButton.addMouseListener(new LrspecAddReaderButtonMouseListener());
+		final Button lrspecAddReaderButton = new Button(
+				lrspecLogicalReadersGroup, SWT.NONE);
+		lrspecAddReaderButton
+				.addMouseListener(new LrspecAddReaderButtonMouseListener());
 		lrspecAddReaderButton.setBounds(75, 173, 49, 26);
 		lrspecAddReaderButton.setText(">>");
 
-		final Button lrspecTruncateReaderButton = new Button(lrspecLogicalReadersGroup, SWT.NONE);
-		lrspecTruncateReaderButton.addMouseListener(new LrspecTruncateReaderButtonMouseListener());
+		final Button lrspecTruncateReaderButton = new Button(
+				lrspecLogicalReadersGroup, SWT.NONE);
+		lrspecTruncateReaderButton
+				.addMouseListener(new LrspecTruncateReaderButtonMouseListener());
 		lrspecTruncateReaderButton.setText("<<");
 		lrspecTruncateReaderButton.setBounds(386, 173, 49, 26);
 
-		final Label availableLabel = new Label(lrspecLogicalReadersGroup, SWT.NONE);
+		final Label availableLabel = new Label(lrspecLogicalReadersGroup,
+				SWT.NONE);
 		availableLabel.setText("Available:");
 		availableLabel.setBounds(12, 60, 55, 16);
 
-		final Label includedLabel = new Label(lrspecLogicalReadersGroup, SWT.NONE);
+		final Label includedLabel = new Label(lrspecLogicalReadersGroup,
+				SWT.NONE);
 		includedLabel.setText("Included:");
 		includedLabel.setBounds(318, 60, 55, 16);
 
-		final Label filterByLabel = new Label(lrspecLogicalReadersGroup, SWT.NONE);
+		final Label filterByLabel = new Label(lrspecLogicalReadersGroup,
+				SWT.NONE);
 		filterByLabel.setText("Filter by:");
 		filterByLabel.setBounds(188, 27, 49, 16);
 
 		compFilterByCombo = new Combo(lrspecLogicalReadersGroup, SWT.READ_ONLY);
-		compFilterByCombo.setBackground(SWTResourceManager.getColor(230, 230, 230));
-		compFilterByCombo.addSelectionListener(new CompFilterByComboSelectionListener());
+		compFilterByCombo.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
+		compFilterByCombo
+				.addSelectionListener(new CompFilterByComboSelectionListener());
 		compFilterByCombo.setVisibleItemCount(2);
 		compFilterByCombo.select(0);
 		compFilterByCombo.setItems(new String[] { "Static", "Dynamic" });
 		compFilterByCombo.setBounds(243, 24, 78, 24);
 
-		final Label label = new Label(lrspecLogicalReadersGroup, SWT.SEPARATOR | SWT.HORIZONTAL);
+		final Label label = new Label(lrspecLogicalReadersGroup, SWT.SEPARATOR
+				| SWT.HORIZONTAL);
 		label.setBounds(12, 54, 485, 3);
 
 		newReaderButton = new Button(lrspecLogicalReadersGroup, SWT.NONE);
 		newReaderButton.addMouseListener(new NewReaderButtonMouseListener());
-		newReaderButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/iconAddOnPackage.gif"));
+		newReaderButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/iconAddOnPackage.gif"));
 		newReaderButton.setText("New reader");
 		newReaderButton.setBounds(204, 173, 100, 26);
 		newReaderButton.setEnabled(false);
 
-		final Button lrspecCompResetButton = new Button(CompositeGroup, SWT.NONE);
-		lrspecCompResetButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/icon_delete_tag.gif"));
-		lrspecCompResetButton.addMouseListener(new LrspecCompResetButtonMouseListener());
+		final Button lrspecCompResetButton = new Button(CompositeGroup,
+				SWT.NONE);
+		lrspecCompResetButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/icon_delete_tag.gif"));
+		lrspecCompResetButton
+				.addMouseListener(new LrspecCompResetButtonMouseListener());
 		lrspecCompResetButton.setText("Reset");
 		lrspecCompResetButton.setBounds(178, 376, 65, 26);
 
 		CompReaderSaveButton = new Button(CompositeGroup, SWT.NONE);
-		CompReaderSaveButton.addMouseListener(new CompReaderSaveButtonMouseListener());
-		CompReaderSaveButton.setImage(ResourceManager.getPluginImage(Activator.getDefault(), "icons/img/b_save.png"));
+		CompReaderSaveButton
+				.addMouseListener(new CompReaderSaveButtonMouseListener());
+		CompReaderSaveButton.setImage(ResourceManager.getPluginImage(Activator
+				.getDefault(), "icons/img/b_save.png"));
 		CompReaderSaveButton.setText("Save");
 		CompReaderSaveButton.setBounds(105, 376, 67, 26);
 
@@ -779,7 +894,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		readerNameLabel.setBounds(10, 27, 80, 16);
 
 		CompReaderNameText = new Text(CompositeGroup, SWT.BORDER);
-		CompReaderNameText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		CompReaderNameText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		CompReaderNameText.setBounds(105, 24, 412, 22);
 		CompReaderNameText.setEnabled(false);
 
@@ -793,8 +909,10 @@ public class LogicalReaderEditorView extends ViewPart {
 
 		CompReaderTypeText = new Combo(propertiesGroup, SWT.READ_ONLY);
 		CompReaderTypeText.setBounds(96, 23, 401, 24);
-		CompReaderTypeText.setItems(new String[] { "org.ow2.aspirerfid.ale.server.readers.CompositeReader" });
-		CompReaderTypeText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		CompReaderTypeText
+				.setItems(new String[] { "org.ow2.aspirerfid.ale.server.readers.CompositeReader" });
+		CompReaderTypeText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 
 		CompDescriptionLabel = new Label(propertiesGroup, SWT.NONE);
 		CompDescriptionLabel.setBounds(10, 56, 80, 16);
@@ -802,7 +920,8 @@ public class LogicalReaderEditorView extends ViewPart {
 
 		CompDescriptionText = new Text(propertiesGroup, SWT.BORDER);
 		CompDescriptionText.setBounds(96, 53, 401, 22);
-		CompDescriptionText.setBackground(SWTResourceManager.getColor(230, 230, 230));
+		CompDescriptionText.setBackground(SWTResourceManager.getColor(230, 230,
+				230));
 		composite_2.setSize(757, 499);
 		scrolledComposite.setContent(composite_2);
 
@@ -824,56 +943,82 @@ public class LogicalReaderEditorView extends ViewPart {
 		// load values to RPConnectionPointCombo
 		String connectionPointArray[] = {};
 
-		connectionPointArray = preferences.getString(PreferenceConstants.P_ConnectionPoints).split(",");
+		connectionPointArray = preferences.getString(
+				PreferenceConstants.P_ConnectionPoints).split(",");
 
 		RPConnectionPointCombo.removeAll();
 		for (int i = 0; i < connectionPointArray.length; i++) {
-			if (!(connectionPointArray[i].equals(""))){
-			RPConnectionPointCombo.add(connectionPointArray[i]);
+			if (!(connectionPointArray[i].equals(""))) {
+				RPConnectionPointCombo.add(connectionPointArray[i]);
 			}
 		}
 
 		// load values to RPNotificationPointCombo
 		String notificationPointArray[] = {};
 
-		notificationPointArray = preferences.getString(PreferenceConstants.P_NotificationPoints).split(",");
+		notificationPointArray = preferences.getString(
+				PreferenceConstants.P_NotificationPoints).split(",");
 
 		RPNotificationPointCombo.removeAll();
 		for (int i = 0; i < notificationPointArray.length; i++) {
-			if (!(notificationPointArray[i].equals(""))){
-			RPNotificationPointCombo.add(notificationPointArray[i]);
+			if (!(notificationPointArray[i].equals(""))) {
+				RPNotificationPointCombo.add(notificationPointArray[i]);
 			}
 		}
 	}
 
 	private File[] getHALLRSpecsPathFolderContents() {
 
-		String folderPath = preferences.getString(PreferenceConstants.P_HAL_LRSpecsPATH);
+		String folderPath = preferences
+				.getString(PreferenceConstants.P_HAL_LRSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdirs();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
 
 	private File[] getRPLRSpecsPathFolderContents() {
 
-		String folderPath = preferences.getString(PreferenceConstants.P_RP_LRSpecsPATH);
+		String folderPath = preferences
+				.getString(PreferenceConstants.P_RP_LRSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdirs();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
 
 	private File[] getLLRPLRSpecsPathFolderContents() {
 
-		String folderPath = preferences.getString(PreferenceConstants.P_LLRP_LRSpecsPATH);
+		String folderPath = preferences
+				.getString(PreferenceConstants.P_LLRP_LRSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdirs();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
 
 	private File[] getCompositeLRSpecsPathFolderContents() {
 
-		String folderPath = preferences.getString(PreferenceConstants.P_Composite_LRSpecsPATH);
+		String folderPath = preferences
+				.getString(PreferenceConstants.P_Composite_LRSpecsPATH);
 		File f = new File(folderPath);
+
+		if (f.exists() == false) {
+			f.mkdirs();
+		}
+
 		File[] contents = f.listFiles();
 		return contents;
 	}
@@ -923,7 +1068,8 @@ public class LogicalReaderEditorView extends ViewPart {
 			for (int i = 0; i < CompositeDirectoryContents.length; i++) {
 				if (CompositeDirectoryContents[i].getName().endsWith(".xml")) {
 					compNodeChild = new TreeItem(CompositeReadersNode, SWT.NULL);
-					compNodeChild.setText(CompositeDirectoryContents[i].getName());
+					compNodeChild.setText(CompositeDirectoryContents[i]
+							.getName());
 				}
 			}
 		}
@@ -933,14 +1079,16 @@ public class LogicalReaderEditorView extends ViewPart {
 	 * Initialize the toolbar
 	 */
 	private void initializeToolBar() {
-		IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
+		IToolBarManager toolbarManager = getViewSite().getActionBars()
+				.getToolBarManager();
 	}
 
 	/**
 	 * Initialize the menu
 	 */
 	private void initializeMenu() {
-		IMenuManager menuManager = getViewSite().getActionBars().getMenuManager();
+		IMenuManager menuManager = getViewSite().getActionBars()
+				.getMenuManager();
 	}
 
 	@Override
@@ -987,12 +1135,16 @@ public class LogicalReaderEditorView extends ViewPart {
 
 			// Dynamic definition
 			if (HALStaticDefinitionCheck.getSelection() == false) {
-				if (HALReaderTypeText.getText().equals("") || HALDescriptionText.getText().equals("") || HALAdaptorClassText.getText().equals("")
-						|| HALPhysicalReaderNameText.getText().equals("") || HALReadTimeIntervalText.getText().equals("")
-						|| HALReadPointsText.getText().equals("") || HALPropertiesFileText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All property fields are mandatory!");
-				}
-				else {
+				if (HALReaderTypeText.getText().equals("")
+						|| HALDescriptionText.getText().equals("")
+						|| HALAdaptorClassText.getText().equals("")
+						|| HALPhysicalReaderNameText.getText().equals("")
+						|| HALReadTimeIntervalText.getText().equals("")
+						|| HALReadPointsText.getText().equals("")
+						|| HALPropertiesFileText.getText().equals("")) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"All property fields are mandatory!");
+				} else {
 					// set isComposite to false (HAL Reader)
 					halLrSpecBuilder.setIsComposite(false);
 
@@ -1002,43 +1154,50 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = HALReaderTypeText.getText();
 
-					halLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = HALDescriptionText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = HALAdaptorClassText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader name property
 					propertyName = "PhysicalReaderName";
 					propertyValue = HALPhysicalReaderNameText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = HALReadTimeIntervalText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read points property
 					propertyName = "ReadPoints";
 					propertyValue = HALReadPointsText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Properties file property
 					propertyName = "PropertiesFile";
 					propertyValue = HALPropertiesFileText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					FileDialog fd;
 
@@ -1055,17 +1214,18 @@ public class LogicalReaderEditorView extends ViewPart {
 						halLrSpecBuilder.generateXml(selection);
 
 						// add reader to general List of readers
-						lrSpecBuilder.setLogicalReaders(HALReaderNameText.getText());
+						lrSpecBuilder.setLogicalReaders(HALReaderNameText
+								.getText());
 
 						// add reader to lrspectree -> HALReadersNode
 						halNodeChild = new TreeItem(HALReadersNode, SWT.NULL);
-						halNodeChild.setText(selection.substring(selection.lastIndexOf("\\") + 1));
+						halNodeChild.setText(selection.substring(selection
+								.lastIndexOf("\\") + 1));
 
 						HALReaderSaveButton.setEnabled(false);
 
 						resetHALReaderFields();
-					}
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -1073,19 +1233,24 @@ public class LogicalReaderEditorView extends ViewPart {
 				}
 			}// Static definition
 			else {
-				if (HALReaderNameText.getText().equals("") || HALReaderTypeText.getText().equals("") || HALDescriptionText.getText().equals("")
-						|| HALAdaptorClassText.getText().equals("") || HALPhysicalReaderNameText.getText().equals("")
-						|| HALReadTimeIntervalText.getText().equals("") || HALReadPointsText.getText().equals("")
+				if (HALReaderNameText.getText().equals("")
+						|| HALReaderTypeText.getText().equals("")
+						|| HALDescriptionText.getText().equals("")
+						|| HALAdaptorClassText.getText().equals("")
+						|| HALPhysicalReaderNameText.getText().equals("")
+						|| HALReadTimeIntervalText.getText().equals("")
+						|| HALReadPointsText.getText().equals("")
 						|| HALPropertiesFileText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All fields are mandatory!");
+					MessageDialog.openError(container.getShell(), "Error",
+							"All fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (HAL Reader)
 					halLrSpecBuilder.setIsComposite(false);
 
 					// set Logical Reader Name
-					halLrSpecBuilder.setLogicalReaders(HALReaderNameText.getText());
+					halLrSpecBuilder.setLogicalReaders(HALReaderNameText
+							.getText());
 
 					// set HAL properties
 
@@ -1093,43 +1258,50 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = HALReaderTypeText.getText();
 
-					halLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = HALDescriptionText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = HALAdaptorClassText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader name property
 					propertyName = "PhysicalReaderName";
 					propertyValue = HALPhysicalReaderNameText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = HALReadTimeIntervalText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read points property
 					propertyName = "ReadPoints";
 					propertyValue = HALReadPointsText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Properties file property
 					propertyName = "PropertiesFile";
 					propertyValue = HALPropertiesFileText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					FileDialog fd;
 
@@ -1143,11 +1315,13 @@ public class LogicalReaderEditorView extends ViewPart {
 					}
 
 					// generate HAL Reader Static Definition XML
-					generateHALReaderStaticDefinitionXML(halLrSpecBuilder, selection);
+					generateHALReaderStaticDefinitionXML(halLrSpecBuilder,
+							selection);
 
 					// add reader to lrspectree -> HALReadersNode
 					halNodeChild = new TreeItem(HALReadersNode, SWT.NULL);
-					halNodeChild.setText(selection.substring(selection.lastIndexOf("\\") + 1));
+					halNodeChild.setText(selection.substring(selection
+							.lastIndexOf("\\") + 1));
 
 					HALReaderSaveButton.setEnabled(false);
 
@@ -1158,13 +1332,15 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	public void generateHALReaderStaticDefinitionXML(LRSpecBuilder halLrSpecBuilder, String selection) {
+	public void generateHALReaderStaticDefinitionXML(
+			LRSpecBuilder halLrSpecBuilder, String selection) {
 		try {
 			// ///////////////////////////
 			// Creating an empty XML Document
 
 			// We need a Document
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document document = docBuilder.newDocument();
 
@@ -1172,24 +1348,33 @@ public class LogicalReaderEditorView extends ViewPart {
 			// Creating the XML tree
 
 			// create the root element and add it to the document
-			Element logicalReadersRoot = document.createElement("LogicalReaders");
-			logicalReadersRoot.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			logicalReadersRoot.setAttribute("xsi:noNamespaceSchemaLocation", "/resources/LogicalReaders.xsd");
+			Element logicalReadersRoot = document
+					.createElement("LogicalReaders");
+			logicalReadersRoot.setAttribute("xmlns:xsi",
+					"http://www.w3.org/2001/XMLSchema-instance");
+			logicalReadersRoot.setAttribute("xsi:noNamespaceSchemaLocation",
+					"/resources/LogicalReaders.xsd");
 			document.appendChild(logicalReadersRoot);
 
-			Element logicalReaderChild = document.createElement("LogicalReader");
-			logicalReaderChild.setAttribute("name", halLrSpecBuilder.getLogicalReaders().get(0));
+			Element logicalReaderChild = document
+					.createElement("LogicalReader");
+			logicalReaderChild.setAttribute("name", halLrSpecBuilder
+					.getLogicalReaders().get(0));
 			logicalReadersRoot.appendChild(logicalReaderChild);
 
 			Element lrSpecChild = document.createElement("LRSpec");
-			lrSpecChild.setAttribute("isComposite", halLrSpecBuilder.getIsComposite().toString());
-			lrSpecChild.setAttribute("readerType", halLrSpecBuilder.getProperties().get(0).getValue());
+			lrSpecChild.setAttribute("isComposite", halLrSpecBuilder
+					.getIsComposite().toString());
+			lrSpecChild.setAttribute("readerType", halLrSpecBuilder
+					.getProperties().get(0).getValue());
 			logicalReaderChild.appendChild(lrSpecChild);
 
 			for (int i = 1; i < halLrSpecBuilder.getProperties().size(); i++) {
 				Element lrPropertyChild = document.createElement("LRProperty");
-				lrPropertyChild.setAttribute("name", halLrSpecBuilder.getProperties().get(i).getName());
-				lrPropertyChild.setAttribute("value", halLrSpecBuilder.getProperties().get(i).getValue());
+				lrPropertyChild.setAttribute("name", halLrSpecBuilder
+						.getProperties().get(i).getName());
+				lrPropertyChild.setAttribute("value", halLrSpecBuilder
+						.getProperties().get(i).getValue());
 				lrSpecChild.appendChild(lrPropertyChild);
 			}
 
@@ -1197,7 +1382,8 @@ public class LogicalReaderEditorView extends ViewPart {
 			// Output the XML
 
 			// set up a transformer
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			TransformerFactory transformerFactory = TransformerFactory
+					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -1210,16 +1396,17 @@ public class LogicalReaderEditorView extends ViewPart {
 			String xmlString = sw.toString();
 
 			try {
-				BufferedWriter out = new BufferedWriter(new FileWriter(selection));
+				BufferedWriter out = new BufferedWriter(new FileWriter(
+						selection));
 				out.write(xmlString);
 				out.close();
+			} catch (IOException e) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"Error in writing the file!");
 			}
-			catch (IOException e) {
-				MessageDialog.openError(container.getShell(), "Error", "Error in writing the file!");
-			}
-		}
-		catch (Exception e) {
-			MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+		} catch (Exception e) {
+			MessageDialog.openError(container.getShell(), "Error",
+					"DOM parser error!");
 		}
 	}
 
@@ -1266,14 +1453,19 @@ public class LogicalReaderEditorView extends ViewPart {
 
 			// Dynamic definition
 			if (RPStaticDefinitionCheck.getSelection() == false) {
-				if (RPReaderTypeText.getText().equals("") || RPDescriptionText.getText().equals("") || RPConnectionPointCombo.getText().equals("")
-						|| RPNotificationPointCombo.getText().equals("") || RPReadTimeIntervalText.getText().equals("")
-						|| RPAdaptorClassText.getText().equals("") || RPImplClassText.getText().equals("")
-						|| RPPhysicalReaderNameText.getText().equals("") || RPPhysicalReaderSourceText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All property fields are mandatory!");
+				if (RPReaderTypeText.getText().equals("")
+						|| RPDescriptionText.getText().equals("")
+						|| RPConnectionPointCombo.getText().equals("")
+						|| RPNotificationPointCombo.getText().equals("")
+						|| RPReadTimeIntervalText.getText().equals("")
+						|| RPAdaptorClassText.getText().equals("")
+						|| RPImplClassText.getText().equals("")
+						|| RPPhysicalReaderNameText.getText().equals("")
+						|| RPPhysicalReaderSourceText.getText().equals("")) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"All property fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (RP Reader)
 					rpLrSpecBuilder.setIsComposite(false);
 
@@ -1283,55 +1475,64 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = RPReaderTypeText.getText();
 
-					rpLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = RPDescriptionText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point property
 					propertyName = "ConnectionPoint";
 					propertyValue = RPConnectionPointCombo.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Notification point property
 					propertyName = "NotificationPoint";
 					propertyValue = RPNotificationPointCombo.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = RPReadTimeIntervalText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = RPAdaptorClassText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Implementation class property
 					propertyName = "ImplementationClass";
 					propertyValue = RPImplClassText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader name property
 					propertyName = "PhysicalReaderName";
 					propertyValue = RPPhysicalReaderNameText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader source property
 					propertyName = "PhysicalReaderSource";
 					propertyValue = RPPhysicalReaderSourceText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					FileDialog fd;
 
@@ -1349,36 +1550,42 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						// add reader to lrspectree -> RPReadersNode
 						rpNodeChild = new TreeItem(RPReadersNode, SWT.NULL);
-						rpNodeChild.setText(selection.substring(selection.lastIndexOf("\\") + 1));
+						rpNodeChild.setText(selection.substring(selection
+								.lastIndexOf("\\") + 1));
 
 						RPReaderSaveButton.setEnabled(false);
 
 						addNewConnectionPointValueIfNotPresent();
 						addNewNotificationPointValueIfNotPresent();
-						
+
 						resetRPReaderFields();
-					}
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			} // Static definition
 			else {
-				if (RPReaderNameText.getText().equals("") || RPReaderTypeText.getText().equals("") || RPDescriptionText.getText().equals("")
-						|| RPConnectionPointCombo.getText().equals("") || RPNotificationPointCombo.getText().equals("")
-						|| RPReadTimeIntervalText.getText().equals("") || RPAdaptorClassText.getText().equals("")
-						|| RPImplClassText.getText().equals("") || RPPhysicalReaderNameText.getText().equals("")
+				if (RPReaderNameText.getText().equals("")
+						|| RPReaderTypeText.getText().equals("")
+						|| RPDescriptionText.getText().equals("")
+						|| RPConnectionPointCombo.getText().equals("")
+						|| RPNotificationPointCombo.getText().equals("")
+						|| RPReadTimeIntervalText.getText().equals("")
+						|| RPAdaptorClassText.getText().equals("")
+						|| RPImplClassText.getText().equals("")
+						|| RPPhysicalReaderNameText.getText().equals("")
 						|| RPPhysicalReaderSourceText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All fields are mandatory!");
+					MessageDialog.openError(container.getShell(), "Error",
+							"All fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (RP Reader)
 					rpLrSpecBuilder.setIsComposite(false);
 
 					// set Logical Reader Name
-					rpLrSpecBuilder.setLogicalReaders(RPReaderNameText.getText());
+					rpLrSpecBuilder.setLogicalReaders(RPReaderNameText
+							.getText());
 
 					// set RP properties
 
@@ -1386,55 +1593,64 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = RPReaderTypeText.getText();
 
-					rpLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = RPDescriptionText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point property
 					propertyName = "ConnectionPoint";
 					propertyValue = RPConnectionPointCombo.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Notification point property
 					propertyName = "NotificationPoint";
 					propertyValue = RPNotificationPointCombo.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = RPReadTimeIntervalText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = RPAdaptorClassText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Implementation class property
 					propertyName = "ImplementationClass";
 					propertyValue = RPImplClassText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader name property
 					propertyName = "PhysicalReaderName";
 					propertyValue = RPPhysicalReaderNameText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader source property
 					propertyName = "PhysicalReaderSource";
 					propertyValue = RPPhysicalReaderSourceText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					FileDialog fd;
 
@@ -1448,17 +1664,19 @@ public class LogicalReaderEditorView extends ViewPart {
 					}
 
 					// generate HAL Reader Static Definition XML
-					generateRPReaderStaticDefinitionXML(rpLrSpecBuilder, selection);
+					generateRPReaderStaticDefinitionXML(rpLrSpecBuilder,
+							selection);
 
 					// add reader to lrspectree -> RPReadersNode
 					rpNodeChild = new TreeItem(RPReadersNode, SWT.NULL);
-					rpNodeChild.setText(selection.substring(selection.lastIndexOf("\\") + 1));
+					rpNodeChild.setText(selection.substring(selection
+							.lastIndexOf("\\") + 1));
 
 					RPReaderSaveButton.setEnabled(false);
 
 					addNewConnectionPointValueIfNotPresent();
 					addNewNotificationPointValueIfNotPresent();
-					
+
 					resetRPReaderFields();
 				}
 			}
@@ -1472,28 +1690,34 @@ public class LogicalReaderEditorView extends ViewPart {
 		String connectionPoints = "";
 		boolean found = false;
 
-		connectionPointArray = preferences.getString(PreferenceConstants.P_ConnectionPoints).split(",");
+		connectionPointArray = preferences.getString(
+				PreferenceConstants.P_ConnectionPoints).split(",");
 
 		for (int i = 0; i < connectionPointArray.length; i++) {
-			if (RPConnectionPointCombo.getText().equals(connectionPointArray[i])) {
+			if (RPConnectionPointCombo.getText()
+					.equals(connectionPointArray[i])) {
 				found = true;
 			}
 		}
 
 		if (found == false) {
 
-			connectionPoints = preferences.getString(PreferenceConstants.P_ConnectionPoints);
+			connectionPoints = preferences
+					.getString(PreferenceConstants.P_ConnectionPoints);
 
-			connectionPoints = connectionPoints + "," + RPConnectionPointCombo.getText();
+			connectionPoints = connectionPoints + ","
+					+ RPConnectionPointCombo.getText();
 
-			preferences.setValue(PreferenceConstants.P_ConnectionPoints, connectionPoints);
+			preferences.setValue(PreferenceConstants.P_ConnectionPoints,
+					connectionPoints);
 
-			connectionPointArray = preferences.getString(PreferenceConstants.P_ConnectionPoints).split(",");
+			connectionPointArray = preferences.getString(
+					PreferenceConstants.P_ConnectionPoints).split(",");
 
 			RPConnectionPointCombo.removeAll();
 			for (int i = 0; i < connectionPointArray.length; i++) {
-				if(!(connectionPointArray[i].equals(""))){
-				RPConnectionPointCombo.add(connectionPointArray[i]);
+				if (!(connectionPointArray[i].equals(""))) {
+					RPConnectionPointCombo.add(connectionPointArray[i]);
 				}
 			}
 		}
@@ -1505,40 +1729,48 @@ public class LogicalReaderEditorView extends ViewPart {
 		String notificationPoints = "";
 		boolean found = false;
 
-		notificationPointArray = preferences.getString(PreferenceConstants.P_NotificationPoints).split(",");
+		notificationPointArray = preferences.getString(
+				PreferenceConstants.P_NotificationPoints).split(",");
 
 		for (int i = 0; i < notificationPointArray.length; i++) {
-			if (RPNotificationPointCombo.getText().equals(notificationPointArray[i])) {
+			if (RPNotificationPointCombo.getText().equals(
+					notificationPointArray[i])) {
 				found = true;
 			}
 		}
 
 		if (found == false) {
 
-			notificationPoints = preferences.getString(PreferenceConstants.P_NotificationPoints);
+			notificationPoints = preferences
+					.getString(PreferenceConstants.P_NotificationPoints);
 
-			notificationPoints = notificationPoints + "," + RPNotificationPointCombo.getText();
+			notificationPoints = notificationPoints + ","
+					+ RPNotificationPointCombo.getText();
 
-			preferences.setValue(PreferenceConstants.P_NotificationPoints, notificationPoints);
+			preferences.setValue(PreferenceConstants.P_NotificationPoints,
+					notificationPoints);
 
-			notificationPointArray = preferences.getString(PreferenceConstants.P_NotificationPoints).split(",");
+			notificationPointArray = preferences.getString(
+					PreferenceConstants.P_NotificationPoints).split(",");
 
 			RPNotificationPointCombo.removeAll();
 			for (int i = 0; i < notificationPointArray.length; i++) {
-				if(!(notificationPointArray[i].equals(""))){
-				RPNotificationPointCombo.add(notificationPointArray[i]);
+				if (!(notificationPointArray[i].equals(""))) {
+					RPNotificationPointCombo.add(notificationPointArray[i]);
 				}
 			}
 		}
 	}
 
-	public void generateRPReaderStaticDefinitionXML(LRSpecBuilder rpLrSpecBuilder, String selection) {
+	public void generateRPReaderStaticDefinitionXML(
+			LRSpecBuilder rpLrSpecBuilder, String selection) {
 		try {
 			// ///////////////////////////
 			// Creating an empty XML Document
 
 			// We need a Document
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document document = docBuilder.newDocument();
 
@@ -1546,24 +1778,33 @@ public class LogicalReaderEditorView extends ViewPart {
 			// Creating the XML tree
 
 			// create the root element and add it to the document
-			Element logicalReadersRoot = document.createElement("LogicalReaders");
-			logicalReadersRoot.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			logicalReadersRoot.setAttribute("xsi:noNamespaceSchemaLocation", "/resources/LogicalReaders.xsd");
+			Element logicalReadersRoot = document
+					.createElement("LogicalReaders");
+			logicalReadersRoot.setAttribute("xmlns:xsi",
+					"http://www.w3.org/2001/XMLSchema-instance");
+			logicalReadersRoot.setAttribute("xsi:noNamespaceSchemaLocation",
+					"/resources/LogicalReaders.xsd");
 			document.appendChild(logicalReadersRoot);
 
-			Element logicalReaderChild = document.createElement("LogicalReader");
-			logicalReaderChild.setAttribute("name", rpLrSpecBuilder.getLogicalReaders().get(0));
+			Element logicalReaderChild = document
+					.createElement("LogicalReader");
+			logicalReaderChild.setAttribute("name", rpLrSpecBuilder
+					.getLogicalReaders().get(0));
 			logicalReadersRoot.appendChild(logicalReaderChild);
 
 			Element lrSpecChild = document.createElement("LRSpec");
-			lrSpecChild.setAttribute("isComposite", rpLrSpecBuilder.getIsComposite().toString());
-			lrSpecChild.setAttribute("readerType", rpLrSpecBuilder.getProperties().get(0).getValue());
+			lrSpecChild.setAttribute("isComposite", rpLrSpecBuilder
+					.getIsComposite().toString());
+			lrSpecChild.setAttribute("readerType", rpLrSpecBuilder
+					.getProperties().get(0).getValue());
 			logicalReaderChild.appendChild(lrSpecChild);
 
 			for (int i = 1; i < rpLrSpecBuilder.getProperties().size(); i++) {
 				Element lrPropertyChild = document.createElement("LRProperty");
-				lrPropertyChild.setAttribute("name", rpLrSpecBuilder.getProperties().get(i).getName());
-				lrPropertyChild.setAttribute("value", rpLrSpecBuilder.getProperties().get(i).getValue());
+				lrPropertyChild.setAttribute("name", rpLrSpecBuilder
+						.getProperties().get(i).getName());
+				lrPropertyChild.setAttribute("value", rpLrSpecBuilder
+						.getProperties().get(i).getValue());
 				lrSpecChild.appendChild(lrPropertyChild);
 			}
 
@@ -1571,7 +1812,8 @@ public class LogicalReaderEditorView extends ViewPart {
 			// Output the XML
 
 			// set up a transformer
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			TransformerFactory transformerFactory = TransformerFactory
+					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -1584,16 +1826,17 @@ public class LogicalReaderEditorView extends ViewPart {
 			String xmlString = sw.toString();
 
 			try {
-				BufferedWriter out = new BufferedWriter(new FileWriter(selection));
+				BufferedWriter out = new BufferedWriter(new FileWriter(
+						selection));
 				out.write(xmlString);
 				out.close();
+			} catch (IOException e) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"Error in writing the file!");
 			}
-			catch (IOException e) {
-				MessageDialog.openError(container.getShell(), "Error", "Error in writing the file!");
-			}
-		}
-		catch (Exception e) {
-			MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+		} catch (Exception e) {
+			MessageDialog.openError(container.getShell(), "Error",
+					"DOM parser error!");
 		}
 	}
 
@@ -1644,16 +1887,24 @@ public class LogicalReaderEditorView extends ViewPart {
 			llrpLrSpecBuilder = new LRSpecBuilder();
 
 			if (LLRPStaticDefinitionCheck.getSelection() == false) {
-				if (LLRPReaderTypeText.getText().equals("") || LLRPDescriptionText.getText().equals("")
-						|| LLRPConnectionPointAddressText.getText().equals("") || LLRPConnectionPointPortText.getText().equals("")
-						|| LLRPEncryptedConnectionPointAddressText.getText().equals("") || LLRPEncryptedConnectionPointPortText.getText().equals("")
-						|| LLRPReadTimeIntervalText.getText().equals("") || LLRPAdaptorClassText.getText().equals("")
-						|| LLRPImplClassText.getText().equals("") || LLRPPhysicalReaderSourceText.getText().equals("")
-						|| LLRPDescriptiveReaderSourceText.getText().equals("") || LLRPReaderOperationSpecIDText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All property fields are mandatory!");
+				if (LLRPReaderTypeText.getText().equals("")
+						|| LLRPDescriptionText.getText().equals("")
+						|| LLRPConnectionPointAddressText.getText().equals("")
+						|| LLRPConnectionPointPortText.getText().equals("")
+						|| LLRPEncryptedConnectionPointAddressText.getText()
+								.equals("")
+						|| LLRPEncryptedConnectionPointPortText.getText()
+								.equals("")
+						|| LLRPReadTimeIntervalText.getText().equals("")
+						|| LLRPAdaptorClassText.getText().equals("")
+						|| LLRPImplClassText.getText().equals("")
+						|| LLRPPhysicalReaderSourceText.getText().equals("")
+						|| LLRPDescriptiveReaderSourceText.getText().equals("")
+						|| LLRPReaderOperationSpecIDText.getText().equals("")) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"All property fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (RP Reader)
 					llrpLrSpecBuilder.setIsComposite(false);
 
@@ -1663,73 +1914,87 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = LLRPReaderTypeText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = LLRPDescriptionText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point address property
 					propertyName = "ConnectionPointAddress";
 					propertyValue = LLRPConnectionPointAddressText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point port property
 					propertyName = "ConnectionPointPort";
 					propertyValue = LLRPConnectionPointPortText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Encrypted connection point address property
 					propertyName = "EncryptedConnectionPointAddress";
-					propertyValue = LLRPEncryptedConnectionPointAddressText.getText();
+					propertyValue = LLRPEncryptedConnectionPointAddressText
+							.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Encrypted connection point port property
 					propertyName = "EncryptedConnectionPointPort";
-					propertyValue = LLRPEncryptedConnectionPointPortText.getText();
+					propertyValue = LLRPEncryptedConnectionPointPortText
+							.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = LLRPReadTimeIntervalText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = LLRPAdaptorClassText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Implementation class property
 					propertyName = "ImplementationClass";
 					propertyValue = LLRPImplClassText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader source property
 					propertyName = "PhysicalReaderSource";
 					propertyValue = LLRPPhysicalReaderSourceText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Descriptive Reader source property
 					propertyName = "DescriptiveReaderSource";
 					propertyValue = LLRPDescriptiveReaderSourceText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Reader Operation Spec ID property
 					propertyName = "RoSpecID";
 					propertyValue = LLRPReaderOperationSpecIDText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					FileDialog fd;
 
@@ -1747,34 +2012,43 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						// add reader to lrspectree -> LLRPReadersNode
 						llrpNodeChild = new TreeItem(LLRPReadersNode, SWT.NULL);
-						llrpNodeChild.setText(selection.substring(selection.lastIndexOf("\\") + 1));
+						llrpNodeChild.setText(selection.substring(selection
+								.lastIndexOf("\\") + 1));
 
 						LLRPReaderSaveButton.setEnabled(false);
 
 						resetLLRPReaderFields();
-					}
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-			}
-			else {
-				if (LLRPReaderNameText.getText().equals("") || LLRPReaderTypeText.getText().equals("") || LLRPDescriptionText.getText().equals("")
-						|| LLRPConnectionPointAddressText.getText().equals("") || LLRPConnectionPointPortText.getText().equals("")
-						|| LLRPEncryptedConnectionPointAddressText.getText().equals("") || LLRPEncryptedConnectionPointPortText.getText().equals("")
-						|| LLRPReadTimeIntervalText.getText().equals("") || LLRPAdaptorClassText.getText().equals("")
-						|| LLRPImplClassText.getText().equals("") || LLRPPhysicalReaderSourceText.getText().equals("")
-						|| LLRPDescriptiveReaderSourceText.getText().equals("") || LLRPReaderOperationSpecIDText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All fields are mandatory!");
+			} else {
+				if (LLRPReaderNameText.getText().equals("")
+						|| LLRPReaderTypeText.getText().equals("")
+						|| LLRPDescriptionText.getText().equals("")
+						|| LLRPConnectionPointAddressText.getText().equals("")
+						|| LLRPConnectionPointPortText.getText().equals("")
+						|| LLRPEncryptedConnectionPointAddressText.getText()
+								.equals("")
+						|| LLRPEncryptedConnectionPointPortText.getText()
+								.equals("")
+						|| LLRPReadTimeIntervalText.getText().equals("")
+						|| LLRPAdaptorClassText.getText().equals("")
+						|| LLRPImplClassText.getText().equals("")
+						|| LLRPPhysicalReaderSourceText.getText().equals("")
+						|| LLRPDescriptiveReaderSourceText.getText().equals("")
+						|| LLRPReaderOperationSpecIDText.getText().equals("")) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"All fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (RP Reader)
 					llrpLrSpecBuilder.setIsComposite(false);
 
 					// set Logical Reader Name
-					llrpLrSpecBuilder.setLogicalReaders(LLRPReaderNameText.getText());
+					llrpLrSpecBuilder.setLogicalReaders(LLRPReaderNameText
+							.getText());
 
 					// set LLRP properties
 
@@ -1782,73 +2056,87 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = LLRPReaderTypeText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = LLRPDescriptionText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point address property
 					propertyName = "ConnectionPointAddress";
 					propertyValue = LLRPConnectionPointAddressText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point port property
 					propertyName = "ConnectionPointPort";
 					propertyValue = LLRPConnectionPointPortText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Encrypted connection point address property
 					propertyName = "EncryptedConnectionPointAddress";
-					propertyValue = LLRPEncryptedConnectionPointAddressText.getText();
+					propertyValue = LLRPEncryptedConnectionPointAddressText
+							.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Encrypted connection point port property
 					propertyName = "EncryptedConnectionPointPort";
-					propertyValue = LLRPEncryptedConnectionPointPortText.getText();
+					propertyValue = LLRPEncryptedConnectionPointPortText
+							.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = LLRPReadTimeIntervalText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = LLRPAdaptorClassText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Implementation class property
 					propertyName = "ImplementationClass";
 					propertyValue = LLRPImplClassText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader source property
 					propertyName = "PhysicalReaderSource";
 					propertyValue = LLRPPhysicalReaderSourceText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Descriptive Reader source property
 					propertyName = "DescriptiveReaderSource";
 					propertyValue = LLRPDescriptiveReaderSourceText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Reader Operation Spec ID property
 					propertyName = "RoSpecID";
 					propertyValue = LLRPReaderOperationSpecIDText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					FileDialog fd;
 
@@ -1862,11 +2150,13 @@ public class LogicalReaderEditorView extends ViewPart {
 					}
 
 					// generate LLRP Reader Static Definition XML
-					generateLLRPReaderStaticDefinitionXML(llrpLrSpecBuilder, selection);
+					generateLLRPReaderStaticDefinitionXML(llrpLrSpecBuilder,
+							selection);
 
 					// add reader to lrspectree -> LLRPReadersNode
 					llrpNodeChild = new TreeItem(LLRPReadersNode, SWT.NULL);
-					llrpNodeChild.setText(selection.substring(selection.lastIndexOf("\\") + 1));
+					llrpNodeChild.setText(selection.substring(selection
+							.lastIndexOf("\\") + 1));
 
 					LLRPReaderSaveButton.setEnabled(false);
 
@@ -1877,13 +2167,15 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	public void generateLLRPReaderStaticDefinitionXML(LRSpecBuilder llrpLrSpecBuilder, String selection) {
+	public void generateLLRPReaderStaticDefinitionXML(
+			LRSpecBuilder llrpLrSpecBuilder, String selection) {
 		try {
 			// ///////////////////////////
 			// Creating an empty XML Document
 
 			// We need a Document
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document document = docBuilder.newDocument();
 
@@ -1891,24 +2183,33 @@ public class LogicalReaderEditorView extends ViewPart {
 			// Creating the XML tree
 
 			// create the root element and add it to the document
-			Element logicalReadersRoot = document.createElement("LogicalReaders");
-			logicalReadersRoot.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			logicalReadersRoot.setAttribute("xsi:noNamespaceSchemaLocation", "/resources/LogicalReaders.xsd");
+			Element logicalReadersRoot = document
+					.createElement("LogicalReaders");
+			logicalReadersRoot.setAttribute("xmlns:xsi",
+					"http://www.w3.org/2001/XMLSchema-instance");
+			logicalReadersRoot.setAttribute("xsi:noNamespaceSchemaLocation",
+					"/resources/LogicalReaders.xsd");
 			document.appendChild(logicalReadersRoot);
 
-			Element logicalReaderChild = document.createElement("LogicalReader");
-			logicalReaderChild.setAttribute("name", llrpLrSpecBuilder.getLogicalReaders().get(0));
+			Element logicalReaderChild = document
+					.createElement("LogicalReader");
+			logicalReaderChild.setAttribute("name", llrpLrSpecBuilder
+					.getLogicalReaders().get(0));
 			logicalReadersRoot.appendChild(logicalReaderChild);
 
 			Element lrSpecChild = document.createElement("LRSpec");
-			lrSpecChild.setAttribute("isComposite", llrpLrSpecBuilder.getIsComposite().toString());
-			lrSpecChild.setAttribute("readerType", llrpLrSpecBuilder.getProperties().get(0).getValue());
+			lrSpecChild.setAttribute("isComposite", llrpLrSpecBuilder
+					.getIsComposite().toString());
+			lrSpecChild.setAttribute("readerType", llrpLrSpecBuilder
+					.getProperties().get(0).getValue());
 			logicalReaderChild.appendChild(lrSpecChild);
 
 			for (int i = 1; i < llrpLrSpecBuilder.getProperties().size(); i++) {
 				Element lrPropertyChild = document.createElement("LRProperty");
-				lrPropertyChild.setAttribute("name", llrpLrSpecBuilder.getProperties().get(i).getName());
-				lrPropertyChild.setAttribute("value", llrpLrSpecBuilder.getProperties().get(i).getValue());
+				lrPropertyChild.setAttribute("name", llrpLrSpecBuilder
+						.getProperties().get(i).getName());
+				lrPropertyChild.setAttribute("value", llrpLrSpecBuilder
+						.getProperties().get(i).getValue());
 				lrSpecChild.appendChild(lrPropertyChild);
 			}
 
@@ -1916,7 +2217,8 @@ public class LogicalReaderEditorView extends ViewPart {
 			// Output the XML
 
 			// set up a transformer
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			TransformerFactory transformerFactory = TransformerFactory
+					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -1929,26 +2231,27 @@ public class LogicalReaderEditorView extends ViewPart {
 			String xmlString = sw.toString();
 
 			try {
-				BufferedWriter out = new BufferedWriter(new FileWriter(selection));
+				BufferedWriter out = new BufferedWriter(new FileWriter(
+						selection));
 				out.write(xmlString);
 				out.close();
+			} catch (IOException e) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"Error in writing the file!");
 			}
-			catch (IOException e) {
-				MessageDialog.openError(container.getShell(), "Error", "Error in writing the file!");
-			}
-		}
-		catch (Exception e) {
-			MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+		} catch (Exception e) {
+			MessageDialog.openError(container.getShell(), "Error",
+					"DOM parser error!");
 		}
 	}
 
 	private class LrspecAddReaderButtonMouseListener extends MouseAdapter {
 		public void mouseDown(final MouseEvent e) {
 			if (availableToIncludedReaders[0] == "") {
-				MessageDialog.openError(container.getShell(), "Error", "No reader has been selected!");
+				MessageDialog.openError(container.getShell(), "Error",
+						"No reader has been selected!");
 
-			}
-			else {
+			} else {
 
 				// add selected reader to included readers
 				lrspecIncludedReadersList.add(availableToIncludedReaders[0]);
@@ -1965,10 +2268,10 @@ public class LogicalReaderEditorView extends ViewPart {
 	private class LrspecTruncateReaderButtonMouseListener extends MouseAdapter {
 		public void mouseDown(final MouseEvent e) {
 			if (includedToAvailableReaders[0] == "") {
-				MessageDialog.openError(container.getShell(), "Error", "No reader has been selected!");
+				MessageDialog.openError(container.getShell(), "Error",
+						"No reader has been selected!");
 
-			}
-			else {
+			} else {
 
 				// add selected reader to available readers
 				lrspecLogicalReadersList.add(includedToAvailableReaders[0]);
@@ -1991,19 +2294,20 @@ public class LogicalReaderEditorView extends ViewPart {
 			String propertyValue = "";
 			compositeLrSpecBuilder = new LRSpecBuilder();
 
-			if (CompDescriptionText.getText().equals("") || CompReaderTypeText.getText().equals("")) {
-				MessageDialog.openError(container.getShell(), "Error", "All fields are mandatory!");
+			if (CompDescriptionText.getText().equals("")
+					|| CompReaderTypeText.getText().equals("")) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"All fields are mandatory!");
 
-			}
-			else if (lrspecIncludedReadersList.getItemCount() == 0) {
-				MessageDialog.openError(container.getShell(), "Error", "No reader has been selected!");
+			} else if (lrspecIncludedReadersList.getItemCount() == 0) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"No reader has been selected!");
 
-			}
-			else if (lrspecIncludedReadersList.getItemCount() < 2) {
-				MessageDialog.openError(container.getShell(), "Error", "At least two readers should be selected!");
+			} else if (lrspecIncludedReadersList.getItemCount() < 2) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"At least two readers should be selected!");
 
-			}
-			else {
+			} else {
 				// set isComposite to true (Composite Reader)
 				compositeLrSpecBuilder.setIsComposite(true);
 
@@ -2013,17 +2317,21 @@ public class LogicalReaderEditorView extends ViewPart {
 				propertyName = "ReaderType";
 				propertyValue = CompReaderTypeText.getText();
 
-				compositeLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+				compositeLrSpecBuilder.setLRProperty(index, propertyName,
+						propertyValue);
 
 				// set Description property
 				propertyName = "Description";
 				propertyValue = CompDescriptionText.getText();
 
-				compositeLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+				compositeLrSpecBuilder.setLRProperty(++index, propertyName,
+						propertyValue);
 
 				// set list of logical readers to compositeLrSpecBuilder
 				for (int i = 0; i < lrspecIncludedReadersList.getItemCount(); i++) {
-					compositeLrSpecBuilder.setLogicalReaders(lrspecIncludedReadersList.getItem(i));
+					compositeLrSpecBuilder
+							.setLogicalReaders(lrspecIncludedReadersList
+									.getItem(i));
 				}
 
 				FileDialog fd;
@@ -2043,19 +2351,19 @@ public class LogicalReaderEditorView extends ViewPart {
 						compositeLrSpecBuilder.generateXml(selection);
 
 						// add reader to lrspectree -> LLRPReadersNode
-						compNodeChild = new TreeItem(CompositeReadersNode, SWT.NULL);
-						compNodeChild.setText(selection.substring(selection.lastIndexOf("\\") + 1));
+						compNodeChild = new TreeItem(CompositeReadersNode,
+								SWT.NULL);
+						compNodeChild.setText(selection.substring(selection
+								.lastIndexOf("\\") + 1));
 
 						CompReaderSaveButton.setEnabled(false);
 
 						resetCompositeReaderFields();
-					}
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-				else if (filterByComboSelectedItem.equals("Static")) {
+				} else if (filterByComboSelectedItem.equals("Static")) {
 
 					fd = new FileDialog(compositeComposite.getShell(), SWT.SAVE);
 					fd.setText("Save");
@@ -2066,11 +2374,13 @@ public class LogicalReaderEditorView extends ViewPart {
 						selection += ".xml";
 					}
 
-					generateCompositeReaderStaticDefinitionXML(compositeLrSpecBuilder, selection);
+					generateCompositeReaderStaticDefinitionXML(
+							compositeLrSpecBuilder, selection);
 
 					// add reader to lrspectree -> Composite Readers Node
 					compNodeChild = new TreeItem(CompositeReadersNode, SWT.NULL);
-					compNodeChild.setText(selection.substring(selection.lastIndexOf("\\") + 1));
+					compNodeChild.setText(selection.substring(selection
+							.lastIndexOf("\\") + 1));
 
 					CompReaderSaveButton.setEnabled(false);
 
@@ -2081,7 +2391,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	public void generateCompositeReaderStaticDefinitionXML(LRSpecBuilder compositeLrSpecBuilder, String selection) {
+	public void generateCompositeReaderStaticDefinitionXML(
+			LRSpecBuilder compositeLrSpecBuilder, String selection) {
 		File[] HALDirectoryContents = getHALLRSpecsPathFolderContents();
 		File[] RPDirectoryContents = getRPLRSpecsPathFolderContents();
 		File[] LLRPDirectoryContents = getLLRPLRSpecsPathFolderContents();
@@ -2090,7 +2401,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		String temp = "";
 
 		for (int i = 0; i < compositeLrSpecBuilder.getLogicalReaders().size(); i++) {
-			temp = (String) staticReadersHashMap.get(compositeLrSpecBuilder.getLogicalReaders().get(i));
+			temp = (String) staticReadersHashMap.get(compositeLrSpecBuilder
+					.getLogicalReaders().get(i));
 			readerFileNames.add(temp);
 
 		}
@@ -2100,12 +2412,14 @@ public class LogicalReaderEditorView extends ViewPart {
 			// Creating an empty XML Document
 
 			// We need a Document
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document document = docBuilder.newDocument();
 
 			// We need a Document
-			DocumentBuilderFactory dBFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory dBFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder dBuilder = dBFactory.newDocumentBuilder();
 			Document doc = dBuilder.newDocument();
 
@@ -2115,28 +2429,34 @@ public class LogicalReaderEditorView extends ViewPart {
 				// appropriate node
 				if (HALDirectoryContents.length != 0) {
 					for (int j = 0; j < HALDirectoryContents.length; j++) {
-						if (HALDirectoryContents[j].getName().equals(readerFileNames.get(i))) {
+						if (HALDirectoryContents[j].getName().equals(
+								readerFileNames.get(i))) {
 
 							try {
-								File selectedFile = new File(PreferenceConstants.P_HAL_LRSpecsPATH + HALDirectoryContents[j].getName());
+								File selectedFile = new File(
+										PreferenceConstants.P_HAL_LRSpecsPATH
+												+ HALDirectoryContents[j]
+														.getName());
 
 								if (selectedFile.exists()) {
 									document = docBuilder.parse(selectedFile);
 
 									// Get nodes list of all elements
-									NodeList list = document.getElementsByTagName("LogicalReader");
+									NodeList list = document
+											.getElementsByTagName("LogicalReader");
 
 									for (int x = 0; x < list.getLength(); x++) {
 										// Get element
 										nodeList.add(list.item(x));
 									}
+								} else {
+									MessageDialog.openError(container
+											.getShell(), "Error",
+											"File not found!");
 								}
-								else {
-									MessageDialog.openError(container.getShell(), "Error", "File not found!");
-								}
-							}
-							catch (Exception exc) {
-								MessageDialog.openError(container.getShell(), "Error", "HAL DOM parser error!");
+							} catch (Exception exc) {
+								MessageDialog.openError(container.getShell(),
+										"Error", "HAL DOM parser error!");
 							}
 
 						}
@@ -2145,28 +2465,34 @@ public class LogicalReaderEditorView extends ViewPart {
 
 				if (RPDirectoryContents.length != 0) {
 					for (int j = 0; j < RPDirectoryContents.length; j++) {
-						if (RPDirectoryContents[j].getName().equals(readerFileNames.get(i))) {
+						if (RPDirectoryContents[j].getName().equals(
+								readerFileNames.get(i))) {
 
 							try {
-								File selectedFile = new File(PreferenceConstants.P_RP_LRSpecsPATH + RPDirectoryContents[j].getName());
+								File selectedFile = new File(
+										PreferenceConstants.P_RP_LRSpecsPATH
+												+ RPDirectoryContents[j]
+														.getName());
 
 								if (selectedFile.exists()) {
 									document = docBuilder.parse(selectedFile);
 
 									// Get nodes list of all elements
-									NodeList list = document.getElementsByTagName("LogicalReader");
+									NodeList list = document
+											.getElementsByTagName("LogicalReader");
 
 									for (int x = 0; x < list.getLength(); x++) {
 										// Get element
 										nodeList.add(list.item(x));
 									}
+								} else {
+									MessageDialog.openError(container
+											.getShell(), "Error",
+											"File not found!");
 								}
-								else {
-									MessageDialog.openError(container.getShell(), "Error", "File not found!");
-								}
-							}
-							catch (Exception exc) {
-								MessageDialog.openError(container.getShell(), "Error", "RP DOM parser error!");
+							} catch (Exception exc) {
+								MessageDialog.openError(container.getShell(),
+										"Error", "RP DOM parser error!");
 							}
 
 						}
@@ -2175,28 +2501,34 @@ public class LogicalReaderEditorView extends ViewPart {
 
 				if (LLRPDirectoryContents.length != 0) {
 					for (int j = 0; j < LLRPDirectoryContents.length; j++) {
-						if (LLRPDirectoryContents[j].getName().equals(readerFileNames.get(i))) {
+						if (LLRPDirectoryContents[j].getName().equals(
+								readerFileNames.get(i))) {
 
 							try {
-								File selectedFile = new File(PreferenceConstants.P_LLRP_LRSpecsPATH + LLRPDirectoryContents[j].getName());
+								File selectedFile = new File(
+										PreferenceConstants.P_LLRP_LRSpecsPATH
+												+ LLRPDirectoryContents[j]
+														.getName());
 
 								if (selectedFile.exists()) {
 									document = docBuilder.parse(selectedFile);
 
 									// Get nodes list of all elements
-									NodeList list = document.getElementsByTagName("LogicalReader");
+									NodeList list = document
+											.getElementsByTagName("LogicalReader");
 
 									for (int x = 0; x < list.getLength(); x++) {
 										// Get element
 										nodeList.add(list.item(x));
 									}
+								} else {
+									MessageDialog.openError(container
+											.getShell(), "Error",
+											"File not found!");
 								}
-								else {
-									MessageDialog.openError(container.getShell(), "Error", "File not found!");
-								}
-							}
-							catch (Exception exc) {
-								MessageDialog.openError(container.getShell(), "Error", "LLRP DOM parser error!");
+							} catch (Exception exc) {
+								MessageDialog.openError(container.getShell(),
+										"Error", "LLRP DOM parser error!");
 							}
 
 						}
@@ -2209,8 +2541,10 @@ public class LogicalReaderEditorView extends ViewPart {
 
 			// create the root element and add it to the document
 			Element logicalReadersRoot = doc.createElement("LogicalReaders");
-			logicalReadersRoot.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			logicalReadersRoot.setAttribute("xsi:noNamespaceSchemaLocation", "/resources/LogicalReaders.xsd");
+			logicalReadersRoot.setAttribute("xmlns:xsi",
+					"http://www.w3.org/2001/XMLSchema-instance");
+			logicalReadersRoot.setAttribute("xsi:noNamespaceSchemaLocation",
+					"/resources/LogicalReaders.xsd");
 			doc.appendChild(logicalReadersRoot);
 
 			for (int j = 0; j < nodeList.size(); j++) {
@@ -2218,22 +2552,30 @@ public class LogicalReaderEditorView extends ViewPart {
 			}
 
 			Element logicalReaderChild = doc.createElement("LogicalReader");
-			logicalReaderChild.setAttribute("name", CompReaderNameText.getText());
+			logicalReaderChild.setAttribute("name", CompReaderNameText
+					.getText());
 			logicalReadersRoot.appendChild(logicalReaderChild);
 
 			Element lrSpecChild = doc.createElement("LRSpec");
-			lrSpecChild.setAttribute("isComposite", compositeLrSpecBuilder.getIsComposite().toString());
-			lrSpecChild.setAttribute("readerType", compositeLrSpecBuilder.getProperties().get(0).getValue());
+			lrSpecChild.setAttribute("isComposite", compositeLrSpecBuilder
+					.getIsComposite().toString());
+			lrSpecChild.setAttribute("readerType", compositeLrSpecBuilder
+					.getProperties().get(0).getValue());
 			logicalReaderChild.appendChild(lrSpecChild);
 
-			Element lrPropertyDescriptionChild = doc.createElement("LRProperty");
-			lrPropertyDescriptionChild.setAttribute("name", compositeLrSpecBuilder.getProperties().get(1).getName());
-			lrPropertyDescriptionChild.setAttribute("value", compositeLrSpecBuilder.getProperties().get(1).getValue());
+			Element lrPropertyDescriptionChild = doc
+					.createElement("LRProperty");
+			lrPropertyDescriptionChild.setAttribute("name",
+					compositeLrSpecBuilder.getProperties().get(1).getName());
+			lrPropertyDescriptionChild.setAttribute("value",
+					compositeLrSpecBuilder.getProperties().get(1).getValue());
 			lrSpecChild.appendChild(lrPropertyDescriptionChild);
 
-			for (int j = 0; j < compositeLrSpecBuilder.getLogicalReaders().size(); j++) {
+			for (int j = 0; j < compositeLrSpecBuilder.getLogicalReaders()
+					.size(); j++) {
 				Element lrPropertyReaderChild = doc.createElement("readers");
-				lrPropertyReaderChild.setTextContent(compositeLrSpecBuilder.getLogicalReaders().get(j));
+				lrPropertyReaderChild.setTextContent(compositeLrSpecBuilder
+						.getLogicalReaders().get(j));
 				lrSpecChild.appendChild(lrPropertyReaderChild);
 			}
 
@@ -2241,7 +2583,8 @@ public class LogicalReaderEditorView extends ViewPart {
 			// Output the XML
 
 			// set up a transformer
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			TransformerFactory transformerFactory = TransformerFactory
+					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -2254,16 +2597,17 @@ public class LogicalReaderEditorView extends ViewPart {
 			String xmlFinalString = sw.toString();
 
 			try {
-				BufferedWriter out = new BufferedWriter(new FileWriter(selection));
+				BufferedWriter out = new BufferedWriter(new FileWriter(
+						selection));
 				out.write(xmlFinalString);
 				out.close();
+			} catch (IOException e) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"Error in writing the file!");
 			}
-			catch (IOException e) {
-				MessageDialog.openError(container.getShell(), "Error", "Error in writing the file!");
-			}
-		}
-		catch (Exception e) {
-			MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+		} catch (Exception e) {
+			MessageDialog.openError(container.getShell(), "Error",
+					"DOM parser error!");
 		}
 
 	}
@@ -2290,7 +2634,8 @@ public class LogicalReaderEditorView extends ViewPart {
 			compFilterByCombo.deselectAll();
 
 			for (int i = 0; i < lrspecIncludedReadersList.getItemCount(); i++) {
-				lrspecLogicalReadersList.add(lrspecIncludedReadersList.getItem(i));
+				lrspecLogicalReadersList.add(lrspecIncludedReadersList
+						.getItem(i));
 			}
 
 			lrspecIncludedReadersList.removeAll();
@@ -2324,18 +2669,20 @@ public class LogicalReaderEditorView extends ViewPart {
 				File selectedFile = new File(selection);
 
 				if (selectedFile.exists()) {
-					documentBuilderFactory = DocumentBuilderFactory.newInstance();
-					documentBuilder = documentBuilderFactory.newDocumentBuilder();
+					documentBuilderFactory = DocumentBuilderFactory
+							.newInstance();
+					documentBuilder = documentBuilderFactory
+							.newDocumentBuilder();
 					document = documentBuilder.parse(selectedFile);
 					Node node = document.getDocumentElement();
 					root = node.getNodeName();
+				} else {
+					MessageDialog.openError(container.getShell(), "Error",
+							"File not found!");
 				}
-				else {
-					MessageDialog.openError(container.getShell(), "Error", "File not found!");
-				}
-			}
-			catch (Exception exc) {
-				MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+			} catch (Exception exc) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"DOM parser error!");
 			}
 
 			// if the reader is dynamic
@@ -2345,15 +2692,22 @@ public class LogicalReaderEditorView extends ViewPart {
 					lRSpec = openLrSpecBuilder.getLRSpecFromFile(selection);
 
 					// retrieve Reader Type property index
-					for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-						if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
+					for (int i = 0; i < lRSpec.getProperties().getProperty()
+							.size(); i++) {
+						if (lRSpec.getProperties().getProperty().get(i)
+								.getName().equals("ReaderType")) {
 							readerTypePropertyIndex = i;
 						}
 					}
 
 					// if the xml file refers to a HAL reader
-					if (lRSpec.getProperties().getProperty().get(readerTypePropertyIndex).getValue().equals(
-							"org.ow2.aspirerfid.ale.server.readers.hal.HALAdaptor")) {
+					if (lRSpec
+							.getProperties()
+							.getProperty()
+							.get(readerTypePropertyIndex)
+							.getValue()
+							.equals(
+									"org.ow2.aspirerfid.ale.server.readers.hal.HALAdaptor")) {
 						tabFolder.setSelection(lrspecHALTabItem);
 
 						resetHALReaderFields();
@@ -2362,27 +2716,45 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						HALReaderNameText.setText("");
 
-						for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-							if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
-								HALReaderTypeText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("Description")) {
-								HALDescriptionText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("AdaptorClass")) {
-								HALAdaptorClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PhysicalReaderName")) {
-								HALPhysicalReaderNameText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReadTimeInterval")) {
-								HALReadTimeIntervalText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReadPoints")) {
-								HALReadPointsText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PropertiesFile")) {
-								HALPropertiesFileText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
+						for (int i = 0; i < lRSpec.getProperties()
+								.getProperty().size(); i++) {
+							if (lRSpec.getProperties().getProperty().get(i)
+									.getName().equals("ReaderType")) {
+								HALReaderTypeText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("Description")) {
+								HALDescriptionText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("AdaptorClass")) {
+								HALAdaptorClassText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"PhysicalReaderName")) {
+								HALPhysicalReaderNameText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName()
+									.equals("ReadTimeInterval")) {
+								HALReadTimeIntervalText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("ReadPoints")) {
+								HALReadPointsText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("PropertiesFile")) {
+								HALPropertiesFileText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
 							}
 						}
 
@@ -2393,8 +2765,13 @@ public class LogicalReaderEditorView extends ViewPart {
 						existingHALReaderFileToBeSaved = selection;
 					}
 					// if the xml file refers to a RP reader
-					else if (lRSpec.getProperties().getProperty().get(readerTypePropertyIndex).getValue().equals(
-							"org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor")) {
+					else if (lRSpec
+							.getProperties()
+							.getProperty()
+							.get(readerTypePropertyIndex)
+							.getValue()
+							.equals(
+									"org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor")) {
 						tabFolder.setSelection(lrspecRPTabItem);
 
 						resetRPReaderFields();
@@ -2403,33 +2780,56 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						RPReaderNameText.setText("");
 
-						for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-							if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
-								RPReaderTypeText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("Description")) {
-								RPDescriptionText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ConnectionPoint")) {
-								RPConnectionPointCombo.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("NotificationPoint")) {
-								RPNotificationPointCombo.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReadTimeInterval")) {
-								RPReadTimeIntervalText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("AdaptorClass")) {
-								RPAdaptorClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ImplementationClass")) {
-								RPImplClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PhysicalReaderName")) {
-								RPPhysicalReaderNameText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PhysicalReaderSource")) {
-								RPPhysicalReaderSourceText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
+						for (int i = 0; i < lRSpec.getProperties()
+								.getProperty().size(); i++) {
+							if (lRSpec.getProperties().getProperty().get(i)
+									.getName().equals("ReaderType")) {
+								RPReaderTypeText.setText(lRSpec.getProperties()
+										.getProperty().get(i).getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("Description")) {
+								RPDescriptionText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("ConnectionPoint")) {
+								RPConnectionPointCombo.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"NotificationPoint")) {
+								RPNotificationPointCombo.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName()
+									.equals("ReadTimeInterval")) {
+								RPReadTimeIntervalText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("AdaptorClass")) {
+								RPAdaptorClassText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"ImplementationClass")) {
+								RPImplClassText.setText(lRSpec.getProperties()
+										.getProperty().get(i).getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"PhysicalReaderName")) {
+								RPPhysicalReaderNameText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"PhysicalReaderSource")) {
+								RPPhysicalReaderSourceText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
 							}
 						}
 
@@ -2440,8 +2840,13 @@ public class LogicalReaderEditorView extends ViewPart {
 						existingRPReaderFileToBeSaved = selection;
 					}
 					// if the xml file refers to a LLRP reader
-					else if (lRSpec.getProperties().getProperty().get(readerTypePropertyIndex).getValue().equals(
-							"org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor")) {
+					else if (lRSpec
+							.getProperties()
+							.getProperty()
+							.get(readerTypePropertyIndex)
+							.getValue()
+							.equals(
+									"org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor")) {
 						tabFolder.setSelection(lrspecLLRPTabItem);
 
 						resetLLRPReaderFields();
@@ -2450,42 +2855,78 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						LLRPReaderNameText.setText("");
 
-						for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-							if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
-								LLRPReaderTypeText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("Description")) {
-								LLRPDescriptionText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ConnectionPointAddress")) {
-								LLRPConnectionPointAddressText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ConnectionPointPort")) {
-								LLRPConnectionPointPortText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("EncryptedConnectionPointAddress")) {
-								LLRPEncryptedConnectionPointAddressText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("EncryptedConnectionPointPort")) {
-								LLRPEncryptedConnectionPointPortText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReadTimeInterval")) {
-								LLRPReadTimeIntervalText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("AdaptorClass")) {
-								LLRPAdaptorClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ImplementationClass")) {
-								LLRPImplClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PhysicalReaderSource")) {
-								LLRPPhysicalReaderSourceText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("DescriptiveReaderSource")) {
-								LLRPDescriptiveReaderSourceText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("RoSpecID")) {
-								LLRPReaderOperationSpecIDText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
+						for (int i = 0; i < lRSpec.getProperties()
+								.getProperty().size(); i++) {
+							if (lRSpec.getProperties().getProperty().get(i)
+									.getName().equals("ReaderType")) {
+								LLRPReaderTypeText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("Description")) {
+								LLRPDescriptionText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"ConnectionPointAddress")) {
+								LLRPConnectionPointAddressText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"ConnectionPointPort")) {
+								LLRPConnectionPointPortText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"EncryptedConnectionPointAddress")) {
+								LLRPEncryptedConnectionPointAddressText
+										.setText(lRSpec.getProperties()
+												.getProperty().get(i)
+												.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"EncryptedConnectionPointPort")) {
+								LLRPEncryptedConnectionPointPortText
+										.setText(lRSpec.getProperties()
+												.getProperty().get(i)
+												.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName()
+									.equals("ReadTimeInterval")) {
+								LLRPReadTimeIntervalText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("AdaptorClass")) {
+								LLRPAdaptorClassText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"ImplementationClass")) {
+								LLRPImplClassText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"PhysicalReaderSource")) {
+								LLRPPhysicalReaderSourceText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"DescriptiveReaderSource")) {
+								LLRPDescriptiveReaderSourceText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("RoSpecID")) {
+								LLRPReaderOperationSpecIDText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
 							}
 						}
 
@@ -2496,8 +2937,13 @@ public class LogicalReaderEditorView extends ViewPart {
 						existingLLRPReaderFileToBeSaved = selection;
 					}
 					// if the xml file refers to a Composite reader
-					else if (lRSpec.getProperties().getProperty().get(readerTypePropertyIndex).getValue().equals(
-							"org.ow2.aspirerfid.ale.server.readers.CompositeReader")) {
+					else if (lRSpec
+							.getProperties()
+							.getProperty()
+							.get(readerTypePropertyIndex)
+							.getValue()
+							.equals(
+									"org.ow2.aspirerfid.ale.server.readers.CompositeReader")) {
 						tabFolder.setSelection(lrspecCompositeTabItem);
 
 						resetCompositeReaderFields();
@@ -2505,16 +2951,24 @@ public class LogicalReaderEditorView extends ViewPart {
 						CompReaderNameText.setEnabled(false);
 						newReaderButton.setEnabled(true);
 
-						for (int i = 0; i < lRSpec.getReaders().getReader().size(); i++) {
-							lrspecIncludedReadersList.add(lRSpec.getReaders().getReader().get(i));
+						for (int i = 0; i < lRSpec.getReaders().getReader()
+								.size(); i++) {
+							lrspecIncludedReadersList.add(lRSpec.getReaders()
+									.getReader().get(i));
 						}
 
-						for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-							if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
-								CompReaderTypeText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("Description")) {
-								CompDescriptionText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
+						for (int i = 0; i < lRSpec.getProperties()
+								.getProperty().size(); i++) {
+							if (lRSpec.getProperties().getProperty().get(i)
+									.getName().equals("ReaderType")) {
+								CompReaderTypeText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("Description")) {
+								CompDescriptionText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
 							}
 						}
 
@@ -2525,18 +2979,23 @@ public class LogicalReaderEditorView extends ViewPart {
 						existingCompositeReaderFileToBeSaved = selection;
 					}
 
-				}
-				catch (Exception e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				// if the reader is static
-			}
-			else if (root.equals("LogicalReaders")) {
-				NodeList lrSpecNodeList = document.getElementsByTagName("LRSpec");
+			} else if (root.equals("LogicalReaders")) {
+				NodeList lrSpecNodeList = document
+						.getElementsByTagName("LRSpec");
 
 				if (lrSpecNodeList.getLength() == 1) {
-					if (lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue().equals("org.ow2.aspirerfid.ale.server.readers.hal.HALAdaptor")) {
+					if (lrSpecNodeList
+							.item(0)
+							.getAttributes()
+							.item(1)
+							.getNodeValue()
+							.equals(
+									"org.ow2.aspirerfid.ale.server.readers.hal.HALAdaptor")) {
 						tabFolder.setSelection(lrspecHALTabItem);
 
 						resetHALReaderFields();
@@ -2544,31 +3003,57 @@ public class LogicalReaderEditorView extends ViewPart {
 						HALReaderNameText.setEnabled(true);
 
 						// set reader name text
-						NodeList logicalReaderNodeList = document.getElementsByTagName("LogicalReader");
-						HALReaderNameText.setText(logicalReaderNodeList.item(0).getAttributes().item(0).getNodeValue());
+						NodeList logicalReaderNodeList = document
+								.getElementsByTagName("LogicalReader");
+						HALReaderNameText.setText(logicalReaderNodeList.item(0)
+								.getAttributes().item(0).getNodeValue());
 
-						HALReaderTypeText.setText(lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue());
+						HALReaderTypeText.setText(lrSpecNodeList.item(0)
+								.getAttributes().item(1).getNodeValue());
 
-						NodeList lrPropertyNodeList = document.getElementsByTagName("LRProperty");
+						NodeList lrPropertyNodeList = document
+								.getElementsByTagName("LRProperty");
 
 						for (int i = 0; i < lrPropertyNodeList.getLength(); i++) {
-							if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("Description")) {
-								HALDescriptionText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("AdaptorClass")) {
-								HALAdaptorClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PhysicalReaderName")) {
-								HALPhysicalReaderNameText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ReadTimeInterval")) {
-								HALReadTimeIntervalText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ReadPoints")) {
-								HALReadPointsText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PropertiesFile")) {
-								HALPropertiesFileText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
+							if (lrPropertyNodeList.item(i).getAttributes()
+									.item(0).getTextContent().equals(
+											"Description")) {
+								HALDescriptionText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("AdaptorClass")) {
+								HALAdaptorClassText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("PhysicalReaderName")) {
+								HALPhysicalReaderNameText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ReadTimeInterval")) {
+								HALReadTimeIntervalText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ReadPoints")) {
+								HALReadPointsText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("PropertiesFile")) {
+								HALPropertiesFileText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
 							}
 						}
 
@@ -2577,9 +3062,13 @@ public class LogicalReaderEditorView extends ViewPart {
 						HALReaderSaveButton.setEnabled(true);
 
 						existingHALReaderFileToBeSaved = selection;
-					}
-					else if (lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue().equals(
-							"org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor")) {
+					} else if (lrSpecNodeList
+							.item(0)
+							.getAttributes()
+							.item(1)
+							.getNodeValue()
+							.equals(
+									"org.ow2.aspirerfid.ale.server.readers.rp.RPAdaptor")) {
 						tabFolder.setSelection(lrspecRPTabItem);
 
 						resetRPReaderFields();
@@ -2587,37 +3076,71 @@ public class LogicalReaderEditorView extends ViewPart {
 						RPReaderNameText.setEnabled(true);
 
 						// set reader name text
-						NodeList logicalReaderNodeList = document.getElementsByTagName("LogicalReader");
-						RPReaderNameText.setText(logicalReaderNodeList.item(0).getAttributes().item(0).getNodeValue());
+						NodeList logicalReaderNodeList = document
+								.getElementsByTagName("LogicalReader");
+						RPReaderNameText.setText(logicalReaderNodeList.item(0)
+								.getAttributes().item(0).getNodeValue());
 
-						RPReaderTypeText.setText(lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue());
+						RPReaderTypeText.setText(lrSpecNodeList.item(0)
+								.getAttributes().item(1).getNodeValue());
 
-						NodeList lrPropertyNodeList = document.getElementsByTagName("LRProperty");
+						NodeList lrPropertyNodeList = document
+								.getElementsByTagName("LRProperty");
 
 						for (int i = 0; i < lrPropertyNodeList.getLength(); i++) {
-							if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("Description")) {
-								RPDescriptionText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ConnectionPoint")) {
-								RPConnectionPointCombo.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("NotificationPoint")) {
-								RPNotificationPointCombo.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ReadTimeInterval")) {
-								RPReadTimeIntervalText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("AdaptorClass")) {
-								RPAdaptorClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ImplementationClass")) {
-								RPImplClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PhysicalReaderName")) {
-								RPPhysicalReaderNameText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PhysicalReaderSource")) {
-								RPPhysicalReaderSourceText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
+							if (lrPropertyNodeList.item(i).getAttributes()
+									.item(0).getTextContent().equals(
+											"Description")) {
+								RPDescriptionText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ConnectionPoint")) {
+								RPConnectionPointCombo
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("NotificationPoint")) {
+								RPNotificationPointCombo
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ReadTimeInterval")) {
+								RPReadTimeIntervalText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("AdaptorClass")) {
+								RPAdaptorClassText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ImplementationClass")) {
+								RPImplClassText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("PhysicalReaderName")) {
+								RPPhysicalReaderNameText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("PhysicalReaderSource")) {
+								RPPhysicalReaderSourceText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
 							}
 						}
 
@@ -2626,9 +3149,13 @@ public class LogicalReaderEditorView extends ViewPart {
 						RPReaderSaveButton.setEnabled(true);
 
 						existingRPReaderFileToBeSaved = selection;
-					}
-					else if (lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue().equals(
-							"org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor")) {
+					} else if (lrSpecNodeList
+							.item(0)
+							.getAttributes()
+							.item(1)
+							.getNodeValue()
+							.equals(
+									"org.ow2.aspirerfid.ale.server.readers.llrp.LLRPAdaptor")) {
 						tabFolder.setSelection(lrspecLLRPTabItem);
 
 						resetLLRPReaderFields();
@@ -2636,46 +3163,93 @@ public class LogicalReaderEditorView extends ViewPart {
 						LLRPReaderNameText.setEnabled(true);
 
 						// set reader name text
-						NodeList logicalReaderNodeList = document.getElementsByTagName("LogicalReader");
-						LLRPReaderNameText.setText(logicalReaderNodeList.item(0).getAttributes().item(0).getNodeValue());
+						NodeList logicalReaderNodeList = document
+								.getElementsByTagName("LogicalReader");
+						LLRPReaderNameText
+								.setText(logicalReaderNodeList.item(0)
+										.getAttributes().item(0).getNodeValue());
 
-						LLRPReaderTypeText.setText(lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue());
+						LLRPReaderTypeText.setText(lrSpecNodeList.item(0)
+								.getAttributes().item(1).getNodeValue());
 
-						NodeList lrPropertyNodeList = document.getElementsByTagName("LRProperty");
+						NodeList lrPropertyNodeList = document
+								.getElementsByTagName("LRProperty");
 
 						for (int i = 0; i < lrPropertyNodeList.getLength(); i++) {
-							if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("Description")) {
-								LLRPDescriptionText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ConnectionPointAddress")) {
-								LLRPConnectionPointAddressText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ConnectionPointPort")) {
-								LLRPConnectionPointPortText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("EncryptedConnectionPointAddress")) {
-								LLRPEncryptedConnectionPointAddressText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("EncryptedConnectionPointPort")) {
-								LLRPEncryptedConnectionPointPortText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ReadTimeInterval")) {
-								LLRPReadTimeIntervalText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("AdaptorClass")) {
-								LLRPAdaptorClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ImplementationClass")) {
-								LLRPImplClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PhysicalReaderSource")) {
-								LLRPPhysicalReaderSourceText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("DescriptiveReaderSource")) {
-								LLRPDescriptiveReaderSourceText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-							}
-							else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("RoSpecID")) {
-								LLRPReaderOperationSpecIDText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
+							if (lrPropertyNodeList.item(i).getAttributes()
+									.item(0).getTextContent().equals(
+											"Description")) {
+								LLRPDescriptionText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ConnectionPointAddress")) {
+								LLRPConnectionPointAddressText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ConnectionPointPort")) {
+								LLRPConnectionPointPortText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("EncryptedConnectionPointAddress")) {
+								LLRPEncryptedConnectionPointAddressText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("EncryptedConnectionPointPort")) {
+								LLRPEncryptedConnectionPointPortText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ReadTimeInterval")) {
+								LLRPReadTimeIntervalText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("AdaptorClass")) {
+								LLRPAdaptorClassText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("ImplementationClass")) {
+								LLRPImplClassText.setText(lrPropertyNodeList
+										.item(i).getAttributes().item(1)
+										.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("PhysicalReaderSource")) {
+								LLRPPhysicalReaderSourceText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("DescriptiveReaderSource")) {
+								LLRPDescriptiveReaderSourceText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
+							} else if (lrPropertyNodeList.item(i)
+									.getAttributes().item(0).getTextContent()
+									.equals("RoSpecID")) {
+								LLRPReaderOperationSpecIDText
+										.setText(lrPropertyNodeList.item(i)
+												.getAttributes().item(1)
+												.getNodeValue());
 							}
 						}
 
@@ -2685,8 +3259,7 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						existingLLRPReaderFileToBeSaved = selection;
 					}
-				}
-				else {
+				} else {
 					tabFolder.setSelection(lrspecCompositeTabItem);
 
 					CompReaderNameText.setEnabled(true);
@@ -2694,18 +3267,27 @@ public class LogicalReaderEditorView extends ViewPart {
 
 					resetCompositeReaderFields();
 
-					NodeList logicalReaderNodeList = document.getElementsByTagName("LogicalReader");
-					CompReaderNameText.setText(logicalReaderNodeList.item(logicalReaderNodeList.getLength() - 1).getAttributes().item(0)
-							.getNodeValue());
+					NodeList logicalReaderNodeList = document
+							.getElementsByTagName("LogicalReader");
+					CompReaderNameText.setText(logicalReaderNodeList.item(
+							logicalReaderNodeList.getLength() - 1)
+							.getAttributes().item(0).getNodeValue());
 
-					CompReaderTypeText.setText(lrSpecNodeList.item(lrSpecNodeList.getLength() - 1).getAttributes().item(1).getNodeValue());
+					CompReaderTypeText.setText(lrSpecNodeList.item(
+							lrSpecNodeList.getLength() - 1).getAttributes()
+							.item(1).getNodeValue());
 
-					NodeList lrPropertyNodeList = document.getElementsByTagName("LRProperty");
-					CompDescriptionText.setText((lrPropertyNodeList.item(lrPropertyNodeList.getLength() - 1).getAttributes().item(1).getNodeValue()));
+					NodeList lrPropertyNodeList = document
+							.getElementsByTagName("LRProperty");
+					CompDescriptionText.setText((lrPropertyNodeList.item(
+							lrPropertyNodeList.getLength() - 1).getAttributes()
+							.item(1).getNodeValue()));
 
-					NodeList readersNodesList = document.getElementsByTagName("readers");
+					NodeList readersNodesList = document
+							.getElementsByTagName("readers");
 					for (int i = 0; i < readersNodesList.getLength(); i++) {
-						lrspecIncludedReadersList.add(readersNodesList.item(i).getTextContent());
+						lrspecIncludedReadersList.add(readersNodesList.item(i)
+								.getTextContent());
 					}
 
 					compFilterByCombo.setText("Static");
@@ -2734,12 +3316,14 @@ public class LogicalReaderEditorView extends ViewPart {
 			if (item != null) {
 				lrspectreeSelectedItem = item.getText();
 
-				if (lrspectreeSelectedItem.equals("HAL Readers") || lrspectreeSelectedItem.equals("RP Readers")
-						|| lrspectreeSelectedItem.equals("LLRP Readers") || lrspectreeSelectedItem.equals("Composite Readers")) {
+				if (lrspectreeSelectedItem.equals("HAL Readers")
+						|| lrspectreeSelectedItem.equals("RP Readers")
+						|| lrspectreeSelectedItem.equals("LLRP Readers")
+						|| lrspectreeSelectedItem.equals("Composite Readers")) {
 					return;
-				}
-				else {
-					lrspectreeSelectedItemParent = item.getParentItem().getText();
+				} else {
+					lrspectreeSelectedItemParent = item.getParentItem()
+							.getText();
 				}
 			}
 
@@ -2748,28 +3332,34 @@ public class LogicalReaderEditorView extends ViewPart {
 				// check if the file to be opened contains a static reader or a
 				// dynamic reader
 				try {
-					File selectedFile = new File(PreferenceConstants.P_HAL_LRSpecsPATH + lrspectreeSelectedItem);
+					File selectedFile = new File(
+							PreferenceConstants.P_HAL_LRSpecsPATH
+									+ lrspectreeSelectedItem);
 
 					if (selectedFile.exists()) {
-						documentBuilderFactory = DocumentBuilderFactory.newInstance();
-						documentBuilder = documentBuilderFactory.newDocumentBuilder();
+						documentBuilderFactory = DocumentBuilderFactory
+								.newInstance();
+						documentBuilder = documentBuilderFactory
+								.newDocumentBuilder();
 						document = documentBuilder.parse(selectedFile);
 						Node node = document.getDocumentElement();
 						root = node.getNodeName();
+					} else {
+						MessageDialog.openError(container.getShell(), "Error",
+								"File not found!");
 					}
-					else {
-						MessageDialog.openError(container.getShell(), "Error", "File not found!");
-					}
-				}
-				catch (Exception exc) {
-					MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+				} catch (Exception exc) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"DOM parser error!");
 				}
 
 				// Dynamic definition
 				if (root.equals("ns3:LRSpec")) {
 					try {
 						LRSpec lRSpec = new LRSpec();
-						lRSpec = openLrSpecBuilder.getLRSpecFromFile(PreferenceConstants.P_HAL_LRSpecsPATH + lrspectreeSelectedItem);
+						lRSpec = openLrSpecBuilder
+								.getLRSpecFromFile(PreferenceConstants.P_HAL_LRSpecsPATH
+										+ lrspectreeSelectedItem);
 
 						tabFolder.setSelection(lrspecHALTabItem);
 
@@ -2779,27 +3369,45 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						HALReaderNameText.setText("");
 
-						for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-							if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
-								HALReaderTypeText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("Description")) {
-								HALDescriptionText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("AdaptorClass")) {
-								HALAdaptorClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PhysicalReaderName")) {
-								HALPhysicalReaderNameText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReadTimeInterval")) {
-								HALReadTimeIntervalText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReadPoints")) {
-								HALReadPointsText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PropertiesFile")) {
-								HALPropertiesFileText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
+						for (int i = 0; i < lRSpec.getProperties()
+								.getProperty().size(); i++) {
+							if (lRSpec.getProperties().getProperty().get(i)
+									.getName().equals("ReaderType")) {
+								HALReaderTypeText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("Description")) {
+								HALDescriptionText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("AdaptorClass")) {
+								HALAdaptorClassText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"PhysicalReaderName")) {
+								HALPhysicalReaderNameText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName()
+									.equals("ReadTimeInterval")) {
+								HALReadTimeIntervalText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("ReadPoints")) {
+								HALReadPointsText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("PropertiesFile")) {
+								HALPropertiesFileText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
 							}
 						}
 
@@ -2807,9 +3415,9 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						HALReaderSaveButton.setEnabled(true);
 
-						existingHALReaderFileToBeSaved = PreferenceConstants.P_HAL_LRSpecsPATH + lrspectreeSelectedItem;
-					}
-					catch (Exception e1) {
+						existingHALReaderFileToBeSaved = PreferenceConstants.P_HAL_LRSpecsPATH
+								+ lrspectreeSelectedItem;
+					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -2822,34 +3430,56 @@ public class LogicalReaderEditorView extends ViewPart {
 
 					HALReaderNameText.setEnabled(true);
 
-					NodeList lrSpecNodeList = document.getElementsByTagName("LRSpec");
+					NodeList lrSpecNodeList = document
+							.getElementsByTagName("LRSpec");
 
 					// set reader name text
-					NodeList logicalReaderNodeList = document.getElementsByTagName("LogicalReader");
-					HALReaderNameText.setText(logicalReaderNodeList.item(0).getAttributes().item(0).getNodeValue());
+					NodeList logicalReaderNodeList = document
+							.getElementsByTagName("LogicalReader");
+					HALReaderNameText.setText(logicalReaderNodeList.item(0)
+							.getAttributes().item(0).getNodeValue());
 
-					HALReaderTypeText.setText(lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue());
+					HALReaderTypeText.setText(lrSpecNodeList.item(0)
+							.getAttributes().item(1).getNodeValue());
 
-					NodeList lrPropertyNodeList = document.getElementsByTagName("LRProperty");
+					NodeList lrPropertyNodeList = document
+							.getElementsByTagName("LRProperty");
 
 					for (int i = 0; i < lrPropertyNodeList.getLength(); i++) {
-						if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("Description")) {
-							HALDescriptionText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("AdaptorClass")) {
-							HALAdaptorClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PhysicalReaderName")) {
-							HALPhysicalReaderNameText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ReadTimeInterval")) {
-							HALReadTimeIntervalText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ReadPoints")) {
-							HALReadPointsText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PropertiesFile")) {
-							HALPropertiesFileText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
+						if (lrPropertyNodeList.item(i).getAttributes().item(0)
+								.getTextContent().equals("Description")) {
+							HALDescriptionText.setText(lrPropertyNodeList.item(
+									i).getAttributes().item(1).getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent()
+								.equals("AdaptorClass")) {
+							HALAdaptorClassText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"PhysicalReaderName")) {
+							HALPhysicalReaderNameText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"ReadTimeInterval")) {
+							HALReadTimeIntervalText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals("ReadPoints")) {
+							HALReadPointsText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"PropertiesFile")) {
+							HALPropertiesFileText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
 						}
 					}
 
@@ -2857,35 +3487,41 @@ public class LogicalReaderEditorView extends ViewPart {
 
 					HALReaderSaveButton.setEnabled(true);
 
-					existingHALReaderFileToBeSaved = PreferenceConstants.P_HAL_LRSpecsPATH + lrspectreeSelectedItem;
+					existingHALReaderFileToBeSaved = PreferenceConstants.P_HAL_LRSpecsPATH
+							+ lrspectreeSelectedItem;
 				}
-			}
-			else if (lrspectreeSelectedItemParent.equals("RP Readers")) {
+			} else if (lrspectreeSelectedItemParent.equals("RP Readers")) {
 
 				// check if the file to be opened contains a static reader or a
 				// dynamic reader
 				try {
-					File selectedFile = new File(PreferenceConstants.P_RP_LRSpecsPATH + lrspectreeSelectedItem);
+					File selectedFile = new File(
+							PreferenceConstants.P_RP_LRSpecsPATH
+									+ lrspectreeSelectedItem);
 
 					if (selectedFile.exists()) {
-						documentBuilderFactory = DocumentBuilderFactory.newInstance();
-						documentBuilder = documentBuilderFactory.newDocumentBuilder();
+						documentBuilderFactory = DocumentBuilderFactory
+								.newInstance();
+						documentBuilder = documentBuilderFactory
+								.newDocumentBuilder();
 						document = documentBuilder.parse(selectedFile);
 						Node node = document.getDocumentElement();
 						root = node.getNodeName();
+					} else {
+						MessageDialog.openError(container.getShell(), "Error",
+								"File not found!");
 					}
-					else {
-						MessageDialog.openError(container.getShell(), "Error", "File not found!");
-					}
-				}
-				catch (Exception exc) {
-					MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+				} catch (Exception exc) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"DOM parser error!");
 				}
 
 				if (root.equals("ns3:LRSpec")) {
 					try {
 						LRSpec lRSpec = new LRSpec();
-						lRSpec = openLrSpecBuilder.getLRSpecFromFile(PreferenceConstants.P_RP_LRSpecsPATH + lrspectreeSelectedItem);
+						lRSpec = openLrSpecBuilder
+								.getLRSpecFromFile(PreferenceConstants.P_RP_LRSpecsPATH
+										+ lrspectreeSelectedItem);
 
 						tabFolder.setSelection(lrspecRPTabItem);
 
@@ -2895,33 +3531,56 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						RPReaderNameText.setText("");
 
-						for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-							if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
-								RPReaderTypeText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("Description")) {
-								RPDescriptionText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ConnectionPoint")) {
-								RPConnectionPointCombo.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("NotificationPoint")) {
-								RPNotificationPointCombo.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReadTimeInterval")) {
-								RPReadTimeIntervalText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("AdaptorClass")) {
-								RPAdaptorClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ImplementationClass")) {
-								RPImplClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PhysicalReaderName")) {
-								RPPhysicalReaderNameText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PhysicalReaderSource")) {
-								RPPhysicalReaderSourceText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
+						for (int i = 0; i < lRSpec.getProperties()
+								.getProperty().size(); i++) {
+							if (lRSpec.getProperties().getProperty().get(i)
+									.getName().equals("ReaderType")) {
+								RPReaderTypeText.setText(lRSpec.getProperties()
+										.getProperty().get(i).getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("Description")) {
+								RPDescriptionText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("ConnectionPoint")) {
+								RPConnectionPointCombo.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"NotificationPoint")) {
+								RPNotificationPointCombo.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName()
+									.equals("ReadTimeInterval")) {
+								RPReadTimeIntervalText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("AdaptorClass")) {
+								RPAdaptorClassText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"ImplementationClass")) {
+								RPImplClassText.setText(lRSpec.getProperties()
+										.getProperty().get(i).getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"PhysicalReaderName")) {
+								RPPhysicalReaderNameText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"PhysicalReaderSource")) {
+								RPPhysicalReaderSourceText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
 							}
 						}
 
@@ -2929,54 +3588,81 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						RPReaderSaveButton.setEnabled(true);
 
-						existingRPReaderFileToBeSaved = PreferenceConstants.P_RP_LRSpecsPATH + lrspectreeSelectedItem;
-					}
-					catch (Exception e1) {
+						existingRPReaderFileToBeSaved = PreferenceConstants.P_RP_LRSpecsPATH
+								+ lrspectreeSelectedItem;
+					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-				else if (root.equals("LogicalReaders")) {
+				} else if (root.equals("LogicalReaders")) {
 					tabFolder.setSelection(lrspecRPTabItem);
 
 					resetRPReaderFields();
 
 					RPReaderNameText.setEnabled(true);
 
-					NodeList lrSpecNodeList = document.getElementsByTagName("LRSpec");
+					NodeList lrSpecNodeList = document
+							.getElementsByTagName("LRSpec");
 
 					// set reader name text
-					NodeList logicalReaderNodeList = document.getElementsByTagName("LogicalReader");
-					RPReaderNameText.setText(logicalReaderNodeList.item(0).getAttributes().item(0).getNodeValue());
+					NodeList logicalReaderNodeList = document
+							.getElementsByTagName("LogicalReader");
+					RPReaderNameText.setText(logicalReaderNodeList.item(0)
+							.getAttributes().item(0).getNodeValue());
 
-					RPReaderTypeText.setText(lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue());
+					RPReaderTypeText.setText(lrSpecNodeList.item(0)
+							.getAttributes().item(1).getNodeValue());
 
-					NodeList lrPropertyNodeList = document.getElementsByTagName("LRProperty");
+					NodeList lrPropertyNodeList = document
+							.getElementsByTagName("LRProperty");
 
 					for (int i = 0; i < lrPropertyNodeList.getLength(); i++) {
-						if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("Description")) {
-							RPDescriptionText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ConnectionPoint")) {
-							RPConnectionPointCombo.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("NotificationPoint")) {
-							RPNotificationPointCombo.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ReadTimeInterval")) {
-							RPReadTimeIntervalText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("AdaptorClass")) {
-							RPAdaptorClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ImplementationClass")) {
-							RPImplClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PhysicalReaderName")) {
-							RPPhysicalReaderNameText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PhysicalReaderSource")) {
-							RPPhysicalReaderSourceText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
+						if (lrPropertyNodeList.item(i).getAttributes().item(0)
+								.getTextContent().equals("Description")) {
+							RPDescriptionText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"ConnectionPoint")) {
+							RPConnectionPointCombo.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"NotificationPoint")) {
+							RPNotificationPointCombo.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"ReadTimeInterval")) {
+							RPReadTimeIntervalText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent()
+								.equals("AdaptorClass")) {
+							RPAdaptorClassText.setText(lrPropertyNodeList.item(
+									i).getAttributes().item(1).getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"ImplementationClass")) {
+							RPImplClassText.setText(lrPropertyNodeList.item(i)
+									.getAttributes().item(1).getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"PhysicalReaderName")) {
+							RPPhysicalReaderNameText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"PhysicalReaderSource")) {
+							RPPhysicalReaderSourceText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
 						}
 					}
 
@@ -2984,35 +3670,41 @@ public class LogicalReaderEditorView extends ViewPart {
 
 					RPReaderSaveButton.setEnabled(true);
 
-					existingRPReaderFileToBeSaved = PreferenceConstants.P_RP_LRSpecsPATH + lrspectreeSelectedItem;
+					existingRPReaderFileToBeSaved = PreferenceConstants.P_RP_LRSpecsPATH
+							+ lrspectreeSelectedItem;
 				}
-			}
-			else if (lrspectreeSelectedItemParent.equals("LLRP Readers")) {
+			} else if (lrspectreeSelectedItemParent.equals("LLRP Readers")) {
 
 				// check if the file to be opened contains a static reader or a
 				// dynamic reader
 				try {
-					File selectedFile = new File(PreferenceConstants.P_LLRP_LRSpecsPATH + lrspectreeSelectedItem);
+					File selectedFile = new File(
+							PreferenceConstants.P_LLRP_LRSpecsPATH
+									+ lrspectreeSelectedItem);
 
 					if (selectedFile.exists()) {
-						documentBuilderFactory = DocumentBuilderFactory.newInstance();
-						documentBuilder = documentBuilderFactory.newDocumentBuilder();
+						documentBuilderFactory = DocumentBuilderFactory
+								.newInstance();
+						documentBuilder = documentBuilderFactory
+								.newDocumentBuilder();
 						document = documentBuilder.parse(selectedFile);
 						Node node = document.getDocumentElement();
 						root = node.getNodeName();
+					} else {
+						MessageDialog.openError(container.getShell(), "Error",
+								"File not found!");
 					}
-					else {
-						MessageDialog.openError(container.getShell(), "Error", "File not found!");
-					}
-				}
-				catch (Exception exc) {
-					MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+				} catch (Exception exc) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"DOM parser error!");
 				}
 
 				if (root.equals("ns3:LRSpec")) {
 					try {
 						LRSpec lRSpec = new LRSpec();
-						lRSpec = openLrSpecBuilder.getLRSpecFromFile(PreferenceConstants.P_LLRP_LRSpecsPATH + lrspectreeSelectedItem);
+						lRSpec = openLrSpecBuilder
+								.getLRSpecFromFile(PreferenceConstants.P_LLRP_LRSpecsPATH
+										+ lrspectreeSelectedItem);
 
 						tabFolder.setSelection(lrspecLLRPTabItem);
 
@@ -3022,42 +3714,78 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						LLRPReaderNameText.setText("");
 
-						for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-							if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
-								LLRPReaderTypeText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("Description")) {
-								LLRPDescriptionText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ConnectionPointAddress")) {
-								LLRPConnectionPointAddressText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ConnectionPointPort")) {
-								LLRPConnectionPointPortText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("EncryptedConnectionPointAddress")) {
-								LLRPEncryptedConnectionPointAddressText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("EncryptedConnectionPointPort")) {
-								LLRPEncryptedConnectionPointPortText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReadTimeInterval")) {
-								LLRPReadTimeIntervalText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("AdaptorClass")) {
-								LLRPAdaptorClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("ImplementationClass")) {
-								LLRPImplClassText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("PhysicalReaderSource")) {
-								LLRPPhysicalReaderSourceText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("DescriptiveReaderSource")) {
-								LLRPDescriptiveReaderSourceText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("RoSpecID")) {
-								LLRPReaderOperationSpecIDText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
+						for (int i = 0; i < lRSpec.getProperties()
+								.getProperty().size(); i++) {
+							if (lRSpec.getProperties().getProperty().get(i)
+									.getName().equals("ReaderType")) {
+								LLRPReaderTypeText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("Description")) {
+								LLRPDescriptionText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"ConnectionPointAddress")) {
+								LLRPConnectionPointAddressText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"ConnectionPointPort")) {
+								LLRPConnectionPointPortText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"EncryptedConnectionPointAddress")) {
+								LLRPEncryptedConnectionPointAddressText
+										.setText(lRSpec.getProperties()
+												.getProperty().get(i)
+												.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"EncryptedConnectionPointPort")) {
+								LLRPEncryptedConnectionPointPortText
+										.setText(lRSpec.getProperties()
+												.getProperty().get(i)
+												.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName()
+									.equals("ReadTimeInterval")) {
+								LLRPReadTimeIntervalText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("AdaptorClass")) {
+								LLRPAdaptorClassText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"ImplementationClass")) {
+								LLRPImplClassText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"PhysicalReaderSource")) {
+								LLRPPhysicalReaderSourceText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals(
+											"DescriptiveReaderSource")) {
+								LLRPDescriptiveReaderSourceText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("RoSpecID")) {
+								LLRPReaderOperationSpecIDText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
 							}
 						}
 
@@ -3065,63 +3793,106 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						LLRPReaderSaveButton.setEnabled(true);
 
-						existingLLRPReaderFileToBeSaved = PreferenceConstants.P_LLRP_LRSpecsPATH + lrspectreeSelectedItem;
-					}
-					catch (Exception e1) {
+						existingLLRPReaderFileToBeSaved = PreferenceConstants.P_LLRP_LRSpecsPATH
+								+ lrspectreeSelectedItem;
+					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-				else if (root.equals("LogicalReaders")) {
+				} else if (root.equals("LogicalReaders")) {
 					tabFolder.setSelection(lrspecLLRPTabItem);
 
 					resetLLRPReaderFields();
 
 					LLRPReaderNameText.setEnabled(true);
 
-					NodeList lrSpecNodeList = document.getElementsByTagName("LRSpec");
+					NodeList lrSpecNodeList = document
+							.getElementsByTagName("LRSpec");
 
 					// set reader name text
-					NodeList logicalReaderNodeList = document.getElementsByTagName("LogicalReader");
-					LLRPReaderNameText.setText(logicalReaderNodeList.item(0).getAttributes().item(0).getNodeValue());
+					NodeList logicalReaderNodeList = document
+							.getElementsByTagName("LogicalReader");
+					LLRPReaderNameText.setText(logicalReaderNodeList.item(0)
+							.getAttributes().item(0).getNodeValue());
 
-					LLRPReaderTypeText.setText(lrSpecNodeList.item(0).getAttributes().item(1).getNodeValue());
+					LLRPReaderTypeText.setText(lrSpecNodeList.item(0)
+							.getAttributes().item(1).getNodeValue());
 
-					NodeList lrPropertyNodeList = document.getElementsByTagName("LRProperty");
+					NodeList lrPropertyNodeList = document
+							.getElementsByTagName("LRProperty");
 
 					for (int i = 0; i < lrPropertyNodeList.getLength(); i++) {
-						if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("Description")) {
-							LLRPDescriptionText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ConnectionPointAddress")) {
-							LLRPConnectionPointAddressText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ConnectionPointPort")) {
-							LLRPConnectionPointPortText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("EncryptedConnectionPointAddress")) {
-							LLRPEncryptedConnectionPointAddressText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("EncryptedConnectionPointPort")) {
-							LLRPEncryptedConnectionPointPortText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ReadTimeInterval")) {
-							LLRPReadTimeIntervalText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("AdaptorClass")) {
-							LLRPAdaptorClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("ImplementationClass")) {
-							LLRPImplClassText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("PhysicalReaderSource")) {
-							LLRPPhysicalReaderSourceText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("DescriptiveReaderSource")) {
-							LLRPDescriptiveReaderSourceText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
-						}
-						else if (lrPropertyNodeList.item(i).getAttributes().item(0).getTextContent().equals("RoSpecID")) {
-							LLRPReaderOperationSpecIDText.setText(lrPropertyNodeList.item(i).getAttributes().item(1).getNodeValue());
+						if (lrPropertyNodeList.item(i).getAttributes().item(0)
+								.getTextContent().equals("Description")) {
+							LLRPDescriptionText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"ConnectionPointAddress")) {
+							LLRPConnectionPointAddressText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"ConnectionPointPort")) {
+							LLRPConnectionPointPortText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"EncryptedConnectionPointAddress")) {
+							LLRPEncryptedConnectionPointAddressText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"EncryptedConnectionPointPort")) {
+							LLRPEncryptedConnectionPointPortText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"ReadTimeInterval")) {
+							LLRPReadTimeIntervalText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent()
+								.equals("AdaptorClass")) {
+							LLRPAdaptorClassText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"ImplementationClass")) {
+							LLRPImplClassText.setText(lrPropertyNodeList
+									.item(i).getAttributes().item(1)
+									.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"PhysicalReaderSource")) {
+							LLRPPhysicalReaderSourceText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals(
+										"DescriptiveReaderSource")) {
+							LLRPDescriptiveReaderSourceText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
+						} else if (lrPropertyNodeList.item(i).getAttributes()
+								.item(0).getTextContent().equals("RoSpecID")) {
+							LLRPReaderOperationSpecIDText
+									.setText(lrPropertyNodeList.item(i)
+											.getAttributes().item(1)
+											.getNodeValue());
 						}
 					}
 
@@ -3129,17 +3900,18 @@ public class LogicalReaderEditorView extends ViewPart {
 
 					LLRPReaderSaveButton.setEnabled(true);
 
-					existingLLRPReaderFileToBeSaved = PreferenceConstants.P_LLRP_LRSpecsPATH + lrspectreeSelectedItem;
+					existingLLRPReaderFileToBeSaved = PreferenceConstants.P_LLRP_LRSpecsPATH
+							+ lrspectreeSelectedItem;
 				}
-			}
-			else if (lrspectreeSelectedItemParent.equals("Composite Readers")) {
+			} else if (lrspectreeSelectedItemParent.equals("Composite Readers")) {
 				// reset fields
 				CompReaderNameText.setText("");
 				CompReaderTypeText.deselectAll();
 				CompDescriptionText.setText("");
 
 				for (int i = 0; i < lrspecIncludedReadersList.getItemCount(); i++) {
-					lrspecLogicalReadersList.add(lrspecIncludedReadersList.getItem(i));
+					lrspecLogicalReadersList.add(lrspecIncludedReadersList
+							.getItem(i));
 				}
 
 				lrspecIncludedReadersList.removeAll();
@@ -3148,28 +3920,34 @@ public class LogicalReaderEditorView extends ViewPart {
 				// check if the file to be opened contains a static reader or a
 				// dynamic reader
 				try {
-					File selectedFile = new File(PreferenceConstants.P_Composite_LRSpecsPATH + lrspectreeSelectedItem);
+					File selectedFile = new File(
+							PreferenceConstants.P_Composite_LRSpecsPATH
+									+ lrspectreeSelectedItem);
 
 					if (selectedFile.exists()) {
-						documentBuilderFactory = DocumentBuilderFactory.newInstance();
-						documentBuilder = documentBuilderFactory.newDocumentBuilder();
+						documentBuilderFactory = DocumentBuilderFactory
+								.newInstance();
+						documentBuilder = documentBuilderFactory
+								.newDocumentBuilder();
 						document = documentBuilder.parse(selectedFile);
 						Node node = document.getDocumentElement();
 						root = node.getNodeName();
+					} else {
+						MessageDialog.openError(container.getShell(), "Error",
+								"File not found!");
 					}
-					else {
-						MessageDialog.openError(container.getShell(), "Error", "File not found!");
-					}
-				}
-				catch (Exception exc) {
-					MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+				} catch (Exception exc) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"DOM parser error!");
 				}
 
 				if (root.equals("ns3:LRSpec")) {
 
 					try {
 						LRSpec lRSpec = new LRSpec();
-						lRSpec = openLrSpecBuilder.getLRSpecFromFile(PreferenceConstants.P_Composite_LRSpecsPATH + lrspectreeSelectedItem);
+						lRSpec = openLrSpecBuilder
+								.getLRSpecFromFile(PreferenceConstants.P_Composite_LRSpecsPATH
+										+ lrspectreeSelectedItem);
 
 						tabFolder.setSelection(lrspecCompositeTabItem);
 
@@ -3178,16 +3956,24 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						resetCompositeReaderFields();
 
-						for (int i = 0; i < lRSpec.getReaders().getReader().size(); i++) {
-							lrspecIncludedReadersList.add(lRSpec.getReaders().getReader().get(i));
+						for (int i = 0; i < lRSpec.getReaders().getReader()
+								.size(); i++) {
+							lrspecIncludedReadersList.add(lRSpec.getReaders()
+									.getReader().get(i));
 						}
 
-						for (int i = 0; i < lRSpec.getProperties().getProperty().size(); i++) {
-							if (lRSpec.getProperties().getProperty().get(i).getName().equals("ReaderType")) {
-								CompReaderTypeText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
-							}
-							else if (lRSpec.getProperties().getProperty().get(i).getName().equals("Description")) {
-								CompDescriptionText.setText(lRSpec.getProperties().getProperty().get(i).getValue());
+						for (int i = 0; i < lRSpec.getProperties()
+								.getProperty().size(); i++) {
+							if (lRSpec.getProperties().getProperty().get(i)
+									.getName().equals("ReaderType")) {
+								CompReaderTypeText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
+							} else if (lRSpec.getProperties().getProperty()
+									.get(i).getName().equals("Description")) {
+								CompDescriptionText.setText(lRSpec
+										.getProperties().getProperty().get(i)
+										.getValue());
 							}
 						}
 
@@ -3195,14 +3981,13 @@ public class LogicalReaderEditorView extends ViewPart {
 
 						CompReaderSaveButton.setEnabled(true);
 
-						existingCompositeReaderFileToBeSaved = PreferenceConstants.P_Composite_LRSpecsPATH + lrspectreeSelectedItem;
-					}
-					catch (Exception e1) {
+						existingCompositeReaderFileToBeSaved = PreferenceConstants.P_Composite_LRSpecsPATH
+								+ lrspectreeSelectedItem;
+					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-				else if (root.equals("LogicalReaders")) {
+				} else if (root.equals("LogicalReaders")) {
 
 					tabFolder.setSelection(lrspecCompositeTabItem);
 
@@ -3211,27 +3996,38 @@ public class LogicalReaderEditorView extends ViewPart {
 
 					resetCompositeReaderFields();
 
-					NodeList logicalReaderNodeList = document.getElementsByTagName("LogicalReader");
-					CompReaderNameText.setText(logicalReaderNodeList.item(logicalReaderNodeList.getLength() - 1).getAttributes().item(0)
-							.getNodeValue());
+					NodeList logicalReaderNodeList = document
+							.getElementsByTagName("LogicalReader");
+					CompReaderNameText.setText(logicalReaderNodeList.item(
+							logicalReaderNodeList.getLength() - 1)
+							.getAttributes().item(0).getNodeValue());
 
-					NodeList lrSpecNodeList = document.getElementsByTagName("LRSpec");
-					CompReaderTypeText.setText(lrSpecNodeList.item(lrSpecNodeList.getLength() - 1).getAttributes().item(1).getNodeValue());
+					NodeList lrSpecNodeList = document
+							.getElementsByTagName("LRSpec");
+					CompReaderTypeText.setText(lrSpecNodeList.item(
+							lrSpecNodeList.getLength() - 1).getAttributes()
+							.item(1).getNodeValue());
 
-					NodeList lrPropertyNodeList = document.getElementsByTagName("LRProperty");
-					CompDescriptionText.setText((lrPropertyNodeList.item(lrPropertyNodeList.getLength() - 1).getAttributes().item(1).getNodeValue()));
+					NodeList lrPropertyNodeList = document
+							.getElementsByTagName("LRProperty");
+					CompDescriptionText.setText((lrPropertyNodeList.item(
+							lrPropertyNodeList.getLength() - 1).getAttributes()
+							.item(1).getNodeValue()));
 
-					NodeList readersNodesList = document.getElementsByTagName("readers");
+					NodeList readersNodesList = document
+							.getElementsByTagName("readers");
 
 					for (int i = 0; i < readersNodesList.getLength(); i++) {
-						lrspecIncludedReadersList.add(readersNodesList.item(i).getTextContent());
+						lrspecIncludedReadersList.add(readersNodesList.item(i)
+								.getTextContent());
 					}
 
 					compFilterByCombo.setText("Static");
 
 					CompReaderSaveButton.setEnabled(true);
 
-					existingCompositeReaderFileToBeSaved = PreferenceConstants.P_Composite_LRSpecsPATH + lrspectreeSelectedItem;
+					existingCompositeReaderFileToBeSaved = PreferenceConstants.P_Composite_LRSpecsPATH
+							+ lrspectreeSelectedItem;
 				}
 			}
 
@@ -3257,26 +4053,31 @@ public class LogicalReaderEditorView extends ViewPart {
 				newReaderButton.setEnabled(false);
 
 				// HAL static readers
-				getStaticReaders(HALDirectoryContents, PreferenceConstants.P_HAL_LRSpecsPATH);
+				getStaticReaders(HALDirectoryContents,
+						PreferenceConstants.P_HAL_LRSpecsPATH);
 
 				// RP static readers
-				getStaticReaders(RPDirectoryContents, PreferenceConstants.P_RP_LRSpecsPATH);
+				getStaticReaders(RPDirectoryContents,
+						PreferenceConstants.P_RP_LRSpecsPATH);
 
 				// LLRP static readers
-				getStaticReaders(LLRPDirectoryContents, PreferenceConstants.P_LLRP_LRSpecsPATH);
+				getStaticReaders(LLRPDirectoryContents,
+						PreferenceConstants.P_LLRP_LRSpecsPATH);
 
 				if (lrspecIncludedReadersList.getItemCount() != 0) {
-					for (int i = 0; i < lrspecIncludedReadersList.getItemCount(); i++) {
-						for (int j = 0; j < lrspecLogicalReadersList.getItemCount(); j++) {
-							if (lrspecIncludedReadersList.getItem(i).equals(lrspecLogicalReadersList.getItem(j))) {
+					for (int i = 0; i < lrspecIncludedReadersList
+							.getItemCount(); i++) {
+						for (int j = 0; j < lrspecLogicalReadersList
+								.getItemCount(); j++) {
+							if (lrspecIncludedReadersList.getItem(i).equals(
+									lrspecLogicalReadersList.getItem(j))) {
 								lrspecLogicalReadersList.remove(j);
 							}
 						}
 					}
 				}
 
-			}
-			else if (filterByComboSelectedItem.equals("Dynamic")) {
+			} else if (filterByComboSelectedItem.equals("Dynamic")) {
 
 				CompReaderNameText.setEnabled(false);
 				newReaderButton.setEnabled(true);
@@ -3284,7 +4085,8 @@ public class LogicalReaderEditorView extends ViewPart {
 				// load values to available readers list
 				String dynamicReadersArray[] = {};
 
-				dynamicReadersArray = preferences.getString(PreferenceConstants.P_DynamicReaders).split(",");
+				dynamicReadersArray = preferences.getString(
+						PreferenceConstants.P_DynamicReaders).split(",");
 
 				lrspecLogicalReadersList.removeAll();
 				for (int i = 0; i < dynamicReadersArray.length; i++) {
@@ -3295,12 +4097,15 @@ public class LogicalReaderEditorView extends ViewPart {
 				if (exists("org.ow2.aspirerfid.ide.aleconfig.Activator")) {// added
 					// By
 					// nkef
-					IPreferenceStore lrspecConfigPreferences = org.ow2.aspirerfid.ide.aleconfig.Activator.getDefault().getPreferenceStore();
+					IPreferenceStore lrspecConfigPreferences = org.ow2.aspirerfid.ide.aleconfig.Activator
+							.getDefault().getPreferenceStore();
 
 					String readerNamesArray[] = {};
 
-					readerNamesArray = lrspecConfigPreferences.getString(
-							org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants.P_ReaderNames).split(",");
+					readerNamesArray = lrspecConfigPreferences
+							.getString(
+									org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants.P_ReaderNames)
+							.split(",");
 
 					for (int j = 0; j < readerNamesArray.length; j++) {
 						lrspecLogicalReadersList.add(readerNamesArray[j]);
@@ -3317,8 +4122,7 @@ public class LogicalReaderEditorView extends ViewPart {
 			Class.forName(className);
 			// Class.forName(className,false, null);
 			return true;
-		}
-		catch (ClassNotFoundException exception) {
+		} catch (ClassNotFoundException exception) {
 			return false;
 		}
 	}
@@ -3335,29 +4139,36 @@ public class LogicalReaderEditorView extends ViewPart {
 				if (directoryContents[i].getName().endsWith(".xml")) {
 
 					try {
-						File selectedFile = new File(readersPath + directoryContents[i].getName());
+						File selectedFile = new File(readersPath
+								+ directoryContents[i].getName());
 
 						if (selectedFile.exists()) {
-							documentBuilderFactory = DocumentBuilderFactory.newInstance();
-							documentBuilder = documentBuilderFactory.newDocumentBuilder();
+							documentBuilderFactory = DocumentBuilderFactory
+									.newInstance();
+							documentBuilder = documentBuilderFactory
+									.newDocumentBuilder();
 							document = documentBuilder.parse(selectedFile);
 							Node node = document.getDocumentElement();
 							root = node.getNodeName();
+						} else {
+							MessageDialog.openError(container.getShell(),
+									"Error", "File not found!");
 						}
-						else {
-							MessageDialog.openError(container.getShell(), "Error", "File not found!");
-						}
-					}
-					catch (Exception exc) {
-						MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+					} catch (Exception exc) {
+						MessageDialog.openError(container.getShell(), "Error",
+								"DOM parser error!");
 					}
 
 					if (root.equals("LogicalReaders")) {
-						NodeList lrSpecNodeList = document.getElementsByTagName("LogicalReader");
+						NodeList lrSpecNodeList = document
+								.getElementsByTagName("LogicalReader");
 
-						lrspecLogicalReadersList.add(lrSpecNodeList.item(0).getAttributes().item(0).getNodeValue());
+						lrspecLogicalReadersList.add(lrSpecNodeList.item(0)
+								.getAttributes().item(0).getNodeValue());
 
-						staticReadersHashMap.put(lrSpecNodeList.item(0).getAttributes().item(0).getNodeValue(), directoryContents[i].getName());
+						staticReadersHashMap.put(lrSpecNodeList.item(0)
+								.getAttributes().item(0).getNodeValue(),
+								directoryContents[i].getName());
 
 					}
 
@@ -3378,25 +4189,32 @@ public class LogicalReaderEditorView extends ViewPart {
 				if (directoryContents[i].getName().endsWith(".xml")) {
 
 					try {
-						File selectedFile = new File(readersPath + directoryContents[i].getName());
+						File selectedFile = new File(readersPath
+								+ directoryContents[i].getName());
 
 						if (selectedFile.exists()) {
-							documentBuilderFactory = DocumentBuilderFactory.newInstance();
-							documentBuilder = documentBuilderFactory.newDocumentBuilder();
+							documentBuilderFactory = DocumentBuilderFactory
+									.newInstance();
+							documentBuilder = documentBuilderFactory
+									.newDocumentBuilder();
 							document = documentBuilder.parse(selectedFile);
 							Node node = document.getDocumentElement();
 							root = node.getNodeName();
+						} else {
+							MessageDialog.openError(container.getShell(),
+									"Error", "File not found!");
 						}
-						else {
-							MessageDialog.openError(container.getShell(), "Error", "File not found!");
-						}
-					}
-					catch (Exception exc) {
-						MessageDialog.openError(container.getShell(), "Error", "DOM parser error!");
+					} catch (Exception exc) {
+						MessageDialog.openError(container.getShell(), "Error",
+								"DOM parser error!");
 					}
 
 					if (root.equals("ns3:LRSpec")) {
-						lrspecLogicalReadersList.add(directoryContents[i].getName().substring(0, directoryContents[i].getName().indexOf(".")));
+						lrspecLogicalReadersList.add(directoryContents[i]
+								.getName().substring(
+										0,
+										directoryContents[i].getName().indexOf(
+												".")));
 					}
 
 				}
@@ -3404,7 +4222,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class HALReadTimeIntervalTextVerifyListener implements VerifyListener {
+	private class HALReadTimeIntervalTextVerifyListener implements
+			VerifyListener {
 		public void verifyText(final VerifyEvent arg0) {
 			String string = arg0.text;
 			char[] chars = new char[string.length()];
@@ -3418,7 +4237,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class RPReadTimeIntervalTextVerifyListener implements VerifyListener {
+	private class RPReadTimeIntervalTextVerifyListener implements
+			VerifyListener {
 		public void verifyText(final VerifyEvent arg0) {
 			String string = arg0.text;
 			char[] chars = new char[string.length()];
@@ -3432,7 +4252,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class LLRPConnectionPointPortTextVerifyListener implements VerifyListener {
+	private class LLRPConnectionPointPortTextVerifyListener implements
+			VerifyListener {
 		public void verifyText(final VerifyEvent arg0) {
 			String string = arg0.text;
 			char[] chars = new char[string.length()];
@@ -3446,7 +4267,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class LLRPEncryptedConnectionPointPortTextVerifyListener implements VerifyListener {
+	private class LLRPEncryptedConnectionPointPortTextVerifyListener implements
+			VerifyListener {
 		public void verifyText(final VerifyEvent arg0) {
 			String string = arg0.text;
 			char[] chars = new char[string.length()];
@@ -3460,7 +4282,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class LLRPReadTimeIntervalTextVerifyListener implements VerifyListener {
+	private class LLRPReadTimeIntervalTextVerifyListener implements
+			VerifyListener {
 		public void verifyText(final VerifyEvent arg0) {
 			String string = arg0.text;
 			char[] chars = new char[string.length()];
@@ -3474,7 +4297,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class LLRPPhysicalReaderSourceTextVerifyListener implements VerifyListener {
+	private class LLRPPhysicalReaderSourceTextVerifyListener implements
+			VerifyListener {
 		public void verifyText(final VerifyEvent arg0) {
 			String string = arg0.text;
 			char[] chars = new char[string.length()];
@@ -3488,7 +4312,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class LLRPReaderOperationSpecIDTextVerifyListener implements VerifyListener {
+	private class LLRPReaderOperationSpecIDTextVerifyListener implements
+			VerifyListener {
 		public void verifyText(final VerifyEvent arg0) {
 			String string = arg0.text;
 			char[] chars = new char[string.length()];
@@ -3508,7 +4333,8 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class HALBrowsePropertiesFileButtonMouseListener extends MouseAdapter {
+	private class HALBrowsePropertiesFileButtonMouseListener extends
+			MouseAdapter {
 		public void mouseDown(final MouseEvent e) {
 			FileDialog fd;
 
@@ -3531,13 +4357,17 @@ public class LogicalReaderEditorView extends ViewPart {
 
 			// Dynamic definition
 			if (HALStaticDefinitionCheck.getSelection() == false) {
-				if (HALReaderTypeText.getText().equals("") || HALDescriptionText.getText().equals("") || HALAdaptorClassText.getText().equals("")
-						|| HALPhysicalReaderNameText.getText().equals("") || HALReadTimeIntervalText.getText().equals("")
-						|| HALReadPointsText.getText().equals("") || HALPropertiesFileText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All property fields are mandatory!");
+				if (HALReaderTypeText.getText().equals("")
+						|| HALDescriptionText.getText().equals("")
+						|| HALAdaptorClassText.getText().equals("")
+						|| HALPhysicalReaderNameText.getText().equals("")
+						|| HALReadTimeIntervalText.getText().equals("")
+						|| HALReadPointsText.getText().equals("")
+						|| HALPropertiesFileText.getText().equals("")) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"All property fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (HAL Reader)
 					halLrSpecBuilder.setIsComposite(false);
 
@@ -3547,50 +4377,57 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = HALReaderTypeText.getText();
 
-					halLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = HALDescriptionText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = HALAdaptorClassText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader name property
 					propertyName = "PhysicalReaderName";
 					propertyValue = HALPhysicalReaderNameText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = HALReadTimeIntervalText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read points property
 					propertyName = "ReadPoints";
 					propertyValue = HALReadPointsText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Properties file property
 					propertyName = "PropertiesFile";
 					propertyValue = HALPropertiesFileText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					try {
-						halLrSpecBuilder.generateXml(existingHALReaderFileToBeSaved);
+						halLrSpecBuilder
+								.generateXml(existingHALReaderFileToBeSaved);
 
 						resetHALReaderFields();
-					}
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -3598,19 +4435,24 @@ public class LogicalReaderEditorView extends ViewPart {
 			}
 			// Static definition
 			else {
-				if (HALReaderNameText.getText().equals("") || HALReaderTypeText.getText().equals("") || HALDescriptionText.getText().equals("")
-						|| HALAdaptorClassText.getText().equals("") || HALPhysicalReaderNameText.getText().equals("")
-						|| HALReadTimeIntervalText.getText().equals("") || HALReadPointsText.getText().equals("")
+				if (HALReaderNameText.getText().equals("")
+						|| HALReaderTypeText.getText().equals("")
+						|| HALDescriptionText.getText().equals("")
+						|| HALAdaptorClassText.getText().equals("")
+						|| HALPhysicalReaderNameText.getText().equals("")
+						|| HALReadTimeIntervalText.getText().equals("")
+						|| HALReadPointsText.getText().equals("")
 						|| HALPropertiesFileText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All fields are mandatory!");
+					MessageDialog.openError(container.getShell(), "Error",
+							"All fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (HAL Reader)
 					halLrSpecBuilder.setIsComposite(false);
 
 					// set Logical Reader Name
-					halLrSpecBuilder.setLogicalReaders(HALReaderNameText.getText());
+					halLrSpecBuilder.setLogicalReaders(HALReaderNameText
+							.getText());
 
 					// set HAL properties
 
@@ -3618,46 +4460,54 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = HALReaderTypeText.getText();
 
-					halLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = HALDescriptionText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = HALAdaptorClassText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader name property
 					propertyName = "PhysicalReaderName";
 					propertyValue = HALPhysicalReaderNameText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = HALReadTimeIntervalText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read points property
 					propertyName = "ReadPoints";
 					propertyValue = HALReadPointsText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Properties file property
 					propertyName = "PropertiesFile";
 					propertyValue = HALPropertiesFileText.getText();
 
-					halLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					halLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// generate HAL Reader Static Definition XML
-					generateHALReaderStaticDefinitionXML(halLrSpecBuilder, existingHALReaderFileToBeSaved);
+					generateHALReaderStaticDefinitionXML(halLrSpecBuilder,
+							existingHALReaderFileToBeSaved);
 
 					resetHALReaderFields();
 				}
@@ -3675,14 +4525,19 @@ public class LogicalReaderEditorView extends ViewPart {
 
 			// Dynamic definition
 			if (RPStaticDefinitionCheck.getSelection() == false) {
-				if (RPReaderTypeText.getText().equals("") || RPDescriptionText.getText().equals("") || RPConnectionPointCombo.getText().equals("")
-						|| RPNotificationPointCombo.getText().equals("") || RPReadTimeIntervalText.getText().equals("")
-						|| RPAdaptorClassText.getText().equals("") || RPImplClassText.getText().equals("")
-						|| RPPhysicalReaderNameText.getText().equals("") || RPPhysicalReaderSourceText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All property fields are mandatory!");
+				if (RPReaderTypeText.getText().equals("")
+						|| RPDescriptionText.getText().equals("")
+						|| RPConnectionPointCombo.getText().equals("")
+						|| RPNotificationPointCombo.getText().equals("")
+						|| RPReadTimeIntervalText.getText().equals("")
+						|| RPAdaptorClassText.getText().equals("")
+						|| RPImplClassText.getText().equals("")
+						|| RPPhysicalReaderNameText.getText().equals("")
+						|| RPPhysicalReaderSourceText.getText().equals("")) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"All property fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (RP Reader)
 					rpLrSpecBuilder.setIsComposite(false);
 
@@ -3692,85 +4547,100 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = RPReaderTypeText.getText();
 
-					rpLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = RPDescriptionText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point property
 					propertyName = "ConnectionPoint";
 					propertyValue = RPConnectionPointCombo.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Notification point property
 					propertyName = "NotificationPoint";
 					propertyValue = RPNotificationPointCombo.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = RPReadTimeIntervalText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = RPAdaptorClassText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Implementation class property
 					propertyName = "ImplementationClass";
 					propertyValue = RPImplClassText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader name property
 					propertyName = "PhysicalReaderName";
 					propertyValue = RPPhysicalReaderNameText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader source property
 					propertyName = "PhysicalReaderSource";
 					propertyValue = RPPhysicalReaderSourceText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					try {
-						rpLrSpecBuilder.generateXml(existingRPReaderFileToBeSaved);
+						rpLrSpecBuilder
+								.generateXml(existingRPReaderFileToBeSaved);
 
 						addNewConnectionPointValueIfNotPresent();
 						addNewNotificationPointValueIfNotPresent();
-						
+
 						resetRPReaderFields();
-					}
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			} // Static definition
 			else {
-				if (RPReaderNameText.getText().equals("") || RPReaderTypeText.getText().equals("") || RPDescriptionText.getText().equals("")
-						|| RPConnectionPointCombo.getText().equals("") || RPNotificationPointCombo.getText().equals("")
-						|| RPReadTimeIntervalText.getText().equals("") || RPAdaptorClassText.getText().equals("")
-						|| RPImplClassText.getText().equals("") || RPPhysicalReaderNameText.getText().equals("")
+				if (RPReaderNameText.getText().equals("")
+						|| RPReaderTypeText.getText().equals("")
+						|| RPDescriptionText.getText().equals("")
+						|| RPConnectionPointCombo.getText().equals("")
+						|| RPNotificationPointCombo.getText().equals("")
+						|| RPReadTimeIntervalText.getText().equals("")
+						|| RPAdaptorClassText.getText().equals("")
+						|| RPImplClassText.getText().equals("")
+						|| RPPhysicalReaderNameText.getText().equals("")
 						|| RPPhysicalReaderSourceText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All fields are mandatory!");
+					MessageDialog.openError(container.getShell(), "Error",
+							"All fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (RP Reader)
 					rpLrSpecBuilder.setIsComposite(false);
 
 					// set Logical Reader Name
-					rpLrSpecBuilder.setLogicalReaders(RPReaderNameText.getText());
+					rpLrSpecBuilder.setLogicalReaders(RPReaderNameText
+							.getText());
 
 					// set RP properties
 
@@ -3778,62 +4648,72 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = RPReaderTypeText.getText();
 
-					rpLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = RPDescriptionText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point property
 					propertyName = "ConnectionPoint";
 					propertyValue = RPConnectionPointCombo.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Notification point property
 					propertyName = "NotificationPoint";
 					propertyValue = RPNotificationPointCombo.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = RPReadTimeIntervalText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = RPAdaptorClassText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Implementation class property
 					propertyName = "ImplementationClass";
 					propertyValue = RPImplClassText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader name property
 					propertyName = "PhysicalReaderName";
 					propertyValue = RPPhysicalReaderNameText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader source property
 					propertyName = "PhysicalReaderSource";
 					propertyValue = RPPhysicalReaderSourceText.getText();
 
-					rpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					rpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// generate RP Reader Static Definition XML
-					generateRPReaderStaticDefinitionXML(rpLrSpecBuilder, existingRPReaderFileToBeSaved);
+					generateRPReaderStaticDefinitionXML(rpLrSpecBuilder,
+							existingRPReaderFileToBeSaved);
 
 					addNewConnectionPointValueIfNotPresent();
 					addNewNotificationPointValueIfNotPresent();
-					
+
 					resetRPReaderFields();
 				}
 			}
@@ -3850,16 +4730,24 @@ public class LogicalReaderEditorView extends ViewPart {
 			llrpLrSpecBuilder = new LRSpecBuilder();
 
 			if (LLRPStaticDefinitionCheck.getSelection() == false) {
-				if (LLRPReaderTypeText.getText().equals("") || LLRPDescriptionText.getText().equals("")
-						|| LLRPConnectionPointAddressText.getText().equals("") || LLRPConnectionPointPortText.getText().equals("")
-						|| LLRPEncryptedConnectionPointAddressText.getText().equals("") || LLRPEncryptedConnectionPointPortText.getText().equals("")
-						|| LLRPReadTimeIntervalText.getText().equals("") || LLRPAdaptorClassText.getText().equals("")
-						|| LLRPImplClassText.getText().equals("") || LLRPPhysicalReaderSourceText.getText().equals("")
-						|| LLRPDescriptiveReaderSourceText.getText().equals("") || LLRPReaderOperationSpecIDText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All property fields are mandatory!");
+				if (LLRPReaderTypeText.getText().equals("")
+						|| LLRPDescriptionText.getText().equals("")
+						|| LLRPConnectionPointAddressText.getText().equals("")
+						|| LLRPConnectionPointPortText.getText().equals("")
+						|| LLRPEncryptedConnectionPointAddressText.getText()
+								.equals("")
+						|| LLRPEncryptedConnectionPointPortText.getText()
+								.equals("")
+						|| LLRPReadTimeIntervalText.getText().equals("")
+						|| LLRPAdaptorClassText.getText().equals("")
+						|| LLRPImplClassText.getText().equals("")
+						|| LLRPPhysicalReaderSourceText.getText().equals("")
+						|| LLRPDescriptiveReaderSourceText.getText().equals("")
+						|| LLRPReaderOperationSpecIDText.getText().equals("")) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"All property fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (RP Reader)
 					llrpLrSpecBuilder.setIsComposite(false);
 
@@ -3869,101 +4757,124 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = LLRPReaderTypeText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = LLRPDescriptionText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point address property
 					propertyName = "ConnectionPointAddress";
 					propertyValue = LLRPConnectionPointAddressText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point port property
 					propertyName = "ConnectionPointPort";
 					propertyValue = LLRPConnectionPointPortText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Encrypted connection point address property
 					propertyName = "EncryptedConnectionPointAddress";
-					propertyValue = LLRPEncryptedConnectionPointAddressText.getText();
+					propertyValue = LLRPEncryptedConnectionPointAddressText
+							.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Encrypted connection point port property
 					propertyName = "EncryptedConnectionPointPort";
-					propertyValue = LLRPEncryptedConnectionPointPortText.getText();
+					propertyValue = LLRPEncryptedConnectionPointPortText
+							.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = LLRPReadTimeIntervalText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = LLRPAdaptorClassText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Implementation class property
 					propertyName = "ImplementationClass";
 					propertyValue = LLRPImplClassText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader source property
 					propertyName = "PhysicalReaderSource";
 					propertyValue = LLRPPhysicalReaderSourceText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Descriptive Reader source property
 					propertyName = "DescriptiveReaderSource";
 					propertyValue = LLRPDescriptiveReaderSourceText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Reader Operation Spec ID property
 					propertyName = "RoSpecID";
 					propertyValue = LLRPReaderOperationSpecIDText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					try {
-						llrpLrSpecBuilder.generateXml(existingLLRPReaderFileToBeSaved);
+						llrpLrSpecBuilder
+								.generateXml(existingLLRPReaderFileToBeSaved);
 
 						resetLLRPReaderFields();
-					}
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-			}
-			else {
-				if (LLRPReaderNameText.getText().equals("") || LLRPReaderTypeText.getText().equals("") || LLRPDescriptionText.getText().equals("")
-						|| LLRPConnectionPointAddressText.getText().equals("") || LLRPConnectionPointPortText.getText().equals("")
-						|| LLRPEncryptedConnectionPointAddressText.getText().equals("") || LLRPEncryptedConnectionPointPortText.getText().equals("")
-						|| LLRPReadTimeIntervalText.getText().equals("") || LLRPAdaptorClassText.getText().equals("")
-						|| LLRPImplClassText.getText().equals("") || LLRPPhysicalReaderSourceText.getText().equals("")
-						|| LLRPDescriptiveReaderSourceText.getText().equals("") || LLRPReaderOperationSpecIDText.getText().equals("")) {
-					MessageDialog.openError(container.getShell(), "Error", "All fields are mandatory!");
+			} else {
+				if (LLRPReaderNameText.getText().equals("")
+						|| LLRPReaderTypeText.getText().equals("")
+						|| LLRPDescriptionText.getText().equals("")
+						|| LLRPConnectionPointAddressText.getText().equals("")
+						|| LLRPConnectionPointPortText.getText().equals("")
+						|| LLRPEncryptedConnectionPointAddressText.getText()
+								.equals("")
+						|| LLRPEncryptedConnectionPointPortText.getText()
+								.equals("")
+						|| LLRPReadTimeIntervalText.getText().equals("")
+						|| LLRPAdaptorClassText.getText().equals("")
+						|| LLRPImplClassText.getText().equals("")
+						|| LLRPPhysicalReaderSourceText.getText().equals("")
+						|| LLRPDescriptiveReaderSourceText.getText().equals("")
+						|| LLRPReaderOperationSpecIDText.getText().equals("")) {
+					MessageDialog.openError(container.getShell(), "Error",
+							"All fields are mandatory!");
 
-				}
-				else {
+				} else {
 					// set isComposite to false (RP Reader)
 					llrpLrSpecBuilder.setIsComposite(false);
 
 					// set Logical Reader Name
-					llrpLrSpecBuilder.setLogicalReaders(LLRPReaderNameText.getText());
+					llrpLrSpecBuilder.setLogicalReaders(LLRPReaderNameText
+							.getText());
 
 					// set LLRP properties
 
@@ -3971,76 +4882,91 @@ public class LogicalReaderEditorView extends ViewPart {
 					propertyName = "ReaderType";
 					propertyValue = LLRPReaderTypeText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(index, propertyName,
+							propertyValue);
 
 					// set Description property
 					propertyName = "Description";
 					propertyValue = LLRPDescriptionText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point address property
 					propertyName = "ConnectionPointAddress";
 					propertyValue = LLRPConnectionPointAddressText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Connection point port property
 					propertyName = "ConnectionPointPort";
 					propertyValue = LLRPConnectionPointPortText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Encrypted connection point address property
 					propertyName = "EncryptedConnectionPointAddress";
-					propertyValue = LLRPEncryptedConnectionPointAddressText.getText();
+					propertyValue = LLRPEncryptedConnectionPointAddressText
+							.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Encrypted connection point port property
 					propertyName = "EncryptedConnectionPointPort";
-					propertyValue = LLRPEncryptedConnectionPointPortText.getText();
+					propertyValue = LLRPEncryptedConnectionPointPortText
+							.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Read time interval property
 					propertyName = "ReadTimeInterval";
 					propertyValue = LLRPReadTimeIntervalText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Adaptor class property
 					propertyName = "AdaptorClass";
 					propertyValue = LLRPAdaptorClassText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Implementation class property
 					propertyName = "ImplementationClass";
 					propertyValue = LLRPImplClassText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Physical reader source property
 					propertyName = "PhysicalReaderSource";
 					propertyValue = LLRPPhysicalReaderSourceText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Descriptive Reader source property
 					propertyName = "DescriptiveReaderSource";
 					propertyValue = LLRPDescriptiveReaderSourceText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// set Reader Operation Spec ID property
 					propertyName = "RoSpecID";
 					propertyValue = LLRPReaderOperationSpecIDText.getText();
 
-					llrpLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+					llrpLrSpecBuilder.setLRProperty(++index, propertyName,
+							propertyValue);
 
 					// generate LLRP Reader Static Definition XML
-					generateLLRPReaderStaticDefinitionXML(llrpLrSpecBuilder, existingLLRPReaderFileToBeSaved);
+					generateLLRPReaderStaticDefinitionXML(llrpLrSpecBuilder,
+							existingLLRPReaderFileToBeSaved);
 
 					resetLLRPReaderFields();
 				}
@@ -4057,19 +4983,20 @@ public class LogicalReaderEditorView extends ViewPart {
 			String propertyValue = "";
 			compositeLrSpecBuilder = new LRSpecBuilder();
 
-			if (CompDescriptionText.getText().equals("") || CompReaderTypeText.getText().equals("")) {
-				MessageDialog.openError(container.getShell(), "Error", "All fields are mandatory!");
+			if (CompDescriptionText.getText().equals("")
+					|| CompReaderTypeText.getText().equals("")) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"All fields are mandatory!");
 
-			}
-			else if (lrspecIncludedReadersList.getItemCount() == 0) {
-				MessageDialog.openError(container.getShell(), "Error", "No reader has been selected!");
+			} else if (lrspecIncludedReadersList.getItemCount() == 0) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"No reader has been selected!");
 
-			}
-			else if (lrspecIncludedReadersList.getItemCount() < 2) {
-				MessageDialog.openError(container.getShell(), "Error", "At least two readers should be selected!");
+			} else if (lrspecIncludedReadersList.getItemCount() < 2) {
+				MessageDialog.openError(container.getShell(), "Error",
+						"At least two readers should be selected!");
 
-			}
-			else {
+			} else {
 				// set isComposite to true (Composite Reader)
 				compositeLrSpecBuilder.setIsComposite(true);
 
@@ -4079,34 +5006,39 @@ public class LogicalReaderEditorView extends ViewPart {
 				propertyName = "ReaderType";
 				propertyValue = CompReaderTypeText.getText();
 
-				compositeLrSpecBuilder.setLRProperty(index, propertyName, propertyValue);
+				compositeLrSpecBuilder.setLRProperty(index, propertyName,
+						propertyValue);
 
 				// set Description property
 				propertyName = "Description";
 				propertyValue = CompDescriptionText.getText();
 
-				compositeLrSpecBuilder.setLRProperty(++index, propertyName, propertyValue);
+				compositeLrSpecBuilder.setLRProperty(++index, propertyName,
+						propertyValue);
 
 				// set list of logical readers to compositeLrSpecBuilder
 				for (int i = 0; i < lrspecIncludedReadersList.getItemCount(); i++) {
-					compositeLrSpecBuilder.setLogicalReaders(lrspecIncludedReadersList.getItem(i));
+					compositeLrSpecBuilder
+							.setLogicalReaders(lrspecIncludedReadersList
+									.getItem(i));
 				}
 
 				if (filterByComboSelectedItem.equals("Dynamic")) {
 
 					try {
-						compositeLrSpecBuilder.generateXml(existingCompositeReaderFileToBeSaved);
+						compositeLrSpecBuilder
+								.generateXml(existingCompositeReaderFileToBeSaved);
 
 						resetCompositeReaderFields();
-					}
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
-				else if (filterByComboSelectedItem.equals("Static")) {
+				} else if (filterByComboSelectedItem.equals("Static")) {
 
-					generateCompositeReaderStaticDefinitionXML(compositeLrSpecBuilder, existingCompositeReaderFileToBeSaved);
+					generateCompositeReaderStaticDefinitionXML(
+							compositeLrSpecBuilder,
+							existingCompositeReaderFileToBeSaved);
 
 					resetCompositeReaderFields();
 				}
@@ -4115,34 +5047,34 @@ public class LogicalReaderEditorView extends ViewPart {
 		}
 	}
 
-	private class HALStaticDefinitionCheckSelectionListener extends SelectionAdapter {
+	private class HALStaticDefinitionCheckSelectionListener extends
+			SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			if (HALStaticDefinitionCheck.getSelection() == true) {
 				HALReaderNameText.setEnabled(true);
-			}
-			else {
+			} else {
 				HALReaderNameText.setEnabled(false);
 			}
 		}
 	}
 
-	private class RPStaticDefinitionCheckSelectionListener extends SelectionAdapter {
+	private class RPStaticDefinitionCheckSelectionListener extends
+			SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			if (RPStaticDefinitionCheck.getSelection() == true) {
 				RPReaderNameText.setEnabled(true);
-			}
-			else {
+			} else {
 				RPReaderNameText.setEnabled(false);
 			}
 		}
 	}
 
-	private class LLRPStaticDefinitionCheckSelectionListener extends SelectionAdapter {
+	private class LLRPStaticDefinitionCheckSelectionListener extends
+			SelectionAdapter {
 		public void widgetSelected(final SelectionEvent e) {
 			if (LLRPStaticDefinitionCheck.getSelection() == true) {
 				LLRPReaderNameText.setEnabled(true);
-			}
-			else {
+			} else {
 				LLRPReaderNameText.setEnabled(false);
 			}
 		}
@@ -4166,9 +5098,9 @@ public class LogicalReaderEditorView extends ViewPart {
 				if (found == false) {
 					lrspecLogicalReadersList.add(input);
 
-				}
-				else {
-					MessageDialog.openError(container.getShell(), "Error", "Reader already exists! Please try again!");
+				} else {
+					MessageDialog.openError(container.getShell(), "Error",
+							"Reader already exists! Please try again!");
 				}
 
 				// check if plug-in exists and if so, add dynamic reader to
@@ -4176,13 +5108,16 @@ public class LogicalReaderEditorView extends ViewPart {
 				// exist
 				if (exists("org.ow2.aspirerfid.ide.aleconfig.Activator")) {
 					if (findLRSpecConfiguratorView() != null) {
-						IPreferenceStore lrspecConfigPreferences = org.ow2.aspirerfid.ide.aleconfig.Activator.getDefault().getPreferenceStore();
+						IPreferenceStore lrspecConfigPreferences = org.ow2.aspirerfid.ide.aleconfig.Activator
+								.getDefault().getPreferenceStore();
 						String readerNamesArray[] = {};
 						String readerNames = "";
 						boolean exists = false;
 
-						readerNamesArray = lrspecConfigPreferences.getString(
-								org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants.P_ReaderNames).split(",");
+						readerNamesArray = lrspecConfigPreferences
+								.getString(
+										org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants.P_ReaderNames)
+								.split(",");
 
 						for (int i = 0; i < readerNamesArray.length; i++) {
 							if (input.equals(readerNamesArray[i])) {
@@ -4197,8 +5132,10 @@ public class LogicalReaderEditorView extends ViewPart {
 
 							readerNames = readerNames + "," + input;
 
-							lrspecConfigPreferences.setValue(org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants.P_ReaderNames,
-									readerNames);
+							lrspecConfigPreferences
+									.setValue(
+											org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants.P_ReaderNames,
+											readerNames);
 						}
 					}
 				}
@@ -4212,7 +5149,8 @@ public class LogicalReaderEditorView extends ViewPart {
 
 			for (int i = 0; i < PlatformUI.getWorkbench().getWorkbenchWindows().length; i++) {
 
-				IWorkbenchWindow iWorkbenchWindow = PlatformUI.getWorkbench().getWorkbenchWindows()[i];
+				IWorkbenchWindow iWorkbenchWindow = PlatformUI.getWorkbench()
+						.getWorkbenchWindows()[i];
 
 				for (int j = 0; j < iWorkbenchWindow.getPages().length; j++) {
 
@@ -4220,9 +5158,11 @@ public class LogicalReaderEditorView extends ViewPart {
 
 					for (int k = 0; k < iWorkbenchPage.getViewReferences().length; k++) {
 
-						if (iWorkbenchPage.getViewReferences()[k].getId().equals(LRSpecConfiguratorView.ID)) {
+						if (iWorkbenchPage.getViewReferences()[k].getId()
+								.equals(LRSpecConfiguratorView.ID)) {
 
-							return (LRSpecConfiguratorView) iWorkbenchPage.getViewReferences()[k].getView(false);
+							return (LRSpecConfiguratorView) iWorkbenchPage
+									.getViewReferences()[k].getView(false);
 						}
 
 					}

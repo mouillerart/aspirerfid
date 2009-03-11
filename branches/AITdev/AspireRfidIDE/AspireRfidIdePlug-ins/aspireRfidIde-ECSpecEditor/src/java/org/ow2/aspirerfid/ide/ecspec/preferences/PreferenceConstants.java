@@ -27,9 +27,9 @@ package org.ow2.aspirerfid.ide.ecspec.preferences;
  */
 public class PreferenceConstants {
 
-	public static final String P_ECSpecsPATH = "P_ECSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\ECSpecs\\";
-	public static final String P_HAL_LRSpecsPATH = "P_HAL_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\";
-	public static final String P_RP_LRSpecsPATH = "P_RP_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\";
-	public static final String P_LLRP_LRSpecsPATH = "P_LLRP_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
+	public static final String P_ECSpecsPATH = System.getProperty("user.home")+ "\\AspireRFID\\IDE\\ECSpecs\\"; //"C:\\ASPIRE_APPLICATION_FILES\\ECSpecs\\";
+	public static final String P_HAL_LRSpecsPATH = System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\HAL\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\";
+	public static final String P_RP_LRSpecsPATH = System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\RP\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\";
+	public static final String P_LLRP_LRSpecsPATH = System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
 
 }

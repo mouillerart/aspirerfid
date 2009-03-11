@@ -953,7 +953,7 @@ public class ECSpecEditorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();
@@ -983,7 +983,7 @@ public class ECSpecEditorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();
@@ -997,7 +997,7 @@ public class ECSpecEditorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();
@@ -1011,7 +1011,7 @@ public class ECSpecEditorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();

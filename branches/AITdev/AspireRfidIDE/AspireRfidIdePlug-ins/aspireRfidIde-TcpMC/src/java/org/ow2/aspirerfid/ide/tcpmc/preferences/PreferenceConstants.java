@@ -33,8 +33,8 @@ import org.ow2.aspirerfid.ide.tcpmc.rawmc.RawTcpMessageCapturer;
  */
 public class PreferenceConstants {
 
-	public static final String P_RawTcpListeningPort = "P_RawTcpListeningPort"; //"7777";
-	public static final String P_RawEpcListeningPort = "P_RawEpcListeningPort"; //"7777";
+	public static final String P_RawTcpListeningPort = "7777";
+	public static final String P_RawEpcListeningPort = "7777";
 	public static HashMap<String, RawTcpMessageCapturer> P_RawTcpMessageCaptureThreads = null;
 	public static HashMap<String,CaptureApp> P_EpcTcpMessageCaptureThreads = null;
 	

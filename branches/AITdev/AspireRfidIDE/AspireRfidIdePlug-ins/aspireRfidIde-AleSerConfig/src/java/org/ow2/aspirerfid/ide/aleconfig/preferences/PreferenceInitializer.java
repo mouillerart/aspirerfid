@@ -25,10 +25,10 @@ import org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants;
 
 /**
  * Class used to initialize default preference values.
-
+ * 
  * @author Vasso Koletti e-mail: vkol@ait.edu.gr
  * @author Nikos Kefalakis (nkef) e-mail: nkef@ait.edu.gr
- *
+ * 
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
@@ -40,39 +40,22 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		
-		store.setDefault(PreferenceConstants.P_ECSpecsPATH,
-				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\ECSpecs\\");
-		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH,
-				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\HAL\\");
-		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH,
-				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\RP\\");
-		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH,
-				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\");
-		store.setDefault(PreferenceConstants.P_Composite_LRSpecsPATH,
-				System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\Composite\\");
-		store.setDefault(PreferenceConstants.P_ALEClientEndPointSTRING,
-				"http://localhost:8080/aspireALE0.3.1m/services/ALEService");
-		store.setDefault(PreferenceConstants.P_ALELRClientEndPointSTRING,
-				"http://localhost:8080/aspireALE0.3.1m/services/ALELRService");
-		store
-				.setDefault(PreferenceConstants.P_NotificationURI,
-						"http://localhost:8080,http://localhost:7070,http://localhost:6060");
 
-		store
-				.setDefault(
-						PreferenceConstants.P_ReaderNames,
-						"AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader");
+		store.setDefault(PreferenceConstants.P_ECSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\ECSpecs\\");
+		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\HAL\\");
+		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\RP\\");
+		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\");
+		store.setDefault(PreferenceConstants.P_Composite_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\Composite\\");
+		store.setDefault(PreferenceConstants.P_ALEClientEndPointSTRING, "http://localhost:8080/aspireALE0.3.1m/services/ALEService");
+		store.setDefault(PreferenceConstants.P_ALELRClientEndPointSTRING, "http://localhost:8080/aspireALE0.3.1m/services/ALELRService");
+		store.setDefault(PreferenceConstants.P_NotificationURI, "http://localhost:8080,http://localhost:7070,http://localhost:6060");
 
-		store
-				.setDefault(PreferenceConstants.P_ConnectionPoints,
-						"http://localhost:8080,http://localhost:7070,http://localhost:6060");
-		store
-				.setDefault(PreferenceConstants.P_NotificationPoints,
-						"http://localhost:8080,http://localhost:7070,http://localhost:6060");
-		
-		store.setDefault(PreferenceConstants.P_ECSpecNames,
-				"ECSpec_additions,ECSpec_current,ECSpec_deletions");
+		store.setDefault(PreferenceConstants.P_ReaderNames, "AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader");
+
+		store.setDefault(PreferenceConstants.P_ConnectionPoints, "http://localhost:8080,http://localhost:7070,http://localhost:6060");
+		store.setDefault(PreferenceConstants.P_NotificationPoints, "http://localhost:8080,http://localhost:7070,http://localhost:6060");
+
+		store.setDefault(PreferenceConstants.P_ECSpecNames, "ECSpec_additions,ECSpec_current,ECSpec_deletions");
 	}
 
 }

@@ -26,11 +26,11 @@ package org.ow2.aspirerfid.ide.lrspec.preferences;
  */
 public class PreferenceConstants {
 
-	public static final String P_HAL_LRSpecsPATH = "P_HAL_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\";
-	public static final String P_RP_LRSpecsPATH = "P_RP_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\";
-	public static final String P_LLRP_LRSpecsPATH = "P_LLRP_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
-	public static final String P_Composite_LRSpecsPATH = "P_Composite_LRSpecsPATH"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\Composite\\";
-	public static final String P_ConnectionPoints = "P_ConnectionPoints"; //"http://localhost:8080,http://localhost:7070,http://localhost:6060";
-	public static final String P_NotificationPoints = "P_NotificationPoints"; //"http://localhost:8080,http://localhost:7070,http://localhost:6060";
-	public static final String P_DynamicReaders = "P_DynamicReaders"; //"DynamicImpinjLlrpReader,DynamicAccadaSimulatorRpReader,DynamicIntermecRpReader";
+	public static final String P_HAL_LRSpecsPATH = System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\HAL\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\";
+	public static final String P_RP_LRSpecsPATH = System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\RP\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\";
+	public static final String P_LLRP_LRSpecsPATH = System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
+	public static final String P_Composite_LRSpecsPATH = System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\Composite\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\Composite\\";
+	public static final String P_ConnectionPoints = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
+	public static final String P_NotificationPoints = "http://localhost:8080,http://localhost:7070,http://localhost:6060";
+	public static final String P_DynamicReaders = "DynamicImpinjLlrpReader,DynamicAccadaSimulatorRpReader,DynamicIntermecRpReader";
 }

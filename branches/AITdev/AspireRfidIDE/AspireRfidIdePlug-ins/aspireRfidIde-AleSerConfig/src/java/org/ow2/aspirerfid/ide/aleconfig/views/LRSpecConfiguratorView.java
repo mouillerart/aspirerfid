@@ -1523,7 +1523,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();
@@ -1785,7 +1785,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();
@@ -1799,7 +1799,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();
@@ -1813,7 +1813,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();
@@ -1827,7 +1827,7 @@ public class LRSpecConfiguratorView extends ViewPart {
 		File f = new File(folderPath);
 
 		if (f.exists() == false) {
-			f.mkdir();
+			f.mkdirs();
 		}
 
 		File[] contents = f.listFiles();
