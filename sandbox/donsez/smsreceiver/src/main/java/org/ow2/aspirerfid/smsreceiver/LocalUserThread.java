@@ -466,4 +466,26 @@ public class LocalUserThread extends Thread
 		PrintStream ps = new PrintStream(fos, true, "UTF-8");
 		ps.println(smsMessage.toHTML());
 	}
+	
+	
+	/**
+	 * Generating KML file with informations received from remote GSM modem.
+	 * 
+	 * @param sms the SMS containing the informations
+	 * @param path the path of the KML file to be created
+	 * @throws FileNotFoundException if path is invalid
+	 * @throws UnsupportedEncodingException if UTF-8 character encoding is not
+	 *         available on host platform
+	 * @throws MalformedMessageException if SMS is corrupted
+	 */
+	private void generateKMLFile(String sms, String path)
+			throws FileNotFoundException, UnsupportedEncodingException,
+			MalformedMessageException
+	{		
+		SMSBalloonMessage smsMessage = (SMSBalloonMessage)(new SMSBalloonMessageProcessor()).parse(sms);
+		FileOutputStream fos = new FileOutputStream(path);
+		PrintStream ps = new PrintStream(fos, true, "UTF-8");
+		ps.println(smsMessage.toKML());
+	}
+
 }

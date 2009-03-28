@@ -45,7 +45,6 @@ public class SMSBalloonMessage implements Message {
 		this.pressure=pressure;
 		this.temperature=temperature;
 	}
-
 		
 	/**
 	 * Temperature.
@@ -225,5 +224,14 @@ public class SMSBalloonMessage implements Message {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @see http://code.google.com/intl/fr/apis/kml/documentation/
+	 */
+	public String toKML(){
+		// TODO
+		StringBuffer sb=new StringBuffer();
+		return sb.toString();
+		
+	}	
 }
