@@ -26,7 +26,6 @@ import org.apache.felix.ipojo.handlers.event.publisher.Publisher;
 import org.osgi.service.event.EventConstants;
 import org.osgi.service.log.LogService;
 import org.ow2.aspirerfid.reader.util.config.Configuration;
-import org.ow2.aspirerfid.util.Logger;
 import org.ow2.aspirerfid.util.RFIDConstants;
 
 /**
@@ -45,7 +44,7 @@ import org.ow2.aspirerfid.util.RFIDConstants;
  * @author Lionel Touseau
  * @version 3.0.0 01/2009
  */
-public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean {
+public class RfidReaderSimulator implements Runnable {
 
 	/**
 	 * Time between two polls in milliseconds.
@@ -85,8 +84,9 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean {
 
 	/**
 	 * Logger used to record errors, warnings, information and debug messages.
+	 * LogService optional reference injected by iPOJO
 	 */
-	private Logger logger;
+	private LogService logger;
 
 	/**
 	 * iPOJO EventAdmin Handler publisher.
@@ -97,8 +97,7 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean {
 	 * Constructor called by iPOJO
 	 */
 	private RfidReaderSimulator() {
-		System.out.println("{RFIDREADERSIMULATOR}");
-		logger = new Logger("FictiveReader", Logger.INFO);
+		logger.log(LogService.LOG_INFO, "{RFIDREADERSIMULATOR}");
 	}
 
 	/*
@@ -157,10 +156,12 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean {
 
 	// implementation of MBean interface
 	// setter of max attribute
-	/*
-	 * (non-Javadoc)
+	/**
+	 * setter for the maximum of simultaneous read tag the reader will read a
+	 * random number between 0 and the max
 	 * 
-	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#setMaxTagRead(int)
+	 * @param max
+	 *            the maximum tag read in a command
 	 */
 	public void setMaxTagRead(int max) {
 		reader.setMaxTagRead(max);
@@ -169,10 +170,11 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean {
 
 	// implementation of MBean interface
 	// getter of max attribute
-	/*
-	 * (non-Javadoc)
+	/**
+	 * getter for the maximum of simultaneous read tag the reader will read a
+	 * random number between 0 and the max
 	 * 
-	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#getMaxTagRead()
+	 * @return the max number of tag read in a command
 	 */
 	public int getMaxTagRead() {
 		return reader.getMaxTagRead();
@@ -180,20 +182,21 @@ public class RfidReaderSimulator implements Runnable, RfidReaderSimulatorMBean {
 
 	// implementation of MBean interface
 	// setter of tagList attribute
-	/*
-	 * (non-Javadoc)
+	/**
+	 * setter for the tag list used to randomly choose read tags.
 	 * 
-	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#setTagList(java.lang.String[])
+	 * @param tagList
+	 *            a string array containing the Rfid guid
 	 */
 	public void setTagList(String[] tagList) {
 		reader.setTagList(tagList);
 	}
 
 	// implementation of RFID Reader MBean interface
-	/*
-	 * (non-Javadoc)
+	/**
+	 * getter for the tag list used to randomly choose read tags.
 	 * 
-	 * @see org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean#getTagList()
+	 * @return the list of tag fictitiously read
 	 */
 	public String[] getTagList() {
 		return reader.getTagList();

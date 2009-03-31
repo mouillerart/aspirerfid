@@ -18,27 +18,38 @@
    License for the specific language governing rights and limitations.
 -->
 
-<ipojo xmlns:ev="org.apache.felix.ipojo.handlers.event">
+<ipojo xmlns:ev="org.apache.felix.ipojo.handlers.event"
+		xmlns:jmx="org.apache.felix.ipojo.handlers.jmx">
 	<component
 		classname="org.ow2.aspirerfid.reader.fictive.RfidReaderSimulator"
 		factory="false" immediate="false">
 
-		<provides
-			specification="{org.ow2.aspirerfid.reader.fictive.RfidReaderSimulatorMBean}">
-			<property name="Bundle-Description" value="Fictive Reader"
-				type="java.lang.String" />
-			<property name="jmxagent.objectname"
-				value="rfid:type=reader,SymbolicName=Fictive"
-				type="java.lang.String" />
-		</provides>
-
 		<callback transition="VALIDATE" method="startReader" />
 		<callback transition="INVALIDATE" method="stopReader" />
+		
+		<requires field="logger" optional="true"/>		
 		
 		<ev:publisher
 			name="fictiveTagPublisher"
 			field="m_publisher"
-			topics="org/ow2/aspirerfid/rfidtopic/rfid"/>		
+			topics="org/ow2/aspirerfid/rfidtopic/rfid"/>
+			
+		<jmx:config
+			objectName="rfid:type=reader,SymbolicName=Fictive" usesMOSGi="true">
+		    <jmx:method name="setLogicalName"/>
+		    <jmx:method name="getLogicalName"/>
+		    <jmx:method name="setRepeatPeriod"/>
+		    <jmx:method name="getRepeatPeriod"/>
+		    <jmx:method name="setReaderGUId"/>
+		    <jmx:method name="getReaderGUId"/>
+		    <jmx:method name="setMaxTagRead"/>
+		    <jmx:method name="getMaxTagRead"/>
+		    <jmx:method name="setTagList"/>
+		    <jmx:method name="getTagList"/>		    		    		    		    
+		    <jmx:method name="startReader"/>
+		    <jmx:method name="stopReader"/>
+		    <jmx:method name="dispose"/>
+		</jmx:config>	
 
 	</component>
 
