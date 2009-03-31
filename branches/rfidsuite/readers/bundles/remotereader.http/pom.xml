@@ -72,7 +72,6 @@
                     <instructions>
                         <Bundle-Name>AspireRFID-remotereader.http</Bundle-Name>
                         <Bundle-Description>Provides an HTTP interface for receiving RFID tag reading</Bundle-Description>
-                        <Bundle-Activator>org.ow2.aspirerfid.reader.remote.http.Activator</Bundle-Activator>
                         <Export-Package>*</Export-Package>
                         <Import-Package>*</Import-Package>
                         <Private-Package></Private-Package>

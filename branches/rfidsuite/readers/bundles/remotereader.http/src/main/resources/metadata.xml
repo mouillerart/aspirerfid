@@ -26,15 +26,6 @@
 		factory="false" architecture="true"
 		immediate="false">
 
-<!-- 		<provides
-			interface="{org.ow2.aspirerfid.reader.remote.http.RfidHttpReaderMBean}">
-			<property name="Bundle-Description" value="HTTP RFID Reader"
-				type="java.lang.String" />
-			<property name="jmxagent.objectname"
-				value="rfid:type=reader,SymbolicName=HTTP"
-				type="java.lang.String" />
-		</provides> -->
-
 		<callback transition="INVALIDATE" method="stopReader" />
 
 		<ev:publisher
