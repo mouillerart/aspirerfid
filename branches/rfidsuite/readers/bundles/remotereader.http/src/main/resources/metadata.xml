@@ -26,6 +26,8 @@
 		factory="false" architecture="true"
 		immediate="false">
 
+		<requires field="logger" optional="true"/>
+
 		<callback transition="INVALIDATE" method="stopReader" />
 
 		<ev:publisher

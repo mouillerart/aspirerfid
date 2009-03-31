@@ -24,7 +24,6 @@ import java.util.Properties;
 import org.apache.felix.ipojo.handlers.event.publisher.Publisher;
 import org.osgi.service.event.EventConstants;
 import org.osgi.service.log.LogService;
-import org.ow2.aspirerfid.util.Logger;
 import org.ow2.aspirerfid.util.RFIDConstants;
 import org.ow2.aspirerfid.wires.RFIDTagRead;
 
@@ -56,7 +55,7 @@ public class RfidHttpReader {
 	/**
 	 * Logger used to record errors, warnings, information and debug messages.
 	 */
-	private Logger logger;
+	private LogService logger;
 
 	private String gpsCoordinates;
 	
@@ -71,8 +70,7 @@ public class RfidHttpReader {
 	 * @param bc
 	 *            BundleContext used for service registrations.
 	 */
-	RfidHttpReader() {
-		logger = new Logger("HTTPReader", Logger.INFO);
+	private RfidHttpReader() {
 		instance = this;
 	}
 	
@@ -206,7 +204,7 @@ public class RfidHttpReader {
 	 * @see org.ow2.aspirerfid.reader.RfidReaderMBean#dispose()
 	 */
 	public void dispose() {
-		logger.log(Level.WARNING,"The HTTP reader has no driver, it can't be disposed.");
+		logger.log(LogService.LOG_WARNING,"The HTTP reader has no driver, it can't be disposed.");
 	}
 
 	/*
