@@ -34,6 +34,7 @@ public class RfidPropertyAdapter {
 	private static Map<String, String> equivalenceMap = new HashMap<String,String>();
 	static final String[] MANDATORY_FIELDS = new String[]{ID,TIMESTAMP, READER_ID};
 	private boolean valid;
+	private TagAdapter tagAdapter = new TagAdapter();
 //	private RFIDTagRead tagProp;
 	
 	//Added to use event instead of RFIDTagRead WireAdmin
@@ -84,7 +85,7 @@ public class RfidPropertyAdapter {
 	 */
 	public Dictionary getTagInfo(){
 		Properties tagInfo = new Properties();
-		tagInfo.put(RFIDConstants.TAGGUID_KEY, id);
+		tagInfo.put(RFIDConstants.TAGGUID_KEY, tagAdapter.adaptIDToEPC(id));
 		tagInfo.put(EventConstants.TIMESTAMP, timestamp);
 		tagInfo.put(RFIDConstants.READERGUID_KEY, readerId);
 		return tagInfo;
@@ -98,5 +99,20 @@ public class RfidPropertyAdapter {
 		timestamp = (String)values.get(TIMESTAMP);
 		readerId = (String)values.get(READER_ID);
 	}
-	
+}
+//Temp solution for adapting non EPC tag ids (e.g. NFC) to a format compliant with rfidsuite's tag factory
+//Current workaround forces a GID prefix
+//FIXME Migrate this to a TDT compliant solution (if any for NFC tags...)
+class TagAdapter {
+    private static final int TAG_LENGTH = 24;
+    private static final String GID_TAG_PREFIX = "35";
+    
+    public String adaptIDToEPC(String tagID) {
+        StringBuffer sb = new StringBuffer(tagID);
+        sb.insert(0,GID_TAG_PREFIX);
+        while (sb.length() < TAG_LENGTH) {
+            sb.insert(2, "0");
+        }
+        return sb.toString();
+    }
 }
