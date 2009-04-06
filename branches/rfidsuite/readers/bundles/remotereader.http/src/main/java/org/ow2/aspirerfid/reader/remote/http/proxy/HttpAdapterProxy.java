@@ -23,6 +23,7 @@
 
 package org.ow2.aspirerfid.reader.remote.http.proxy;
 
+import java.util.Map;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -65,6 +66,21 @@ public class HttpAdapterProxy {
 	  } else {
 		  return true;		  
 	  }
+	}
+
+	/**
+	 * Utility method to send a RFID event by HTTP to the Aspire HTTP adapter
+	 * @param urlPrefix the prefix of the servlet processing the 
+	 * @param tagId the tag id
+	 * @param parameters a map of name-value pairs
+	 * @return true if the response code is not 4xx or 5xx
+	 * @throws IOException
+	 * @TODO take into account 3xx response codes 
+	 * @TODO take into account HttpsURLConnection 
+	 */
+	public static boolean sendTag(String urlPrefix, String tagId, Map<String,String> parameters) throws IOException {
+		System.err.println("Not implemented");	
+		return false;
 	}
 	  
 	/**
