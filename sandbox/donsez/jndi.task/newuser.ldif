@@ -1,0 +1,18 @@
+dn: uid=smithj,ou=users,ou=system
+cn: John Smith
+sn: Smith
+givenname: John
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+ou: Teacher
+ou: People
+l: Grenoble
+uid: smithj
+mail: smithj@grenoble.org
+telephonenumber: +33 476 12 34 56
+facsimiletelephonenumber: +33 476 12 34 00
+roomnumber: 211
+userpassword: 2hot4U
+
