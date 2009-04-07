@@ -206,7 +206,8 @@ public class JNDITask extends Task {
 
 		if (name != null) {
 
-			SearchControls searchControls = null;
+			SearchControls searchControls = new SearchControls();
+			searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
 			// Perform search
 			NamingEnumeration<SearchResult> searchResults;
