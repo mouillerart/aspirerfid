@@ -42,12 +42,6 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>osgi_R4_core</artifactId>
-			<version>1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
@@ -66,6 +60,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi_R4_core</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.ipojo.manipulator</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -84,9 +91,6 @@
 						<Bundle-Description>
 							Tag data standard implementation
 						</Bundle-Description>
-						<Bundle-Activator>
-							org.ow2.aspirerfid.common.tdt.Activator
-						</Bundle-Activator>
 						<Import-Package>*</Import-Package>
 						<Private-Package>
 							org.ow2.aspirerfid.common.tdt.*, !*
@@ -97,28 +101,6 @@
 						<Export-Service>
 							org.ow2.aspirerfid.common.tdt.TDT
 						</Export-Service>
-						<!-- 
-							<Include-Resource>
-							/props/auxiliary/ManagerTranslation.xml=src/main/resources/auxiliary/ManagerTranslation.xml,
-							/props/schemes/GIAI-64.xml=src/main/resources/schemes/GIAI-64.xml,
-							/props/schemes/GIAI-96.xml=src/main/resources/schemes/GIAI-96.xml,
-							/props/schemes/GID-96.xml=src/main/resources/schemes/GID-96.xml,
-							/props/schemes/GRAI-96.xml=src/main/resources/schemes/GRAI-96.xml,
-							/props/schemes/SGLN-96.xml=src/main/resources/schemes/SGLN-96.xml,
-							/props/schemes/SGTIN-96.xml=src/main/resources/schemes/SGTIN-96.xml,
-							/props/schemes/USDOD-96.xml=src/main/resources/schemes/USDOD-96.xml,
-							/props/schemes/SSCC-96.xml=src/main/resources/schemes/SSCC-96.xml,
-							/props/schemes/SSCC-64.xml=src/main/resources/schemes/SSCC-64.xml,
-							/props/schemes/USDOD-64.xml=src/main/resources/schemes/USDOD-64.xml,
-							/props/schemes/SGTIN-64.xml=src/main/resources/schemes/SGTIN-64.xml,
-							/props/schemes/SGLN-64.xml=src/main/resources/schemes/SGLN-64.xml,
-							/props/schemes/GRAI-64.xml=src/main/resources/schemes/GRAI-64.xml,
-							/props/schemes/not-defined/GIAI-202.xml=src/main/resources/schemes/not-defined/GIAI-202.xml,
-							/props/schemes/not-defined/GRAI-170.xml=src/main/resources/schemes/not-defined/GRAI-170.xml,
-							/props/schemes/not-defined/SGLN-195.xml=src/main/resources/schemes/not-defined/SGLN-195.xml,
-							/props/schemes/not-defined/SGTIN-198.xml=src/main/resources/schemes/not-defined/SGTIN-198.xml
-							</Include-Resource>
-						-->
 					</instructions>
 				</configuration>
 			</plugin>
@@ -132,6 +114,17 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>org.apache.felix</groupId>
+        		<artifactId>maven-ipojo-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>ipojo-bundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 	<dependencyManagement>

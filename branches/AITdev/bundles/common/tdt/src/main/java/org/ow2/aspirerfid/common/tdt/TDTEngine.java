@@ -161,17 +161,17 @@ public class TDTEngine implements TDT {
      *            "http://www.castor.org">Castor</a>.
      * @throws Exception
      */
-    public TDTEngine(Bundle b, String location, String confdir) throws Exception {
+    public TDTEngine(BundleContext context) throws Exception {
 
-	xmldir = confdir;
+	xmldir = "XML";
+	String location = context.getBundle().getLocation().replace("file:", "");
 	EpcTagDataTranslation tdt;
-	long t = System.currentTimeMillis();
 	JarFile jar = new JarFile(location);
 	Enumeration entries = jar.entries();
 	try {
 	    while (entries.hasMoreElements()) {
 		JarEntry current = (JarEntry) entries.nextElement();
-		if (!current.isDirectory() && current.getName().startsWith(confdir)) {
+		if (!current.isDirectory() && current.getName().startsWith(xmldir)) {
 		    if (current.getName().contains("schemes")) {
 			tdt = (EpcTagDataTranslation) Unmarshaller.unmarshal(EpcTagDataTranslation.class, new InputStreamReader(jar
 				.getInputStream(current)));
