@@ -15,7 +15,8 @@
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
  * KIND, either express or implied. See the GNU Lesser General Public 
  * License for the specific language governing rights and limitations.
- */package org.ow2.aspirerfid.reader.remote.http;
+ */
+package org.ow2.aspirerfid.reader.remote.http;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -81,14 +82,11 @@ public class ReaderServlet extends HttpServlet {
 	}
 	private void bind() {
 		System.out.println("binding to: " + httpService);
-		// TODO Auto-generated method stub
 		try {
 			httpService.registerServlet("/HttpTagReader", new ReaderServlet(), null, null);
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NamespaceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

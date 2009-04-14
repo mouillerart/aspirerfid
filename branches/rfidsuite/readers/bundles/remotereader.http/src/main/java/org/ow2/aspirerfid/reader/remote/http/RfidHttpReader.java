@@ -90,7 +90,8 @@ public class RfidHttpReader {
 	void sendEvent(Dictionary tagInfo) {
 		// add complementary information to the tag reading
 		tagInfo.put(RFIDConstants.READERNAME_KEY, this.getLogicalName());
-		if (this.gpsCoordinates != null) {
+		//Check if RFIDConstants.COORDINATES_KEY has not yet been set
+		if (tagInfo.get(RFIDConstants.COORDINATES_KEY) == null && this.gpsCoordinates != null) {
 			tagInfo.put(RFIDConstants.COORDINATES_KEY,this.gpsCoordinates);
 		}
 		// send the Event using iPOJO eventAdmin handler
