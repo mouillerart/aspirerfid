@@ -29,6 +29,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
+import javax.management.ObjectName;
 import javax.naming.Binding;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -59,6 +62,7 @@ import org.ow2.aspirerfid.app.epcis.client.widget.tags.TagGeneralInformation;
 import org.ow2.aspirerfid.app.epcis.client.widget.topology.ArchiElement;
 import org.ow2.aspirerfid.app.epcis.client.widget.users.UserGWT;
 import org.ow2.aspirerfid.app.epcis.client.widget.warnings.WarningGWT;
+import org.ow2.aspirerfid.epcis.server.MeasurementBean;
 import org.ow2.aspirerfid.epcis.server.PrivilegeBean;
 import org.ow2.aspirerfid.epcis.server.RFIDDataAccessBean;
 import org.ow2.aspirerfid.epcis.server.RFIDDataAccessRemote;
@@ -104,7 +108,7 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
     
     private RFIDDataAccessRemote dataAccess = null;
     
-    private String onsURL;
+   // private String onsURL;
     
     /**
      * Constructor
@@ -119,12 +123,41 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
                     .getProperty("server.type"));
             ip = props.getProperty("server.jndi.ip");
             port = props.getProperty("server.jndi.port");
-            onsURL = props.getProperty("ons.service.url");
+            //onsURL = props.getProperty("ons.service.url");
         } catch (IOException e) {
             e.printStackTrace();
         }
         
         initRemoteSessions();
+    }
+    
+    private ObjectName epcisProps;
+    
+	private MBeanServer lookForExistingServer() {
+		List mbeanServers = MBeanServerFactory.findMBeanServer(null);
+		if (mbeanServers != null && mbeanServers.size() > 0) {
+			return (MBeanServer) mbeanServers.get(0);
+		}
+		System.out.println("NO MBeanServer found!");
+		return null;
+	}
+	
+    
+	private String getOnsURL() {
+		return org.ow2.aspirerfid.epcis.server.util.EPCISProperties.getProperty("ons.service.url");
+		//
+//    	try {
+//        	if (epcisProps==null) {
+//       		 epcisProps = new ObjectName("aspire:Name=epcisprops");
+//        	}
+//    		String result = (String)lookForExistingServer().invoke(epcisProps, 
+//        			"getValue", new Object[]{"ons.service.url"}, new String[]{"java.lang.String"});
+//    	    System.out.println("retrieving " + result);
+//        	return result;		
+//    	} catch (Exception ex) {
+//    		ex.printStackTrace();
+//    		return null;
+//    	}
     }
     
     private void initRemoteSessions() {
@@ -310,13 +343,10 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
         return Convertor.RGLMBList2RGLMBGWTList(result);
     }
     
-    /* (non-Javadoc)
-     * @see org.ow2.aspirerfid.app.epcis.client.RemoteAdminView#getTempatureChart(java.lang.String, java.lang.String, int, int)
-     */
     public String getTempatureChart(String tag, String unit, int w, int h) {
         List<ReportGroupListMemberBean> tagHistory = dataAccess
                 .getTemperatureEPCHistory(tag);
-        boolean convertToCelcius = (unit.equals("c"));
+        boolean convertToCelsius = (unit.equals("c"));
         
         if (tagHistory.size() == 0)
             return "";
@@ -328,13 +358,13 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
         double pos = 0;
         double tempMin = tagHistory.get(0).getMeasurement("temperature")
                 .getValue();
-        if (convertToCelcius) {
+        if (convertToCelsius) {
             tempMin -= 273.15;
         }
         double tempMax = tempMin;
         for (ReportGroupListMemberBean r : tagHistory) {
             double temp = r.getMeasurement("temperature").getValue();
-            if (convertToCelcius) {
+            if (convertToCelsius) {
                 temp -= 273.15;
             }
             series1
@@ -355,8 +385,8 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
         dataset.addSeries(series1);
         
         String yAxisLabel;
-        if (convertToCelcius) {
-            yAxisLabel = "Temperature in Celcius";
+        if (convertToCelsius) {
+            yAxisLabel = "Temperature in Celsius";
         } else {
             yAxisLabel = "Temperature in Kelvin";
         }
@@ -394,6 +424,92 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
             e.printStackTrace();
         }
         
+        return chartName;
+    }
+    public String[] getAvailableMeasurements(String tag) {
+    	List<ReportGroupListMemberBean> result = dataAccess.getEPCHistory(tag);
+        HashSet<String> availableMeasurements = new HashSet<String>();
+    	
+        for (ReportGroupListMemberBean bean : result) {
+        	Set<MeasurementBean> set =  bean.getMeasurements();
+        	for (MeasurementBean m : set) {
+        		availableMeasurements.add(m.getApplicationName());
+        	}
+        }
+        String [] returnVal = availableMeasurements.toArray(new String[0]);
+
+        return returnVal ;
+    }  
+    /* (non-Javadoc)
+     * @see org.ow2.aspirerfid.app.epcis.client.RemoteAdminView#getTempatureChart(java.lang.String, java.lang.String, int, int)
+     */
+    public String getChart(String tag, String measurement, int w, int h) {
+        List<ReportGroupListMemberBean> tagHistory = dataAccess
+                .getEPCHistory(tag);
+        String chartName = "";
+        String presentationName = measurement == null ? "" : Character.toUpperCase(measurement.charAt(0))+measurement.substring(1);
+        String unit = null;
+        if (tagHistory.size() != 0) {
+	        TimeSeries series1 = new TimeSeries(presentationName + " evolution",
+	                FixedMillisecond.class);
+	        double pos = 0;
+	        double tempMin = Integer.MAX_VALUE; //tagHistory.get(0).getMeasurement(measurement).getValue();
+	        double tempMax = Integer.MIN_VALUE; //tempMin;
+	        for (ReportGroupListMemberBean r : tagHistory) {
+	        	MeasurementBean bean = r.getMeasurement(measurement);
+	        	
+	        	if (bean != null) {
+		            double temp = bean.getValue();
+		            unit = bean.getUnit();
+		            series1
+		                    .add(new FixedMillisecond(r.getMemberDate().getTime()),
+		                            temp);
+		            pos++;
+		            if (temp > tempMax) {
+		                tempMax = temp;
+		            }
+		            if (temp < tempMin) {
+		                tempMin = temp;
+		            }
+	        	}
+	        }
+	        
+	        TimeSeriesCollection dataset = new TimeSeriesCollection();
+	        dataset.addSeries(series1);
+	        String yAxisLabel = presentationName + (unit == null ? "" : " (" + unit + ")");
+	        JFreeChart chart = ChartFactory.createTimeSeriesChart(presentationName + " of "
+	                + tag, // title
+	                "Date", // x-axis label
+	                yAxisLabel, // y-axis label
+	                dataset, // data
+	                true, // create legend?
+	                true, // generate tooltips?
+	                false // generate URLs?
+	                );
+	        
+	        // // get a reference to the plot for further customisation...
+	        XYPlot plot = chart.getXYPlot();
+	        // plot.setBackgroundPaint(Color.lightGray);
+	        // plot.setDomainGridlinePaint(Color.white);
+	        // plot.setRangeGridlinePaint(Color.white);
+	        
+	        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+	        renderer.setSeriesLinesVisible(0, true);
+	        renderer.setSeriesShapesVisible(1, true);
+	        plot.setRenderer(renderer);
+	        
+	        // change the auto tick unit selection to integer units only...
+	        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+	        rangeAxis.setRange(tempMin - 1, tempMax + 1);
+	        
+	        try {
+	            HttpSession session = getThreadLocalRequest().getSession();
+	            chartName = ServletUtilities.saveChartAsPNG(chart, w, h, session);
+	        } catch (Exception e) {
+	            // handle exception
+	            e.printStackTrace();
+	        }
+        }
         return chartName;
     }
     
@@ -583,7 +699,7 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
                     .getCreationDate().toLocaleString(), tagBean
                     .getDescription(), "Local");
         } else {
-            String epcisServiceURL = tagRequester.getEPCISServiceURL(onsURL,
+            String epcisServiceURL = tagRequester.getEPCISServiceURL(getOnsURL(),
                     tag);
             if (epcisServiceURL != null) {
                 Map<String, String> infos = tagRequester.generalTagInformation(
@@ -591,11 +707,11 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
                 if (infos.size() != 0) {
                     tagGI = new TagGeneralInformation(infos.get("tag"), infos
                             .get("creationDate"), infos.get("description"),
-                            tagRequester.getEPCISDescription(onsURL,
+                            tagRequester.getEPCISDescription(getOnsURL(),
                                     epcisServiceURL));
                 } else {
                     tagGI = new TagGeneralInformation(tag, null, null,
-                            tagRequester.getEPCISDescription(onsURL,
+                            tagRequester.getEPCISDescription(getOnsURL(),
                                     epcisServiceURL));
                 }
             } else {
@@ -615,7 +731,7 @@ public class RemoteAdminViewImpl extends RemoteServiceServlet implements
         int numPartner = 0;
         
         // Get the list of partners
-        String[] tagServiceURLs = tagRequester.getEPCISServicesHistory(onsURL,
+        String[] tagServiceURLs = tagRequester.getEPCISServicesHistory(getOnsURL(),
                 tag);
         for (String tagServiceURL : tagServiceURLs) {
             // Get tag history for a partner

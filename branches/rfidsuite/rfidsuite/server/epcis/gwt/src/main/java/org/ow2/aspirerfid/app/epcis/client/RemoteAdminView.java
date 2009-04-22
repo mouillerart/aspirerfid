@@ -182,6 +182,17 @@ public interface RemoteAdminView extends RemoteService {
 	public String getTempatureChart(String tag, String unit, int w, int h);
 
 	/**
+	 * General chart generator
+	 * @param tag
+	 * @param unit
+	 * @param w
+	 * @param h
+	 * @return
+	 */
+	public String getChart(String tag, String measurement, int w, int h);
+
+	public String[] getAvailableMeasurements(String tag);
+	/**
 	 * TODO Javadoc
 	 * 
 	 * @return

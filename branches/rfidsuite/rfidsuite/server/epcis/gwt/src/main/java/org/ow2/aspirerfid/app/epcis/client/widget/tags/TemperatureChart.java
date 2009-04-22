@@ -71,6 +71,10 @@ public class TemperatureChart extends Image {
         
         setStyleName("widget-TempChart");
         int w = RootPanel.get().getOffsetWidth() - 200 - 30;
-        IndexModule.getSession().getTempatureChart(tag, unit, w, 350, callback);
+        if (unit.equalsIgnoreCase("c") || unit.equalsIgnoreCase("k") ) {
+            IndexModule.getSession().getTempatureChart(tag, unit, w, 350, callback);
+        } else {
+        	IndexModule.getSession().getChart(tag, unit, w, 350, callback);
+        }
     }
 }

@@ -26,6 +26,7 @@ import org.ow2.aspirerfid.app.epcis.client.widget.tags.ReportGroupListMemberGWT;
 import org.ow2.aspirerfid.app.epcis.client.widget.users.UserGWT;
 import org.ow2.aspirerfid.app.epcis.client.widget.warnings.WarningLostGWT;
 import org.ow2.aspirerfid.app.epcis.client.widget.warnings.WarningTempGWT;
+import org.ow2.aspirerfid.epcis.server.MeasurementBean;
 import org.ow2.aspirerfid.epcis.server.PrivilegeBean;
 import org.ow2.aspirerfid.epcis.server.ReportGroupListMemberBean;
 import org.ow2.aspirerfid.epcis.server.RoleBean;
@@ -78,9 +79,17 @@ public class Convertor {
      */
     public static ReportGroupListMemberGWT ReportGroupListMemberBean2ReportGroupListMemberGWT(
             ReportGroupListMemberBean bean) {
-        double temp = -1.0;
+        double temp = Double.MIN_VALUE;
         if (bean.getMeasurement("temperature") != null) {
             temp = bean.getMeasurement("temperature").getValue();
+        } else {
+        	//search for first temperature occurrence
+        	for (MeasurementBean measure : bean.getMeasurements()) {
+        		if (measure.getUnit().equalsIgnoreCase("K")) {
+        			temp = measure.getValue();
+        			break;
+        		}
+        	}
         }
         
         Date utilDate = new Date(bean.getMemberDate().getTime());

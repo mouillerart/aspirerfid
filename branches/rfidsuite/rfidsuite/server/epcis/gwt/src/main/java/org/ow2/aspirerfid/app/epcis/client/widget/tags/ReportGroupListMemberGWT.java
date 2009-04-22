@@ -17,13 +17,15 @@ package org.ow2.aspirerfid.app.epcis.client.widget.tags;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * TODO Javadoc
  * 
  * @author Guillaume Vaudaux-Ruth
  * @version 2007
  */
-public class ReportGroupListMemberGWT implements Serializable {
+public class ReportGroupListMemberGWT implements Serializable, IsSerializable {
     
     private static final long serialVersionUID = 4762081927359559963L;
     
@@ -49,7 +51,7 @@ public class ReportGroupListMemberGWT implements Serializable {
      * TODO Javadoc
      */
     public ReportGroupListMemberGWT() {
-        
+    	
     }
     
     /**

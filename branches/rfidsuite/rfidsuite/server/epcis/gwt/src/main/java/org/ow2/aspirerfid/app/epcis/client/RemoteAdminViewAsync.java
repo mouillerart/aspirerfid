@@ -158,6 +158,10 @@ public interface RemoteAdminViewAsync {
 	public void getTempatureChart(String tag, String unit, int w, int h,
 			AsyncCallback callback);
 
+	public void getChart(String tag, String measurement, int w, int h,
+			AsyncCallback callback);
+	
+	public void getAvailableMeasurements(String tag,AsyncCallback callback);
 	/**
 	 * TODO Javadoc
 	 * 

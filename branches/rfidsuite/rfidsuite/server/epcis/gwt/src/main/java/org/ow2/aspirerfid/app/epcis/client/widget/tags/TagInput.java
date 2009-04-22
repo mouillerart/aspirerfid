@@ -27,6 +27,7 @@ import asquare.gwt.tk.client.ui.ModalDialog;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -55,6 +56,8 @@ public class TagInput extends Composite {
     private GMap2Widget gmapWidget;
     
     private GMapMenu menu;
+    
+    private ChangeListener inputChangeListener;
     
     /**
      * TODO Javadoc
@@ -143,6 +146,13 @@ public class TagInput extends Composite {
             IndexModule.getSession().getEPCHistory(TagInput.getTag(),
                     new GetEPCHistoryCallback());
         }
+        if (inputChangeListener != null) {
+        	inputChangeListener.onChange(this);
+        }
+    }
+    
+    public void setChangeListener(ChangeListener listener) {
+    	this.inputChangeListener = listener;
     }
     
     // private class TextBoxChangeListener implements ChangeListener {
@@ -295,4 +305,6 @@ public class TagInput extends Composite {
             updateDependencies();
         }
     }
+  
+
 }

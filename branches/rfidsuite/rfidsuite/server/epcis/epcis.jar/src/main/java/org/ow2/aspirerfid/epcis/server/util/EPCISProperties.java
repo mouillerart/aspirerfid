@@ -15,29 +15,88 @@
 package org.ow2.aspirerfid.epcis.server.util;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
+
+import javax.management.InstanceAlreadyExistsException;
+import javax.management.MBeanRegistrationException;
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
+import javax.management.MalformedObjectNameException;
+import javax.management.NotCompliantMBeanException;
+import javax.management.ObjectName;
+import javax.management.loading.MLet;
+import javax.management.loading.MLetMBean;
 
 /**
  * TODO Javadoc
  * 
  * @author Unknown
  */
-public class EPCISProperties {
-    /**
-     * Get a property from the property file
-     * 
-     * @param key :
-     *            the key property
-     * @return the associated value
-     */
-    public static String getProperty(String key) {
-        Properties properties = new Properties();
-        try {
-            properties.load(EPCISProperties.class
-                    .getResourceAsStream("/epcis.properties"));
-            return properties.getProperty(key);
-        } catch (IOException e) {
-            return null;
-        }
-    }
+public class EPCISProperties implements EPCISPropertiesMBean {
+	private static EPCISProperties instance = new EPCISProperties();
+	private Properties properties;
+
+	private EPCISProperties() {
+		System.out.println("=======================Properties==============");
+		try {
+			if (properties == null) {
+				properties = new Properties();
+				properties.load(EPCISProperties.class
+						.getResourceAsStream("/epcis.properties"));
+			}
+			registerMBean();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			properties = new Properties();
+		}
+	}
+
+	private void registerMBean() {
+		ObjectName name;
+		try {
+			name = new ObjectName("aspire:Name=epcisprops");
+
+			MBeanServer server = lookForExistingServer();
+			if (server != null && !server.isRegistered(name)) {
+				System.out
+						.println("Creating new MBean for epcis properties");
+				
+				server.registerMBean(this, name);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Get a property from the property file
+	 * 
+	 * @param key
+	 *            : the key property
+	 * @return the associated value
+	 */
+	public static String getProperty(String key) {
+		return instance.getValue(key);
+	}
+
+	public String getValue(String key) {
+		return properties.getProperty(key);
+	}
+
+	public void setValue(String key, String value) {
+		System.out.println("MBean setting " + key + " to " + value);
+		properties.put(key, value);
+	}
+
+	private MBeanServer lookForExistingServer() {
+		List mbeanServers = MBeanServerFactory.findMBeanServer(null);
+		if (mbeanServers != null && mbeanServers.size() > 0) {
+			return (MBeanServer) mbeanServers.get(0);
+		}
+		System.out.println("NO MBeanServer found!");
+		return null;
+	}
+
 }

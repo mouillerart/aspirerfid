@@ -73,8 +73,10 @@ public class InfoWindowTab {
 					ReportGroupListMemberGWT report = (ReportGroupListMemberGWT) reports
 							.get(i);
 
-					vp.add(new HTML("<font size=1><b>Temperature</b> : "
-							+ report.getTemperature() + " K&#176;</font>"));
+					if (report.getTemperature() != Double.MIN_VALUE) {
+						vp.add(new HTML("<font size=1><b>Temperature</b> : "
+								+ report.getTemperature() + " K&#176;</font>"));
+					}
 					vp.add(new HTML("<font size=1><b>GPS</b> : "
 							+ report.getGpsCoordinate()));
 					vp.add(new HTML("<font size=1><b>Gateway</b> : "

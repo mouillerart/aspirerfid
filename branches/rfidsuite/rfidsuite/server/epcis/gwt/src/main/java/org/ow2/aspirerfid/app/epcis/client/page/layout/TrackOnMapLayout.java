@@ -25,6 +25,7 @@ import org.ow2.aspirerfid.app.epcis.client.widget.table.ReportGroupListMemberTab
 import org.ow2.aspirerfid.app.epcis.client.widget.tags.TagInput;
 import org.ow2.aspirerfid.app.epcis.client.widget.tags.TemperatureChart;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -46,7 +47,7 @@ import com.mapitz.gwt.googleMaps.client.GMapType;
  * @author Guillaume Vaudaux-Ruth
  * @version 2007
  */
-public class TrackOnMapLayout implements PageLayout {
+public class TrackOnMapLayout implements PageLayout, ChangeListener {
 	private static double PARIS_LAT = 48.898581;
 
 	private static double PARIS_LNG = 2.438965;
@@ -57,6 +58,7 @@ public class TrackOnMapLayout implements PageLayout {
 	public static TemperatureChart chart;
 
 	private ListBox lbSelectUnit;
+	private ListBox lbInfo;
 
 	private TagInput tagInput;
 
@@ -129,15 +131,16 @@ public class TrackOnMapLayout implements PageLayout {
 
 		FlexTable flTable = new FlexTable();
 
-		ListBox lbInfo = new ListBox(false);
-		lbInfo.addItem("Temperature");
+		lbInfo = new ListBox(false);
+		lbInfo.addChangeListener(new MeasurementSelectorChangeListener());
 
-		flTable.setText(1, 1, "Informations : ");
+//		lbInfo.addItem("Temperature");
+		flTable.setText(1, 1, "Informations: ");
 		flTable.setWidget(1, 2, lbInfo);
 
 		lbSelectUnit = new ListBox();
-		lbSelectUnit.addItem("Celcius", "c");
 		lbSelectUnit.addItem("Kelvin", "k");
+		lbSelectUnit.addItem("Celsius", "c");
 		lbSelectUnit.setSelectedIndex(0);
 		lbSelectUnit.addChangeListener(new UnitSelectorChangeListener());
 		flTable.setText(2, 1, "Temperature unit : ");
@@ -145,7 +148,7 @@ public class TrackOnMapLayout implements PageLayout {
 
 		// epc tag input
 		tagInput = new TagInput(tableResult, gmapWidget, menu);
-
+		tagInput.setChangeListener(this);
 		chart = new TemperatureChart(TagInput.getTag(), lbSelectUnit
 				.getValue(lbSelectUnit.getSelectedIndex()));
 
@@ -157,9 +160,14 @@ public class TrackOnMapLayout implements PageLayout {
 		mainPanel.add(tagInput);
 		mainPanel.add(tabPanel);
 		mainPanel.add(tableResult);
-
+		
+		//load combo with possible measurement values for current tag
+		loadMeasurementCombo(TagInput.getTag());
+		
 		IndexModule.setCentralWidget(mainPanel);
 	}
+	
+	
 
 	private class UnitSelectorChangeListener implements ChangeListener {
 		public void onChange(Widget sender) {
@@ -167,6 +175,45 @@ public class TrackOnMapLayout implements PageLayout {
 					.getSelectedIndex()));
 			chart.setTag(TagInput.getTag(), TagInput.getUnit());
 		}
+	}
+	
+	private class MeasurementSelectorChangeListener implements ChangeListener {
+		public void onChange(Widget sender) {
+			showCurrentChart();
+		}
+	}
+	private void showCurrentChart() {
+		String measurement = lbInfo.getValue(lbInfo.getSelectedIndex());
+		lbSelectUnit.setEnabled(measurement.equalsIgnoreCase("temperature"));
+		chart.setTag(TagInput.getTag(), measurement);
+	}
+	public void onChange(Widget widget) {
+		loadMeasurementCombo(TagInput.getTag());
+	}
+	private void loadMeasurementCombo(String tag) {
+		AsyncCallback callback = new AsyncCallback() {
+            public void onSuccess(Object result) {
+        		String[] measurements = (String[])result;
+        		if (measurements == null || measurements.length == 0) {
+        			lbInfo.addItem("no items!");
+        		} else {
+        			for (int i = 0; i < measurements.length; i++) {
+        				String s = measurements[i];
+        				if (s!= null && s.length() > 1) {
+        					s = Character.toUpperCase(s.charAt(0)) + s.substring(1);
+        				}
+        				lbInfo.addItem(s,measurements[i]);
+					}
+        			showCurrentChart();
+        		}
+            }
+            
+            public void onFailure(Throwable ex) {
+        		lbInfo.addItem("error: " + ex.getMessage());
+            }
+        };
+		IndexModule.getSession().getAvailableMeasurements(tag,callback);
+		lbInfo.clear();
 	}
 
 	/*

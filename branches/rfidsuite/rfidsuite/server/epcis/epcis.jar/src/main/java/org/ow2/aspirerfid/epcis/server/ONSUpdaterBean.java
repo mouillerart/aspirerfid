@@ -71,7 +71,7 @@ public class ONSUpdaterBean implements ONSUpdaterLocal {
     /**
      * The ONS service URL
      */
-    private String onsServiceURL = null;
+    //private String onsServiceURL = null;
     
     @EJB
     private TagRequesterRemote tagRequesterRemote = null;
@@ -82,7 +82,7 @@ public class ONSUpdaterBean implements ONSUpdaterLocal {
     @PostConstruct
     public void init() {
         // Defines the ONS service URL
-        onsServiceURL = EPCISProperties.getProperty("ons.service.url");
+        //onsServiceURL = EPCISProperties.getProperty("ons.service.url");
         
         if (timer == null) {
             // Cancels previous timers
@@ -102,7 +102,7 @@ public class ONSUpdaterBean implements ONSUpdaterLocal {
      */
     @Timeout
     public synchronized void updateONS(Timer timer) {
-        System.out.println("Trying to update ONS...");
+        System.out.println("Trying: ONS update...");
         
         Query q = entityManager
                 .createQuery("SELECT r.tag, MAX(r.onsRecordState), MAX(r.id) "
@@ -110,7 +110,11 @@ public class ONSUpdaterBean implements ONSUpdaterLocal {
         List<Object[]> result = q.getResultList();
         
         try {
-            String ip = InetAddress.getLocalHost().getHostAddress();
+            String ip = EPCISProperties.getProperty("ip");
+            
+            if (ip == null || ip.equals("")) {
+            	InetAddress.getLocalHost().getHostAddress();
+            }
             String serviceURL = "http://" + ip + ":"
                     + EPCISProperties.getProperty("tag.service.url");
             
@@ -120,7 +124,7 @@ public class ONSUpdaterBean implements ONSUpdaterLocal {
                 String tag = (String) objects[0];
                 Integer onsRecordState = (Integer) objects[1];
                 Integer id = (Integer) objects[2];
-                
+                System.out.println("updating tag");
                 if (onsRecordState == ReportGroupListMemberBean.TO_RECORD_ON_ONS) {
                     tags.put(id, tag);
                 }
@@ -128,7 +132,7 @@ public class ONSUpdaterBean implements ONSUpdaterLocal {
             
             if (tags.size() > 0) {
                 boolean isONSUpdated = tagRequesterRemote
-                        .registerEPCISServiceHistory(onsServiceURL, tags
+                        .registerEPCISServiceHistory(EPCISProperties.getProperty("ons.service.url"), tags
                                 .values().toString(), serviceURL);
                 
                 if (isONSUpdated) {
