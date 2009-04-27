@@ -27,9 +27,12 @@ package org.ow2.aspirerfid.ide.ecspec.preferences;
  */
 public class PreferenceConstants {
 
-	public static final String P_ECSpecsPATH = System.getProperty("user.home")+ "\\AspireRFID\\IDE\\ECSpecs\\"; //"C:\\ASPIRE_APPLICATION_FILES\\ECSpecs\\";
-	public static final String P_HAL_LRSpecsPATH = System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\HAL\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\";
-	public static final String P_RP_LRSpecsPATH = System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\RP\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\";
-	public static final String P_LLRP_LRSpecsPATH = System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\"; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
+	private static String fileSeparator = System.getProperty("file.separator");
+	private static String userHome = System.getProperty("user.home");
+	
+	public static final String P_ECSpecsPATH = userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"ECSpecs"+fileSeparator; //"C:\\ASPIRE_APPLICATION_FILES\\ECSpecs\\";
+	public static final String P_HAL_LRSpecsPATH = userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"HAL"+fileSeparator; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\HAL\\";
+	public static final String P_RP_LRSpecsPATH = userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"RP"+fileSeparator; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\RP\\";
+	public static final String P_LLRP_LRSpecsPATH = userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"LLRP"+fileSeparator; //"C:\\ASPIRE_APPLICATION_FILES\\LRSpecs\\LLRP\\";
 
 }

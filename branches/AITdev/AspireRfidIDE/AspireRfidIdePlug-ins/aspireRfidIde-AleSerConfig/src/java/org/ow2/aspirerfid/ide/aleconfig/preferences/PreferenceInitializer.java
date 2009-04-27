@@ -32,6 +32,8 @@ import org.ow2.aspirerfid.ide.aleconfig.preferences.PreferenceConstants;
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
+	private String fileSeparator = System.getProperty("file.separator");
+	private String userHome = System.getProperty("user.home");
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -41,13 +43,13 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 
-		store.setDefault(PreferenceConstants.P_ECSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\ECSpecs\\");
-		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\HAL\\");
-		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\RP\\");
-		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\");
-		store.setDefault(PreferenceConstants.P_Composite_LRSpecsPATH, System.getProperty("user.home") + "\\AspireRFID\\IDE\\LRSpecs\\Composite\\");
-		store.setDefault(PreferenceConstants.P_ALEClientEndPointSTRING, "http://localhost:8080/aspireALE0.3.1m/services/ALEService");
-		store.setDefault(PreferenceConstants.P_ALELRClientEndPointSTRING, "http://localhost:8080/aspireALE0.3.1m/services/ALELRService");
+		store.setDefault(PreferenceConstants.P_ECSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"ECSpecs"+fileSeparator);
+		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"HAL"+fileSeparator);
+		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"RP"+fileSeparator);
+		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"LLRP"+fileSeparator);
+		store.setDefault(PreferenceConstants.P_Composite_LRSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"Composite"+fileSeparator);
+		store.setDefault(PreferenceConstants.P_ALEClientEndPointSTRING, "http://localhost:8080/aspireRfidALE/services/ALEService");
+		store.setDefault(PreferenceConstants.P_ALELRClientEndPointSTRING, "http://localhost:8080/aspireRfidALE/services/ALELRService");
 		store.setDefault(PreferenceConstants.P_NotificationURI, "http://localhost:8080,http://localhost:7070,http://localhost:6060");
 
 		store.setDefault(PreferenceConstants.P_ReaderNames, "AccadaSimulatorWithRPProxy,SmartLabIntermecLogicalReader");

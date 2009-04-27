@@ -34,6 +34,9 @@ import org.ow2.aspirerfid.ide.ecspec.Activator;
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
+	private String fileSeparator = System.getProperty("file.separator");
+	private String userHome = System.getProperty("user.home");
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -41,10 +44,10 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		store.setDefault(PreferenceConstants.P_ECSpecsPATH, System.getProperty("user.home")+ "\\AspireRFID\\IDE\\ECSpecs\\");
-		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH, System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\HAL\\");
-		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH, System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\RP\\");
-		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH, System.getProperty("user.home")+ "\\AspireRFID\\IDE\\LRSpecs\\LLRP\\");
+		store.setDefault(PreferenceConstants.P_ECSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"ECSpecs\\");
+		store.setDefault(PreferenceConstants.P_HAL_LRSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"HAL"+fileSeparator);
+		store.setDefault(PreferenceConstants.P_RP_LRSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"RP"+fileSeparator);
+		store.setDefault(PreferenceConstants.P_LLRP_LRSpecsPATH, userHome+fileSeparator+"AspireRFID"+fileSeparator+"IDE"+fileSeparator+"LRSpecs"+fileSeparator+"LLRP"+fileSeparator);
 	}
 
 }
