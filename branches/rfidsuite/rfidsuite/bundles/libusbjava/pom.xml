@@ -81,11 +81,7 @@
 <!--							javax.swing.event,-->
 <!--							javax.swing.tree-->
 <!--						</Import-Package>-->
-						<Bundle-NativeCode>
-							LibusbJava.dll;osname=WindowsXP;processor=x86,
-							LibusbJava.dll;osname=windows vista;processor=x86,
-							libusbJava.so;osname=Linux;processor=x86
-						</Bundle-NativeCode>
+						<Bundle-NativeCode>LibusbJava.dll;osname=WindowsXP;processor=x86,LibusbJava.dll;osname=windows vista;processor=x86,libusbJava.so;osname=Linux;processor=x86</Bundle-NativeCode>
 					</instructions>
 				</configuration>
 			</plugin>
