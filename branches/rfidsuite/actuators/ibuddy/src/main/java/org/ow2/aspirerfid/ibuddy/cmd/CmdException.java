@@ -21,7 +21,7 @@ package org.ow2.aspirerfid.ibuddy.cmd;
 
 /**
  * provides a exception for ibuddies commands.
- * @author El Mehdi Damon
+ * @author El Mehdi Damou
  */
 public class CmdException extends Exception{
 	/**
@@ -29,7 +29,7 @@ public class CmdException extends Exception{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	String messageError;
+	private String messageError;
 	
 	public CmdException(String string) {
 		this.messageError = string;

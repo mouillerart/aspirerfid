@@ -21,5 +21,5 @@
 package org.ow2.aspirerfid.ibuddy.service;
 
 public enum Action {
-	ROTATE,FLAP,HEAD,HEART;
+	ROTATE,FLAP,HEAD,HEART,RESET;
 }

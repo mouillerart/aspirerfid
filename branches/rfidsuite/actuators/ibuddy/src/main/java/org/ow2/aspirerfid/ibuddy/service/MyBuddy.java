@@ -97,7 +97,11 @@ public class MyBuddy implements Runnable {
 		}
 	}
 	
-
+	
+	public void reset() {
+		buddy.sendReset();
+	}
+	
 	public void run() {
 		try {
 			buddy.open();
@@ -126,15 +130,7 @@ public class MyBuddy implements Runnable {
 						 setOrientation(Orientation.valueOf(actions.get(i)));
 						
 					 }
-					
-					
-				}
-//				 for (Iterator<String> iterator2 = actions.iterator(); iterator2
-//						.hasNext();) {
-//					String string = (String) iterator2.next();
-//					setOrientation(Orientation.valueOf(string));
-//					Thread.sleep(225);
-//				}				
+				}	
 				break;
 			case FLAP:
 				 actions = buddyWillDo.get(type);
@@ -144,18 +140,9 @@ public class MyBuddy implements Runnable {
 						 waiting = Integer.parseInt(actions.get(i));
 					 }
 					 else {
-						 flapwings(Integer.parseInt(actions.get(i)));
-						
+						 flapwings(Integer.parseInt(actions.get(i))*2);
 					 }
-					
-					
-				}
-				 
-//				 for (Iterator<String> iterator2 = actions.iterator(); iterator2
-//						.hasNext();) {
-//					String string = (String) iterator2.next();
-//					flapwings(Integer.parseInt(string));
-//				}			
+				 }	
 				break;
 			case HEAD:
 				 actions = buddyWillDo.get(type);
@@ -166,18 +153,8 @@ public class MyBuddy implements Runnable {
 					 }
 					 else {
 						 colorhead(HeadColor.valueOf(actions.get(i)));
-						
-					 }
-					
-					
+					 }			
 				}
-				 
-//				 for (Iterator<String> iterator2 = actions.iterator(); iterator2
-//						.hasNext();) {
-//					String string = (String) iterator2.next();
-//					colorhead(HeadColor.valueOf(string));
-//					Thread.sleep(225);
-//				}		
 				break;
 			case HEART:
 				 actions = buddyWillDo.get(type);
@@ -189,23 +166,16 @@ public class MyBuddy implements Runnable {
 					 else {
 						 heartState(HeartState.valueOf(actions.get(i)));
 						
-					 }
-					
-					
+					 }	
 				}
-				 
-				 
-//				 for (Iterator<String> iterator2 = actions.iterator(); iterator2
-//						.hasNext();) {
-//					String string = (String) iterator2.next();
-//					heartState(HeartState.valueOf(string));
-//				}		
+				break;
+			case RESET:
+				reset();
 				break;
 			
 			default:
 				break;
 			}
 		}
-		
 	}
 }

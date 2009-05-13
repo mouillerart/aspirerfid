@@ -35,7 +35,7 @@ import org.ow2.aspirerfid.ibuddy.service.MyBuddy;
 
 /**
  * provides a shell command to control connected iBuddies.
- * @author El Mehdi Damon
+ * @author El Mehdi Damou
  */
 public class IBuddyCommand implements Command {
 
@@ -45,6 +45,7 @@ public class IBuddyCommand implements Command {
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
 	public void start()  {
+		
 	}
 
 	/**
@@ -72,25 +73,70 @@ public class IBuddyCommand implements Command {
 		String subcommand=st.nextToken();
 		n-=2;
 		Map<Long, IBuddyDescriptor> buddies =  buddy.getListIbuddy();
-		if(subcommand.equalsIgnoreCase("*")){
+		
+		if (subcommand.equalsIgnoreCase("list")){
+			out.println(buddies.keySet().size()+ " buddy(s) are connected!");
+			for (Iterator<Long> iterator = buddies.keySet().iterator(); iterator.hasNext();) {
+				Long ibuddyID = iterator.next();
+				out.println("Ibuddy" +ibuddyID+" id = " + ibuddyID );	
+			}
+		}else if(subcommand.equalsIgnoreCase("*")){
+			String cmd =null;
+			String listcmd = new String();
+			while (st.hasMoreTokens()) {
+				cmd = st.nextToken();
+				if (cmd.equalsIgnoreCase("reset")) {
+					Map<Action,List<String>> resetAction = new HashMap<Action, List<String>>();
+					resetAction.put(Action.RESET, null);
+					for (Iterator<Long> iterator = buddies.keySet().iterator(); iterator.hasNext();) {
+						Long ibuddyID = iterator.next();
+						new MyBuddy(buddies.get(ibuddyID),resetAction);
+					}
+					return;
+				}
+				listcmd = listcmd + " " + cmd;
+			}
 			
-//			System.out.println(buddies.keySet().size()+ " ibuddy(s) found!");
-//			for (Iterator<?> iterator = buddies.keySet().iterator(); iterator.hasNext();) {
-//				Long id = (Long) iterator.next();
-//				System.out.println("buddy: " + id );
-//				
-//			}
-		}else{
+			try {
+				List<Map<Action,List<String>>> buddycmd = parseCmdLineOrder(listcmd);
+				
+				for (Iterator<Long> iterator = buddies.keySet().iterator(); iterator.hasNext();) {
+					Long ibuddyID = iterator.next();
+					if (listcmd.equalsIgnoreCase("reset")){
+						
+					}
+					out.println("Ibuddy" + ibuddyID+ " : "  );
+					for (Iterator<Map<Action, List<String>>> iterator2 = buddycmd.iterator(); iterator2.hasNext();) {
+						Map<Action, List<String>> map = iterator2.next();
+						for (Iterator<Action> iterator3 = map.keySet().iterator(); iterator3.hasNext();) {
+							Action action = iterator3.next();
+							
+							out.println("	"+action +  " : "  + map.get(action));
+						}
+						new MyBuddy(buddies.get(ibuddyID),map);
+					}
+				}
+			} catch (CmdException e) {
+				err.println(e.getMessageError());
+				e.printStackTrace();
+			}
 			
 			
+		}else{			
 			try{
 				Long id = Long.parseLong(subcommand);
-				Map <Long, List> listBuddy =  new HashMap<Long, List>();
+				Map <Long, List<Map<Action,List<String>>>> listBuddy =  new HashMap<Long, List<Map<Action,List<String>>>>();
 				String cmd =null;
 				String listcmd = new String();
-				if (st.hasMoreTokens()) cmd = st.nextToken();
 				while (st.hasMoreTokens()) {
-					if (cmd.equalsIgnoreCase("ibuddy")){
+					cmd = st.nextToken();
+					if (cmd.equalsIgnoreCase("reset")){
+						Map<Action,List<String>> resetAction = new HashMap<Action, List<String>>();
+						resetAction.put(Action.RESET, null);
+						new MyBuddy(buddies.get(id),resetAction);
+						return;
+						
+					}else if (cmd.equalsIgnoreCase("ibuddy")){
 						List<Map<Action,List<String>>> buddycmd = parseCmdLineOrder(listcmd);
 						if (listBuddy.keySet().contains(id)){
 							listBuddy.get(id).addAll(buddycmd);
@@ -103,7 +149,6 @@ public class IBuddyCommand implements Command {
 					else{
 						listcmd = listcmd + " " + cmd;
 					}
-					if (st.hasMoreTokens()) cmd = st.nextToken();
 				}
 				
 				List<Map<Action,List<String>>> buddycmd = parseCmdLineOrder(listcmd);
@@ -116,217 +161,33 @@ public class IBuddyCommand implements Command {
 				IBuddyDescriptor abudy = null;
 				for (Iterator<Long> iterator = listBuddy.keySet().iterator(); iterator
 						.hasNext();) {
-					Long idbuddy = (Long) iterator.next();
+					Long idbuddy = iterator.next();
 					out.println(">>iBuddy " + idbuddy +  ":" );
 					abudy = buddies.get(idbuddy);
 					List<Map<Action,List<String>>> buddyDo = listBuddy.get(idbuddy);
 					for (Iterator<Map<Action, List<String>>> iterator2 = buddyDo.iterator(); iterator2
 							.hasNext();) {
-						Map<Action, List<String>> map = (Map<Action, List<String>>) iterator2.next();
-						for (Iterator iterator3 = map.keySet().iterator(); iterator3
+						Map<Action, List<String>> map = iterator2.next();
+						for (Iterator<Action> iterator3 = map.keySet().iterator(); iterator3
 								.hasNext();) {
-							Action action = (Action) iterator3.next();
+							Action action = iterator3.next();
 							out.println("	"+action +  " : "  + map.get(action));
 						}
 						new MyBuddy(abudy,map);
 					}
-					
 				}
-				
-				
-				/////////////////////////////////////////////////////////////////////////////////////////////////
-//				while (st.hasMoreTokens()) {
-//					if (cmd.equalsIgnoreCase("ibuddy")){
-//						Map<Action,List<String>> buddycmd = parseCmdLine(listcmd);
-//						if (listBuddy.keySet().contains(id)){
-//							for (Iterator iterator = buddycmd.keySet().iterator(); iterator.hasNext();) {
-//								Action type = (Action) iterator.next();
-//								if (listBuddy.get(id).keySet().contains(type)){
-//									((List<String>)listBuddy.get(id).get(type)).addAll(buddycmd.get(type));
-//								}else {
-//									listBuddy.get(id).put(type,buddycmd.get(type));
-//								}
-//						
-//							}
-////						listBuddy.get(id).putAll(buddycmd);
-//						}else {
-//							listBuddy.put(id,buddycmd);
-//						}
-//						id = Long.parseLong(st.nextToken());
-//						listcmd = new String();
-//					}else{
-//						listcmd = listcmd + " " + cmd;
-//					}
-//					if (st.hasMoreTokens()) cmd = st.nextToken();
-//				}
-//				
-//				Map<Action,List<String>> list = parseCmdLine(listcmd);
-//				if (listBuddy.keySet().contains(id)){
-//					for (Iterator iterator = list.keySet().iterator(); iterator
-//							.hasNext();) {
-//						Action type = (Action) iterator.next();
-//						if (listBuddy.get(id).keySet().contains(type)){
-//							((List<String>)listBuddy.get(id).get(type)).addAll(list.get(type));
-//						}else {
-//							listBuddy.get(id).put(type,list.get(type));
-//						}
-//						
-//					}
-//					
-////					listBuddy.get(id).putAll(list);
-//				}else {
-//					listBuddy.put(id,list);
-//				}
-//				IBuddyDescriptor abudy = null;
-//				for (Iterator<Long> iterator = listBuddy.keySet().iterator(); iterator
-//						.hasNext();) {
-//					Long idbuddy = (Long) iterator.next();
-//					out.println(">>iBuddy " + idbuddy +  ":" );
-//					abudy = buddies.get(idbuddy);
-//					Map<Action,List<String>> buddyDo = listBuddy.get(idbuddy);
-//					for (Iterator<Action> iterator2 = buddyDo.keySet().iterator(); iterator2
-//							.hasNext();) {
-//						Action action = (Action) iterator2.next();
-//						out.println("	"+action +  " : "  + buddyDo.get(action));
-//						
-//					}
-//					new MyBuddy(abudy,buddyDo);
-//				}
-				///////////////////////////////////////////////////////////////////////////////////////////////////
-				
-				
-//				if ((id >= 0) && (id <buddies.size())){
-//					buddies.get(id).open();
-//					buddies.get(id).sendReset();
-//					while (st.hasMoreTokens()) {
-//						String cmd = st.nextToken();
-//				        System.out.println(cmd);
-//				        if (cmd.equalsIgnoreCase("rotate")){
-//				        	cmd = st.nextToken();
-//				        	cmd = cmd.toUpperCase();
-//				        	while (cmd.equalsIgnoreCase("left") || cmd.equalsIgnoreCase("right")){
-//					        	cmd = cmd.toUpperCase();
-//					        	buddies.get(id).sendOrientation(Orientation.valueOf(cmd));
-//					        	Thread.sleep(500);
-//					        	cmd = st.nextToken();	
-//				        	}
-//						}
-//				        if (cmd.equalsIgnoreCase("FLAP")){
-//				        	cmd = st.nextToken();
-//				        	try{
-//				        	Integer times = Integer.parseInt(cmd);
-//				        	flapwings(buddies.get(id),times);
-//				        	}catch (NumberFormatException e) {
-//								System.out.println(cmd + " is incorrect parameter! \n Flap command requiere a number parameter, ex : flap 10");
-//							}
-//				        }
-//				     }
-//					buddies.get(id).close();
-//				}else{
-//					System.out.println(subcommand + " is an incorrect parameter!! \n  choose buddy id from 0 to " + buddies.size());
-//				}
-				
 			}catch (CmdException e){
-				err.println( "\n" +  e.messageError);
+				err.println( "\n" +  e.getMessageError());
+				e.printStackTrace();
 			}
 		}
 
 	}
 
-	private Map<Action,List<String>> parseCmdLine(String cmdline) throws CmdException{
-		
-		Map<Action,List<String>> commandToDo = new HashMap<Action, List<String>>();
-		StringTokenizer st=new StringTokenizer(cmdline, " ");
-		List<String> actions = null;
-		String cmd=null;
-		if (st.hasMoreTokens()) cmd = st.nextToken();
-		while (st.hasMoreTokens()) {
-//	        System.out.println(cmd);
-	        if (cmd.equalsIgnoreCase("rotate")){
-	        	actions = new ArrayList<String>();
-	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
-	        	cmd = cmd.toUpperCase();
-	        	while (cmd.equalsIgnoreCase("left") || cmd.equalsIgnoreCase("right")){
-		        	cmd = cmd.toUpperCase();
-		        	actions.add(cmd);
-		        	if (st.hasMoreTokens()) cmd = st.nextToken();
-		        	else break;	
-	        	}
-	        	if (commandToDo.keySet().contains(Action.ROTATE)){
-	        		commandToDo.get(Action.ROTATE).addAll(actions);
-	        	}else{
-	        		commandToDo.put(Action.ROTATE, actions);
-	        	}
-			}
-	        else if (cmd.equalsIgnoreCase("flap")){
-	        	actions = new ArrayList<String>();
-	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
-	        	try{
-	        		Integer times = Integer.parseInt(cmd);
-	        		actions.add(times.toString());
-	        	}catch (NumberFormatException e) {
-					throw (new CmdException(cmd + " is incorrect parameter! \n Flap command requiere a number parameter, ex : flap 10"));	
-				}	        	
-	        	if (commandToDo.keySet().contains(Action.FLAP)){
-	        		commandToDo.get(Action.FLAP).addAll(actions);
-	        	}else{
-	        		commandToDo.put(Action.FLAP, actions);
-	        	}
-	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        }
-	        else if (cmd.equalsIgnoreCase("heart")){
-	        	actions = new ArrayList<String>();
-	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
-	        	cmd = cmd.toUpperCase();
-	        	while (cmd.equalsIgnoreCase("on") || cmd.equalsIgnoreCase("off")){
-		        	cmd = cmd.toUpperCase();
-		        	actions.add(cmd);
-		        	if (st.hasMoreTokens()) cmd = st.nextToken();
-		        	else break;		
-	        	}
-	        	
-	        	if (commandToDo.keySet().contains(Action.HEART)){
-	        		commandToDo.get(Action.HEART).addAll(actions);
-	        	}else{
-	        		commandToDo.put(Action.HEART, actions);
-	        	}
-	        }
-	        
-	        else if(cmd.equalsIgnoreCase("head")){
-	        	actions = new ArrayList<String>();
-	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
-	        	cmd = cmd.toUpperCase();
-	        	while (cmd.equalsIgnoreCase("NONE") || cmd.equalsIgnoreCase("YELLOW") || 
-	        			cmd.equalsIgnoreCase("BLUE")|| cmd.equalsIgnoreCase("WHITE") ||
-	        			cmd.equalsIgnoreCase("VIOLET")|| cmd.equalsIgnoreCase("CYAN")|| 
-	        			cmd.equalsIgnoreCase("GREEN")|| cmd.equalsIgnoreCase("RED")){
-	        		
-		        	cmd = cmd.toUpperCase();
-		        	actions.add(cmd);
-		        	if (st.hasMoreTokens()) cmd = st.nextToken();
-		        	else break;	
-	        	}
-	        	
-	        	if (commandToDo.keySet().contains(Action.HEAD)){
-	        		commandToDo.get(Action.HEAD).addAll(actions);
-	        	}else{
-	        		commandToDo.put(Action.HEAD, actions);
-	        	}
-	        }
-	        
-	        else throw (new CmdException(cmd  + "is an unknown command"));    
-	     }
-		
-		return commandToDo;
-		
-	}
+
 	
 	private List<Map<Action,List<String>>> parseCmdLineOrder(String cmdline) throws CmdException{
-		int order = 0;
+		
 		List<Map<Action,List<String>>> orderList= new ArrayList<Map<Action,List<String>>>(); 
 		Map<Action,List<String>> commandToDo = null;
 		
@@ -337,15 +198,14 @@ public class IBuddyCommand implements Command {
 		while (st.hasMoreTokens()) {
 			commandToDo = new HashMap<Action, List<String>>();
 			orderList.add(commandToDo);
-//	        System.out.println(cmd);
 	        if (cmd.equalsIgnoreCase("rotate")){
 	        	actions = new ArrayList<String>();
 	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
+	        	else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
 	        	Integer times = Integer.parseInt(cmd);
-        		actions.add(times.toString());
+	        	actions.add(times.toString());
         		if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
+	        	else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
 	        	cmd = cmd.toUpperCase();
 	        	while (cmd.equalsIgnoreCase("left") || cmd.equalsIgnoreCase("right")){
 		        	cmd = cmd.toUpperCase();
@@ -362,16 +222,16 @@ public class IBuddyCommand implements Command {
 	        else if (cmd.equalsIgnoreCase("flap")){
 	        	actions = new ArrayList<String>();
 	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
+	        	else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
 	        	try{
 	        		Integer times = Integer.parseInt(cmd);
 	        		actions.add(times.toString());
 	        		if (st.hasMoreTokens()) cmd = st.nextToken();
-		        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
+		        	else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
 	        		times = Integer.parseInt(cmd);
 	        		actions.add(times.toString());
 	        	}catch (NumberFormatException e) {
-					throw (new CmdException(cmd + " is incorrect parameter! \n Flap command requiere a number parameter, ex : flap 10"));	
+					throw (new CmdException(cmd + " is incorrect parameter! \n Flap command requiere two numbers parameter, ex : flap 80 10"));	
 				}	        	
 	        	if (commandToDo.keySet().contains(Action.FLAP)){
 	        		commandToDo.get(Action.FLAP).addAll(actions);
@@ -383,11 +243,11 @@ public class IBuddyCommand implements Command {
 	        else if (cmd.equalsIgnoreCase("heart")){
 	        	actions = new ArrayList<String>();
 	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
+	        	else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
 	        	Integer times = Integer.parseInt(cmd);
         		actions.add(times.toString());
         		if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
+	        	else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
 	        	cmd = cmd.toUpperCase();
 	        	while (cmd.equalsIgnoreCase("on") || cmd.equalsIgnoreCase("off")){
 		        	cmd = cmd.toUpperCase();
@@ -406,11 +266,11 @@ public class IBuddyCommand implements Command {
 	        else if(cmd.equalsIgnoreCase("head")){
 	        	actions = new ArrayList<String>();
 	        	if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
+	        	else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
 	        	Integer times = Integer.parseInt(cmd);
         		actions.add(times.toString());
         		if (st.hasMoreTokens()) cmd = st.nextToken();
-	        	else throw (new CmdException(cmd + " need paramter! \n tape help to get list of command "));
+	        	else throw (new CmdException(cmd + " need paramter! \n tape ibuddy to get list of command "));
 	        	cmd = cmd.toUpperCase();
 	        	while (cmd.equalsIgnoreCase("NONE") || cmd.equalsIgnoreCase("YELLOW") || 
 	        			cmd.equalsIgnoreCase("BLUE")|| cmd.equalsIgnoreCase("WHITE") ||
@@ -428,13 +288,10 @@ public class IBuddyCommand implements Command {
 	        	}else{
 	        		commandToDo.put(Action.HEAD, actions);
 	        	}
-	        }
-	        
+	        }  
 	        else throw (new CmdException(cmd  + "is an unknown command"));    
 	     }
-		
 		return orderList;
-		
 	}
 
 	/**
@@ -462,18 +319,13 @@ public class IBuddyCommand implements Command {
 	 * @see org.apache.felix.shell.Command#getUsage()
 	 */
 	public String getFullUsage() {
-		return			getName() + " config <serial number> <token> : configure the bunny' identifiers"
-		+"\n"+	getName() + " play <left ear pos> <right ear pos> <text to speech> [<choregraphy>]: speech a text and play a chroregraphy"
-		+"\n"+	getName() + " voice <voice>: set the default voice (eg julie22k,claire22s,caroline22k,bruno22k,graham22s,lucy22s,heather22k,ryan22k,aaron22s,laura22s)"
-		+"\n"+	getName() + " voices : list the available voices"
-		+"\n"+	getName() + " baseurl <baseurl>: set the default base url of the Nabaztag server or proxy"
-		+"\n"+	getName() + " ears : get ears positions"
-		+"\n"+	getName() + " raw <url encoded params>: send the URL with raw encoded parameters"
-		+"\n"+	getName() + " sleep : sleep the bunny"
-		+"\n"+	getName() + " wakeup : wakeup the bunny"
-		+"\n"+	getName() + " issleeping : get the status of the bunny"
-		+"\n"+	getName() + " whoiam : get the name of the bunny"
-		+"\n"+	getName() + " trace <on|off> : set on|off the trace"
+		return			getName() + " list : List connected Ibuddys with id"
+		+"\n"+	getName() + " <id|*> rotate <interval> <directions: left|right>: rotate  every interval(>=200) time(in milliseconde) to the directions (eg : ibuddy 0 rotate 500 left right left)"
+		+"\n"+	getName() + " <id|*> flap <intensity> <number of flaps>: falp with specific intensity(>=75)  (eg ibuddy 0 flap 75 10)"
+		+"\n"+	getName() + " <id|*> head <interval> <colors:none|yellow|blue|white|violet|cyan|green|red>  : change head color every interval(in ms) (eg : ibuddy * head 500 yellow red blue)"
+		+"\n"+	getName() + " <id|*> heart <interval> <status:on|off>  : change heart status every interval(in ms) (eg : ibuddy * head 500 yellow red blue)"
+		+"\n"+	getName() + " <id|*> reset  : reset the ibuddy (eg : ibuddy * reset)"
+		+"\n Informations : \n  You can combine ibuddy actions command eg: ibuddy 1 rotate 500 left right ibuddy 0 flap 90 10"
 		;
 	}	
 }
