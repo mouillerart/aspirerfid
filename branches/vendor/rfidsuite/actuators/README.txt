@@ -1,0 +1,1 @@
+Those are the actuators of AspireRFID, such as the iBuddy, rocket launcher, etc.

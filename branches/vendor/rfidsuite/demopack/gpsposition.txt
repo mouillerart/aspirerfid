@@ -1,0 +1,9 @@
+# GPS Positions for Aspire demo
+
+Grenoble (LIG Lab/BatC),45.193925,5.770875
+Grenoble (LIG Lab/BatD),45.193149,5.76834
+Brussels (Mannekenpis),50.845,4.349992
+Brussels (Baulieu), 50.814402,4.411327
+Leuven (KUL), 50.87788,4.70216
+Athens (Parthenon), 37.971369,23.726628
+Valence (IUT),44.9151,4.914579 
