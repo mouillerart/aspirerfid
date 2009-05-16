@@ -2,6 +2,12 @@ OW2 :: AspireRFID ::  iBuddy
 
 This bundle provides a service and a command to control one or more iBuddies connected to the host
 
+The i-Buddy is a small blinking and moving USB figurine initially designed as a MSN live avantar.
+This actuator can be used in SOHO (Small Office Home Office) usecases.
+
+
+
+
 Installation Windows
 --------------------
 Copy the file IBUDDY.INF in the system
@@ -39,4 +45,14 @@ is interpreted as
 
 The first parameter is the duration in milliseconds of the action
 The second parameter of the FLAP action is the number of times of the wing flapping with a duration indicated in the first argument
+
+
+Other links
+-----------
+"hacking the USB i-buddy" http://cuntography.com/blog/?p=17
+
+http://www.jraf.org/static/maven/sites/jlibibuddy
+
+http://sourceforge.net/projects/usbsnoop
+
 

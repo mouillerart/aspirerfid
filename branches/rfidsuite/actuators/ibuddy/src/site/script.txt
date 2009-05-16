@@ -15,3 +15,7 @@ ibuddy 0 rotate 1000 left right left right left right
 ibuddy 0 rotate 1000 left right left right left right
 ibuddy 0 flap 75 30 head 1000 red yellow none cyan yellow
 ibuddy 0 rotate 1000 left right left right left right flap 75 30 head 1000 red yellow none cyan yellow heart 1000 on off on off on off on off  ibuddy 1 rotate 1000 left right left right left right flap 75 30 head 1000 red yellow none cyan yellow heart 1000 on off on off on off on
+
+ibuddy * flap 75 30 head 1000 red yellow none cyan yellow
+
+ibuddy * reset
