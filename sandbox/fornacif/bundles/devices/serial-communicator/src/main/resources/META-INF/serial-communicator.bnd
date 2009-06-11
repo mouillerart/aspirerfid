@@ -31,3 +31,12 @@ Private-Package org.ow2.aspirerfid.device.serialcommunicator.impl
 
 # Embed the RXTX jar
 Embed-Dependency rxtx;inline=true
+
+Bundle-NativeCode nativelib/Windows/i368-mingw32/rxtxParallel.dll;nativelib/Windows/i368-mingw32/rxtxSerial.dll;osname=Win32;processor=x86,\
+                  nativelib/Linux/i686-unknown-linux-gnu/librxtxParallel.so;nativelib/Linux/i686-unknown-linux-gnu/librxtxSerial.so;osname=Linux;processor=x86,\
+                  nativelib/Linux/ia64-unkown-linux-gnu/librxtxSerial.so;osname=Linux;processor=ia64,\
+                  nativelib/Linux/x86_64-unknown-linux-gnu/librxtxSerial.so;osname=Linux;processor=x86-64,\
+                  nativelib/Mac_OS_X/librxtxSerial.jnilib;osname=Mac OS X;processor=x86;processor=PowerPC;processor=x86-64,\
+                  nativelib/Solaris/sparc-solaris/sparc32-sun-solaris2.8/librxtxSerial-2.1-7.so;nativelib/Solaris/sparc-solaris/sparc32-sun-solaris2.8/librxtxSerial.so;osname=Solaris;processor=Sparc,\
+                  nativelib/Solaris/sparc-solaris/sparc64-sun-solaris2.8/librxtxSerial-2.1-7.so;nativelib/Solaris/sparc-solaris/sparc64-sun-solaris2.8/librxtxSerial.so;osname=Solaris;processor=Sparc64
+                  
