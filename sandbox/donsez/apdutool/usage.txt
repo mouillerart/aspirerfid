@@ -15,12 +15,13 @@ waitinsertion <hex string>      : wait for a card with the following ATR
 atr                             : get card ATR detail
 card                            : get card info
 send <hex string>               : send a command APDU
-last				: display the response APDU
-last <format>			: display the response APDU in format HEX,byte,short,int,UNICODE,UTF
+last                            : display the response APDU
+last <format>                   : display the response APDU in format HEX,byte,short,int,UNICODE,UTF
+protocol <string>               : protocol can be "T=0", "T=1", "T=CL" or "*"
 select <hex string>             : select the applet by AID
-pause <interger>                : pause in millisec
+pause <integer>                 : pause in millisec
 help | ?                        : this help
-close				: close current channel, card, terminal
+close                           : close current channel, card, terminal
 exit | quit                     : exit APDUTool
 echo <string>                   : echo the string
 # <comment>                     : comment for batch files
@@ -29,4 +30,4 @@ jcapplets                       : list the JavaCard applets in the card
 gpapplets                       : list the Global Platform applets in the card
 
 Properties:
-apdutool.atrlist.url		: the URL of the global ATR list (default http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt)
+apdutool.atrlist.url            : the URL of the global ATR list (default http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt)

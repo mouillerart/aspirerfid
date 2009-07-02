@@ -1,14 +1,20 @@
 /*
  * HERE THE BANNER
  */
+import java.awt.print.Printable;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.URL;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
+import javax.smartcardio.ATR;
 import javax.smartcardio.Card;
 import javax.smartcardio.CardChannel;
 import javax.smartcardio.CardException;
@@ -33,17 +39,20 @@ public class APDUTool {
 
 	private static final String ATRBANKRESOURCE="/atrbank.txt";
 	private static final String ATRBANKLOCALFILE="atrbank.txt";
-	private static final String ATRBANKURL="http://www-adele.imag.fr/~donsez/pub/apdutool/atrbank.txt";
+	private static final String ATRBANKURL="http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt";
 	private static final Object PROMPT = "\n>";
 
 	private static CardTerminals cardTerminals=null;
 	private static CardTerminal cardTerminal=null;
+	private static String protocol="*"; // "T=0", "T=1", or "T=CL"
 	private static Card card=null;
 	private static CardChannel cardChannel=null;
+	private static ATR cardATR=null;
 	
 	private static byte[] lastResponseAPDU=null;
 
-	private static byte[][] atrBank=null; // for future purposes
+	private static ATRBank atrBank=new ATRBank();
+
 	
 	private static PrintStream out=System.out;
 	private static PrintStream err=System.err;
@@ -73,9 +82,29 @@ public class APDUTool {
 			in=new BufferedReader(new InputStreamReader(System.in));
 		}
 
-		// TODO load ATR bank from the local file and from a URL (common repository)
-		
-		
+		// load ATR bank with the embedded ressource
+//		try {
+//			InputStream is=APDUTool.class.getClassLoader().getResourceAsStream(ATRBANKRESOURCE));
+//			if(is!=null) atrBank.load(new InputStreamReader(is));
+//			else err.println("Can't load the ATR Bank from the ressource " + ATRBANKRESOURCE);
+//		} catch (IOException e) {
+//			err.println("Can't load the ATR Bank:"+ e.getLocalizedMessage());
+//		}
+
+		// load ATR bank from a URL (common repository)
+		try {
+			atrBank.load(new InputStreamReader((new URL(ATRBANKURL)).openStream()));
+		} catch (IOException e) {
+			err.println("Can't load the ATR Bank:"+ e.getLocalizedMessage());
+		}
+
+		// load ATR bank with the local file
+		try {
+			atrBank.load(new FileReader(ATRBANKLOCALFILE));
+		} catch (IOException e) {
+			err.println("Can't load the ATR Bank:"+ e.getLocalizedMessage());
+		}
+
 		TerminalFactory terminalFactory = TerminalFactory.getDefault();
 		cardTerminals = terminalFactory.terminals();
 
@@ -120,14 +149,24 @@ public class APDUTool {
 					// TODO : match ATR in the atrbank
 				}
 				else if(command.equals("atr")) {
-					//getCardID();
-					// TODO : match ATR in the atrbank
+					printATR(out);
+				}
+				else if(command.equals("protocol")) {
+					int b=line.indexOf("\"");
+					int e=line.lastIndexOf("\"");
+					if(!(b>0 && e>0 && e>b)) {
+						err.println("Incorrect format for the protocol");
+						if(protocol!=null) err.println("Current protocol is " + protocol);
+						continue;							
+					}
+					protocol=line.substring(b+1, e);											
 				}
 				else if(command.equals("terminal")) {
 					int b=line.indexOf("\"");
 					int e=line.lastIndexOf("\"");
 					if(!(b>0 && e>0 && e>b)) {
-						err.println("Incorrect format for the terminal name");			
+						err.println("Incorrect format for the terminal name");
+						if(cardTerminal!=null) err.println("Current terminal is " + cardTerminal.getName());
 						continue;							
 					}
 					String name=line.substring(b+1, e);						
@@ -148,6 +187,7 @@ public class APDUTool {
 					while (i.hasNext()) {
 						out.println(getCardTerminalInfo((CardTerminal) i.next()));
 					}
+				}
 				else if(command.equals("last")) {
 					if(lastResponseAPDU==null){
 						out.println();
@@ -158,22 +198,9 @@ public class APDUTool {
 							out.println("Format not implemented");
 						}
 					}
-				}
 				} else if(command.equals("close")) {
 					close();
 				}
-//					else if(command.equals("applets")) {
-//						//getApplets();
-//					}
-//					else if(command.equals("select")) {
-//						byte[] x = null;
-//						if (check9000(ch.transmit(SELECT_APDU))) {
-//							out.println("SELECT OKAY");
-//						} else {
-//							out.println("SELECT NOT OKAY");
-//							return;
-//						}
-//					}
 				else if(command.equals("quit") || command.equals("exit")) {
 					close();						
 					break;
@@ -204,6 +231,18 @@ public class APDUTool {
 				else if(command.equals("help")||command.equals("?")) {
 					printFile(USAGEFILE);
 				}
+//				else if(command.equals("applets")) {
+//				//getApplets();
+//			    }
+//		 	    else if(command.equals("select")) {
+//				   byte[] x = null;
+//				   if (check9000(ch.transmit(SELECT_APDU))) {
+//					 out.println("SELECT OKAY");
+//				    } else {
+//					  out.println("SELECT NOT OKAY");
+//					  return;
+//				    }
+//			    }
 				else {
 					out.println("unknown command");
 				}
@@ -213,15 +252,14 @@ public class APDUTool {
 		}
 	}
 	
+
 	private static void close() throws CardException {
-		if(cardChannel!=null) {cardChannel.close(); cardChannel=null; }
-		if(card!=null) {card=null; }
+		//if(cardChannel!=null) {cardChannel.close(); cardChannel=null; }
+		if(card!=null) {card.disconnect(false); card=null; }
 		if(cardTerminal!=null) {cardTerminal=null; }
 	}
 
 	public static boolean check9000(ResponseAPDU responseAPDU) {
-		//byte[] response = ra.getBytes();
-		//return (response[response.length - 2] == (byte) 0x90 && response[response.length - 1] == 0);
 		return (responseAPDU.getSW()==0x9000); 
 	}
 
@@ -298,20 +336,19 @@ public class APDUTool {
 		}
 		
 		try {
-			card = cardTerminal.connect("T=1");
+			card = cardTerminal.connect(protocol);
 			out.println("Terminal connected");
 		} catch (Exception e) {
 			err.println("Terminal NOT connected: " + e.toString());
+			return;
 		}
 				
-		byte[] cardATR=card.getATR().getBytes();
-		out.println("ATR: " + HexString.hexify(cardATR, " "));
-		
-		// TODO find the ATR info in the bank
+		cardATR=card.getATR();
+		printATR(out);
 		
 		// if an ATR is required, test if the inserted card matches this ATR
 		if(requiredATR!=null && cardATR!=null) {
-			if(!java.util.Arrays.equals(cardATR,requiredATR)) {
+			if(!java.util.Arrays.equals(cardATR.getBytes(),requiredATR)) {
 				card=null;
 				return;
 			}
@@ -319,6 +356,17 @@ public class APDUTool {
 		cardChannel = card.getBasicChannel();
 	}
 	
+	private static void printATR(PrintStream out) {
+		if(cardATR!=null){
+			out.println("ATR: " + HexString.hexify(cardATR.getBytes(), " "));
+			String description=atrBank.getDescription(cardATR.getBytes());
+			if(description!=null) out.println(description);
+			
+		} else {
+			out.println("ATR: none");			
+		}
+	}
+
 	private static String getCardTerminalInfo(CardTerminal cardTerminal) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("CardTerminal[name=");

@@ -9,5 +9,6 @@ waitinsertion 3F 65 25 00 2C 09 69 90 00
 echo SESAME VITALE information
 echo get public information about the owner of the card
 send BC B0 02 88 B0
+close
 help
 quit
