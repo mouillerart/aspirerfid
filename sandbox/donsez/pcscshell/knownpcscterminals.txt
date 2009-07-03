@@ -1,0 +1,4 @@
+# Known PCSC terminals
+
+O2 O2Micro CCID SC Reader 0
+    CCID USB Reader 0

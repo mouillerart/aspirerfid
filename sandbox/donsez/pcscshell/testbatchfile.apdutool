@@ -1,0 +1,15 @@
+#
+# This script file contains command for PCSCShell
+#
+terminals
+terminal
+atrbank
+echo wait for a SESAME VITALE (french healthcare card)
+waitinsertion 3F 65 25 00 2C 09 69 90 00
+echo SESAME VITALE information
+echo get public information about the owner of the card
+send BC B0 02 88 B0
+last HEX
+close
+help
+quit
