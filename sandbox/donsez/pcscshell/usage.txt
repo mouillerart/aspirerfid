@@ -25,6 +25,7 @@ protocol <string>               : protocol can be "T=0", "T=1", "T=CL" or "*"
 select <hex string>             : select the applet by AID
 pause <integer>                 : pause in millisec
 help | ?                        : this help
+exec | batch | run <url>        : execute the command lines listed in the document at the <url>
 close                           : close current channel, card, terminal
 exit | quit                     : exit APDUTool
 echo <string>                   : echo the string

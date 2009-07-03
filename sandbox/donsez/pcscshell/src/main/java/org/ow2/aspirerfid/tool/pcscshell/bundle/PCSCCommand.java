@@ -22,38 +22,52 @@
 */
 package org.ow2.aspirerfid.tool.pcscshell.bundle;
 
+import java.io.File;
 import java.io.PrintStream;
+import java.net.URL;
+
+import javax.smartcardio.CardException;
 
 import org.apache.felix.shell.Command;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.ow2.aspirerfid.tool.pcscshell.impl.PCSCShell;
 
 /**
+ * This class provides a command shell for Felix
  * @author  Didier DONSEZ <X.Y@imag.fr> where X=Didier and Y=Donsez
  */
 public class PCSCCommand implements BundleActivator, Command {
 
 	private ServiceRegistration serviceRegistration;
-	
+	private PCSCShell pcscShell;
 	/**
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		serviceRegistration=bundleContext.registerService(Command.class.getName(), this, null);
+		pcscShell=new PCSCShell();
+		// load ATRs ?
 	}
 
 	/**
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
+		pcscShell.close();
+		pcscShell=null;
 		serviceRegistration.unregister();
-
 	}
 
 	public void execute(String line, PrintStream out, PrintStream err) {
-		// TODO Auto-generated method stub
-		
+		try {
+			int i=getName().length();
+			while(line.charAt(i)!=' ') i++;
+			pcscShell.execute(line.substring(i),out,err);
+		} catch (CardException e) {
+			e.printStackTrace();
+		}		
 	}
 
 	public String getName() {
@@ -67,5 +81,4 @@ public class PCSCCommand implements BundleActivator, Command {
 	public String getUsage() {
 		return null;
 	}
-
 }

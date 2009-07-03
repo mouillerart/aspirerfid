@@ -23,10 +23,14 @@
 package org.ow2.aspirerfid.tool.pcscshell.impl;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.io.Reader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ListIterator;
@@ -42,16 +46,23 @@ import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
 import javax.smartcardio.TerminalFactory;
 
+import com.sun.rmi.rmid.ExecOptionPermission;
+
 /**
- * This class provides a simple utility to send/receive APDU with a smartcard connected to a PC/SC smartcard reader.
- * @author  Didier Donsez (didier.donsez@imag.fr)
- * <p>This version uses the Java Platform 6 javax.smartcardio API.
- * <p>The previous version uses the non-maintained OpenCard Framework (OCF) API. 
- **/
+ * This class provides a simple utility to send/receive APDU with a smartcard
+ * connected to a PC/SC smartcard reader.
+ * 
+ * @author Didier Donsez (didier.donsez@imag.fr)
+ *         <p>
+ *         This version uses the Java Platform 6 javax.smartcardio API.
+ *         <p>
+ *         The previous version uses the non-maintained OpenCard Framework (OCF)
+ *         API.
+ */
 
 public class PCSCShell {
 
-	private static final String NAME="apdutool";
+	private static final String NAME="pcsctool";
 	private static final char ENDL='\n';
 	private static final String USAGEFILE="usage.txt";
 
@@ -60,32 +71,36 @@ public class PCSCShell {
 	private static final String ATRBANKURL="http://ludovic.rousseau.free.fr/softwares/pcsc-tools/smartcard_list.txt";
 	private static final Object PROMPT = "\n>";
 
-	private static CardTerminals cardTerminals=null;
-	private static CardTerminal cardTerminal=null;
-	private static String protocol="*"; // "T=0", "T=1", or "T=CL"
-	private static Card card=null;
-	private static CardChannel cardChannel=null;
-	private static ATR cardATR=null;
+	private TerminalFactory terminalFactory = null;
+	private CardTerminals cardTerminals=null;
+	private CardTerminal cardTerminal=null;
+	private String protocol="*"; // "T=0", "T=1", or "T=CL"
+	private Card card=null;
+	private CardChannel cardChannel=null;
+	private ATR cardATR=null;
 	
-	private static byte[] lastResponseAPDU=null;
+	private byte[] lastResponseAPDU=null;
 
-	private static ATRBank atrBank=new ATRBank();
-
+	private ATRBank atrBank=new ATRBank();
 	
 	private static PrintStream out=System.out;
 	private static PrintStream err=System.err;
+
+	private static boolean mustPrintCommandLine=false;
+
 	
-	public static void main (String [] args) {
-		
+	private static void printBanner(){
 		out.println ("---------------------------------------------------------------");
 		out.println ("PCSCShell");
 		out.println ("Author: Didier DONSEZ <X.Y@imag.fr> where X=Didier and Y=Donsez");
 		out.println ("Licence: LGPL v2.1");
 		out.println ("---------------------------------------------------------------");
-
+	}
+	
+	public static void main (String [] args) {
+		
+		printBanner();
 		BufferedReader in=null;
-
-		boolean mustPrintCommandLine=false;
 
 		if(args.length==1) {
 			try {
@@ -100,32 +115,208 @@ public class PCSCShell {
 			in=new BufferedReader(new InputStreamReader(System.in));
 		}
 
-		// load ATR bank with the embedded ressource
-//		try {
-//			InputStream is=PCSCShell.class.getClassLoader().getResourceAsStream(ATRBANKRESOURCE));
-//			if(is!=null) atrBank.load(new InputStreamReader(is));
-//			else err.println("Can't load the ATR Bank from the ressource " + ATRBANKRESOURCE);
-//		} catch (IOException e) {
-//			err.println("Can't load the ATR Bank:"+ e.getLocalizedMessage());
-//		}
-
-		// load ATR bank from a URL (common repository)
+		loop(in);
+		
+	}
+	
+	public PCSCShell(){
+		terminalFactory = TerminalFactory.getDefault();
+		cardTerminals = terminalFactory.terminals();		
+	}
+	
+	/**
+	 * load ATR bank from a URL (common repository)
+	 */
+	public void loadATRBank(URL url){
 		try {
-			atrBank.load(new InputStreamReader((new URL(ATRBANKURL)).openStream()));
+			atrBank.load(new InputStreamReader(url.openStream()));
 		} catch (IOException e) {
 			err.println("Can't load the ATR Bank:"+ e.getLocalizedMessage());
 		}
-
-		// load ATR bank with the local file
+	}
+	
+	/**
+	 * load ATR bank with the local file
+	 */
+	public void loadATRBank(File file){
 		try {
-			atrBank.load(new FileReader(ATRBANKLOCALFILE));
+			atrBank.load(new FileReader(file));
 		} catch (IOException e) {
 			err.println("Can't load the ATR Bank:"+ e.getLocalizedMessage());
 		}
+	}
 
-		TerminalFactory terminalFactory = TerminalFactory.getDefault();
-		cardTerminals = terminalFactory.terminals();
+	/**
+	 * load ATR bank with the ressource
+	 */
+	public void loadATRBank(String path){
+		try {
+			 InputStream is=PCSCShell.class.getClassLoader().getResourceAsStream(path);
+			 if(is!=null) atrBank.load(new InputStreamReader(is));
+			 else err.println("Can't load the ATR Bank from the ressource " + path);
+		} catch (IOException e) {
+			 err.println("Can't load the ATR Bank:"+ e.getLocalizedMessage());
+		}
+	}
+		
+	
+	public void execute(String line, PrintStream out, PrintStream err) throws CardException {
+		// split in command and arguments
+		StringTokenizer st=new StringTokenizer(line);
+		String command=st.nextToken();
+		if(command==null) return;
+		String argument=line.substring(command.length());
 
+		// command execution
+		if(command.equals("send") || command.equals(">") || command.equals("-->")) {
+			byte[] cmdapdu=null;
+			try {
+				cmdapdu=HexString.parse(argument," \t");
+			} catch(java.lang.NumberFormatException e){
+				err.println ("Incorrect APDU format");
+				return;
+			}
+			ResponseAPDU responseAPDU =cardChannel.transmit(new CommandAPDU(cmdapdu));
+			if (check9000(responseAPDU)) {
+				out.println("Response OK: "+HexString.hexify(responseAPDU.getBytes()," "));
+			} else {
+				out.println("Response KO: "+HexString.hexify(responseAPDU.getBytes()," "));
+			}
+			
+			lastResponseAPDU=responseAPDU.getBytes();
+		}
+		else if(command.equals("card")) {
+			// getCardID();
+			// TODO : match ATR in the atrbank
+		}
+		else if(command.equals("exec") || command.equals("run") || command.equals("batch")) {
+			// exec <url>;
+			// TODO : match ATR in the atrbank
+		}
+		else if(command.equals("atr")) {
+			printATR(out);
+		}
+		else if(command.equals("atrbankload")) {
+			// TODO;
+			try {
+				atrBank.load(new InputStreamReader((new URL(line.substring(line.lastIndexOf(" "))).openStream())));
+			} catch (IOException e) {
+				err.println("Can't load the ATR Bank:"+ e.getLocalizedMessage());
+			}
+		}
+		else if(command.equals("protocol")) {
+			int b=line.indexOf("\"");
+			int e=line.lastIndexOf("\"");
+			if(!(b>0 && e>0 && e>b)) {
+				err.println("Incorrect format for the protocol");
+				if(protocol!=null) err.println("Current protocol is " + protocol);
+				return;							
+			}
+			protocol=line.substring(b+1, e);											
+		}
+		else if(command.equals("terminal")) {
+			int b=line.indexOf("\"");
+			int e=line.lastIndexOf("\"");
+			if(!(b>0 && e>0 && e>b)) {
+				err.println("Incorrect format for the terminal name");
+				if(cardTerminal!=null) err.println("Current terminal is " + cardTerminal.getName());
+				return;							
+			}
+			String name=line.substring(b+1, e);						
+			
+			CardTerminal _cardTerminal = cardTerminals.getTerminal(name);
+			if(_cardTerminal==null) {
+				err.println("No Terminal with this name");			
+				return;
+			} else {
+				out.println("Using "+_cardTerminal.getName());			
+				cardTerminal=_cardTerminal;
+			}
+		}
+		else if(command.equals("terminals")) {
+			cardTerminals = terminalFactory.terminals();
+			List<CardTerminal> list = cardTerminals.list();
+			ListIterator i = list.listIterator();
+			while (i.hasNext()) {
+				out.println(getCardTerminalInfo((CardTerminal) i.next()));
+			}
+		}
+		else if(command.equals("last")) {
+			if(lastResponseAPDU==null){
+				out.println();
+			} else {
+				if(argument.indexOf("HEX")!=-1){
+					out.println(HexString.hexify(lastResponseAPDU," "));
+				} else {
+					out.println("Format not implemented");
+				}
+			}
+		} else if(command.equals("close")) {
+			close();
+		}
+		else if(command.equals("echo")) {
+			out.println(argument);
+		}
+		else if( command.equals("#") || "#".equals(line.substring(0,1))) {
+			// do nothing
+			// out.println(argument);
+		}
+		else if(command.equals("waitinsertion")) {
+			byte[] requiredATR=null;
+			try {
+				requiredATR=HexString.parse(argument, " \t");
+				if(requiredATR!=null && requiredATR.length==0) requiredATR=null;
+				waitInsertion(requiredATR);
+			} catch(java.lang.NumberFormatException e) {
+				err.println ("Incorrect ATR format");
+			}
+		}
+		else if(command.equals("atrbank")) {
+				out.println("Local ATR bank");
+			printFile(ATRBANKLOCALFILE);
+			out.println("Remote common ATR bank");
+			printUrl(ATRBANKURL);
+		}
+		else if(command.equals("help")||command.equals("?")) {
+			printFile(USAGEFILE);
+		}
+// else if(command.equals("applets")) {
+// //getApplets();
+// }
+// else if(command.equals("select")) {
+// byte[] x = null;
+// if (check9000(ch.transmit(SELECT_APDU))) {
+// out.println("SELECT OKAY");
+// } else {
+// out.println("SELECT NOT OKAY");
+// return;
+// }
+// }
+		else {
+			err.println("unknown command");
+		}
+	}
+	
+	private static void loop(BufferedReader in){
+		
+		PCSCShell pcscShell=new PCSCShell();
+		
+		try {
+			pcscShell.loadATRBank(ATRBANKRESOURCE);
+		} catch (Exception e) {
+			err.println("ATRBank loading error for "+ATRBANKRESOURCE + " : "+e.getLocalizedMessage());
+		}
+		try {
+			pcscShell.loadATRBank(new URL(ATRBANKURL));
+		} catch (Exception e) {
+			err.println("ATRBank loading error for "+ATRBANKURL + " : "+e.getLocalizedMessage());
+		}
+		try {
+			pcscShell.loadATRBank(new File(ATRBANKLOCALFILE));
+		} catch (Exception e) {
+			err.println("ATRBank loading error for "+ATRBANKLOCALFILE + " : "+e.getLocalizedMessage());
+		}
+		
 		while(true){
 
 			try {
@@ -138,141 +329,21 @@ public class PCSCShell {
 				// print the line
 				if(mustPrintCommandLine) out.println(line);
 
-				// split in command and arguments
-				StringTokenizer st=new StringTokenizer(line);
-				String command=st.nextToken();
-				if(command==null) continue;
-				String argument=line.substring(command.length());
-
-				// command execution
-				if(command.equals("send") || command.equals(">") || command.equals("-->")) {
-					byte[] cmdapdu=null;
-					try {
-						cmdapdu=HexString.parse(argument," \t");
-					} catch(java.lang.NumberFormatException e){
-						err.println ("Incorrect APDU format");
-						continue;
-					}
-					ResponseAPDU responseAPDU =cardChannel.transmit(new CommandAPDU(cmdapdu));
-					if (check9000(responseAPDU)) {
-						out.println("Response OK: "+HexString.hexify(responseAPDU.getBytes()," "));
-					} else {
-						out.println("Response KO: "+HexString.hexify(responseAPDU.getBytes()," "));
-					}
-					
-					lastResponseAPDU=responseAPDU.getBytes();
-				}
-				else if(command.equals("card")) {
-					//getCardID();
-					// TODO : match ATR in the atrbank
-				}
-				else if(command.equals("atr")) {
-					printATR(out);
-				}
-				else if(command.equals("protocol")) {
-					int b=line.indexOf("\"");
-					int e=line.lastIndexOf("\"");
-					if(!(b>0 && e>0 && e>b)) {
-						err.println("Incorrect format for the protocol");
-						if(protocol!=null) err.println("Current protocol is " + protocol);
-						continue;							
-					}
-					protocol=line.substring(b+1, e);											
-				}
-				else if(command.equals("terminal")) {
-					int b=line.indexOf("\"");
-					int e=line.lastIndexOf("\"");
-					if(!(b>0 && e>0 && e>b)) {
-						err.println("Incorrect format for the terminal name");
-						if(cardTerminal!=null) err.println("Current terminal is " + cardTerminal.getName());
-						continue;							
-					}
-					String name=line.substring(b+1, e);						
-					
-					CardTerminal _cardTerminal = cardTerminals.getTerminal(name);
-					if(_cardTerminal==null) {
-						err.println("No Terminal with this name");			
-						continue;
-					} else {
-						out.println("Using "+_cardTerminal.getName());			
-						cardTerminal=_cardTerminal;
-					}
-				}
-				else if(command.equals("terminals")) {
-					cardTerminals = terminalFactory.terminals();
-					List<CardTerminal> list = cardTerminals.list();
-					ListIterator i = list.listIterator();
-					while (i.hasNext()) {
-						out.println(getCardTerminalInfo((CardTerminal) i.next()));
-					}
-				}
-				else if(command.equals("last")) {
-					if(lastResponseAPDU==null){
-						out.println();
-					} else {
-						if(argument.indexOf("HEX")!=-1){
-							out.println(HexString.hexify(lastResponseAPDU," "));
-						} else {
-							out.println("Format not implemented");
-						}
-					}
-				} else if(command.equals("close")) {
-					close();
-				}
-				else if(command.equals("quit") || command.equals("exit")) {
-					close();						
+				if(line.startsWith("quit") || line.startsWith("exit")) {
+					pcscShell.close();
 					break;
 				}
-				else if(command.equals("echo")) {
-					out.println(argument);
-				}
-				else if( command.equals("#") || "#".equals(line.substring(0,1))) {
-					// do nothing
-					// out.println(argument);
-				}
-				else if(command.equals("waitinsertion")) {
-					byte[] requiredATR=null;
-					try {
-						requiredATR=HexString.parse(argument, " \t");
-						if(requiredATR!=null && requiredATR.length==0) requiredATR=null;
-						waitInsertion(requiredATR);
-					} catch(java.lang.NumberFormatException e) {
-						err.println ("Incorrect ATR format");
-					}
-				}
-				else if(command.equals("atrbank")) {
-  					out.println("Local ATR bank");
-					printFile(ATRBANKLOCALFILE);
-					out.println("Remote common ATR bank");
-					printUrl(ATRBANKURL);
-				}
-				else if(command.equals("help")||command.equals("?")) {
-					printFile(USAGEFILE);
-				}
-//				else if(command.equals("applets")) {
-//				//getApplets();
-//			    }
-//		 	    else if(command.equals("select")) {
-//				   byte[] x = null;
-//				   if (check9000(ch.transmit(SELECT_APDU))) {
-//					 out.println("SELECT OKAY");
-//				    } else {
-//					  out.println("SELECT NOT OKAY");
-//					  return;
-//				    }
-//			    }
-				else {
-					out.println("unknown command");
-				}
+				pcscShell.execute(line,out,err);
+				
 			} catch (Exception e) {
 				e.printStackTrace(err);
 			}
 		}
 	}
 	
-
-	private static void close() throws CardException {
-		//if(cardChannel!=null) {cardChannel.close(); cardChannel=null; }
+	
+	public void close() throws CardException {
+		// if(cardChannel!=null) {cardChannel.close(); cardChannel=null; }
 		if(card!=null) {card.disconnect(false); card=null; }
 		if(cardTerminal!=null) {cardTerminal=null; }
 	}
@@ -334,15 +405,16 @@ public class PCSCShell {
 
 	}	
 	
-	public static void waitInsertion(byte[] requiredATR) throws CardException {
+	public void waitInsertion(byte[] requiredATR) throws CardException {
 		waitInsertion(requiredATR, 10000);
 	}
 
 	/**
 	 * process the command waitinsertion
-	 * @throws CardException 
+	 * 
+	 * @throws CardException
 	 */
-	public static void waitInsertion(byte[] requiredATR, long timeout) throws CardException {
+	public void waitInsertion(byte[] requiredATR, long timeout) throws CardException {
 		
 		if(!cardTerminal.isCardPresent()) {
 			out.println("Insert the card before "+timeout/1000+" seconds");			
@@ -374,7 +446,7 @@ public class PCSCShell {
 		cardChannel = card.getBasicChannel();
 	}
 	
-	private static void printATR(PrintStream out) {
+	private void printATR(PrintStream out) {
 		if(cardATR!=null){
 			out.println("ATR: " + HexString.hexify(cardATR.getBytes(), " "));
 			String description=atrBank.getDescription(cardATR.getBytes());
@@ -385,7 +457,7 @@ public class PCSCShell {
 		}
 	}
 
-	private static String getCardTerminalInfo(CardTerminal cardTerminal) {
+	private String getCardTerminalInfo(CardTerminal cardTerminal) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("CardTerminal[name=");
 		sb.append(cardTerminal.getName());

@@ -1,0 +1,8 @@
+TODOLIST
+
+Felix Shell Command
+
+ fix atrbankload command
+ 
+ exec | batch | run <url>        : execute the command lines listed in the document at the <url>
+ 
