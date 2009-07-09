@@ -246,7 +246,7 @@ public class PCSCShell {
 				out.println();
 			} else {
 				if(argument.indexOf("HEX")!=-1){
-					out.println(HexString.hexify(lastResponseAPDU," "));
+					out.println(HexString.hexify(lastResponseAPDU," ",16));
 				} else {
 					out.println("Format not implemented");
 				}

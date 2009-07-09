@@ -1,6 +1,6 @@
 TODOLIST
 
-Felix Shell Command
+Debug the Felix Shell Command
 
  fix atrbankload command
  

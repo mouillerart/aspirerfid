@@ -41,17 +41,41 @@ public class HexString {
 		if(separator==null){
 			separator="\n\t ";
 		}
+		int byteCounter=0;
 		StringTokenizer st = new StringTokenizer(hexString,separator);
-		byte[] result = new byte[st.countTokens() ];
+		byte[][] tok = new byte[st.countTokens()][];
 		for(int i=0; st.hasMoreTokens(); i++) {
-			//result[i]=(byte)Integer.parseInt(st.nextToken(),16);
-			char[] ca=(st.nextToken()).toCharArray();
-			if(ca.length!=2) throw new java.lang.NumberFormatException();
-			result[i]=(byte)(parse(ca[0])*16+parse(ca[1]));
+			tok[i]=parse(st.nextToken());
+			byteCounter+=tok[i].length;
 		}
+		byte[] result = new byte[byteCounter];
+		int k=0;
+		for(int i=0; i<tok.length; i++) {
+			for(int j=0; j<tok[i].length; j++) {
+				result[k++]=tok[i][j];
+			}
+		}		
 		return result;
 	}
 
+	
+	/**
+	 * Parse a Hex string without separator
+	 * @param hexString a a hexadecimal-formatted string
+	 * @note : java.lang.Integer.parseInt(String s, int radix) do not verify if symbol is correct !!
+	 */
+	public static byte[] parse(String hexString)
+		throws java.lang.NumberFormatException {
+		int len=hexString.length();
+		if(len%2!=0) throw new java.lang.NumberFormatException();
+		byte[] result = new byte[len/2];
+		char[] ca=hexString.toCharArray();
+		for(int i=0; i<len; i+=2) {
+			result[i/2]=(byte)(ca[i]*16+parse(ca[i+1]));
+		}
+		return result;
+	}
+	
 	/**
 	 * Parse a radix 16 symbol
 	 * @param c a symbol
@@ -78,11 +102,12 @@ public class HexString {
 		return sb.toString();
 	}
 
+
 	/**
 	 * Hexify a byte array
 	 * @param ba a byte array
 	 */
-	public static String hexify(byte[] ba, String separator) {
+	public static String hexify(byte[] ba, String separator, int bytePerLine) {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < ba.length; i++) {
 			if(i!=0 && separator!=null) {
@@ -92,8 +117,20 @@ public class HexString {
 			if (bs.length() == 1) {
 				sb.append(0);
 			}
-			sb.append(bs);			
+			sb.append(bs);
+			if((i+1)%bytePerLine==0) {
+				sb.append('\n');
+			}
 		}
 		return sb.toString();
+	}
+
+	
+	/**
+	 * Hexify a byte array
+	 * @param ba a byte array
+	 */
+	public static String hexify(byte[] ba, String separator) {
+		return hexify(ba,separator,Integer.MAX_VALUE);
 	}
 }

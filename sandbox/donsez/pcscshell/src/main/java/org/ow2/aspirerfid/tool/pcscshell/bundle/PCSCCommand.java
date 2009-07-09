@@ -22,9 +22,7 @@
 */
 package org.ow2.aspirerfid.tool.pcscshell.bundle;
 
-import java.io.File;
 import java.io.PrintStream;
-import java.net.URL;
 
 import javax.smartcardio.CardException;
 

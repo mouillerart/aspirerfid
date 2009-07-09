@@ -1,0 +1,27 @@
+#
+# This script file contains command for PCSCShell
+#
+help
+terminals
+terminal "    CCID USB Reader 0"
+waitinsertion
+
+echo commands for the ACR122 RFID readers and MiFare tags
+
+echo get firmware info
+> FF 00 48 00 00
+
+echo get card info
+> 80140000 08
+
+echo get serial from card
+> 80140400 06
+
+read tag block #0
+> FF00000005 D4 40 01 30 00
+
+read tag block #1
+> FF00000005 D4 40 01 30 04
+
+close
+quit
