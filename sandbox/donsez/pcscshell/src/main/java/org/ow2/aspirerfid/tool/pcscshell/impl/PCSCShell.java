@@ -79,7 +79,7 @@ public class PCSCShell {
 	private CardChannel cardChannel=null;
 	private ATR cardATR=null;
 	
-	private byte[] lastResponseAPDU=null;
+	private byte[] lastResponse=null;
 
 	private ATRBank atrBank=new ATRBank();
 	
@@ -183,7 +183,7 @@ public class PCSCShell {
 				out.println("Response KO: "+HexString.hexify(responseAPDU.getBytes()," "));
 			}
 			
-			lastResponseAPDU=responseAPDU.getBytes();
+			lastResponse=responseAPDU.getBytes();
 		}
 		else if(command.equals("card")) {
 			// getCardID();
@@ -242,11 +242,13 @@ public class PCSCShell {
 			}
 		}
 		else if(command.equals("last")) {
-			if(lastResponseAPDU==null){
+			if(lastResponse==null){
 				out.println();
 			} else {
 				if(argument.indexOf("HEX")!=-1){
-					out.println(HexString.hexify(lastResponseAPDU," ",16));
+					out.println(HexString.hexify(lastResponse," ",16));
+				} else if(argument.indexOf("CHAR")!=-1){
+						out.println(HexString.hexifyWithAscii(lastResponse," ",16));
 				} else {
 					out.println("Format not implemented");
 				}
@@ -434,6 +436,7 @@ public class PCSCShell {
 		}
 				
 		cardATR=card.getATR();
+		lastResponse=card.getATR().getBytes();
 		printATR(out);
 		
 		// if an ATR is required, test if the inserted card matches this ATR

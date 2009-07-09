@@ -19,8 +19,9 @@ waitinsertion <hex string>      : wait for a card with the following ATR
 atr                             : get card ATR detail
 card                            : get card info
 send <hex string>               : send a command APDU
-last                            : display the response APDU
-last <format>                   : display the response APDU in format HEX,byte,short,int,UNICODE,UTF
+last                            : display the last response
+last <format>                   : display the last response in format HEX,CHAR,byte,short,int,UNICODE,UTF
+last <format> <bytePerline>     : display the last response with bytePerline bytes per line
 protocol <string>               : protocol can be "T=0", "T=1", "T=CL" or "*"
 select <hex string>             : select the applet by AID
 pause <integer>                 : pause in millisec

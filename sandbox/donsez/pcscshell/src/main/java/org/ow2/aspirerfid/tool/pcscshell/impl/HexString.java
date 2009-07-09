@@ -125,6 +125,35 @@ public class HexString {
 		return sb.toString();
 	}
 
+	/**
+	 * Hexify a byte array
+	 * @param ba a byte array
+	 * TODO add char from 0x00 to 0x20 + 0x7F
+	 */
+	public static String hexifyWithAscii(byte[] ba, String separator, int bytePerLine) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < ba.length; i++) {
+			if(i!=0 && separator!=null) {
+				sb.append(separator);
+			}
+
+			if(ba[i]>0x20 && ba[i]<0x7F) {
+				sb.append(' ');
+				sb.append((char)ba[i]);
+			} else {
+				String bs=null;
+				bs = Integer.toHexString(ba[i] & 0xFF);
+				if (bs.length() == 1) {
+					sb.append(0);
+				}
+				sb.append(bs);
+			}
+			if((i+1)%bytePerLine==0) {
+				sb.append('\n');
+			}
+		}
+		return sb.toString();
+	}
 	
 	/**
 	 * Hexify a byte array
