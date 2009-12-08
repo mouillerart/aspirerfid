@@ -23,11 +23,13 @@
  */
 
 
-package fr.liglab.adele.sunspot.controller;
+package org.ow2.aspirerfid.sensor.sunspot.controller;
 
 import com.sun.spot.sensorboard.EDemoBoard;
 import com.sun.spot.sensorboard.io.IScalarInput;
 import com.sun.spot.io.j2me.radiogram.*;
+import com.sun.spot.sensorboard.peripheral.ISwitch;
+import com.sun.spot.sensorboard.peripheral.ISwitchListener;
 import com.sun.spot.sensorboard.peripheral.ITriColorLED;
 import com.sun.spot.util.BootloaderListener;
 import com.sun.spot.util.Utils;
@@ -37,15 +39,13 @@ import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 /**
- * This application is the 'on SPOT' portion of the SendDataDemo. It
- * periodically samples a sensor value on the SPOT and transmits it to
- * a desktop application (the 'on Desktop' portion of the SendDataDemo)
- * where the values are displayed.
+ * This application is an 'on SPOT' controller. It is designed to interact with an OSGi gateway.
+ * It periodically sends heartbeat so that it can be detected by the gateway and used as a service
+ * that is invokable, that produces sensor measurements and that publishes events when a button is pushed
  *
- * @author: Vipul Gupta
- * modified: Ron Goldman
+ * @author: Lionel Touseau
  */
-public class SPOTController extends MIDlet {
+public class SPOTController extends MIDlet  implements ISwitchListener {
 
     private static final int HOST_PORT = 50;
     private static final int REPLY_PORT = 51;
@@ -56,6 +56,8 @@ public class SPOTController extends MIDlet {
     private RadiogramConnection dgConnection = null;
     
     private boolean running;
+    
+    private ISwitch sw1, sw2;   // Variables to hold the two switches.
     
     protected void startApp() throws MIDletStateChangeException {
         
@@ -86,6 +88,8 @@ public class SPOTController extends MIDlet {
         startHeartbeat();
         
         startDispatcher();
+        
+        startMonitoringSwitches();
         
         System.out.println("hb & dispatch started");
         
@@ -121,6 +125,7 @@ public class SPOTController extends MIDlet {
                         spotAddress = dg.getAddress();
                         cmdType = dg.readByte();
                         int comPort;
+                        long sampleDelay;
                         
                         switch (cmdType) {
                             case PacketTypes.ADMIN_SVC_CONNECTION :
@@ -130,9 +135,15 @@ public class SPOTController extends MIDlet {
                                 break;
                             case PacketTypes.TEMP_PROD_CONNECTION :
                                 comPort = dg.readInt();
-                                long sampleDelay = dg.readLong();
+                                sampleDelay = dg.readLong();
                                 TemperatureProducer tp = new TemperatureProducer(spotAddress, comPort, sampleDelay);
                                 new Thread(tp).start();
+                                break;
+                            case PacketTypes.ACCEL_PROD_CONNECTION :
+                                comPort = dg.readInt();
+                                sampleDelay = dg.readLong();
+                                AccelerationProducer ap = new AccelerationProducer(spotAddress, comPort, sampleDelay);
+                                new Thread(ap).start();
                                 break;
                             default: break;
                         }
@@ -173,6 +184,48 @@ public class SPOTController extends MIDlet {
         }.start();
     }
     
+    private void startMonitoringSwitches() {
+        
+        sw1 = EDemoBoard.getInstance().getSwitches()[EDemoBoard.SW1];  
+        sw2 = EDemoBoard.getInstance().getSwitches()[EDemoBoard.SW2];
+
+        // enable automatic notification of switches
+        sw1.addISwitchListener(this);
+        sw2.addISwitchListener(this);
+
+    }
+    
+    public void switchPressed(ISwitch button) {
+        Datagram dg = null;
+        try {
+            // Then, we ask for a datagram with a small size
+            dg = dgConnection.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
+            dg.writeByte(PacketTypes.BUTTON);
+            byte switchButton = (button == sw1) ? PacketTypes.BUTTON_SW1 : PacketTypes.BUTTON_SW2;
+            dg.writeByte(switchButton);
+            dg.write(PacketTypes.BUTTON_PRESSED);
+            dgConnection.send(dg);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
+    public void switchReleased(ISwitch button) {
+        Datagram dg = null;
+        try {
+            // Then, we ask for a datagram with a small size
+            dg = dgConnection.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
+            dg.writeByte(PacketTypes.BUTTON);
+            byte switchButton = (button == sw1) ? PacketTypes.BUTTON_SW1 : PacketTypes.BUTTON_SW2;
+            dg.writeByte(switchButton);
+            dg.write(PacketTypes.BUTTON_RELEASED);
+            dgConnection.send(dg);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     protected void pauseApp() {
         // This will never be called by the Squawk VM
     }
@@ -180,5 +233,7 @@ public class SPOTController extends MIDlet {
     protected void destroyApp(boolean arg0) throws MIDletStateChangeException {
         // Only called if startApp throws any exception other than MIDletStateChangeException
         running = false;
+        sw1.removeISwitchListener(this);    // disable automatic notification for switch 1
+        sw2.removeISwitchListener(this);    // disable automatic notification for switch 2
     }
 }

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package fr.liglab.adele.sunspot.controller;
+package org.ow2.aspirerfid.sensor.sunspot.controller;
 
 import com.sun.spot.io.j2me.radiogram.RadiogramConnection;
 import com.sun.spot.sensorboard.EDemoBoard;

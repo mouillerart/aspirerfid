@@ -3,10 +3,12 @@
  * and open the template in the editor.
  */
 
-package fr.liglab.adele.sunspot.controller;
+package org.ow2.aspirerfid.sensor.sunspot.controller;
 
 import com.sun.spot.io.j2me.radiogram.Radiogram;
 import com.sun.spot.io.j2me.radiogram.RadiogramConnection;
+import com.sun.spot.peripheral.IBattery;
+import com.sun.spot.peripheral.Spot;
 import com.sun.spot.sensorboard.EDemoBoard;
 import com.sun.spot.sensorboard.peripheral.ITriColorLED;
 import com.sun.spot.sensorboard.peripheral.LEDColor;
@@ -32,12 +34,16 @@ public class SPOTControlHandler implements Runnable {
     
     private ITriColorLED leds[] = EDemoBoard.getInstance ().getLEDs();
     
+    private IBattery battery;
+    
     public SPOTControlHandler(String address, int port) {
         targetAddress = address;
         communicationPort = port;
         try {
             // open a connection to communicate with the remote base station
             rCon = (RadiogramConnection) Connector.open("radiogram://"+targetAddress+":"+communicationPort);
+            // get Battery
+            battery = Spot.getInstance().getPowerController().getBattery();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -62,13 +68,21 @@ public class SPOTControlHandler implements Runnable {
         }
         while (!end) {
             try {
+                dg.reset();
                 // listen for incomming commands
                 rCon.receive(dg);
                 byte cmd = dg.readByte();
                 
                 switch (cmd) {
                     case PacketTypes.BLINK_LEDS_REQ :
-                        blinkLEDs();
+                        int times = dg.readInt();
+                        blinkLEDs(times);
+                        break;
+                    case PacketTypes.GET_BATTERY_REQ :
+                        Datagram reply = rCon.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
+                        reply.writeByte(PacketTypes.GET_BATTERY_REQ);
+                        reply.writeInt(battery.getBatteryLevel());
+                        rCon.send(reply);
                         break;
                 }
                 
@@ -81,8 +95,8 @@ public class SPOTControlHandler implements Runnable {
     }
     
     // handle Blink LEDs command
-    private void blinkLEDs() {
-        for (int i = 0; i < 10; i++) {          // blink LEDs 10 times = 10 seconds
+    private void blinkLEDs(int times) {
+        for (int i = 0; i < times; i++) {          // blink LEDs N times for N seconds
             for (int j = 0; j < 8; j++) {
                 leds[j].setColor(LEDColor.MAGENTA);
                 leds[j].setOn();
@@ -94,5 +108,5 @@ public class SPOTControlHandler implements Runnable {
             Utils.sleep(750);
         }
     }
-
+    
 }
