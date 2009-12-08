@@ -35,10 +35,19 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
 
 import org.apache.felix.ipojo.ComponentInstance;
+import org.apache.felix.ipojo.ConfigurationException;
 import org.apache.felix.ipojo.Factory;
 import org.apache.felix.ipojo.InstanceManager;
+import org.apache.felix.ipojo.MissingHandlerException;
+import org.apache.felix.ipojo.UnacceptableConfiguration;
 import org.osgi.framework.Constants;
 import org.osgi.util.measurement.Measurement;
+import org.ow2.aspirerfid.sensor.sunspot.event.buttons.SwitchButtonEventPublisher;
+import org.ow2.aspirerfid.sensor.sunspot.event.buttons.EventConstants.SwitchButton;
+import org.ow2.aspirerfid.sensor.sunspot.producers.AccelerationListener;
+import org.ow2.aspirerfid.sensor.sunspot.producers.AccelerationProducer;
+import org.ow2.aspirerfid.sensor.sunspot.producers.TemperatureListener;
+import org.ow2.aspirerfid.sensor.sunspot.producers.TemperatureProducer;
 
 import com.sun.spot.io.j2me.radiogram.RadiogramConnection;
 
@@ -66,10 +75,14 @@ public class Host implements Runnable {
     private RadiogramConnection rCon;	
 	
     private Factory spotServiceFactory;
+    private Factory spotEventFactory;
     private Factory accelProducerFactory;
     private Factory tempProducerFactory;
     private Factory lumProducerFactory;
     private Factory batteryProducerFactory;
+    
+    private ComponentInstance sbepInstance;
+    private SwitchButtonEventPublisher buttonEventPublisher; 
     
     private boolean end;
     
@@ -96,13 +109,22 @@ public class Host implements Runnable {
 		components = new HashMap<String, List<ComponentInstance>>();
 		connectedSpots = new HashSet<String>();
 		lastHbReceived = new HashMap<String, Long>();
-		
 	}
 		
 	// iPOJO callbacks
 	
 	public void start(){
 		System.setProperty("SERIAL_PORT", serialPort);
+		
+		// create an instance of the publisher
+		Properties config = new Properties();
+		config.setProperty("instance.name", "spot-event-pub-inst");
+		try {
+			sbepInstance = spotEventFactory.createComponentInstance(config);
+			buttonEventPublisher = (SwitchButtonEventPublisher) ((InstanceManager)sbepInstance).getPojoObject();			
+        } catch(Exception e) {
+            e.printStackTrace();
+         }
 		
 		// Start listening to SPOT connection broadcasted messages
 		end = false;
@@ -131,11 +153,28 @@ public class Host implements Runnable {
 		// stop all components
 		for (List<ComponentInstance> componentList : components.values()){
 			for (ComponentInstance inst : componentList) {
+	            
+	            // unregisters the producer so it stops receiving updated measurements
+	            Object pojo = ((InstanceManager)inst).getPojoObject();
+				if (pojo instanceof AccelerationProducer) {
+					AccelerationListener accelListener = AccelerationListener.getSingleton();
+					if (accelListener != null) {
+						accelListener.removeProducer((AccelerationProducer) pojo);
+					}
+				} else if (pojo instanceof TemperatureProducer) {
+					TemperatureListener tempListener = TemperatureListener.getSingleton();
+					if (tempListener != null){
+						tempListener.removeProducer((TemperatureProducer) pojo);
+					}
+				}
 				inst.dispose();
 			}
 		}
 		components.clear();
 		connectedSpots.clear();
+		
+		// including the event Publisher
+		sbepInstance.dispose();
 	}
 	
 
@@ -165,12 +204,9 @@ public class Host implements Runnable {
         	}
         	else {
             	try {
-            		System.out.println("waiting for data"); 
 					rCon.receive(dg);
-					System.out.println("data received");
 	            	// read sender's Id
 	                String addr = dg.getAddress();
-	                System.out.println("ADDRESS "+addr);
 	                byte type = dg.readByte();
 	                
 	                if (type == PacketTypes.HEARTBEAT) {
@@ -190,6 +226,36 @@ public class Host implements Runnable {
 		                	}
 		                }
 	                }
+	                else if (type == PacketTypes.BUTTON) {
+	                	
+	                	// which button ?
+	                	byte button = dg.readByte();
+	                	SwitchButton switchButton = null;
+	                	switch (button) {
+	                		case PacketTypes.BUTTON_SW1:
+	                			switchButton = SwitchButton.SW1;
+	                			break;
+	                		case PacketTypes.BUTTON_SW2:
+	                			switchButton = SwitchButton.SW2;
+	                			break;
+	                		default :
+	                			break;
+	                	}
+	                	
+	                	// which event ?
+	                	byte event = dg.readByte();
+	                	switch (event) {
+	                		case PacketTypes.BUTTON_PRESSED:
+	                			buttonEventPublisher.fireButtonPressedEvent(switchButton, addr);
+	                			break;
+	                		case PacketTypes.BUTTON_RELEASED:
+	                			buttonEventPublisher.fireButtonReleasedEvent(switchButton, addr);
+	                			break;
+	                		default : break;
+	                	}
+	                	
+	                }
+	                // else other commands ?
 		            
             	} catch (IOException e) {
 					e.printStackTrace();
@@ -217,7 +283,8 @@ public class Host implements Runnable {
             componentList.add(instance);
         } catch(Exception e) {
            e.printStackTrace();
-        } 
+        }
+        
         
         // create a TemperatureProducer component instance
 		configuration.clear();
@@ -229,6 +296,41 @@ public class Host implements Runnable {
         configuration.put("wireadmin.producer.flavors", new Class[]{Measurement.class});
         try {
             ComponentInstance instance = tempProducerFactory.createComponentInstance(configuration);
+            
+            // registers the producer so it can receive updated measurements
+            Object pojo = ((InstanceManager)instance).getPojoObject();
+			if (pojo instanceof TemperatureProducer) {
+				TemperatureListener tempListener = TemperatureListener.getSingleton();
+				if (tempListener != null) {
+					tempListener.addProducer((TemperatureProducer) pojo);
+				}
+			}
+			
+			componentList.add(instance);
+        } catch(Exception e) {
+           e.printStackTrace();
+        }
+        
+        // create an AccelerationProducer component instance
+		configuration.clear();
+        configuration.put("instance.name","sunspot-accel-prod-"+spotAddress);
+        configuration.put(Constants.SERVICE_PID, accelProducerFactory.getName()+"@"+spotAddress);
+        configuration.put(SPOT_ADDRESS, spotAddress);
+        configuration.put(REPLY_PORT, replyPort);
+//        configuration.put(FLAVORS_PROPERTY, new String[]{Measurement.class.getName()});
+        configuration.put("wireadmin.producer.flavors", new Class[]{Measurement[].class});
+        try {
+            ComponentInstance instance = accelProducerFactory.createComponentInstance(configuration);
+            
+            // registers the producer so it can receive updated measurements
+            Object pojo = ((InstanceManager)instance).getPojoObject();
+			if (pojo instanceof AccelerationProducer) {
+				AccelerationListener accelListener = AccelerationListener.getSingleton();
+				if (accelListener != null){
+					accelListener.addProducer((AccelerationProducer) pojo);
+				}
+			}
+
             componentList.add(instance);
         } catch(Exception e) {
            e.printStackTrace();

@@ -25,7 +25,7 @@
             <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
             <Bundle-Description>${pom.description}</Bundle-Description>
             <Bundle-Vendor>Lionel Touseau</Bundle-Vendor>
-            <Private-Package>org.ow2.aspirerfid.sensor.sunspot.controller, org.ow2.aspirerfid.sensor.sunspot.producers, org.ow2.aspirerfid.sensor.sunspot.service.impl</Private-Package>
+            <Private-Package>org.ow2.aspirerfid.sensor.sunspot.controller, org.ow2.aspirerfid.sensor.sunspot.producers, org.ow2.aspirerfid.sensor.sunspot.service.impl, org.ow2.aspirerfid.sensor.sunspot.event.buttons</Private-Package>
           </instructions>
         </configuration>
       </plugin>

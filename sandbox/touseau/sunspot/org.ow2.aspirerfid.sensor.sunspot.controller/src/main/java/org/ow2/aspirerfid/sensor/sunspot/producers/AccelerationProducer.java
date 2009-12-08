@@ -35,14 +35,12 @@ import com.sun.spot.io.j2me.radiogram.RadiogramConnection;
 
 /**
  * @author Lionel Touseau
- * Temperature Producer that reads measurements sent to the base station by SPOTs
+ * Acceleration Producer that reads measurements sent to the base station by SPOTs
  * 
  */
-public class TemperatureProducer implements Producer, LifecycleController {
-	
-	private static final double CEL_TO_KELVIN_OFFSET = 273.15;
+public class AccelerationProducer implements Producer, LifecycleController {
 
-	private static final long DEFAULT_SAMPLE_DELAY = 10000;
+	private static final long DEFAULT_SAMPLE_DELAY = 200;
 	
 //	private boolean end;
 	
@@ -65,48 +63,36 @@ public class TemperatureProducer implements Producer, LifecycleController {
 	
 	private RadiogramConnection radCon;
 	
-	private Measurement temperatureMeasurement;
+	// initializes an array for 3-axis acceleration measurements
+	private Measurement[] accelerationMeasurements = new Measurement[3];
 	
-	public TemperatureProducer(){
+	public AccelerationProducer(BundleContext ctx){
 		spotConnected = true;
 	}
-	
-//	public void setFlavors (String[] flavorsStrings){
-//		System.out.println("SETFLAVORS called "+flavorsStrings.length);
-//		Class[] temp = new Class[flavorsStrings.length];
-//		for (int i=0; i < flavorsStrings.length; i++){
-//			try {
-//				temp[i] = bundleContext.getBundle().loadClass(flavorsStrings[i]);
-//			} catch (ClassNotFoundException e) {
-//				System.err.println("Class not found: "+flavorsStrings[i]);
-//			}
-//		}
-//		flavors = temp;
-//	}
 	
 	// iPOJO life-cycle callbacks
 	
 	public void start(){
-		System.out.println("SunSPOT temperature producer activated");
+		System.out.println("SunSPOT acceleration producer activated");
 		
 		try {
 			radCon = (RadiogramConnection) Connector.open("radiogram://"+spotAddress+":"+replyPort);
 			Datagram dg = radCon.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
-			dg.writeByte(PacketTypes.TEMP_PROD_CONNECTION);
-			dg.writeInt(PacketTypes.TEMP_PROD_PORT);
+			dg.writeByte(PacketTypes.ACCEL_PROD_CONNECTION);
+			dg.writeInt(PacketTypes.ACCEL_PROD_PORT);
 			dg.writeLong(DEFAULT_SAMPLE_DELAY);
 			// send the command to open a new channel
 			radCon.send(dg);
 			radCon.close();
 //			// open a new connection to receive from the SPOT
-//			radCon =  (RadiogramConnection) Connector.open("radiogram://"+":"+PacketTypes.TEMP_PROD_PORT);
+//			radCon =  (RadiogramConnection) Connector.open("radiogram://"+":"+PacketTypes.ACCEL_PROD_PORT);		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 //		end = false;
-//		Thread t = new Thread (this,"SunSPOT-temperature-producer@"+spotAddress);
+//		Thread t = new Thread (this,"SunSPOT-acceleration-producer@"+spotAddress);
 //		t.start();
 	}
 	
@@ -118,19 +104,21 @@ public class TemperatureProducer implements Producer, LifecycleController {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-		System.out.println("SunSPOT temperature producer deactivated");		
+		System.out.println("SunSPOT acceleration producer deactivated");		
 	}	
 
 	public String getSpotAddress() {
 		return spotAddress;
 	}
 	
-	public void temperatureReceived(double celsiusTemperature) {
+	public void accelerationReceived(double xAccel, double yAccel, double zAccel) {
 		if (wires != null && wires.length > 0){
-			temperatureMeasurement = new Measurement(celsiusTemperature+CEL_TO_KELVIN_OFFSET,
-												0.5, Unit.K, System.currentTimeMillis());
+			accelerationMeasurements[0] = new Measurement(xAccel, 0.01, Unit.m_s2, System.currentTimeMillis());
+			accelerationMeasurements[1] = new Measurement(yAccel, 0.01, Unit.m_s2, System.currentTimeMillis());
+			accelerationMeasurements[2] = new Measurement(zAccel, 0.01, Unit.m_s2, System.currentTimeMillis());
+			
 			for (Wire wire : wires){
-				wire.update(temperatureMeasurement);
+				wire.update(accelerationMeasurements);
 			}
 		}		
 	}
@@ -139,21 +127,24 @@ public class TemperatureProducer implements Producer, LifecycleController {
 //		
 //		// open a connection to reply to the SPOT
 //		try {
-//			Datagram dg = radCon.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
+//			Datagram dg = radCon.newDatagram(radCon.getMaximumLength());
 //
-//			// wait to receive updated temperature values
+//			// wait to receive updated acceleration values
 //			while (!end) {
 //				dg.reset();
 //				radCon.receive(dg);
 //				byte type = dg.readByte();
-//				if (type == PacketTypes.TEMPERATURE) {
-//					double celsiusTemperature = dg.readDouble();
-//					System.out.println("Temperature received : "+celsiusTemperature);
+//				if (type == PacketTypes.ACCELERATION) {
+//					double xAccel = dg.readDouble();
+//					double yAccel = dg.readDouble();
+//					double zAccel = dg.readDouble();
 //					if (wires != null && wires.length > 0){
-//						temperatureMeasurement = new Measurement(celsiusTemperature+CEL_TO_KELVIN_OFFSET,
-//															0.5, Unit.K, System.currentTimeMillis());
+//						accelerationMeasurements[0] = new Measurement(xAccel, 0.01, Unit.m_s2, System.currentTimeMillis());
+//						accelerationMeasurements[1] = new Measurement(yAccel, 0.01, Unit.m_s2, System.currentTimeMillis());
+//						accelerationMeasurements[2] = new Measurement(zAccel, 0.01, Unit.m_s2, System.currentTimeMillis());
+//						
 //						for (Wire wire : wires){
-//							wire.update(temperatureMeasurement);
+//							wire.update(accelerationMeasurements);
 //						}
 //					}
 //				}
@@ -171,7 +162,7 @@ public class TemperatureProducer implements Producer, LifecycleController {
 	}
 
 	public Object polled(Wire wire) {
-		return temperatureMeasurement;
+		return accelerationMeasurements;
 		// TODO ask a more recent value to the SPOT
 	}
 

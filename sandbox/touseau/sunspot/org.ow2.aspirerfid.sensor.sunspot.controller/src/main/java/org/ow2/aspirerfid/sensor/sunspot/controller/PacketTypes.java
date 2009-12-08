@@ -37,18 +37,33 @@ public interface PacketTypes {
 	public static final int ADMIN_SVC_PORT = 60;
 	
 	public static final int TEMP_PROD_PORT = 61;
+	
+	public static final int LUM_PROD_PORT = 62;
+	
+	public static final int ACCEL_PROD_PORT = 63;
     
-    // Command & reply codes for data packets
+	
+    /** Command & reply codes for data packets */
     
     public static final byte NEW_CONNECTION_REQ = 1;
     
     public static final byte ADMIN_SVC_CONNECTION = 2;
     
 	public static final byte TEMP_PROD_CONNECTION = 3;
+	public static final byte ACCEL_PROD_CONNECTION = 4;
     
     public static final byte HEARTBEAT = 10;
     
     public static final byte TEMPERATURE = 11;
+    public static final byte ACCELERATION = 12;
+    
+    public static final byte BUTTON = 20;
+    public static final byte BUTTON_SW1 = 21;
+    public static final byte BUTTON_SW2 = 22;
+    public static final byte BUTTON_RELEASED = 0;
+    public static final byte BUTTON_PRESSED = 1;
+    
+	public static final int GET_BATTERY_REQ = 30;
     
 	public static final int SET_ACCEL_SAMPLE_DELAY = 3;
     
@@ -93,6 +108,8 @@ public interface PacketTypes {
     public static final byte PING_REPLY                 = 110;
     /** Client reply with any error message for the host to display. */
     public static final byte MESSAGE_REPLY              = 111;
+
+	
 
 
 

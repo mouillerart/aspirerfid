@@ -37,6 +37,7 @@ public class SunSpotServiceImpl implements SunSpotService, LifecycleController {
 			Datagram dg = radCon.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
 			dg.writeByte(PacketTypes.ADMIN_SVC_CONNECTION);
 			dg.writeInt(PacketTypes.ADMIN_SVC_PORT);
+			
 			// send a command to open a new channel
 			radCon.send(dg);
 			
@@ -126,6 +127,72 @@ public class SunSpotServiceImpl implements SunSpotService, LifecycleController {
 	}
 
 	public void stopTemperature() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getAddress() {
+		return spotAddress;
+	}
+
+	public int getBatteryLevel() {
+		int batteryLevel = 0;
+		try {
+			Datagram dg = radCon.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
+			dg.writeByte(PacketTypes.GET_BATTERY_REQ);
+			radCon.send(dg);
+			Datagram reply = radCon.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
+			radCon.receive(reply);
+			if (reply.readByte() == PacketTypes.GET_BATTERY_REQ){
+				batteryLevel = reply.readInt();
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return batteryLevel;
+	}
+
+	public void blinkLEDs(int times) {
+		Datagram dg;
+		try {
+			dg = radCon.newDatagram(PacketTypes.DEFAULT_DATAGRAM_SIZE);
+			dg.writeByte(PacketTypes.BLINK_LEDS_REQ);
+			dg.writeInt(times);
+			radCon.send(dg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void ledsOff() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void ledsOn() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setLED(int ledNumber, LEDColor color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setLED(int ledNumber, LEDColor color, long duration) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setLEDs(int[] ledNumbers, LEDColor color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setLEDs(int[] ledNumbers, LEDColor color, long duration) {
 		// TODO Auto-generated method stub
 		
 	}

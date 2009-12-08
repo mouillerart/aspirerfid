@@ -17,14 +17,18 @@
    KIND, either express or implied. See the GNU Lesser General Public 
    License for the specific language governing rights and limitations.
 -->
-<ipojo>
+<ipojo xmlns:event="org.apache.felix.ipojo.handlers.event">
 <!-- declare your component types and instances here -->
 	<component classname="org.ow2.aspirerfid.sensor.sunspot.controller.Host"
 				name="SpotController"
 				immediate="false">
 				
 		<requires field="spotServiceFactory" filter="(factory.name=SpotServiceImpl)"/>
+		<requires field="spotEventFactory" filter="(factory.name=spot-event-pub)"/>
 		<requires field="tempProducerFactory" filter="(factory.name=spot-temp-prod)"/>
+		<requires field="accelProducerFactory" filter="(factory.name=spot-accel-prod)"/>		
+
+
 
 		<properties>
 			<property name="usb.port" field="serialPort" value="COM8"/>
@@ -33,7 +37,6 @@
 				
 		<callback transition="validate" method="start"/>
 		<callback transition="invalidate" method="stop"/>
-		<!-- TODO the same for Producers -->
 		
 	</component>
 
@@ -61,6 +64,26 @@
 		</jmx:config>
 		 -->
 	</component>
+	
+	<component classname="org.ow2.aspirerfid.sensor.sunspot.event.buttons.SwitchButtonEventPublisher"
+				name="spot-event-pub">
+		
+		<requires field="eventAdminService" />
+		
+	</component>
+
+	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.TemperatureListener"
+				name="spot-temp-listener"
+				immediate="false">
+
+		<properties>
+			<property name="listen.port" field="listenPort" value="61"/>
+		</properties>				
+				
+		<callback transition="validate" method="start"/>
+		<callback transition="invalidate" method="stop"/>
+		
+	</component>
 
 	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.TemperatureProducer"
 				name="spot-temp-prod">
@@ -73,7 +96,45 @@
 		
 		<properties>
 			<property name="spot.address" field="spotAddress"/>			
-			<property name="reply.port" field="replyPort"/>				
+			<property name="reply.port" field="replyPort"/>
+			<!-- <property name="flavors" method="setFlavors" /> -->
+		</properties>
+
+				
+		<callback transition="validate" method="start"/>
+		<callback transition="invalidate" method="stop"/>
+		<controller field="spotConnected"/>
+		
+		<!-- ADD JMX HERE -->	
+		
+ 	</component>
+	
+	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.AccelerationListener"
+				name="spot-accel-listener"
+				immediate="false">
+
+		<properties>
+			<property name="listen.port" field="listenPort" value="63"/>
+		</properties>				
+				
+		<callback transition="validate" method="start"/>
+		<callback transition="invalidate" method="stop"/>
+		
+	</component>
+	
+	<component classname="org.ow2.aspirerfid.sensor.sunspot.producers.AccelerationProducer"
+				name="spot-accel-prod">
+				
+		<provides specifications="org.osgi.service.wireadmin.Producer">
+			<property name="service.pid" type="java.lang.String"/>
+			<property name="wireadmin.producer.flavors" field="flavors" />	
+			<property name="data.type" type="java.lang.String" value="acceleration"/>
+		</provides>
+		
+		<properties>
+			<property name="spot.address" field="spotAddress"/>			
+			<property name="reply.port" field="replyPort"/>
+			<!-- <property name="flavors" method="setFlavors" /> -->
 		</properties>
 
 				
@@ -88,5 +149,7 @@
 	<!-- Insert other producers here -->
 	
 	<instance component="SpotController" name="spot-ctrl-inst"/>
+	<instance component="spot-temp-listener" name="spot-temp-listener-inst"/>
+	<instance component="spot-accel-listener" name="spot-accel-listener-inst"/>
 	
 </ipojo>

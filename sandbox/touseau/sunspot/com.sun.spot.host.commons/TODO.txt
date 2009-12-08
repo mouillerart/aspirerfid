@@ -1,0 +1,5 @@
+1- Do it properly
+1.1 Check if DLL resources need to be included in the bundle ?
+1.2 Copy the classes in the bundle instead of just extracting them in the "classes" folder
+
+2- For the moment only the jar is usable

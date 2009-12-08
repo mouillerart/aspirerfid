@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.sun.spot</groupId>
+  <artifactId>com.sun.spot.host.commons</artifactId>
+  <packaging>bundle</packaging>
+  <version>4.0.0</version>
+  <description>Bundle wrapping SunSPOT common library for host applications. This bundle includes libraries from the Blue Sun SPOT SDK (release 4.0)</description>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>       
+          <instructions>
+            <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+            <Bundle-Name>SunSPOT Host API</Bundle-Name>
+            <Bundle-Vendor>Sun Microsystems</Bundle-Vendor>
+            <Export-Package>*</Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+  	<dependency>
+  	  <groupId>org.rxtx</groupId>
+      <artifactId>rxtx</artifactId>
+      <version>2.1.7</version>
+      <scope>provided</scope>
+  	</dependency>
+  </dependencies>  
+</project>
