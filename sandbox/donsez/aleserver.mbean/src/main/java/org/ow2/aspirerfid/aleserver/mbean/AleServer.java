@@ -28,7 +28,7 @@ import org.ow2.aspirerfid.util.mbean.AbstractWebappMBean;
  * @author Didier Donsez
  */
 public class AleServer extends AbstractWebappMBean implements AleServerMBean {
-	public static final String OBJECTNAME = "org.ow2.aspirerfid:type=aleserver,name=uptime";
+	public static final String OBJECTNAME = "org.ow2.aspirerfid:type=aleserver";
 	private ObjectName name = null;
 
 	private long _startTime = 0L;
