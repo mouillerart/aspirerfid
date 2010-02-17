@@ -52,11 +52,24 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 		return System.currentTimeMillis() - _startTime;
 	}
 	
-    public String[] getECSpecs(){
+	public String[] getReaderNames() {
+    	return new String[]{"foo","bar"};
+	}
+    public String[] getECSpecNames(){
     	return new String[]{"tic","tac","toe"};
     }
 
 	public void gc() {
 		System.gc();
+	}
+
+	public long getEventCycles() {
+		// TODO Auto-generated method stub
+		return getEventCycles()/1000;
+	}
+
+	public long getReadCycles() {
+		// TODO Auto-generated method stub
+		return getEventCycles()/10;
 	}
 }

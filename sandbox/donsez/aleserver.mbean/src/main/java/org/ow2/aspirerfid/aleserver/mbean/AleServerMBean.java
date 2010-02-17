@@ -25,7 +25,22 @@ package org.ow2.aspirerfid.aleserver.mbean;
  * @author Didier Donsez
  */
 public interface AleServerMBean {
+    /**
+     * dummy : get the uptime of the ALE Server
+     * @return
+     */
     public long getUptime();
+
+    /**
+     * dummy : invoke garbage collection
+     * @return
+     */
     public void gc();
-    public String[] getECSpecs();
+    
+    // TODO expose as MBeans some of the information EPC reading and logical reader API already provides (e.g. Reader names, ECSpec Names, ECSpec, LRSpecs ...). Moreover check if it is possible to provide some management/Monitoring regarding the Event cycles and the read cycles.
+    public String[] getReaderNames();    
+    public String[] getECSpecNames();
+    
+    public long getEventCycles();
+    public long getReadCycles();
 }
