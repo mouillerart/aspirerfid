@@ -34,12 +34,18 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 	private long _startTime = 0L;
 
 	public AleServer() {
-		_startTime = System.currentTimeMillis();
 		try {
 			name = new ObjectName(OBJECTNAME);
 		} catch (Exception e) {
 			getServletContext().log(e.getMessage()+" "+OBJECTNAME,e);
 		}
+	}
+	
+	protected void start() {
+		_startTime = System.currentTimeMillis();
+	}
+
+	protected void stop() {
 	}
 	
 	protected ObjectName getObjectName() {
@@ -52,17 +58,6 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 		return System.currentTimeMillis() - _startTime;
 	}
 	
-	public String[] getReaderNames() {
-    	return new String[]{"foo","bar"};
-	}
-    public String[] getECSpecNames(){
-    	return new String[]{"tic","tac","toe"};
-    }
-
-	public void gc() {
-		System.gc();
-	}
-
 	public long getEventCycles() {
 		// TODO Auto-generated method stub
 		return getEventCycles()/1000;
@@ -73,7 +68,44 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 		return getEventCycles()/10;
 	}
 
+	// Sensors
+	
 	public String[] getSensorNames() {
-    	return new String[]{"gps","indoorTemperature","outdoorTemperature","indoorHumidity","outdoorHumidity","light","windSpeed","windDirection"};
+    	return new String[]{"gps","indoorTemperature","outdoorTemperature","indoorHumidity","outdoorHumidity","light"};
 	}
+
+	// ECSpec
+	
+    public String[] getECSpecNames(){
+    	return new String[]{"tic","tac","toe"};
+    }
+	
+	public void createECSpec(String name, String ecSpecDescription) {
+		// TODO parse the ecSpecDescription
+		// TODO addorg.ow2.aspirerfid.ale.server.ALE.define(String specName, ECSpec spec)
+	}
+	
+	
+	public void removeECSpec(String name) {
+		// TODO Auto-generated method stub
+	}
+
+	// LogicalReader
+	
+	public String[] getLogicalReaderNames() {
+    	return new String[]{"dockdoor1","dockdoor2","walkinrefrigerator","store"};
+	}
+	
+	public void addLogicalReader(String name, String lrSpecDescription) {
+		// TODO parse the lrSpecDescription
+		// TODO add org.ow2.aspirerfid.ale.server.readers.LogicalReaderManager.addReaders(String name, java.util.List<String> readers)
+	}
+
+	public void removeLogicalReader(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 }

@@ -42,9 +42,14 @@ public abstract class AbstractWebappMBean implements ServletContextListener {
 		servletContext=event.getServletContext();
 		listServers();
 		register(getServer());
+		start();
 	}
 
+	abstract protected void start();
+	abstract protected void stop();
+
 	final public void contextDestroyed(ServletContextEvent event) {
+		stop();
 		unregister(getServer());
 	}
 

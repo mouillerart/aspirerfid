@@ -23,6 +23,7 @@ package org.ow2.aspirerfid.aleserver.mbean;
 /**
  * provides a sample implementation of the ALE Server MBean
  * @author Didier Donsez
+ * @TODO expose as MBeans some of the information EPC reading and logical reader API already provides (e.g. Reader names, ECSpec Names, ECSpec, LRSpecs ...). Moreover check if it is possible to provide some management/Monitoring regarding the Event cycles and the read cycles.
  */
 public interface AleServerMBean {
     /**
@@ -32,17 +33,48 @@ public interface AleServerMBean {
     public long getUptime();
 
     /**
-     * dummy : invoke garbage collection
-     * @return
+     * get the ECSpec names
      */
-    public void gc();
+     public String[] getECSpecNames();
     
-    // TODO expose as MBeans some of the information EPC reading and logical reader API already provides (e.g. Reader names, ECSpec Names, ECSpec, LRSpecs ...). Moreover check if it is possible to provide some management/Monitoring regarding the Event cycles and the read cycles.
-    public String[] getReaderNames();    
-    public String[] getECSpecNames();
+    /**
+     * create (ie define) a new ECSpec
+     * @param name the ECSpec name
+     * @param ecSpecDescription the XML document of the ECSpec
+     */
+    public void createECSpec(String name, String ecSpecDescription);
+    /**
+     * remove ECSpec
+     * @param name the ECSpec name
+     */
+    public void removeECSpec(String name);
+
+    /**
+     * get the Logical reader names
+     */
+    public String[] getLogicalReaderNames();    
+    
+    /**
+     * add a Logical reader
+     * @param name the logical reader name
+     * @param lrSpecDescription the XML document of the LRSpec
+     */
+    public void addLogicalReader(String name, String lrSpecDescription);
+
+    /**
+     * remove a Logical reader
+     * @param name the logical reader name
+     */
+    public void removeLogicalReader(String name);
+    
+    
+    
     
     public long getEventCycles();
     public long getReadCycles();
     
+    /**
+     * get the Sensor names
+     */
     public String[] getSensorNames();    
 }
