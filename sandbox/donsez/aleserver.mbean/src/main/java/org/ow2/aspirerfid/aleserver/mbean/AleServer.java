@@ -72,4 +72,8 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 		// TODO Auto-generated method stub
 		return getEventCycles()/10;
 	}
+
+	public String[] getSensorNames() {
+    	return new String[]{"gps","indoorTemperature","outdoorTemperature","indoorHumidity","outdoorHumidity","light","windSpeed","windDirection"};
+	}
 }

@@ -43,4 +43,6 @@ public interface AleServerMBean {
     
     public long getEventCycles();
     public long getReadCycles();
+    
+    public String[] getSensorNames();    
 }

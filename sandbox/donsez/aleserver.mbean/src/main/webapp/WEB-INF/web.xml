@@ -31,4 +31,27 @@
   
   <!-- Others here  -->
   
+  <!-- 
+    <env-entry>
+        <env-entry-name>aleserver.home</env-entry-name>
+        <env-entry-value>./aleserver.home</env-entry-value>
+        <env-entry-type>java.lang.String</env-entry-type>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>proxyHost</env-entry-name>
+        <env-entry-value></env-entry-value>
+        <env-entry-type>java.lang.String</env-entry-type>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>proxyPort</env-entry-name>
+        <env-entry-value>-1</env-entry-value>
+        <env-entry-type>java.lang.Integer</env-entry-type>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>proxyAuth</env-entry-name>
+        <env-entry-value></env-entry-value>
+        <env-entry-type>java.lang.String</env-entry-type>
+    </env-entry>
+   -->
+   
 </web-app>

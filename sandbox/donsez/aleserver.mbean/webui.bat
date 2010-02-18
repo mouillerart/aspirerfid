@@ -9,3 +9,4 @@ cmd /c start http://tomcat:s3cretlocalhost:8080/manager/jmxproxy?qry=org.ow2.asp
 echo For more information http://tomcat.apache.org/tomcat-5.5-doc/manager-howto.html#Using%20the%20JMX%20Proxy%20Servlet
 cmd /c start http://tomcat.apache.org/tomcat-5.5-doc/manager-howto.html#Using%20the%20JMX%20Proxy%20Servlet
 
+start jconsole
