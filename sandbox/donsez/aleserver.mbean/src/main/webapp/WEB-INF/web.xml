@@ -25,8 +25,22 @@
 <web-app>
   <display-name>OW2 :: AspireRFID :: ALE Server</display-name>
 
+<!-- Listeners registering/unregistering the ALEServer MBeans  -->
+
   <listener>
     <listener-class>org.ow2.aspirerfid.aleserver.mbean.AleServer</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.ow2.aspirerfid.aleserver.mbean.Ale</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.ow2.aspirerfid.aleserver.mbean.LogicalReader</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.ow2.aspirerfid.aleserver.mbean.Sensor</listener-class>
   </listener>
   
   <!-- Others here  -->

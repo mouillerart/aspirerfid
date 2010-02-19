@@ -20,28 +20,16 @@
 
 package org.ow2.aspirerfid.aleserver.mbean;
 
-import java.util.Map;
-
 /**
- * provides the interface of the MBean to manage the ALEServer
+ * provides the MBean interface for managing sensors in the ALEServer
  * @author Didier Donsez
  */
-public interface AleServerMBean {
-
-	/**
-	 * the MBean object name
-	 */
-	public static final String OBJECTNAME = Common.ALESERVER_OBJECTNAME_PREFIX+",name=server";
-
-	/**
-     * get the uptime of the ALE Server
-     * @return the number of milliseconds
-     */
-    public long getUptime();
+public interface SensorMBean {
     
+	public static final String OBJECTNAME = Common.ALESERVER_OBJECTNAME_PREFIX+",name=sensor";	
+	
     /**
-     * get the properties of the ALE Server
-     * @return
+     * get the Sensor names
      */
-    public Map getProperties();
+    public String[] getSensorNames();    
 }

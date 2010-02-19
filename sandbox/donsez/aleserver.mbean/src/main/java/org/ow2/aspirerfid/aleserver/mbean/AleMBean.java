@@ -20,28 +20,34 @@
 
 package org.ow2.aspirerfid.aleserver.mbean;
 
-import java.util.Map;
-
 /**
- * provides the interface of the MBean to manage the ALEServer
+ * provides the MBean interface to expose ALE operations of the ALEServer
  * @author Didier Donsez
  */
-public interface AleServerMBean {
+public interface AleMBean {
 
-	/**
-	 * the MBean object name
-	 */
-	public static final String OBJECTNAME = Common.ALESERVER_OBJECTNAME_PREFIX+",name=server";
+	public static final String OBJECTNAME = Common.ALESERVER_OBJECTNAME_PREFIX+",name=ale";	
 
-	/**
-     * get the uptime of the ALE Server
-     * @return the number of milliseconds
+    /**
+     * get the ECSpec names
      */
-    public long getUptime();
+     public String[] getECSpecNames();
     
     /**
-     * get the properties of the ALE Server
-     * @return
+     * create (ie define) a new ECSpec
+     * @param name the ECSpec name
+     * @param ecSpecDescription the XML document of the ECSpec
      */
-    public Map getProperties();
+    public void createECSpec(String name, String ecSpecDescription);
+    /**
+     * remove ECSpec
+     * @param name the ECSpec name
+     */
+    public void removeECSpec(String name);
+    
+    
+	public long getEventCycles();
+	
+	public long getReadCycles();
+    
 }

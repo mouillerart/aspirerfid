@@ -19,23 +19,18 @@
  */
 package org.ow2.aspirerfid.aleserver.mbean;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.management.ObjectName;
 
 import org.ow2.aspirerfid.util.mbean.AbstractWebappMBean;
 
 /**
- * provides the implementation of the MBean to manage the ALEServer
+ * provides the MBean implementation to expose ALE operations of the ALEServer
  * @author Didier Donsez
  */
-public class AleServer extends AbstractWebappMBean implements AleServerMBean {
+public class Ale extends AbstractWebappMBean implements AleMBean {
 	private ObjectName name = null;
 
-	private long _startTime = 0L;
-
-	public AleServer() {
+	public Ale() {
 		try {
 			name = new ObjectName(OBJECTNAME);
 		} catch (Exception e) {
@@ -44,7 +39,6 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 	}
 	
 	protected void start() {
-		_startTime = System.currentTimeMillis();
 	}
 
 	protected void stop() {
@@ -56,14 +50,26 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 
 	// interface method implementations
 
-	public long getUptime() {
-		return System.currentTimeMillis() - _startTime;
+    public String[] getECSpecNames(){
+    	return new String[]{"tic","tac","toe"};
+    }
+	
+	public void createECSpec(String name, String ecSpecDescription) {
+		// TODO parse the ecSpecDescription
+		// TODO addorg.ow2.aspirerfid.ale.server.ALE.define(String specName, ECSpec spec)
+	}
+	
+	public void removeECSpec(String name) {
+		// TODO Auto-generated method stub
+	}
+	
+	public long getEventCycles() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	public Map getProperties() {
-		Map dummy=new HashMap();
-		dummy.put("foo", "bar");
-		dummy.put("hello","world");
-		return dummy;
+	public long getReadCycles() {
+		// TODO Auto-generated method stub
+		return 0;
 	}	
 }

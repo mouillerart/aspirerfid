@@ -20,28 +20,10 @@
 
 package org.ow2.aspirerfid.aleserver.mbean;
 
-import java.util.Map;
-
 /**
- * provides the interface of the MBean to manage the ALEServer
+ * provides common constants;
  * @author Didier Donsez
  */
-public interface AleServerMBean {
-
-	/**
-	 * the MBean object name
-	 */
-	public static final String OBJECTNAME = Common.ALESERVER_OBJECTNAME_PREFIX+",name=server";
-
-	/**
-     * get the uptime of the ALE Server
-     * @return the number of milliseconds
-     */
-    public long getUptime();
-    
-    /**
-     * get the properties of the ALE Server
-     * @return
-     */
-    public Map getProperties();
+public interface Common {
+	public static final String ALESERVER_OBJECTNAME_PREFIX = "org.ow2.aspirerfid:type=aleserver";	
 }

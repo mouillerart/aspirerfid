@@ -20,28 +20,25 @@
 
 package org.ow2.aspirerfid.aleserver.mbean;
 
-import java.util.Map;
-
 /**
- * provides the interface of the MBean to manage the ALEServer
+ * provides the MBean interface for managing logical readers in the ALEServer
  * @author Didier Donsez
  */
-public interface AleServerMBean {
+public interface LogicalReaderMBean {
+	public static final String OBJECTNAME = Common.ALESERVER_OBJECTNAME_PREFIX+",name=logicalReader";	
 
-	/**
-	 * the MBean object name
-	 */
-	public static final String OBJECTNAME = Common.ALESERVER_OBJECTNAME_PREFIX+",name=server";
-
-	/**
-     * get the uptime of the ALE Server
-     * @return the number of milliseconds
-     */
-    public long getUptime();
+	public String[] getLogicalReaderNames();    
     
     /**
-     * get the properties of the ALE Server
-     * @return
+     * add a Logical reader
+     * @param name the logical reader name
+     * @param lrSpecDescription the XML document of the LRSpec
      */
-    public Map getProperties();
+    public void addLogicalReader(String name, String lrSpecDescription);
+
+    /**
+     * remove a Logical reader
+     * @param name the logical reader name
+     */
+    public void removeLogicalReader(String name);
 }

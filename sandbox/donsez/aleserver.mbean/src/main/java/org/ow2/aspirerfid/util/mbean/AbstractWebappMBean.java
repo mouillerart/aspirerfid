@@ -37,6 +37,9 @@ import javax.servlet.ServletContextListener;
 public abstract class AbstractWebappMBean implements ServletContextListener {
 
 	protected ServletContext servletContext;
+
+	private static boolean trace=true;
+	private static boolean log=false;
 	
 	final public void contextInitialized(ServletContextEvent event) {
 		servletContext=event.getServletContext();
@@ -59,11 +62,26 @@ public abstract class AbstractWebappMBean implements ServletContextListener {
 	
 	protected abstract ObjectName getObjectName();
 
+	protected void print(String msg){
+		if(trace) System.out.println(msg);
+		if(log) servletContext.log(msg);
+	}
+
+	protected void print(String msg, Throwable t){
+		if(trace) {
+			System.err.println(msg + " : " + t.getMessage());
+			t.printStackTrace();
+		}
+		if(log) {
+			servletContext.log(msg + " : " + t.getMessage());
+		}
+	}
+
 	private void register(MBeanServer server) {
 			try {
 				server.registerMBean(this, getObjectName());
 			} catch (Exception e) {
-				servletContext.log("Exception while registering",e);
+				print("Exception while registering",e);
 			}
 	}
 
@@ -71,22 +89,22 @@ public abstract class AbstractWebappMBean implements ServletContextListener {
 		try {
 			server.unregisterMBean(getObjectName());
 		} catch (Exception e) {
-			servletContext.log("Exception while unregistering",e);
+			print("Exception while unregistering",e);
 		}
 	}
 	
 	private void listServers() {
 		ArrayList mbservers = MBeanServerFactory.findMBeanServer(null);
 		if (mbservers == null || mbservers.size()==0) {
-			servletContext.log("No MBeanServer found");
+			print("No MBeanServer found");
 		} else {
 			for (Iterator iterator = mbservers.iterator(); iterator.hasNext();) {
 				MBeanServer mBeanServer = (MBeanServer) iterator.next();
-				servletContext.log("MBeanServer:"+mBeanServer.toString());
+				print("MBeanServer:"+mBeanServer.toString());
 			}
 		}
 		MBeanServer platformMBeanServer = java.lang.management.ManagementFactory.getPlatformMBeanServer();
-		servletContext.log("Platform MBeanServer:"+platformMBeanServer.toString());	
+		print("Platform MBeanServer:"+platformMBeanServer.toString());	
 	}
 	
 	private MBeanServer getServer() {
@@ -99,10 +117,10 @@ public abstract class AbstractWebappMBean implements ServletContextListener {
 		}
 
 		if (mbeanserver != null) {
-			servletContext.log("Found MBeanServer:"+mbeanserver.toString());
+			print("Found MBeanServer:"+mbeanserver.toString());
 		} else {
 			mbeanserver = MBeanServerFactory.createMBeanServer();
-			servletContext.log("Create MBeanServer:"+mbeanserver.toString());
+			print("Create MBeanServer:"+mbeanserver.toString());
 		}
 
 		return mbeanserver;

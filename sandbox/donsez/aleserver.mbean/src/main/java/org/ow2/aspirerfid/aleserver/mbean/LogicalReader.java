@@ -19,23 +19,18 @@
  */
 package org.ow2.aspirerfid.aleserver.mbean;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.management.ObjectName;
 
 import org.ow2.aspirerfid.util.mbean.AbstractWebappMBean;
 
 /**
- * provides the implementation of the MBean to manage the ALEServer
+ * provides the MBean implementation for managing logical readers in the ALEServer
  * @author Didier Donsez
  */
-public class AleServer extends AbstractWebappMBean implements AleServerMBean {
+public class LogicalReader extends AbstractWebappMBean implements LogicalReaderMBean {
 	private ObjectName name = null;
 
-	private long _startTime = 0L;
-
-	public AleServer() {
+	public LogicalReader() {
 		try {
 			name = new ObjectName(OBJECTNAME);
 		} catch (Exception e) {
@@ -44,7 +39,6 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 	}
 	
 	protected void start() {
-		_startTime = System.currentTimeMillis();
 	}
 
 	protected void stop() {
@@ -55,15 +49,21 @@ public class AleServer extends AbstractWebappMBean implements AleServerMBean {
 	}
 
 	// interface method implementations
-
-	public long getUptime() {
-		return System.currentTimeMillis() - _startTime;
+	
+	public String[] getLogicalReaderNames() {
+    	return new String[]{"dockdoor1","dockdoor2","walkinrefrigerator","store"};
+	}
+	
+	public void addLogicalReader(String name, String lrSpecDescription) {
+		// TODO parse the lrSpecDescription
+		// TODO add org.ow2.aspirerfid.ale.server.readers.LogicalReaderManager.addReaders(String name, java.util.List<String> readers)
 	}
 
-	public Map getProperties() {
-		Map dummy=new HashMap();
-		dummy.put("foo", "bar");
-		dummy.put("hello","world");
-		return dummy;
-	}	
+	public void removeLogicalReader(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 }
