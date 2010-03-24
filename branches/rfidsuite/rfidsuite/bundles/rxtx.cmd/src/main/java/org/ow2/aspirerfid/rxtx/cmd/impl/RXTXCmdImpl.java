@@ -47,6 +47,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.ow2.aspirerfid.rxtx.cmd.IOWrapper;
 import org.ow2.aspirerfid.rxtx.cmd.wrapper.AsciiWrapper;
+import org.ow2.aspirerfid.rxtx.cmd.wrapper.BinaryWrapper;
 import org.ow2.aspirerfid.rxtx.cmd.wrapper.HexWrapper;
 
 import rxtx.sample.SerialParameters;
@@ -103,7 +104,9 @@ public class RXTXCmdImpl implements Command, SerialPortEventListener, BundleActi
 						+ getName()
 						+ " send <bytes in hexa>  : send message bytes\n"
 						+ getName()
-						+ " binary                : switch IO in hex\n"
+						+ " binary                : switch IO in binary\n"
+						+ getName()
+						+ " hexa                  : switch IO in hex\n"
 						+ getName()
 						+ " ascii                 : switch IO in ascii\n"
 						+ getName()
@@ -137,6 +140,8 @@ public class RXTXCmdImpl implements Command, SerialPortEventListener, BundleActi
 		if (option.equals("list")) {
 			listPorts(null, out, err);
 		} else if (option.equals("binary")) {
+			currentWrapper = new BinaryWrapper();
+		} else if (option.equals("hexa")) {
 			currentWrapper = new HexWrapper();
 		} else if (option.equals("ascii")) {
 			currentWrapper = new AsciiWrapper();
