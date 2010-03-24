@@ -36,7 +36,7 @@
   
   <groupId>org.ow2.aspirerfid</groupId>
   <artifactId>org.ow2.aspirerfid.rxtx</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.1-SNAPSHOT</version>
     
   <dependencies>
     <dependency>
@@ -61,12 +61,19 @@
             <Import-Package></Import-Package>
             <Private-Package></Private-Package>
 
+<!-- see clause in http://svn.apache.org/viewvc/felix/trunk/framework/src/main/java/org/apache/felix/framework/util/manifestparser/R4LibraryClause.java?view=markup -->
+
 	    	<Bundle-NativeCode>
-	    	Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=Windows XP,
-	    	Linux/i686-unknown-linux-gnu/librxtxSerial.so;Linux/i686-unknown-linux-gnu/librxtxParallel.so;processor=x86;osname=Linux,
-	    	Linux/x86_64-unknown-linux-gnu/librxtxSerial.so;processor=x86_64;osname=Linux,
-	    	Linux/ia64-unknown-linux-gnu/librxtxSerial.so;processor=ia64;osname=Linux,
-	    	Mac_OS_X/librxtxSerial.jnilib;osname=Mac OS X; processor=x86; processor=PowerPC,
+	    	Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windowsnt,
+	    	Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windows2000,
+	    	Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windows2003,
+	    	Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windowsxp,
+	    	Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windowsvista,
+	    	Windows/i386-mingw32/rxtxSerial.dll;Windows/i386-mingw32/rxtxParallel.dll;processor=x86;osname=windows7,
+	    	Linux/i686-unknown-linux-gnu/librxtxSerial.so;Linux/i686-unknown-linux-gnu/librxtxParallel.so;processor=x86;osname=linux,
+	    	Linux/x86_64-unknown-linux-gnu/librxtxSerial.so;processor=x86_64;osname=linux,
+	    	Linux/ia64-unknown-linux-gnu/librxtxSerial.so;processor=ia64;osname=linux,
+	    	Mac_OS_X/librxtxSerial.jnilib;osname=macosx; processor=x86; processor=PowerPC,
 	    	Solaris/sparc-solaris/sparc32-sun-solaris2.8/librxtxSerial.so;processor=sparc;osname=Solaris;osversion=2.8,
 	    	Solaris/sparc-solaris/sparc64-sun-solaris2.8/librxtxSerial.so;processor=sparc64;osname=Solaris;osversion=2.8
 	    	Solaris/sparc-solaris/sparc64-sun-solaris2.8/librxtxSerial.so;processor=sparc64;osname=Solaris;osversion=2.8
