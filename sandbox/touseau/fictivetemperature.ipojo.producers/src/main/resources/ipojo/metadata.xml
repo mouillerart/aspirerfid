@@ -1,0 +1,45 @@
+<ipojo>
+	<!-- component -->
+	<component classname="wa.test.producer.TemperatureProducer"
+				name="fictive_temp_producer" immediate="true">
+				
+		<provides>
+			<property name="service.pid" field="m_PID"/>
+			<property name="wireadmin.producer.flavors" field="m_flavors" />	
+			<property name="data.type" type="java.lang.String" value="temperature"/>
+			<property name="sensor.location" type="java.lang.String"/>
+		</provides>		
+		
+		<properties>
+			<property name="constant_evolution" field="m_constant"/>
+			<property name="flavors" method="setFlavors" />
+		</properties>	
+		
+	</component>
+	
+	<!-- instances -->
+	<instance component="fictive_temp_producer" name="fict-temp-prod-inst-1">
+		<property name="flavors" type="array">
+			<property value="org.osgi.util.measurement.Measurement"/>
+		</property>		
+		<property name="service.pid" value="wa.fictive.temperature.producer-1"/>
+		<property name="constant_evolution" value="false"/>
+		<property name="sensor.location" value="outdoor"/>
+	</instance>
+	<instance component="fictive_temp_producer" name="fict-temp-prod-inst-2">
+		<property name="service.pid" value="wa.fictive.temperature.producer-2"/>
+		<property name="constant_evolution" value="true"/>
+		<property name="sensor.location" value="outdoor"/>
+		<property name="flavors" type="array">
+			<property value="org.osgi.util.measurement.Measurement"/>
+		</property>					
+	</instance>
+	<instance component="fictive_temp_producer" name="fict-temp-prod-inst-3">
+		<property name="service.pid" value="wa.fictive.temperature.producer-3"/>
+		<property name="constant_evolution" value="false"/>
+		<property name="sensor.location" value="indoor"/>
+		<property name="flavors" type="array">
+			<property value="org.osgi.util.measurement.Measurement"/>
+		</property>
+	</instance>		
+</ipojo>
