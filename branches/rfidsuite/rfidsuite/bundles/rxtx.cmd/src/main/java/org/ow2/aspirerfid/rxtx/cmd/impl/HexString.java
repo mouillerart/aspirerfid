@@ -92,7 +92,12 @@ public class HexString {
 		return hexify(data,offset,length,linesize," ");
 		
 	}
-	
+
+	public static String hexify(byte[] data) {
+		return hexify(data,0,Integer.MAX_VALUE,Integer.MAX_VALUE," ");
+		
+	}
+
 	public static String hexify(byte[] data, int offset, int length, int linesize, String separator) {
 		if (data == null)
 			return "null";

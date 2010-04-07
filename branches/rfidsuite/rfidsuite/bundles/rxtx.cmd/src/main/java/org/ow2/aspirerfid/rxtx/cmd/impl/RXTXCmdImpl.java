@@ -45,6 +45,7 @@ import java.util.TooManyListenersException;
 import org.apache.felix.shell.Command;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.ow2.aspirerfid.rxtx.cmd.IOWrapper;
 import org.ow2.aspirerfid.rxtx.cmd.wrapper.AsciiWrapper;
 import org.ow2.aspirerfid.rxtx.cmd.wrapper.BinaryWrapper;
@@ -72,6 +73,9 @@ public class RXTXCmdImpl implements Command, SerialPortEventListener, BundleActi
 	// TODO resizable buffer
 	byte[] readBuffer = new byte[256];
 
+	BundleContext bundleContext;
+	
+	
 	public RXTXCmdImpl(BundleContext context) {
 	}
 
@@ -90,6 +94,8 @@ public class RXTXCmdImpl implements Command, SerialPortEventListener, BundleActi
 	private void printUsage(PrintStream out) {
 		out
 				.println(getName()
+						+ " fwprop                : list the framework properties\n"
+						+ getName()
 						+ " list                  : list the available ports\n"
 						+ getName()
 						+ " open <portname> <baudrate> <flowctrlin> <flowctrlout> <databits> <stopbits> <parity>\n"
@@ -139,6 +145,8 @@ public class RXTXCmdImpl implements Command, SerialPortEventListener, BundleActi
 
 		if (option.equals("list")) {
 			listPorts(null, out, err);
+		} else if (option.equals("fwprop")) {
+			listFrameworkProperties(null, out, err);
 		} else if (option.equals("binary")) {
 			currentWrapper = new BinaryWrapper();
 		} else if (option.equals("hexa")) {
@@ -365,6 +373,15 @@ public class RXTXCmdImpl implements Command, SerialPortEventListener, BundleActi
 
 	}
 
+	public void listFrameworkProperties(String commandLine, PrintStream out, PrintStream err) {		
+		out.println("List of framework properties");
+		out.println(Constants.FRAMEWORK_OS_NAME+"="+(String) bundleContext.getProperty(Constants.FRAMEWORK_OS_NAME));
+		out.println(Constants.FRAMEWORK_OS_VERSION+"="+(String) bundleContext.getProperty(Constants.FRAMEWORK_OS_VERSION));
+		out.println(Constants.FRAMEWORK_PROCESSOR+"="+(String) bundleContext.getProperty(Constants.FRAMEWORK_PROCESSOR));
+		out.println(Constants.FRAMEWORK_LANGUAGE+"="+(String) bundleContext.getProperty(Constants.FRAMEWORK_LANGUAGE));
+	}
+
+	
 	public void listPorts(String commandLine, PrintStream out, PrintStream err) {
 		out.println("List of ports from RXTX");
 		Enumeration ports = CommPortIdentifier.getPortIdentifiers();
@@ -470,13 +487,14 @@ public class RXTXCmdImpl implements Command, SerialPortEventListener, BundleActi
 	/**
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext arg0) throws Exception {
+	public void start(BundleContext bundleContext) throws Exception {
+		this.bundleContext=bundleContext;
 	}
 
 	/**
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext arg0) throws Exception {
+	public void stop(BundleContext bundleContext) throws Exception {
 		if (logOutputStream != null) {
 			try {
 				logOutputStream.close();
