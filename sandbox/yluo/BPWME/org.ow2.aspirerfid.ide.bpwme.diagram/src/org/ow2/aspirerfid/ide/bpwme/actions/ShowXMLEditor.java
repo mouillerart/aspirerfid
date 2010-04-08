@@ -10,10 +10,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.ow2.aspirerfid.bpwme.diagram.simpleditor.PathEditorInput;
+import org.ow2.aspirerfid.bpwme.diagram.simpleditor.SimpleEditor;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 
-import bpwme.diagram.simpleditor.PathEditorInput;
-import bpwme.diagram.simpleditor.SimpleEditor;
 
 
 public class ShowXMLEditor extends AbstractHandler {

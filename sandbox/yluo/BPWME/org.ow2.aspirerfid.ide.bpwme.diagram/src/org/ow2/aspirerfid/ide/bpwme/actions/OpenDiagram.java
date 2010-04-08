@@ -15,16 +15,16 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.ow2.aspirerfid.bpwme.CLCBProc;
+import org.ow2.aspirerfid.bpwme.EBProc;
+import org.ow2.aspirerfid.bpwme.diagram.part.BpwmeDiagramEditor;
+import org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl;
+import org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl;
 import org.ow2.aspirerfid.commons.apdl.model.*;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.OLCBProcAssistant;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
 
-import bpwme.CLCBProc;
-import bpwme.EBProc;
-import bpwme.diagram.part.BpwmeDiagramEditor;
-import bpwme.impl.CLCBProcImpl;
-import bpwme.impl.OLCBProcImpl;
 
 public class OpenDiagram extends AbstractHandler{
 

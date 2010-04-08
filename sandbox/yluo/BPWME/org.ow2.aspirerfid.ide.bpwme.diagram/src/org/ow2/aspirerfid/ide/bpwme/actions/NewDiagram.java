@@ -7,10 +7,10 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.ow2.aspirerfid.bpwme.diagram.part.BpwmeCreationWizard;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
 
-import bpwme.diagram.part.BpwmeCreationWizard;
 
 public class NewDiagram extends AbstractHandler {
 

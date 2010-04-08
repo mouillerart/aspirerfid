@@ -7,6 +7,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.gmf.runtime.notation.View;
+import org.ow2.aspirerfid.bpwme.diagram.edit.parts.EBProcEditPart;
+import org.ow2.aspirerfid.bpwme.impl.EBProcImpl;
 import org.ow2.aspirerfid.commons.ale.model.ale.ECSpec;
 import org.ow2.aspirerfid.commons.apdl.model.ApdlDataField;
 import org.ow2.aspirerfid.commons.apdl.model.EBProc;
@@ -15,8 +17,6 @@ import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.LRSpecBuilder;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.*;
 
-import bpwme.impl.EBProcImpl;
-import bpwme.diagram.edit.parts.EBProcEditPart;
 
 public class EditECSpec extends AbstractActionDelegate 
 implements IObjectActionDelegate {

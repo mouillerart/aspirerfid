@@ -23,9 +23,9 @@
          icon="icons/obj16/BpwmeDiagramFile.gif"
          extensions="bpwme_diagram"
          default="true"
-         class="bpwme.diagram.part.BpwmeDiagramEditor"
-         matchingStrategy="bpwme.diagram.part.BpwmeMatchingStrategy"
-         contributorClass="bpwme.diagram.part.BpwmeDiagramActionBarContributor">
+         class="org.ow2.aspirerfid.bpwme.diagram.part.BpwmeDiagramEditor"
+         matchingStrategy="org.ow2.aspirerfid.bpwme.diagram.part.BpwmeMatchingStrategy"
+         contributorClass="org.ow2.aspirerfid.bpwme.diagram.part.BpwmeDiagramActionBarContributor">
       </editor>
       <!--
       <editor
@@ -35,12 +35,12 @@
       </editor>
       -->
       <editor
-            class="bpwme.diagram.simpleditor.SimpleEditor"
+            class="org.ow2.aspirerfid.bpwme.diagram.simpleditor.SimpleEditor"
             id="bpwme.diagram.simpleditor.SimpleEditor"
             name="Simple Editor">
       </editor>      
       <editor
-            class="bpwme.diagram.xmleditor.XMLEditor"
+            class="org.ow2.aspirerfid.bpwme.diagram.xmleditor.XMLEditor"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             extensions="xml"
             id="bpwme.diagram.xmleditor.XMLEditor"
@@ -69,7 +69,7 @@
   	     name="%newWizardName"
   	     icon="icons/obj16/BpwmeDiagramFile.gif"
   	     category="org.eclipse.ui.Examples"
-  	     class="bpwme.diagram.part.BpwmeCreationWizard"
+  	     class="org.ow2.aspirerfid.bpwme.diagram.part.BpwmeCreationWizard"
   	     id="bpwme.diagram.part.BpwmeCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
       </wizard>
@@ -83,7 +83,7 @@
             id="org.ow2.aspirerfid.ide.bpwme.diagram.InitDiagram">
          <action
                label="%initDiagramActionLabel"
-               class="bpwme.diagram.part.BpwmeInitDiagramFileAction"
+               class="org.ow2.aspirerfid.bpwme.diagram.part.BpwmeInitDiagramFileAction"
                menubarPath="file/additions"
                id="org.ow2.aspirerfid.ide.bpwme.diagram.InitDiagramAction">
          </action>
@@ -122,7 +122,7 @@
 
    <extension point="org.eclipse.core.runtime.preferences" id="prefs">
       <?gmfgen generated="true"?>
-      <initializer class="bpwme.diagram.preferences.DiagramPreferenceInitializer"/>
+      <initializer class="org.ow2.aspirerfid.bpwme.diagram.preferences.DiagramPreferenceInitializer"/>
    </extension>
 
    <extension point="org.eclipse.ui.preferencePages" id="prefpages">
@@ -130,31 +130,31 @@
       <page
             id="org.ow2.aspirerfid.ide.bpwme.diagram.general"
             name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.general"
-            class="bpwme.diagram.preferences.DiagramGeneralPreferencePage">
+            class="org.ow2.aspirerfid.bpwme.diagram.preferences.DiagramGeneralPreferencePage">
       </page>
       <page
             id="org.ow2.aspirerfid.ide.bpwme.diagram.appearance"
             name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.appearance"
             category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
-            class="bpwme.diagram.preferences.DiagramAppearancePreferencePage">
+            class="org.ow2.aspirerfid.bpwme.diagram.preferences.DiagramAppearancePreferencePage">
       </page>
       <page
             id="org.ow2.aspirerfid.ide.bpwme.diagram.connections"
             name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.connections"
             category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
-            class="bpwme.diagram.preferences.DiagramConnectionsPreferencePage">
+            class="org.ow2.aspirerfid.bpwme.diagram.preferences.DiagramConnectionsPreferencePage">
       </page>
       <page
             id="org.ow2.aspirerfid.ide.bpwme.diagram.printing"
             name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.printing"
             category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
-            class="bpwme.diagram.preferences.DiagramPrintingPreferencePage">
+            class="org.ow2.aspirerfid.bpwme.diagram.preferences.DiagramPrintingPreferencePage">
       </page>
       <page
             id="org.ow2.aspirerfid.ide.bpwme.diagram.rulersAndGrid"
             name="%prefpage.org.ow2.aspirerfid.ide.bpwme.diagram.rulersAndGrid"
             category="org.ow2.aspirerfid.ide.bpwme.diagram.general"
-            class="bpwme.diagram.preferences.DiagramRulersAndGridPreferencePage">
+            class="org.ow2.aspirerfid.bpwme.diagram.preferences.DiagramRulersAndGridPreferencePage">
       </page>
    </extension>
 
@@ -162,7 +162,7 @@
       <?gmfgen generated="true"?>
       <propertyContributor
             contributorId="org.ow2.aspirerfid.ide.bpwme.diagram"
-            labelProvider="bpwme.diagram.sheet.BpwmeSheetLabelProvider">
+            labelProvider="org.ow2.aspirerfid.bpwme.diagram.sheet.BpwmeSheetLabelProvider">
          <propertyCategory category="domain"/>
          <propertyCategory category="visual"/>
          <propertyCategory category="extra"/>
@@ -213,7 +213,7 @@
          <propertySection
             id="property.section.domain" 
             tab="property.tab.domain"
-            class="bpwme.diagram.sheet.BpwmePropertySection">
+            class="org.ow2.aspirerfid.bpwme.diagram.sheet.BpwmePropertySection">
             <input type="org.eclipse.gmf.runtime.notation.View"/>
             <input type="org.eclipse.gef.EditPart"/>
          </propertySection>
@@ -255,7 +255,7 @@
 
    <extension point="org.eclipse.gmf.runtime.emf.ui.modelingAssistantProviders" id="modelassist-provider">
       <?gmfgen generated="true"?>
-      <modelingAssistantProvider class="bpwme.diagram.providers.BpwmeModelingAssistantProvider">
+      <modelingAssistantProvider class="org.ow2.aspirerfid.bpwme.diagram.providers.BpwmeModelingAssistantProvider">
          <Priority name="Lowest"/>
          <object class="bpwme.diagram.edit.parts.WorkflowMapEditPart" id="WorkflowMap_1000"/>
          <object class="bpwme.diagram.edit.parts.OLCBProcEditPart" id="OLCBProc_2001"/>
@@ -265,14 +265,14 @@
 
    <extension point="org.eclipse.gmf.runtime.common.ui.services.iconProviders" id="icon-provider">
       <?gmfgen generated="true"?>
-      <IconProvider class="bpwme.diagram.providers.BpwmeIconProvider">
+      <IconProvider class="org.ow2.aspirerfid.bpwme.diagram.providers.BpwmeIconProvider">
          <Priority name="Low"/>
       </IconProvider>
    </extension>
 
    <extension point="org.eclipse.gmf.runtime.common.ui.services.parserProviders" id="parser-provider">
       <?gmfgen generated="true"?>
-      <ParserProvider class="bpwme.diagram.providers.BpwmeParserProvider">
+      <ParserProvider class="org.ow2.aspirerfid.bpwme.diagram.providers.BpwmeParserProvider">
          <Priority name="Lowest"/>
       </ParserProvider>
    </extension>
@@ -285,7 +285,7 @@
                name="%metatype.name.WorkflowMap_1000"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="WorkflowMap"
-               edithelper="bpwme.diagram.edit.helpers.WorkflowMapEditHelper">
+               edithelper="org.ow2.aspirerfid.bpwme.diagram.edit.helpers.WorkflowMapEditHelper">
             <param name="semanticHint" value="1000"/>
          </metamodelType>
       </metamodel>
@@ -295,7 +295,7 @@
                name="%metatype.name.OLCBProc_2001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="OLCBProc"
-               edithelper="bpwme.diagram.edit.helpers.OLCBProcEditHelper">
+               edithelper="org.ow2.aspirerfid.bpwme.diagram.edit.helpers.OLCBProcEditHelper">
             <param name="semanticHint" value="2001"/>
          </metamodelType>
       </metamodel>
@@ -305,7 +305,7 @@
                name="%metatype.name.CLCBProc_3001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="CLCBProc"
-               edithelper="bpwme.diagram.edit.helpers.CLCBProcEditHelper">
+               edithelper="org.ow2.aspirerfid.bpwme.diagram.edit.helpers.CLCBProcEditHelper">
             <param name="semanticHint" value="3001"/>
          </metamodelType>
       </metamodel>
@@ -315,7 +315,7 @@
                name="%metatype.name.EBProc_3002"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="EBProc"
-               edithelper="bpwme.diagram.edit.helpers.EBProcEditHelper">
+               edithelper="org.ow2.aspirerfid.bpwme.diagram.edit.helpers.EBProcEditHelper">
             <param name="semanticHint" value="3002"/>
          </metamodelType>
       </metamodel>
@@ -325,7 +325,7 @@
                name="%metatype.name.Connection_4001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Connection"
-               edithelper="bpwme.diagram.edit.helpers.ConnectionEditHelper">
+               edithelper="org.ow2.aspirerfid.bpwme.diagram.edit.helpers.ConnectionEditHelper">
             <param name="semanticHint" value="4001"/>
          </metamodelType>
       </metamodel>
@@ -471,7 +471,7 @@
       <?gmfgen generated="true"?>
       <command
          categoryId="org.eclipse.ui.category.edit"
-         defaultHandler="bpwme.diagram.part.BpwmeDiagramUpdateCommand"
+         defaultHandler="org.ow2.aspirerfid.bpwme.diagram.part.BpwmeDiagramUpdateCommand"
          description="%update.diagram.description"
          id="bpwme.diagram.updateDiagram"
          name="%update.diagram.name"/>
@@ -498,7 +498,7 @@
                <and>
                   <with variable="activePartId"><equals value="bpwme.diagram.part.BpwmeDiagramEditorID"/></with>
                   <with variable="selection"><iterate ifEmpty="false"> 
-                     <instanceof value="bpwme.diagram.edit.parts.WorkflowMapEditPart"/>
+                     <instanceof value="org.ow2.aspirerfid.bpwme.diagram.edit.parts.WorkflowMapEditPart"/>
                   </iterate></with>
                </and>
             </visibleWhen>
@@ -547,7 +547,7 @@
       <command id="org.ow2.aspirerfid.ide.bpwme.diagram.LoadResourceAction"
          name="Load Resource"
          categoryId="bpwme.diagram.part.BpwmeDiagramEditorID"
-         defaultHandler="bpwme.diagram.part.LoadResourceAction"/>
+         defaultHandler="org.ow2.aspirerfid.bpwme.diagram.part.LoadResourceAction"/>
    </extension>
 
    <extension point="org.eclipse.ui.handlers" id="menu-handlers">
@@ -575,7 +575,7 @@
       <objectContribution
             adaptable="false"
             id="org.ow2.aspirerfid.ide.bpwme.diagram.objectContribution.EBProcEditPart"
-            objectClass="bpwme.diagram.edit.parts.EBProcEditPart">
+            objectClass="org.ow2.aspirerfid.bpwme.diagram.edit.parts.EBProcEditPart">
          <menu
                id="EBEdit"
                label="Edit"

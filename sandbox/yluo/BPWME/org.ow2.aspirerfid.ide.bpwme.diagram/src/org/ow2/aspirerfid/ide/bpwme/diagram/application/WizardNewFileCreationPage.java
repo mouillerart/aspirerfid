@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.ow2.aspirerfid.bpwme.diagram.part.Messages;
 
-import bpwme.diagram.part.Messages;
 
 /**
  * @generated

@@ -18,6 +18,14 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.notation.View;
+import org.ow2.aspirerfid.bpwme.CLCBProc;
+import org.ow2.aspirerfid.bpwme.EBProc;
+import org.ow2.aspirerfid.bpwme.diagram.edit.parts.OLCBProcEditPart;
+import org.ow2.aspirerfid.bpwme.diagram.edit.parts.WorkflowMapEditPart;
+import org.ow2.aspirerfid.bpwme.diagram.simpleditor.PathEditorInput;
+import org.ow2.aspirerfid.bpwme.diagram.simpleditor.SimpleEditor;
+import org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl;
+import org.ow2.aspirerfid.bpwme.provider.NewFakeListener;
 import org.ow2.aspirerfid.commons.apdl.model.*;
 import org.ow2.aspirerfid.commons.apdl.utils.DeserializerUtil;
 import org.ow2.aspirerfid.commons.apdl.utils.Serializer;
@@ -27,14 +35,6 @@ import org.ow2.aspirerfid.ide.bpwme.ecspec.utils.LRSpecBuilder;
 import org.ow2.aspirerfid.ide.bpwme.ecspec.views.ECSpecEditor;
 import org.ow2.aspirerfid.ide.bpwme.test.FakeListener;
 
-import bpwme.CLCBProc;
-import bpwme.EBProc;
-import bpwme.diagram.edit.parts.OLCBProcEditPart;
-import bpwme.diagram.edit.parts.WorkflowMapEditPart;
-import bpwme.diagram.simpleditor.PathEditorInput;
-import bpwme.diagram.simpleditor.SimpleEditor;
-import bpwme.impl.OLCBProcImpl;
-import bpwme.provider.NewFakeListener;
 
 public class MainControl {
 	public enum FileAction{

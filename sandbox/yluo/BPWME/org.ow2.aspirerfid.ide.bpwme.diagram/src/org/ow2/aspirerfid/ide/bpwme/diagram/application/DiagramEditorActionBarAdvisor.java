@@ -33,12 +33,12 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
+import org.ow2.aspirerfid.bpwme.diagram.part.BpwmeCreationWizard;
+import org.ow2.aspirerfid.bpwme.diagram.part.BpwmeDiagramEditor;
+import org.ow2.aspirerfid.bpwme.diagram.part.Messages;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl;
 import org.ow2.aspirerfid.ide.bpwme.utils.MainControl.FileAction;
 
-import bpwme.diagram.part.BpwmeCreationWizard;
-import bpwme.diagram.part.BpwmeDiagramEditor;
-import bpwme.diagram.part.Messages;
 
 /**
  * @generated

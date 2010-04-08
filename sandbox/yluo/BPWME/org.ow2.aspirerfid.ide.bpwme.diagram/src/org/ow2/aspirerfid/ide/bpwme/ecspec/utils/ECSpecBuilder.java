@@ -24,20 +24,6 @@ public class ECSpecBuilder {
 	private List<Viewer> listeners;
 	private ArrayList<Spec> specList;
 	
-//	public ECSpecBuilder() {
-//		
-//		listeners = new ArrayList<Viewer>(); 
-//		
-//		ObjectFactory of = new ObjectFactory();
-//		ecspec = of.createECSpec();
-//		ecspec.setLogicalReaders(of.createECSpecLogicalReaders());
-//		ecspec.setReportSpecs(of.createECSpecReportSpecs());
-//		ecspec.setBoundarySpec(of.createECBoundarySpec());
-//		ecspec.setExtension(of.createECSpecExtension());
-//		ecspec.getBoundarySpec().setExtension(of.createECBoundarySpecExtension());
-//		ecspec.getBoundarySpec().getExtension().setStartTriggerList(of.createECBoundarySpecExtensionStartTriggerList());
-//		ecspec.getBoundarySpec().getExtension().setStopTriggerList(of.createECBoundarySpecExtensionStopTriggerList());
-//	}
 	
 	//bind the existing ECSpec abd EBProc to the ecspec builder
 	public ECSpecBuilder(EBProc ebproc ,ECSpec ecspe) {
@@ -108,21 +94,6 @@ public class ECSpecBuilder {
 		}
 		
 	}
-	
-//	private void iniECSB(EBProc ebproc) {
-//		setDuration(4500);
-//		setRepeatPeriod(4500);
-//		setStableSetInterval(0);
-//		MainControl mc = MainControl.getMainControl();
-//		EventType type = mc.ebprocMap.get(ebproc.getId());
-//		//TODO if type is null, means this is an open of exising apdl file
-//		//now the solution is to give him a default type
-//		//after master data is configured, everything will be fine
-//		//other solution is to store the type somewhere
-//		if(type == null) {
-//			type = EventType.AGGREGATION_EVENT;
-//		}	
-//	}
 	
 	private ECReportSpec createBiz() {
 		ECReportSpec bizTransactionReport = new ECReportSpec();

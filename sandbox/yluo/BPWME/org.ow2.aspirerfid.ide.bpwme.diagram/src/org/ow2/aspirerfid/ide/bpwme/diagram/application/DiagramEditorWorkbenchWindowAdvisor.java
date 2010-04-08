@@ -5,8 +5,8 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.ow2.aspirerfid.bpwme.diagram.part.Messages;
 
-import bpwme.diagram.part.Messages;
 
 /**
  * @generated

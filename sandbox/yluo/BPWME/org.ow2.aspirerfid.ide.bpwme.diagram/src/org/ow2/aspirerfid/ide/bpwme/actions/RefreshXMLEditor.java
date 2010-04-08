@@ -3,8 +3,8 @@ package org.ow2.aspirerfid.ide.bpwme.actions;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.ow2.aspirerfid.bpwme.diagram.simpleditor.SimpleEditor;
 
-import bpwme.diagram.simpleditor.SimpleEditor;
 
 public class RefreshXMLEditor extends AbstractHandler{
 	@Override
