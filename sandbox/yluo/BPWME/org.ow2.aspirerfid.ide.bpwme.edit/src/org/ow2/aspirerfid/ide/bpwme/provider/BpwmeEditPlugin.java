@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme.provider;
+package org.ow2.aspirerfid.ide.bpwme.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 

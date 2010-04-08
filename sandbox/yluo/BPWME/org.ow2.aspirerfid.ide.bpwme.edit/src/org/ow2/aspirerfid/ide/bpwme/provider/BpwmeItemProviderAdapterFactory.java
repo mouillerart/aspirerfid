@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme.provider;
+package org.ow2.aspirerfid.ide.bpwme.provider;
 
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.ow2.aspirerfid.bpwme.util.BpwmeAdapterFactory;
+import org.ow2.aspirerfid.ide.bpwme.util.BpwmeAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -77,7 +77,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.bpwme.WorkflowMap} instances.
+	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.WorkflowMap} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -85,7 +85,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	protected WorkflowMapItemProvider workflowMapItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.bpwme.WorkflowMap}.
+	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.WorkflowMap}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -100,7 +100,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.bpwme.Connection} instances.
+	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.Connection} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -108,7 +108,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	protected ConnectionItemProvider connectionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.bpwme.Connection}.
+	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.Connection}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -123,7 +123,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.bpwme.OLCBProc} instances.
+	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.OLCBProc} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -131,7 +131,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	protected OLCBProcItemProvider olcbProcItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.bpwme.OLCBProc}.
+	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.OLCBProc}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -146,7 +146,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.bpwme.CLCBProc} instances.
+	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.CLCBProc} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -154,7 +154,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	protected CLCBProcItemProvider clcbProcItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.bpwme.CLCBProc}.
+	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.CLCBProc}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -169,7 +169,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.bpwme.EBProc} instances.
+	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.EBProc} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -177,7 +177,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	protected EBProcItemProvider ebProcItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.bpwme.EBProc}.
+	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.EBProc}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -192,7 +192,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.bpwme.Transitions} instances.
+	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.Transitions} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -200,7 +200,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	protected TransitionsItemProvider transitionsItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.bpwme.Transitions}.
+	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.Transitions}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -215,7 +215,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.bpwme.Transition} instances.
+	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.Transition} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -223,7 +223,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	protected TransitionItemProvider transitionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.bpwme.Transition}.
+	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.Transition}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -243,7 +243,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.bpwme.Condition} instances.
+	 * This keeps track of the one adapter used for all {@link org.ow2.aspirerfid.ide.bpwme.Condition} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -251,7 +251,7 @@ public class BpwmeItemProviderAdapterFactory extends BpwmeAdapterFactory impleme
 	protected ConditionItemProvider conditionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.ow2.aspirerfid.bpwme.Condition}.
+	 * This creates an adapter for a {@link org.ow2.aspirerfid.ide.bpwme.Condition}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme.provider;
+package org.ow2.aspirerfid.ide.bpwme.provider;
 
 
 
@@ -13,6 +13,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -23,16 +25,17 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.ow2.aspirerfid.bpwme.BpwmePackage;
-import org.ow2.aspirerfid.bpwme.EBProc;
+import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
+import org.ow2.aspirerfid.ide.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
 
 /**
- * This is the item provider adapter for a {@link org.ow2.aspirerfid.bpwme.EBProc} object.
+ * This is the item provider adapter for a {@link org.ow2.aspirerfid.ide.bpwme.OLCBProc} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class EBProcItemProvider
+public class OLCBProcItemProvider
 	extends NodeItemProvider
 	implements
 		IEditingDomainItemProvider,
@@ -46,7 +49,7 @@ public class EBProcItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EBProcItemProvider(AdapterFactory adapterFactory) {
+	public OLCBProcItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -61,34 +64,11 @@ public class EBProcItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addDescriptionPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
 			addIdPropertyDescriptor(object);
-			//addExtendedAttributesPropertyDescriptor(object);
+			//addTransitionsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Description feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_EBProc_description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EBProc_description_feature", "_UI_EBProc_type"),
-				 BpwmePackage.Literals.EB_PROC__DESCRIPTION,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -102,9 +82,9 @@ public class EBProcItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EBProc_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EBProc_name_feature", "_UI_EBProc_type"),
-				 BpwmePackage.Literals.EB_PROC__NAME,
+				 getString("_UI_OLCBProc_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OLCBProc_name_feature", "_UI_OLCBProc_type"),
+				 BpwmePackage.Literals.OLCB_PROC__NAME,
 				 true,
 				 false,
 				 false,
@@ -124,9 +104,9 @@ public class EBProcItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EBProc_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EBProc_id_feature", "_UI_EBProc_type"),
-				 BpwmePackage.Literals.EB_PROC__ID,
+				 getString("_UI_OLCBProc_id_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OLCBProc_id_feature", "_UI_OLCBProc_type"),
+				 BpwmePackage.Literals.OLCB_PROC__ID,
 				 true,
 				 false,
 				 false,
@@ -136,19 +116,19 @@ public class EBProcItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Extended Attributes feature.
+	 * This adds a property descriptor for the Transitions feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addExtendedAttributesPropertyDescriptor(Object object) {
+	protected void addTransitionsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EBProc_extendedAttributes_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EBProc_extendedAttributes_feature", "_UI_EBProc_type"),
-				 BpwmePackage.Literals.EB_PROC__EXTENDED_ATTRIBUTES,
+				 getString("_UI_OLCBProc_transitions_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_OLCBProc_transitions_feature", "_UI_OLCBProc_type"),
+				 BpwmePackage.Literals.OLCB_PROC__TRANSITIONS,
 				 true,
 				 false,
 				 true,
@@ -158,14 +138,44 @@ public class EBProcItemProvider
 	}
 
 	/**
-	 * This returns EBProc.gif.
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(BpwmePackage.Literals.OLCB_PROC__CLCB_PROC);
+		}
+		return childrenFeatures;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
+
+	/**
+	 * This returns OLCBProc.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EBProc"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OLCBProc"));
 	}
 
 	/**
@@ -176,10 +186,10 @@ public class EBProcItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((EBProc)object).getName();
+		String label = ((OLCBProc)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_EBProc_type") :
-			getString("_UI_EBProc_type") + " " + label;
+			getString("_UI_OLCBProc_type") :
+			getString("_UI_OLCBProc_type") + " " + label;
 	}
 
 	/**
@@ -193,16 +203,17 @@ public class EBProcItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(EBProc.class)) {
-			case BpwmePackage.EB_PROC__DESCRIPTION:
-			case BpwmePackage.EB_PROC__NAME:
-			case BpwmePackage.EB_PROC__ID:
+		switch (notification.getFeatureID(OLCBProc.class)) {
+			case BpwmePackage.OLCB_PROC__NAME:
+			case BpwmePackage.OLCB_PROC__ID:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case BpwmePackage.OLCB_PROC__CLCB_PROC:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
 	}
-	
 
 	/**
 	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
@@ -214,6 +225,11 @@ public class EBProcItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BpwmePackage.Literals.OLCB_PROC__CLCB_PROC,
+				 BpwmeFactory.eINSTANCE.createCLCBProc()));
 	}
 
 }
