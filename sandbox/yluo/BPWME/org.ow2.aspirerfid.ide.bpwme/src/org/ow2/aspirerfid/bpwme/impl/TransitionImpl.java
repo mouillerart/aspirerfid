@@ -4,12 +4,8 @@
  *
  * $Id$
  */
-package bpwme.impl;
+package org.ow2.aspirerfid.bpwme.impl;
 
-import bpwme.BpwmePackage;
-import bpwme.Condition;
-import bpwme.ExtendedAttributes;
-import bpwme.Transition;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -18,6 +14,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.bpwme.Condition;
+import org.ow2.aspirerfid.bpwme.ExtendedAttributes;
+import org.ow2.aspirerfid.bpwme.Transition;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,13 +26,13 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link bpwme.impl.TransitionImpl#getCondition <em>Condition</em>}</li>
- *   <li>{@link bpwme.impl.TransitionImpl#getDescription <em>Description</em>}</li>
- *   <li>{@link bpwme.impl.TransitionImpl#getExtendedAttributes <em>Extended Attributes</em>}</li>
- *   <li>{@link bpwme.impl.TransitionImpl#getFrom <em>From</em>}</li>
- *   <li>{@link bpwme.impl.TransitionImpl#getId <em>Id</em>}</li>
- *   <li>{@link bpwme.impl.TransitionImpl#getName <em>Name</em>}</li>
- *   <li>{@link bpwme.impl.TransitionImpl#getTo <em>To</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl#getExtendedAttributes <em>Extended Attributes</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl#getFrom <em>From</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl#getTo <em>To</em>}</li>
  * </ul>
  * </p>
  *

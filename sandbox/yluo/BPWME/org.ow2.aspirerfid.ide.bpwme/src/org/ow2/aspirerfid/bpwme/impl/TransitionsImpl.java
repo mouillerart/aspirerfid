@@ -4,11 +4,8 @@
  *
  * $Id$
  */
-package bpwme.impl;
+package org.ow2.aspirerfid.bpwme.impl;
 
-import bpwme.BpwmePackage;
-import bpwme.Transition;
-import bpwme.Transitions;
 
 import java.util.Collection;
 
@@ -19,6 +16,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.bpwme.Transition;
+import org.ow2.aspirerfid.bpwme.Transitions;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link bpwme.impl.TransitionsImpl#getTransition <em>Transition</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.TransitionsImpl#getTransition <em>Transition</em>}</li>
  * </ul>
  * </p>
  *

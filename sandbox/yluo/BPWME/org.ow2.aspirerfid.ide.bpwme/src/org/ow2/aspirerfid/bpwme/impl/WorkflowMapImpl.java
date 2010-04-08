@@ -4,12 +4,8 @@
  *
  * $Id$
  */
-package bpwme.impl;
+package org.ow2.aspirerfid.bpwme.impl;
 
-import bpwme.BpwmePackage;
-import bpwme.Connection;
-import bpwme.Node;
-import bpwme.WorkflowMap;
 
 import java.util.Collection;
 
@@ -26,6 +22,10 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.bpwme.Connection;
+import org.ow2.aspirerfid.bpwme.Node;
+import org.ow2.aspirerfid.bpwme.WorkflowMap;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,9 +34,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link bpwme.impl.WorkflowMapImpl#getName <em>Name</em>}</li>
- *   <li>{@link bpwme.impl.WorkflowMapImpl#getConnections <em>Connections</em>}</li>
- *   <li>{@link bpwme.impl.WorkflowMapImpl#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.WorkflowMapImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.WorkflowMapImpl#getConnections <em>Connections</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.WorkflowMapImpl#getNodes <em>Nodes</em>}</li>
  * </ul>
  * </p>
  *

@@ -4,10 +4,8 @@
  *
  * $Id$
  */
-package bpwme.impl;
+package org.ow2.aspirerfid.bpwme.impl;
 
-import bpwme.BpwmePackage;
-import bpwme.Condition;
 
 import java.util.Collection;
 
@@ -21,6 +19,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.bpwme.Condition;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,8 +29,8 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link bpwme.impl.ConditionImpl#getContent <em>Content</em>}</li>
- *   <li>{@link bpwme.impl.ConditionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.ConditionImpl#getContent <em>Content</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.ConditionImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *

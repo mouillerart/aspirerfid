@@ -4,13 +4,8 @@
  *
  * $Id$
  */
-package bpwme.impl;
+package org.ow2.aspirerfid.bpwme.impl;
 
-import bpwme.BpwmePackage;
-import bpwme.CLCBProc;
-import bpwme.OLCBProc;
-import bpwme.Transitions;
-import bpwme.util.BpwmeAssistant;
 
 import java.util.Collection;
 
@@ -26,24 +21,50 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.bpwme.CLCBProc;
+import org.ow2.aspirerfid.bpwme.EBProc;
+import org.ow2.aspirerfid.bpwme.Transitions;
+import org.ow2.aspirerfid.bpwme.util.BpwmeAssistant;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>OLCB Proc</b></em>'.
+ * An implementation of the model object '<em><b>CLCB Proc</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link bpwme.impl.OLCBProcImpl#getName <em>Name</em>}</li>
- *   <li>{@link bpwme.impl.OLCBProcImpl#getId <em>Id</em>}</li>
- *   <li>{@link bpwme.impl.OLCBProcImpl#getTransitions <em>Transitions</em>}</li>
- *   <li>{@link bpwme.impl.OLCBProcImpl#getCLCBProc <em>CLCB Proc</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl#getTransitions <em>Transitions</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl#getEBProc <em>EB Proc</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class OLCBProcImpl extends NodeImpl implements OLCBProc {
+public class CLCBProcImpl extends NodeImpl implements CLCBProc {
+	/**
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTION_EDEFAULT = "";
+
+	/**
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected String description = DESCRIPTION_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -82,7 +103,7 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = BpwmeAssistant.getUniqueOLCBID();
+	protected String id = BpwmeAssistant.getUniqueCLCBID();
 
 	/**
 	 * The cached value of the '{@link #getTransitions() <em>Transitions</em>}' reference.
@@ -95,21 +116,21 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	protected Transitions transitions;
 
 	/**
-	 * The cached value of the '{@link #getCLCBProc() <em>CLCB Proc</em>}' containment reference list.
+	 * The cached value of the '{@link #getEBProc() <em>EB Proc</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCLCBProc()
+	 * @see #getEBProc()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<CLCBProc> cLCBProc;
+	protected EList<EBProc> eBProc;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected OLCBProcImpl() {
+	protected CLCBProcImpl() {
 		super();
 	}
 
@@ -120,7 +141,28 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return BpwmePackage.Literals.OLCB_PROC;
+		return BpwmePackage.Literals.CLCB_PROC;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__DESCRIPTION, oldDescription, description));
 	}
 
 	/**
@@ -141,7 +183,7 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.OLCB_PROC__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__NAME, oldName, name));
 	}
 
 	/**
@@ -162,7 +204,7 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 		String oldId = id;
 		id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.OLCB_PROC__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__ID, oldId, id));
 	}
 
 	/**
@@ -176,7 +218,7 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 			transitions = (Transitions)eResolveProxy(oldTransitions);
 			if (transitions != oldTransitions) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BpwmePackage.OLCB_PROC__TRANSITIONS, oldTransitions, transitions));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BpwmePackage.CLCB_PROC__TRANSITIONS, oldTransitions, transitions));
 			}
 		}
 		return transitions;
@@ -200,7 +242,7 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 		Transitions oldTransitions = transitions;
 		transitions = newTransitions;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.OLCB_PROC__TRANSITIONS, oldTransitions, transitions));
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__TRANSITIONS, oldTransitions, transitions));
 	}
 
 	/**
@@ -208,11 +250,11 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<CLCBProc> getCLCBProc() {
-		if (cLCBProc == null) {
-			cLCBProc = new EObjectContainmentEList<CLCBProc>(CLCBProc.class, this, BpwmePackage.OLCB_PROC__CLCB_PROC);
+	public EList<EBProc> getEBProc() {
+		if (eBProc == null) {
+			eBProc = new EObjectContainmentEList<EBProc>(EBProc.class, this, BpwmePackage.CLCB_PROC__EB_PROC);
 		}
-		return cLCBProc;
+		return eBProc;
 	}
 
 	/**
@@ -223,8 +265,8 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case BpwmePackage.OLCB_PROC__CLCB_PROC:
-				return ((InternalEList<?>)getCLCBProc()).basicRemove(otherEnd, msgs);
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				return ((InternalEList<?>)getEBProc()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -237,15 +279,17 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case BpwmePackage.OLCB_PROC__NAME:
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
+				return getDescription();
+			case BpwmePackage.CLCB_PROC__NAME:
 				return getName();
-			case BpwmePackage.OLCB_PROC__ID:
+			case BpwmePackage.CLCB_PROC__ID:
 				return getId();
-			case BpwmePackage.OLCB_PROC__TRANSITIONS:
+			case BpwmePackage.CLCB_PROC__TRANSITIONS:
 				if (resolve) return getTransitions();
 				return basicGetTransitions();
-			case BpwmePackage.OLCB_PROC__CLCB_PROC:
-				return getCLCBProc();
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				return getEBProc();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -259,18 +303,21 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case BpwmePackage.OLCB_PROC__NAME:
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
+			case BpwmePackage.CLCB_PROC__NAME:
 				setName((String)newValue);
 				return;
-			case BpwmePackage.OLCB_PROC__ID:
+			case BpwmePackage.CLCB_PROC__ID:
 				setId((String)newValue);
 				return;
-			case BpwmePackage.OLCB_PROC__TRANSITIONS:
+			case BpwmePackage.CLCB_PROC__TRANSITIONS:
 				setTransitions((Transitions)newValue);
 				return;
-			case BpwmePackage.OLCB_PROC__CLCB_PROC:
-				getCLCBProc().clear();
-				getCLCBProc().addAll((Collection<? extends CLCBProc>)newValue);
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				getEBProc().clear();
+				getEBProc().addAll((Collection<? extends EBProc>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -284,17 +331,20 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case BpwmePackage.OLCB_PROC__NAME:
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
+			case BpwmePackage.CLCB_PROC__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case BpwmePackage.OLCB_PROC__ID:
+			case BpwmePackage.CLCB_PROC__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case BpwmePackage.OLCB_PROC__TRANSITIONS:
+			case BpwmePackage.CLCB_PROC__TRANSITIONS:
 				setTransitions((Transitions)null);
 				return;
-			case BpwmePackage.OLCB_PROC__CLCB_PROC:
-				getCLCBProc().clear();
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				getEBProc().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -308,14 +358,16 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case BpwmePackage.OLCB_PROC__NAME:
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case BpwmePackage.CLCB_PROC__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case BpwmePackage.OLCB_PROC__ID:
+			case BpwmePackage.CLCB_PROC__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case BpwmePackage.OLCB_PROC__TRANSITIONS:
+			case BpwmePackage.CLCB_PROC__TRANSITIONS:
 				return transitions != null;
-			case BpwmePackage.OLCB_PROC__CLCB_PROC:
-				return cLCBProc != null && !cLCBProc.isEmpty();
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				return eBProc != null && !eBProc.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -330,7 +382,9 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		result.append(" (description: ");
+		result.append(description);
+		result.append(", name: ");
 		result.append(name);
 		result.append(", id: ");
 		result.append(id);
@@ -338,4 +392,4 @@ public class OLCBProcImpl extends NodeImpl implements OLCBProc {
 		return result.toString();
 	}
 
-} //OLCBProcImpl
+} //CLCBProcImpl

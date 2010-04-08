@@ -4,11 +4,8 @@
  *
  * $Id$
  */
-package bpwme.impl;
+package org.ow2.aspirerfid.bpwme.impl;
 
-import bpwme.BpwmePackage;
-import bpwme.Connection;
-import bpwme.Node;
 
 import java.util.Collection;
 
@@ -23,6 +20,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.bpwme.Connection;
+import org.ow2.aspirerfid.bpwme.Node;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,8 +31,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link bpwme.impl.NodeImpl#getIngoingConnections <em>Ingoing Connections</em>}</li>
- *   <li>{@link bpwme.impl.NodeImpl#getOutgoingConnections <em>Outgoing Connections</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.NodeImpl#getIngoingConnections <em>Ingoing Connections</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.bpwme.impl.NodeImpl#getOutgoingConnections <em>Outgoing Connections</em>}</li>
  * </ul>
  * </p>
  *

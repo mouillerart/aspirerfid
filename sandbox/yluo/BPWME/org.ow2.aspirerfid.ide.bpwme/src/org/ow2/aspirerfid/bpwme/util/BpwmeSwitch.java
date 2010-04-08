@@ -4,14 +4,14 @@
  *
  * $Id$
  */
-package bpwme.util;
+package org.ow2.aspirerfid.bpwme.util;
 
-import bpwme.*;
 
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.ow2.aspirerfid.bpwme.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see bpwme.BpwmePackage
+ * @see org.ow2.aspirerfid.bpwme.BpwmePackage
  * @generated
  */
 public class BpwmeSwitch<T> {

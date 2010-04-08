@@ -13,7 +13,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://aspire.ow2.org/"
-            class="bpwme.BpwmePackage"
+            class="org.ow2.aspirerfid.bpwme.BpwmePackage"
             genModel="model/bpwme.genmodel"/>
    </extension>
 

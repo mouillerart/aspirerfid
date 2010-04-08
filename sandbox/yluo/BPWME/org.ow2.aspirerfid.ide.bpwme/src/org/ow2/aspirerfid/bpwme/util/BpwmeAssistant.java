@@ -1,4 +1,4 @@
-package bpwme.util;
+package org.ow2.aspirerfid.bpwme.util;
 
 public class BpwmeAssistant {
 	private static int OLCBCounter = 0;

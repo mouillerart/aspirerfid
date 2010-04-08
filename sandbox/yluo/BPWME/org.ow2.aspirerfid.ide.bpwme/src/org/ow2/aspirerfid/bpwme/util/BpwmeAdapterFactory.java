@@ -4,9 +4,8 @@
  *
  * $Id$
  */
-package bpwme.util;
+package org.ow2.aspirerfid.bpwme.util;
 
-import bpwme.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -14,13 +13,14 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
+import org.ow2.aspirerfid.bpwme.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see bpwme.BpwmePackage
+ * @see org.ow2.aspirerfid.bpwme.BpwmePackage
  * @generated
  */
 public class BpwmeAdapterFactory extends AdapterFactoryImpl {
@@ -136,13 +136,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.WorkflowMap <em>Workflow Map</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.WorkflowMap <em>Workflow Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.WorkflowMap
+	 * @see org.ow2.aspirerfid.bpwme.WorkflowMap
 	 * @generated
 	 */
 	public Adapter createWorkflowMapAdapter() {
@@ -150,13 +150,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.Node <em>Node</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.Node <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.Node
+	 * @see org.ow2.aspirerfid.bpwme.Node
 	 * @generated
 	 */
 	public Adapter createNodeAdapter() {
@@ -164,13 +164,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.Connection <em>Connection</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.Connection <em>Connection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.Connection
+	 * @see org.ow2.aspirerfid.bpwme.Connection
 	 * @generated
 	 */
 	public Adapter createConnectionAdapter() {
@@ -178,13 +178,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.OLCBProc <em>OLCB Proc</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.OLCBProc <em>OLCB Proc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.OLCBProc
+	 * @see org.ow2.aspirerfid.bpwme.OLCBProc
 	 * @generated
 	 */
 	public Adapter createOLCBProcAdapter() {
@@ -192,13 +192,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.CLCBProc <em>CLCB Proc</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.CLCBProc <em>CLCB Proc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.CLCBProc
+	 * @see org.ow2.aspirerfid.bpwme.CLCBProc
 	 * @generated
 	 */
 	public Adapter createCLCBProcAdapter() {
@@ -206,13 +206,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.EBProc <em>EB Proc</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.EBProc <em>EB Proc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.EBProc
+	 * @see org.ow2.aspirerfid.bpwme.EBProc
 	 * @generated
 	 */
 	public Adapter createEBProcAdapter() {
@@ -220,13 +220,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.Transitions <em>Transitions</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.Transitions <em>Transitions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.Transitions
+	 * @see org.ow2.aspirerfid.bpwme.Transitions
 	 * @generated
 	 */
 	public Adapter createTransitionsAdapter() {
@@ -234,13 +234,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.Transition <em>Transition</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.Transition <em>Transition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.Transition
+	 * @see org.ow2.aspirerfid.bpwme.Transition
 	 * @generated
 	 */
 	public Adapter createTransitionAdapter() {
@@ -248,13 +248,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.ExtendedAttribute <em>Extended Attribute</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute <em>Extended Attribute</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.ExtendedAttribute
+	 * @see org.ow2.aspirerfid.bpwme.ExtendedAttribute
 	 * @generated
 	 */
 	public Adapter createExtendedAttributeAdapter() {
@@ -262,13 +262,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.ExtendedAttributes <em>Extended Attributes</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.ExtendedAttributes <em>Extended Attributes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.ExtendedAttributes
+	 * @see org.ow2.aspirerfid.bpwme.ExtendedAttributes
 	 * @generated
 	 */
 	public Adapter createExtendedAttributesAdapter() {
@@ -276,13 +276,13 @@ public class BpwmeAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link bpwme.Condition <em>Condition</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.ow2.aspirerfid.bpwme.Condition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see bpwme.Condition
+	 * @see org.ow2.aspirerfid.bpwme.Condition
 	 * @generated
 	 */
 	public Adapter createConditionAdapter() {

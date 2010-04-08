@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package bpwme;
+package org.ow2.aspirerfid.bpwme;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see bpwme.BpwmePackage
+ * @see org.ow2.aspirerfid.bpwme.BpwmePackage
  * @generated
  */
 public interface BpwmeFactory extends EFactory {
@@ -23,7 +23,7 @@ public interface BpwmeFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	BpwmeFactory eINSTANCE = bpwme.impl.BpwmeFactoryImpl.init();
+	BpwmeFactory eINSTANCE = org.ow2.aspirerfid.bpwme.impl.BpwmeFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Workflow Map</em>'.
