@@ -380,7 +380,6 @@ public class RXTXCmdImpl implements Command, SerialPortEventListener, BundleActi
 		out.println(Constants.FRAMEWORK_PROCESSOR+"="+(String) bundleContext.getProperty(Constants.FRAMEWORK_PROCESSOR));
 		out.println(Constants.FRAMEWORK_LANGUAGE+"="+(String) bundleContext.getProperty(Constants.FRAMEWORK_LANGUAGE));
 	}
-
 	
 	public void listPorts(String commandLine, PrintStream out, PrintStream err) {
 		out.println("List of ports from RXTX");
