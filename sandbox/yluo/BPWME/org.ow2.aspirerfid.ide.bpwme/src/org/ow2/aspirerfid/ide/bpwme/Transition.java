@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme;
+package org.ow2.aspirerfid.ide.bpwme;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -16,17 +16,17 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Transition#getCondition <em>Condition</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Transition#getDescription <em>Description</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Transition#getExtendedAttributes <em>Extended Attributes</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Transition#getFrom <em>From</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Transition#getId <em>Id</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Transition#getName <em>Name</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Transition#getTo <em>To</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Transition#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Transition#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Transition#getExtendedAttributes <em>Extended Attributes</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Transition#getFrom <em>From</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Transition#getId <em>Id</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Transition#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Transition#getTo <em>To</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getTransition()
+ * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getTransition()
  * @model
  * @generated
  */
@@ -41,14 +41,14 @@ public interface Transition extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Condition</em>' reference.
 	 * @see #setCondition(Condition)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getTransition_Condition()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getTransition_Condition()
 	 * @model
 	 * @generated
 	 */
 	Condition getCondition();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Transition#getCondition <em>Condition</em>}' reference.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getCondition <em>Condition</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Condition</em>' reference.
@@ -68,14 +68,14 @@ public interface Transition extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getTransition_Description()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getTransition_Description()
 	 * @model default=""
 	 * @generated
 	 */
 	String getDescription();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Transition#getDescription <em>Description</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getDescription <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Description</em>' attribute.
@@ -94,14 +94,14 @@ public interface Transition extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Extended Attributes</em>' reference.
 	 * @see #setExtendedAttributes(ExtendedAttributes)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getTransition_ExtendedAttributes()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getTransition_ExtendedAttributes()
 	 * @model
 	 * @generated
 	 */
 	ExtendedAttributes getExtendedAttributes();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Transition#getExtendedAttributes <em>Extended Attributes</em>}' reference.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getExtendedAttributes <em>Extended Attributes</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Extended Attributes</em>' reference.
@@ -121,14 +121,14 @@ public interface Transition extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>From</em>' attribute.
 	 * @see #setFrom(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getTransition_From()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getTransition_From()
 	 * @model default=""
 	 * @generated
 	 */
 	String getFrom();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Transition#getFrom <em>From</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getFrom <em>From</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>From</em>' attribute.
@@ -148,14 +148,14 @@ public interface Transition extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getTransition_Id()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getTransition_Id()
 	 * @model default=""
 	 * @generated
 	 */
 	String getId();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Transition#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Id</em>' attribute.
@@ -175,14 +175,14 @@ public interface Transition extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getTransition_Name()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getTransition_Name()
 	 * @model default=""
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Transition#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -202,14 +202,14 @@ public interface Transition extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>To</em>' attribute.
 	 * @see #setTo(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getTransition_To()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getTransition_To()
 	 * @model default=""
 	 * @generated
 	 */
 	String getTo();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Transition#getTo <em>To</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getTo <em>To</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>To</em>' attribute.

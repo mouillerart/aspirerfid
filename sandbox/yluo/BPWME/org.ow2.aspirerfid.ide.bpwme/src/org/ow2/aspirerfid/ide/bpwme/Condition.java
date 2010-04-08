@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme;
+package org.ow2.aspirerfid.ide.bpwme;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -18,12 +18,12 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Condition#getContent <em>Content</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Condition#getType <em>Type</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Condition#getContent <em>Content</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Condition#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCondition()
+ * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCondition()
  * @model
  * @generated
  */
@@ -38,7 +38,7 @@ public interface Condition extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Content</em>' attribute list.
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCondition_Content()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCondition_Content()
 	 * @model
 	 * @generated
 	 */
@@ -55,14 +55,14 @@ public interface Condition extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see #setType(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCondition_Type()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCondition_Type()
 	 * @model default=""
 	 * @generated
 	 */
 	String getType();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Condition#getType <em>Type</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Condition#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.

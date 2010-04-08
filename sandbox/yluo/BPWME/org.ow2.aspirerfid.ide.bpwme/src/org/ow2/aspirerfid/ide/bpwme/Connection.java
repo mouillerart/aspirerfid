@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme;
+package org.ow2.aspirerfid.ide.bpwme;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -16,19 +16,19 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Connection#getSourceNode <em>Source Node</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.Connection#getTargetNode <em>Target Node</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Connection#getSourceNode <em>Source Node</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.Connection#getTargetNode <em>Target Node</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getConnection()
+ * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getConnection()
  * @model
  * @generated
  */
 public interface Connection extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Source Node</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.ow2.aspirerfid.bpwme.Node#getOutgoingConnections <em>Outgoing Connections</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.ow2.aspirerfid.ide.bpwme.Node#getOutgoingConnections <em>Outgoing Connections</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Source Node</em>' reference isn't clear,
@@ -37,15 +37,15 @@ public interface Connection extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source Node</em>' reference.
 	 * @see #setSourceNode(Node)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getConnection_SourceNode()
-	 * @see org.ow2.aspirerfid.bpwme.Node#getOutgoingConnections
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getConnection_SourceNode()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Node#getOutgoingConnections
 	 * @model opposite="outgoingConnections" required="true"
 	 * @generated
 	 */
 	Node getSourceNode();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Connection#getSourceNode <em>Source Node</em>}' reference.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Connection#getSourceNode <em>Source Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Source Node</em>' reference.
@@ -56,7 +56,7 @@ public interface Connection extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Target Node</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.ow2.aspirerfid.bpwme.Node#getIngoingConnections <em>Ingoing Connections</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.ow2.aspirerfid.ide.bpwme.Node#getIngoingConnections <em>Ingoing Connections</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Target Node</em>' reference isn't clear,
@@ -65,15 +65,15 @@ public interface Connection extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target Node</em>' reference.
 	 * @see #setTargetNode(Node)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getConnection_TargetNode()
-	 * @see org.ow2.aspirerfid.bpwme.Node#getIngoingConnections
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getConnection_TargetNode()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Node#getIngoingConnections
 	 * @model opposite="ingoingConnections" required="true"
 	 * @generated
 	 */
 	Node getTargetNode();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.Connection#getTargetNode <em>Target Node</em>}' reference.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.Connection#getTargetNode <em>Target Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Target Node</em>' reference.

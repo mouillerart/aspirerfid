@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme.impl;
+package org.ow2.aspirerfid.ide.bpwme.impl;
 
 
 import java.util.Collection;
@@ -21,11 +21,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.ow2.aspirerfid.bpwme.BpwmePackage;
-import org.ow2.aspirerfid.bpwme.CLCBProc;
-import org.ow2.aspirerfid.bpwme.OLCBProc;
-import org.ow2.aspirerfid.bpwme.Transitions;
-import org.ow2.aspirerfid.bpwme.util.BpwmeAssistant;
+import org.ow2.aspirerfid.ide.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.Transitions;
+import org.ow2.aspirerfid.ide.bpwme.util.BpwmeAssistant;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,10 +34,10 @@ import org.ow2.aspirerfid.bpwme.util.BpwmeAssistant;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl#getTransitions <em>Transitions</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl#getCLCBProc <em>CLCB Proc</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl#getTransitions <em>Transitions</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl#getCLCBProc <em>CLCB Proc</em>}</li>
  * </ul>
  * </p>
  *

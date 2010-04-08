@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme;
+package org.ow2.aspirerfid.ide.bpwme;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -18,13 +18,13 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute#getContent <em>Content</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute#getName <em>Name</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute#getValue <em>Value</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getContent <em>Content</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getExtendedAttribute()
+ * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getExtendedAttribute()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface ExtendedAttribute extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Content</em>' attribute list.
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getExtendedAttribute_Content()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getExtendedAttribute_Content()
 	 * @model
 	 * @generated
 	 */
@@ -56,14 +56,14 @@ public interface ExtendedAttribute extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getExtendedAttribute_Name()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getExtendedAttribute_Name()
 	 * @model default=""
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -83,14 +83,14 @@ public interface ExtendedAttribute extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getExtendedAttribute_Value()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getExtendedAttribute_Value()
 	 * @model default=""
 	 * @generated
 	 */
 	String getValue();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute#getValue <em>Value</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getValue <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Value</em>' attribute.

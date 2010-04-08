@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme;
+package org.ow2.aspirerfid.ide.bpwme;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -18,18 +18,18 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.ExtendedAttributes#getExtendedAttribute <em>Extended Attribute</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttributes#getExtendedAttribute <em>Extended Attribute</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getExtendedAttributes()
+ * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getExtendedAttributes()
  * @model
  * @generated
  */
 public interface ExtendedAttributes extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Extended Attribute</b></em>' containment reference list.
-	 * The list contents are of type {@link org.ow2.aspirerfid.bpwme.ExtendedAttribute}.
+	 * The list contents are of type {@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Extended Attribute</em>' containment reference list isn't clear,
@@ -37,7 +37,7 @@ public interface ExtendedAttributes extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Extended Attribute</em>' containment reference list.
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getExtendedAttributes_ExtendedAttribute()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getExtendedAttributes_ExtendedAttribute()
 	 * @model containment="true"
 	 * @generated
 	 */

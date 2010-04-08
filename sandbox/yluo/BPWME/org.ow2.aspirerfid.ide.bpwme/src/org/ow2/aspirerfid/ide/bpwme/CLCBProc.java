@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme;
+package org.ow2.aspirerfid.ide.bpwme;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -16,15 +16,15 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.CLCBProc#getDescription <em>Description</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.CLCBProc#getName <em>Name</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.CLCBProc#getId <em>Id</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.CLCBProc#getTransitions <em>Transitions</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.CLCBProc#getEBProc <em>EB Proc</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getId <em>Id</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getTransitions <em>Transitions</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getEBProc <em>EB Proc</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCLCBProc()
+ * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCLCBProc()
  * @model
  * @generated
  */
@@ -40,14 +40,14 @@ public interface CLCBProc extends Node {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCLCBProc_Description()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCLCBProc_Description()
 	 * @model default=""
 	 * @generated
 	 */
 	String getDescription();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getDescription <em>Description</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getDescription <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Description</em>' attribute.
@@ -67,14 +67,14 @@ public interface CLCBProc extends Node {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCLCBProc_Name()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCLCBProc_Name()
 	 * @model default=""
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -94,14 +94,14 @@ public interface CLCBProc extends Node {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCLCBProc_Id()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCLCBProc_Id()
 	 * @model default=""
 	 * @generated
 	 */
 	String getId();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Id</em>' attribute.
@@ -120,14 +120,14 @@ public interface CLCBProc extends Node {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Transitions</em>' reference.
 	 * @see #setTransitions(Transitions)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCLCBProc_Transitions()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCLCBProc_Transitions()
 	 * @model
 	 * @generated
 	 */
 	Transitions getTransitions();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getTransitions <em>Transitions</em>}' reference.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getTransitions <em>Transitions</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Transitions</em>' reference.
@@ -138,7 +138,7 @@ public interface CLCBProc extends Node {
 
 	/**
 	 * Returns the value of the '<em><b>EB Proc</b></em>' containment reference list.
-	 * The list contents are of type {@link org.ow2.aspirerfid.bpwme.EBProc}.
+	 * The list contents are of type {@link org.ow2.aspirerfid.ide.bpwme.EBProc}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>EB Proc</em>' containment reference list isn't clear,
@@ -146,7 +146,7 @@ public interface CLCBProc extends Node {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>EB Proc</em>' containment reference list.
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getCLCBProc_EBProc()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getCLCBProc_EBProc()
 	 * @model containment="true"
 	 * @generated
 	 */

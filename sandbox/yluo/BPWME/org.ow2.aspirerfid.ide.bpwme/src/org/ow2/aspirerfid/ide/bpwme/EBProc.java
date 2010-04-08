@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme;
+package org.ow2.aspirerfid.ide.bpwme;
 
 
 /**
@@ -15,14 +15,14 @@ package org.ow2.aspirerfid.bpwme;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.EBProc#getDescription <em>Description</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.EBProc#getName <em>Name</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.EBProc#getId <em>Id</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.EBProc#getExtendedAttributes <em>Extended Attributes</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getId <em>Id</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getExtendedAttributes <em>Extended Attributes</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getEBProc()
+ * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getEBProc()
  * @model
  * @generated
  */
@@ -38,14 +38,14 @@ public interface EBProc extends Node {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getEBProc_Description()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getEBProc_Description()
 	 * @model default=""
 	 * @generated
 	 */
 	String getDescription();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.EBProc#getDescription <em>Description</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getDescription <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Description</em>' attribute.
@@ -65,14 +65,14 @@ public interface EBProc extends Node {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getEBProc_Name()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getEBProc_Name()
 	 * @model default=""
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.EBProc#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -92,14 +92,14 @@ public interface EBProc extends Node {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#getEBProc_Id()
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#getEBProc_Id()
 	 * @model default=""
 	 * @generated
 	 */
 	String getId();
 
 	/**
-	 * Sets the value of the '{@link org.ow2.aspirerfid.bpwme.EBProc#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Id</em>' attribute.

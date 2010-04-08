@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme.impl;
+package org.ow2.aspirerfid.ide.bpwme.impl;
 
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -13,19 +13,19 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.ow2.aspirerfid.bpwme.BpwmeFactory;
-import org.ow2.aspirerfid.bpwme.BpwmePackage;
-import org.ow2.aspirerfid.bpwme.CLCBProc;
-import org.ow2.aspirerfid.bpwme.Condition;
-import org.ow2.aspirerfid.bpwme.Connection;
-import org.ow2.aspirerfid.bpwme.EBProc;
-import org.ow2.aspirerfid.bpwme.ExtendedAttribute;
-import org.ow2.aspirerfid.bpwme.ExtendedAttributes;
-import org.ow2.aspirerfid.bpwme.Node;
-import org.ow2.aspirerfid.bpwme.OLCBProc;
-import org.ow2.aspirerfid.bpwme.Transition;
-import org.ow2.aspirerfid.bpwme.Transitions;
-import org.ow2.aspirerfid.bpwme.WorkflowMap;
+import org.ow2.aspirerfid.ide.bpwme.BpwmeFactory;
+import org.ow2.aspirerfid.ide.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.Condition;
+import org.ow2.aspirerfid.ide.bpwme.Connection;
+import org.ow2.aspirerfid.ide.bpwme.EBProc;
+import org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute;
+import org.ow2.aspirerfid.ide.bpwme.ExtendedAttributes;
+import org.ow2.aspirerfid.ide.bpwme.Node;
+import org.ow2.aspirerfid.ide.bpwme.OLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.Transition;
+import org.ow2.aspirerfid.ide.bpwme.Transitions;
+import org.ow2.aspirerfid.ide.bpwme.WorkflowMap;
 
 /**
  * <!-- begin-user-doc -->
@@ -122,7 +122,7 @@ public class BpwmePackageImpl extends EPackageImpl implements BpwmePackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.ow2.aspirerfid.bpwme.BpwmePackage#eNS_URI
+	 * @see org.ow2.aspirerfid.ide.bpwme.BpwmePackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

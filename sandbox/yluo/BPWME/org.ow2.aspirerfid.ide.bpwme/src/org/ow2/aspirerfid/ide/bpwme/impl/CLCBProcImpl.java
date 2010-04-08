@@ -4,36 +4,47 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme.impl;
+package org.ow2.aspirerfid.ide.bpwme.impl;
 
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.ow2.aspirerfid.bpwme.*;
-import org.ow2.aspirerfid.bpwme.util.BpwmeAssistant;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.ow2.aspirerfid.ide.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.ide.bpwme.CLCBProc;
+import org.ow2.aspirerfid.ide.bpwme.EBProc;
+import org.ow2.aspirerfid.ide.bpwme.Transitions;
+import org.ow2.aspirerfid.ide.bpwme.util.BpwmeAssistant;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>EB Proc</b></em>'.
+ * An implementation of the model object '<em><b>CLCB Proc</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.EBProcImpl#getDescription <em>Description</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.EBProcImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.EBProcImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.EBProcImpl#getExtendedAttributes <em>Extended Attributes</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl#getTransitions <em>Transitions</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl#getEBProc <em>EB Proc</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EBProcImpl extends NodeImpl implements EBProc {
+public class CLCBProcImpl extends NodeImpl implements CLCBProc {
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -92,25 +103,34 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = BpwmeAssistant.getUniqueEBID();
+	protected String id = BpwmeAssistant.getUniqueCLCBID();
 
 	/**
-	 * The cached value of the '{@link #getExtendedAttributes() <em>Extended Attributes</em>}' reference.
+	 * The cached value of the '{@link #getTransitions() <em>Transitions</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getExtendedAttributes()
-	 * 
+	 * @see #getTransitions()
+	 * @generated
 	 * @ordered
 	 */
-	protected ExtendedAttributes extendedAttributes;
+	protected Transitions transitions;
 
+	/**
+	 * The cached value of the '{@link #getEBProc() <em>EB Proc</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEBProc()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EBProc> eBProc;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected EBProcImpl() {
+	protected CLCBProcImpl() {
 		super();
 	}
 
@@ -121,7 +141,7 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return BpwmePackage.Literals.EB_PROC;
+		return BpwmePackage.Literals.CLCB_PROC;
 	}
 
 	/**
@@ -142,7 +162,7 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 		String oldDescription = description;
 		description = newDescription;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC__DESCRIPTION, oldDescription, description));
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__DESCRIPTION, oldDescription, description));
 	}
 
 	/**
@@ -163,7 +183,7 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__NAME, oldName, name));
 	}
 
 	/**
@@ -184,7 +204,7 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 		String oldId = id;
 		id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__ID, oldId, id));
 	}
 
 	/**
@@ -192,8 +212,16 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ExtendedAttributes getExtendedAttributes() {
-		return extendedAttributes;
+	public Transitions getTransitions() {
+		if (transitions != null && transitions.eIsProxy()) {
+			InternalEObject oldTransitions = (InternalEObject)transitions;
+			transitions = (Transitions)eResolveProxy(oldTransitions);
+			if (transitions != oldTransitions) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BpwmePackage.CLCB_PROC__TRANSITIONS, oldTransitions, transitions));
+			}
+		}
+		return transitions;
 	}
 
 	/**
@@ -201,8 +229,8 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ExtendedAttributes basicGetExtendedAttributes() {
-		return extendedAttributes;
+	public Transitions basicGetTransitions() {
+		return transitions;
 	}
 
 	/**
@@ -210,11 +238,37 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setExtendedAttributes(ExtendedAttributes newExtendedAttributes) {
-		ExtendedAttributes oldExtendedAttributes = extendedAttributes;
-		extendedAttributes = newExtendedAttributes;
+	public void setTransitions(Transitions newTransitions) {
+		Transitions oldTransitions = transitions;
+		transitions = newTransitions;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES, oldExtendedAttributes, extendedAttributes));
+			eNotify(new ENotificationImpl(this, Notification.SET, BpwmePackage.CLCB_PROC__TRANSITIONS, oldTransitions, transitions));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<EBProc> getEBProc() {
+		if (eBProc == null) {
+			eBProc = new EObjectContainmentEList<EBProc>(EBProc.class, this, BpwmePackage.CLCB_PROC__EB_PROC);
+		}
+		return eBProc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				return ((InternalEList<?>)getEBProc()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -225,15 +279,17 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case BpwmePackage.EB_PROC__DESCRIPTION:
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
 				return getDescription();
-			case BpwmePackage.EB_PROC__NAME:
+			case BpwmePackage.CLCB_PROC__NAME:
 				return getName();
-			case BpwmePackage.EB_PROC__ID:
+			case BpwmePackage.CLCB_PROC__ID:
 				return getId();
-			case BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES:
-				if (resolve) return getExtendedAttributes();
-				return basicGetExtendedAttributes();
+			case BpwmePackage.CLCB_PROC__TRANSITIONS:
+				if (resolve) return getTransitions();
+				return basicGetTransitions();
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				return getEBProc();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -243,20 +299,25 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case BpwmePackage.EB_PROC__DESCRIPTION:
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
 				setDescription((String)newValue);
 				return;
-			case BpwmePackage.EB_PROC__NAME:
+			case BpwmePackage.CLCB_PROC__NAME:
 				setName((String)newValue);
 				return;
-			case BpwmePackage.EB_PROC__ID:
+			case BpwmePackage.CLCB_PROC__ID:
 				setId((String)newValue);
 				return;
-			case BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES:
-				setExtendedAttributes((ExtendedAttributes)newValue);
+			case BpwmePackage.CLCB_PROC__TRANSITIONS:
+				setTransitions((Transitions)newValue);
+				return;
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				getEBProc().clear();
+				getEBProc().addAll((Collection<? extends EBProc>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -270,17 +331,20 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case BpwmePackage.EB_PROC__DESCRIPTION:
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
-			case BpwmePackage.EB_PROC__NAME:
+			case BpwmePackage.CLCB_PROC__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case BpwmePackage.EB_PROC__ID:
+			case BpwmePackage.CLCB_PROC__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES:
-				setExtendedAttributes((ExtendedAttributes)null);
+			case BpwmePackage.CLCB_PROC__TRANSITIONS:
+				setTransitions((Transitions)null);
+				return;
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				getEBProc().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -294,14 +358,16 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case BpwmePackage.EB_PROC__DESCRIPTION:
+			case BpwmePackage.CLCB_PROC__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
-			case BpwmePackage.EB_PROC__NAME:
+			case BpwmePackage.CLCB_PROC__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case BpwmePackage.EB_PROC__ID:
+			case BpwmePackage.CLCB_PROC__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case BpwmePackage.EB_PROC__EXTENDED_ATTRIBUTES:
-				return extendedAttributes != null;
+			case BpwmePackage.CLCB_PROC__TRANSITIONS:
+				return transitions != null;
+			case BpwmePackage.CLCB_PROC__EB_PROC:
+				return eBProc != null && !eBProc.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -326,4 +392,4 @@ public class EBProcImpl extends NodeImpl implements EBProc {
 		return result.toString();
 	}
 
-} //EBProcImpl
+} //CLCBProcImpl

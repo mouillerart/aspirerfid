@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme.impl;
+package org.ow2.aspirerfid.ide.bpwme.impl;
 
 
 import org.eclipse.emf.ecore.EClass;
@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.ow2.aspirerfid.bpwme.*;
+import org.ow2.aspirerfid.ide.bpwme.*;
 
 /**
  * <!-- begin-user-doc -->

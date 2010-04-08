@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme.impl;
+package org.ow2.aspirerfid.ide.bpwme.impl;
 
 
 import org.eclipse.emf.common.notify.Notification;
@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.ow2.aspirerfid.bpwme.BpwmePackage;
-import org.ow2.aspirerfid.bpwme.Connection;
-import org.ow2.aspirerfid.bpwme.Node;
+import org.ow2.aspirerfid.ide.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.ide.bpwme.Connection;
+import org.ow2.aspirerfid.ide.bpwme.Node;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,8 +26,8 @@ import org.ow2.aspirerfid.bpwme.Node;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.ConnectionImpl#getSourceNode <em>Source Node</em>}</li>
- *   <li>{@link org.ow2.aspirerfid.bpwme.impl.ConnectionImpl#getTargetNode <em>Target Node</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.ConnectionImpl#getSourceNode <em>Source Node</em>}</li>
+ *   <li>{@link org.ow2.aspirerfid.ide.bpwme.impl.ConnectionImpl#getTargetNode <em>Target Node</em>}</li>
  * </ul>
  * </p>
  *

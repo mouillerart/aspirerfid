@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.ow2.aspirerfid.bpwme;
+package org.ow2.aspirerfid.ide.bpwme;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.ow2.aspirerfid.bpwme.BpwmeFactory
+ * @see org.ow2.aspirerfid.ide.bpwme.BpwmeFactory
  * @model kind="package"
  * @generated
  */
@@ -57,14 +57,14 @@ public interface BpwmePackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	BpwmePackage eINSTANCE = org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl.init();
+	BpwmePackage eINSTANCE = org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.WorkflowMapImpl <em>Workflow Map</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl <em>Workflow Map</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.WorkflowMapImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getWorkflowMap()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getWorkflowMap()
 	 * @generated
 	 */
 	int WORKFLOW_MAP = 0;
@@ -106,11 +106,11 @@ public interface BpwmePackage extends EPackage {
 	int WORKFLOW_MAP_FEATURE_COUNT = 3;
 
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.NodeImpl <em>Node</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.NodeImpl <em>Node</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.NodeImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getNode()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.NodeImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getNode()
 	 * @generated
 	 */
 	int NODE = 1;
@@ -143,11 +143,11 @@ public interface BpwmePackage extends EPackage {
 	int NODE_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.ConnectionImpl <em>Connection</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.ConnectionImpl <em>Connection</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.ConnectionImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getConnection()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.ConnectionImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getConnection()
 	 * @generated
 	 */
 	int CONNECTION = 2;
@@ -180,11 +180,11 @@ public interface BpwmePackage extends EPackage {
 	int CONNECTION_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl <em>OLCB Proc</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl <em>OLCB Proc</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getOLCBProc()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getOLCBProc()
 	 * @generated
 	 */
 	int OLCB_PROC = 3;
@@ -253,11 +253,11 @@ public interface BpwmePackage extends EPackage {
 	int OLCB_PROC_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl <em>CLCB Proc</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl <em>CLCB Proc</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getCLCBProc()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getCLCBProc()
 	 * @generated
 	 */
 	int CLCB_PROC = 4;
@@ -335,11 +335,11 @@ public interface BpwmePackage extends EPackage {
 	int CLCB_PROC_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
 
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.EBProcImpl <em>EB Proc</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.EBProcImpl <em>EB Proc</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.EBProcImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getEBProc()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.EBProcImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getEBProc()
 	 * @generated
 	 */
 	int EB_PROC = 5;
@@ -412,11 +412,11 @@ public interface BpwmePackage extends EPackage {
 	 */
 	int EB_PROC_FAKE_ATTR = NODE_FEATURE_COUNT + 5;
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.TransitionsImpl <em>Transitions</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.TransitionsImpl <em>Transitions</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.TransitionsImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getTransitions()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.TransitionsImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getTransitions()
 	 * @generated
 	 */
 	int TRANSITIONS = 6;
@@ -440,11 +440,11 @@ public interface BpwmePackage extends EPackage {
 	int TRANSITIONS_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl <em>Transition</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.TransitionImpl <em>Transition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.TransitionImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getTransition()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.TransitionImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getTransition()
 	 * @generated
 	 */
 	int TRANSITION = 7;
@@ -526,7 +526,7 @@ public interface BpwmePackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see bpwme.impl.ExtendedAttributeImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getExtendedAttribute()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getExtendedAttribute()
 	 * @generated
 	 */
 	int EXTENDED_ATTRIBUTE = 8;
@@ -572,7 +572,7 @@ public interface BpwmePackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see bpwme.impl.ExtendedAttributesImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getExtendedAttributes()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getExtendedAttributes()
 	 * @generated
 	 */
 	int EXTENDED_ATTRIBUTES = 9;
@@ -596,11 +596,11 @@ public interface BpwmePackage extends EPackage {
 	int EXTENDED_ATTRIBUTES_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.ow2.aspirerfid.bpwme.impl.ConditionImpl <em>Condition</em>}' class.
+	 * The meta object id for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.ConditionImpl <em>Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.ow2.aspirerfid.bpwme.impl.ConditionImpl
-	 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getCondition()
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.ConditionImpl
+	 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getCondition()
 	 * @generated
 	 */
 	int CONDITION = 10;
@@ -634,484 +634,484 @@ public interface BpwmePackage extends EPackage {
 
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.WorkflowMap <em>Workflow Map</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.WorkflowMap <em>Workflow Map</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Workflow Map</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.WorkflowMap
+	 * @see org.ow2.aspirerfid.ide.bpwme.WorkflowMap
 	 * @generated
 	 */
 	EClass getWorkflowMap();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.WorkflowMap#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.WorkflowMap#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.WorkflowMap#getName()
+	 * @see org.ow2.aspirerfid.ide.bpwme.WorkflowMap#getName()
 	 * @see #getWorkflowMap()
 	 * @generated
 	 */
 	EAttribute getWorkflowMap_Name();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.bpwme.WorkflowMap#getConnections <em>Connections</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.ide.bpwme.WorkflowMap#getConnections <em>Connections</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Connections</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.WorkflowMap#getConnections()
+	 * @see org.ow2.aspirerfid.ide.bpwme.WorkflowMap#getConnections()
 	 * @see #getWorkflowMap()
 	 * @generated
 	 */
 	EReference getWorkflowMap_Connections();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.bpwme.WorkflowMap#getNodes <em>Nodes</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.ide.bpwme.WorkflowMap#getNodes <em>Nodes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.WorkflowMap#getNodes()
+	 * @see org.ow2.aspirerfid.ide.bpwme.WorkflowMap#getNodes()
 	 * @see #getWorkflowMap()
 	 * @generated
 	 */
 	EReference getWorkflowMap_Nodes();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.Node <em>Node</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.Node <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Node</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Node
+	 * @see org.ow2.aspirerfid.ide.bpwme.Node
 	 * @generated
 	 */
 	EClass getNode();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.ow2.aspirerfid.bpwme.Node#getIngoingConnections <em>Ingoing Connections</em>}'.
+	 * Returns the meta object for the reference list '{@link org.ow2.aspirerfid.ide.bpwme.Node#getIngoingConnections <em>Ingoing Connections</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Ingoing Connections</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Node#getIngoingConnections()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Node#getIngoingConnections()
 	 * @see #getNode()
 	 * @generated
 	 */
 	EReference getNode_IngoingConnections();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.ow2.aspirerfid.bpwme.Node#getOutgoingConnections <em>Outgoing Connections</em>}'.
+	 * Returns the meta object for the reference list '{@link org.ow2.aspirerfid.ide.bpwme.Node#getOutgoingConnections <em>Outgoing Connections</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Outgoing Connections</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Node#getOutgoingConnections()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Node#getOutgoingConnections()
 	 * @see #getNode()
 	 * @generated
 	 */
 	EReference getNode_OutgoingConnections();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.Connection <em>Connection</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.Connection <em>Connection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Connection</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Connection
+	 * @see org.ow2.aspirerfid.ide.bpwme.Connection
 	 * @generated
 	 */
 	EClass getConnection();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.bpwme.Connection#getSourceNode <em>Source Node</em>}'.
+	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.ide.bpwme.Connection#getSourceNode <em>Source Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Source Node</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Connection#getSourceNode()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Connection#getSourceNode()
 	 * @see #getConnection()
 	 * @generated
 	 */
 	EReference getConnection_SourceNode();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.bpwme.Connection#getTargetNode <em>Target Node</em>}'.
+	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.ide.bpwme.Connection#getTargetNode <em>Target Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Target Node</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Connection#getTargetNode()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Connection#getTargetNode()
 	 * @see #getConnection()
 	 * @generated
 	 */
 	EReference getConnection_TargetNode();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.OLCBProc <em>OLCB Proc</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.OLCBProc <em>OLCB Proc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>OLCB Proc</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.OLCBProc
+	 * @see org.ow2.aspirerfid.ide.bpwme.OLCBProc
 	 * @generated
 	 */
 	EClass getOLCBProc();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.OLCBProc#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.OLCBProc#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.OLCBProc#getName()
+	 * @see org.ow2.aspirerfid.ide.bpwme.OLCBProc#getName()
 	 * @see #getOLCBProc()
 	 * @generated
 	 */
 	EAttribute getOLCBProc_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.OLCBProc#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.OLCBProc#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.OLCBProc#getId()
+	 * @see org.ow2.aspirerfid.ide.bpwme.OLCBProc#getId()
 	 * @see #getOLCBProc()
 	 * @generated
 	 */
 	EAttribute getOLCBProc_Id();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.bpwme.OLCBProc#getTransitions <em>Transitions</em>}'.
+	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.ide.bpwme.OLCBProc#getTransitions <em>Transitions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Transitions</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.OLCBProc#getTransitions()
+	 * @see org.ow2.aspirerfid.ide.bpwme.OLCBProc#getTransitions()
 	 * @see #getOLCBProc()
 	 * @generated
 	 */
 	EReference getOLCBProc_Transitions();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.bpwme.OLCBProc#getCLCBProc <em>CLCB Proc</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.ide.bpwme.OLCBProc#getCLCBProc <em>CLCB Proc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>CLCB Proc</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.OLCBProc#getCLCBProc()
+	 * @see org.ow2.aspirerfid.ide.bpwme.OLCBProc#getCLCBProc()
 	 * @see #getOLCBProc()
 	 * @generated
 	 */
 	EReference getOLCBProc_CLCBProc();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.CLCBProc <em>CLCB Proc</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc <em>CLCB Proc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>CLCB Proc</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.CLCBProc
+	 * @see org.ow2.aspirerfid.ide.bpwme.CLCBProc
 	 * @generated
 	 */
 	EClass getCLCBProc();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getDescription <em>Description</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getDescription <em>Description</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.CLCBProc#getDescription()
+	 * @see org.ow2.aspirerfid.ide.bpwme.CLCBProc#getDescription()
 	 * @see #getCLCBProc()
 	 * @generated
 	 */
 	EAttribute getCLCBProc_Description();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.CLCBProc#getName()
+	 * @see org.ow2.aspirerfid.ide.bpwme.CLCBProc#getName()
 	 * @see #getCLCBProc()
 	 * @generated
 	 */
 	EAttribute getCLCBProc_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.CLCBProc#getId()
+	 * @see org.ow2.aspirerfid.ide.bpwme.CLCBProc#getId()
 	 * @see #getCLCBProc()
 	 * @generated
 	 */
 	EAttribute getCLCBProc_Id();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getTransitions <em>Transitions</em>}'.
+	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getTransitions <em>Transitions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Transitions</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.CLCBProc#getTransitions()
+	 * @see org.ow2.aspirerfid.ide.bpwme.CLCBProc#getTransitions()
 	 * @see #getCLCBProc()
 	 * @generated
 	 */
 	EReference getCLCBProc_Transitions();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.bpwme.CLCBProc#getEBProc <em>EB Proc</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.ide.bpwme.CLCBProc#getEBProc <em>EB Proc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>EB Proc</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.CLCBProc#getEBProc()
+	 * @see org.ow2.aspirerfid.ide.bpwme.CLCBProc#getEBProc()
 	 * @see #getCLCBProc()
 	 * @generated
 	 */
 	EReference getCLCBProc_EBProc();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.EBProc <em>EB Proc</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.EBProc <em>EB Proc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>EB Proc</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.EBProc
+	 * @see org.ow2.aspirerfid.ide.bpwme.EBProc
 	 * @generated
 	 */
 	EClass getEBProc();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.EBProc#getDescription <em>Description</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getDescription <em>Description</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.EBProc#getDescription()
+	 * @see org.ow2.aspirerfid.ide.bpwme.EBProc#getDescription()
 	 * @see #getEBProc()
 	 * @generated
 	 */
 	EAttribute getEBProc_Description();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.EBProc#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.EBProc#getName()
+	 * @see org.ow2.aspirerfid.ide.bpwme.EBProc#getName()
 	 * @see #getEBProc()
 	 * @generated
 	 */
 	EAttribute getEBProc_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.EBProc#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.EBProc#getId()
+	 * @see org.ow2.aspirerfid.ide.bpwme.EBProc#getId()
 	 * @see #getEBProc()
 	 * @generated
 	 */
 	EAttribute getEBProc_Id();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.bpwme.EBProc#getExtendedAttributes <em>Extended Attributes</em>}'.
+	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.ide.bpwme.EBProc#getExtendedAttributes <em>Extended Attributes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Extended Attributes</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.EBProc#getExtendedAttributes()
+	 * @see org.ow2.aspirerfid.ide.bpwme.EBProc#getExtendedAttributes()
 	 * @see #getEBProc()
 	 * @generated
 	 */
 	EReference getEBProc_ExtendedAttributes();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.Transitions <em>Transitions</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.Transitions <em>Transitions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Transitions</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transitions
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transitions
 	 * @generated
 	 */
 	EClass getTransitions();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.ow2.aspirerfid.bpwme.Transitions#getTransition <em>Transition</em>}'.
+	 * Returns the meta object for the reference list '{@link org.ow2.aspirerfid.ide.bpwme.Transitions#getTransition <em>Transition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Transition</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transitions#getTransition()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transitions#getTransition()
 	 * @see #getTransitions()
 	 * @generated
 	 */
 	EReference getTransitions_Transition();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.Transition <em>Transition</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.Transition <em>Transition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Transition</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transition
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transition
 	 * @generated
 	 */
 	EClass getTransition();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.bpwme.Transition#getCondition <em>Condition</em>}'.
+	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Condition</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transition#getCondition()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transition#getCondition()
 	 * @see #getTransition()
 	 * @generated
 	 */
 	EReference getTransition_Condition();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.Transition#getDescription <em>Description</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getDescription <em>Description</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transition#getDescription()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transition#getDescription()
 	 * @see #getTransition()
 	 * @generated
 	 */
 	EAttribute getTransition_Description();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.bpwme.Transition#getExtendedAttributes <em>Extended Attributes</em>}'.
+	 * Returns the meta object for the reference '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getExtendedAttributes <em>Extended Attributes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Extended Attributes</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transition#getExtendedAttributes()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transition#getExtendedAttributes()
 	 * @see #getTransition()
 	 * @generated
 	 */
 	EReference getTransition_ExtendedAttributes();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.Transition#getFrom <em>From</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getFrom <em>From</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>From</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transition#getFrom()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transition#getFrom()
 	 * @see #getTransition()
 	 * @generated
 	 */
 	EAttribute getTransition_From();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.Transition#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transition#getId()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transition#getId()
 	 * @see #getTransition()
 	 * @generated
 	 */
 	EAttribute getTransition_Id();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.Transition#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transition#getName()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transition#getName()
 	 * @see #getTransition()
 	 * @generated
 	 */
 	EAttribute getTransition_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.Transition#getTo <em>To</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.Transition#getTo <em>To</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>To</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Transition#getTo()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Transition#getTo()
 	 * @see #getTransition()
 	 * @generated
 	 */
 	EAttribute getTransition_To();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute <em>Extended Attribute</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute <em>Extended Attribute</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Extended Attribute</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.ExtendedAttribute
+	 * @see org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute
 	 * @generated
 	 */
 	EClass getExtendedAttribute();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute#getContent <em>Content</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getContent <em>Content</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Content</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.ExtendedAttribute#getContent()
+	 * @see org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getContent()
 	 * @see #getExtendedAttribute()
 	 * @generated
 	 */
 	EAttribute getExtendedAttribute_Content();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.ExtendedAttribute#getName()
+	 * @see org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getName()
 	 * @see #getExtendedAttribute()
 	 * @generated
 	 */
 	EAttribute getExtendedAttribute_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.ExtendedAttribute#getValue <em>Value</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getValue <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.ExtendedAttribute#getValue()
+	 * @see org.ow2.aspirerfid.ide.bpwme.ExtendedAttribute#getValue()
 	 * @see #getExtendedAttribute()
 	 * @generated
 	 */
 	EAttribute getExtendedAttribute_Value();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.ExtendedAttributes <em>Extended Attributes</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttributes <em>Extended Attributes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Extended Attributes</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.ExtendedAttributes
+	 * @see org.ow2.aspirerfid.ide.bpwme.ExtendedAttributes
 	 * @generated
 	 */
 	EClass getExtendedAttributes();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.bpwme.ExtendedAttributes#getExtendedAttribute <em>Extended Attribute</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.ow2.aspirerfid.ide.bpwme.ExtendedAttributes#getExtendedAttribute <em>Extended Attribute</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Extended Attribute</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.ExtendedAttributes#getExtendedAttribute()
+	 * @see org.ow2.aspirerfid.ide.bpwme.ExtendedAttributes#getExtendedAttribute()
 	 * @see #getExtendedAttributes()
 	 * @generated
 	 */
 	EReference getExtendedAttributes_ExtendedAttribute();
 
 	/**
-	 * Returns the meta object for class '{@link org.ow2.aspirerfid.bpwme.Condition <em>Condition</em>}'.
+	 * Returns the meta object for class '{@link org.ow2.aspirerfid.ide.bpwme.Condition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Condition</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Condition
+	 * @see org.ow2.aspirerfid.ide.bpwme.Condition
 	 * @generated
 	 */
 	EClass getCondition();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.ow2.aspirerfid.bpwme.Condition#getContent <em>Content</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.ow2.aspirerfid.ide.bpwme.Condition#getContent <em>Content</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Content</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Condition#getContent()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Condition#getContent()
 	 * @see #getCondition()
 	 * @generated
 	 */
 	EAttribute getCondition_Content();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.bpwme.Condition#getType <em>Type</em>}'.
+	 * Returns the meta object for the attribute '{@link org.ow2.aspirerfid.ide.bpwme.Condition#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.ow2.aspirerfid.bpwme.Condition#getType()
+	 * @see org.ow2.aspirerfid.ide.bpwme.Condition#getType()
 	 * @see #getCondition()
 	 * @generated
 	 */
@@ -1140,11 +1140,11 @@ public interface BpwmePackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.WorkflowMapImpl <em>Workflow Map</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl <em>Workflow Map</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.WorkflowMapImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getWorkflowMap()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.WorkflowMapImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getWorkflowMap()
 		 * @generated
 		 */
 		EClass WORKFLOW_MAP = eINSTANCE.getWorkflowMap();
@@ -1174,11 +1174,11 @@ public interface BpwmePackage extends EPackage {
 		EReference WORKFLOW_MAP__NODES = eINSTANCE.getWorkflowMap_Nodes();
 
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.NodeImpl <em>Node</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.NodeImpl <em>Node</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.NodeImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getNode()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.NodeImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getNode()
 		 * @generated
 		 */
 		EClass NODE = eINSTANCE.getNode();
@@ -1200,11 +1200,11 @@ public interface BpwmePackage extends EPackage {
 		EReference NODE__OUTGOING_CONNECTIONS = eINSTANCE.getNode_OutgoingConnections();
 
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.ConnectionImpl <em>Connection</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.ConnectionImpl <em>Connection</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.ConnectionImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getConnection()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.ConnectionImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getConnection()
 		 * @generated
 		 */
 		EClass CONNECTION = eINSTANCE.getConnection();
@@ -1226,11 +1226,11 @@ public interface BpwmePackage extends EPackage {
 		EReference CONNECTION__TARGET_NODE = eINSTANCE.getConnection_TargetNode();
 
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl <em>OLCB Proc</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl <em>OLCB Proc</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.OLCBProcImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getOLCBProc()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.OLCBProcImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getOLCBProc()
 		 * @generated
 		 */
 		EClass OLCB_PROC = eINSTANCE.getOLCBProc();
@@ -1268,11 +1268,11 @@ public interface BpwmePackage extends EPackage {
 		EReference OLCB_PROC__CLCB_PROC = eINSTANCE.getOLCBProc_CLCBProc();
 
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl <em>CLCB Proc</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl <em>CLCB Proc</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.CLCBProcImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getCLCBProc()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.CLCBProcImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getCLCBProc()
 		 * @generated
 		 */
 		EClass CLCB_PROC = eINSTANCE.getCLCBProc();
@@ -1318,11 +1318,11 @@ public interface BpwmePackage extends EPackage {
 		EReference CLCB_PROC__EB_PROC = eINSTANCE.getCLCBProc_EBProc();
 
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.EBProcImpl <em>EB Proc</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.EBProcImpl <em>EB Proc</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.EBProcImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getEBProc()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.EBProcImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getEBProc()
 		 * @generated
 		 */
 		EClass EB_PROC = eINSTANCE.getEBProc();
@@ -1360,11 +1360,11 @@ public interface BpwmePackage extends EPackage {
 		EReference EB_PROC__EXTENDED_ATTRIBUTES = eINSTANCE.getEBProc_ExtendedAttributes();
 
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.TransitionsImpl <em>Transitions</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.TransitionsImpl <em>Transitions</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.TransitionsImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getTransitions()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.TransitionsImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getTransitions()
 		 * @generated
 		 */
 		EClass TRANSITIONS = eINSTANCE.getTransitions();
@@ -1378,11 +1378,11 @@ public interface BpwmePackage extends EPackage {
 		EReference TRANSITIONS__TRANSITION = eINSTANCE.getTransitions_Transition();
 
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.TransitionImpl <em>Transition</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.TransitionImpl <em>Transition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.TransitionImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getTransition()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.TransitionImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getTransition()
 		 * @generated
 		 */
 		EClass TRANSITION = eINSTANCE.getTransition();
@@ -1448,7 +1448,7 @@ public interface BpwmePackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see bpwme.impl.ExtendedAttributeImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getExtendedAttribute()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getExtendedAttribute()
 		 * @generated
 		 */
 		EClass EXTENDED_ATTRIBUTE = eINSTANCE.getExtendedAttribute();
@@ -1482,7 +1482,7 @@ public interface BpwmePackage extends EPackage {
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see bpwme.impl.ExtendedAttributesImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getExtendedAttributes()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getExtendedAttributes()
 		 * @generated
 		 */
 		EClass EXTENDED_ATTRIBUTES = eINSTANCE.getExtendedAttributes();
@@ -1496,11 +1496,11 @@ public interface BpwmePackage extends EPackage {
 		EReference EXTENDED_ATTRIBUTES__EXTENDED_ATTRIBUTE = eINSTANCE.getExtendedAttributes_ExtendedAttribute();
 
 		/**
-		 * The meta object literal for the '{@link org.ow2.aspirerfid.bpwme.impl.ConditionImpl <em>Condition</em>}' class.
+		 * The meta object literal for the '{@link org.ow2.aspirerfid.ide.bpwme.impl.ConditionImpl <em>Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.ow2.aspirerfid.bpwme.impl.ConditionImpl
-		 * @see org.ow2.aspirerfid.bpwme.impl.BpwmePackageImpl#getCondition()
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.ConditionImpl
+		 * @see org.ow2.aspirerfid.ide.bpwme.impl.BpwmePackageImpl#getCondition()
 		 * @generated
 		 */
 		EClass CONDITION = eINSTANCE.getCondition();
