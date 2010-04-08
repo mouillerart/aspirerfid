@@ -1,4 +1,4 @@
-package bpwme.provider;
+package org.ow2.aspirerfid.bpwme.provider;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;

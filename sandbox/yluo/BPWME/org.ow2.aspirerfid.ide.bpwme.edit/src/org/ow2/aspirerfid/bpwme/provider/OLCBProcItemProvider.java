@@ -4,12 +4,9 @@
  *
  * $Id$
  */
-package bpwme.provider;
+package org.ow2.aspirerfid.bpwme.provider;
 
 
-import bpwme.BpwmeFactory;
-import bpwme.BpwmePackage;
-import bpwme.OLCBProc;
 
 import java.util.Collection;
 import java.util.List;
@@ -28,9 +25,12 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.ow2.aspirerfid.bpwme.BpwmeFactory;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.bpwme.OLCBProc;
 
 /**
- * This is the item provider adapter for a {@link bpwme.OLCBProc} object.
+ * This is the item provider adapter for a {@link org.ow2.aspirerfid.bpwme.OLCBProc} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

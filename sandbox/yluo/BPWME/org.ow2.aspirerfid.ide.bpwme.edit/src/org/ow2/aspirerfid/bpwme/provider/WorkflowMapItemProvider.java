@@ -4,18 +4,17 @@
  *
  * $Id$
  */
-package bpwme.provider;
+package org.ow2.aspirerfid.bpwme.provider;
 
 
-import bpwme.BpwmeFactory;
-import bpwme.BpwmePackage;
-import bpwme.CLCBProc;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -24,19 +23,24 @@ import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.ow2.aspirerfid.bpwme.BpwmeFactory;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
+import org.ow2.aspirerfid.bpwme.WorkflowMap;
 
 /**
- * This is the item provider adapter for a {@link bpwme.CLCBProc} object.
+ * This is the item provider adapter for a {@link org.ow2.aspirerfid.bpwme.WorkflowMap} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class CLCBProcItemProvider
-	extends NodeItemProvider
+public class WorkflowMapItemProvider
+	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -49,8 +53,15 @@ public class CLCBProcItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CLCBProcItemProvider(AdapterFactory adapterFactory) {
+	public WorkflowMapItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
+		
+		
+		//robert add
+		//System.out.println("Got you");
+		//NewFakeListener nfl = NewFakeListener.getListener();
+		//addListener(nfl);
+
 	}
 
 	/**
@@ -64,34 +75,9 @@ public class CLCBProcItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addDescriptionPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
-			addIdPropertyDescriptor(object);
-			//addTransitionsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Description feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_CLCBProc_description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CLCBProc_description_feature", "_UI_CLCBProc_type"),
-				 BpwmePackage.Literals.CLCB_PROC__DESCRIPTION,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -105,57 +91,13 @@ public class CLCBProcItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CLCBProc_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CLCBProc_name_feature", "_UI_CLCBProc_type"),
-				 BpwmePackage.Literals.CLCB_PROC__NAME,
+				 getString("_UI_WorkflowMap_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_WorkflowMap_name_feature", "_UI_WorkflowMap_type"),
+				 BpwmePackage.Literals.WORKFLOW_MAP__NAME,
 				 true,
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Id feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addIdPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_CLCBProc_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CLCBProc_id_feature", "_UI_CLCBProc_type"),
-				 BpwmePackage.Literals.CLCB_PROC__ID,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Transitions feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTransitionsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_CLCBProc_transitions_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CLCBProc_transitions_feature", "_UI_CLCBProc_type"),
-				 BpwmePackage.Literals.CLCB_PROC__TRANSITIONS,
-				 true,
-				 false,
-				 true,
-				 null,
 				 null,
 				 null));
 	}
@@ -172,7 +114,8 @@ public class CLCBProcItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(BpwmePackage.Literals.CLCB_PROC__EB_PROC);
+			childrenFeatures.add(BpwmePackage.Literals.WORKFLOW_MAP__CONNECTIONS);
+			childrenFeatures.add(BpwmePackage.Literals.WORKFLOW_MAP__NODES);
 		}
 		return childrenFeatures;
 	}
@@ -191,14 +134,14 @@ public class CLCBProcItemProvider
 	}
 
 	/**
-	 * This returns CLCBProc.gif.
+	 * This returns WorkflowMap.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CLCBProc"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/WorkflowMap"));
 	}
 
 	/**
@@ -209,10 +152,10 @@ public class CLCBProcItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((CLCBProc)object).getName();
+		String label = ((WorkflowMap)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_CLCBProc_type") :
-			getString("_UI_CLCBProc_type") + " " + label;
+			getString("_UI_WorkflowMap_type") :
+			getString("_UI_WorkflowMap_type") + " " + label;
 	}
 
 	/**
@@ -226,13 +169,12 @@ public class CLCBProcItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(CLCBProc.class)) {
-			case BpwmePackage.CLCB_PROC__DESCRIPTION:
-			case BpwmePackage.CLCB_PROC__NAME:
-			case BpwmePackage.CLCB_PROC__ID:
+		switch (notification.getFeatureID(WorkflowMap.class)) {
+			case BpwmePackage.WORKFLOW_MAP__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case BpwmePackage.CLCB_PROC__EB_PROC:
+			case BpwmePackage.WORKFLOW_MAP__CONNECTIONS:
+			case BpwmePackage.WORKFLOW_MAP__NODES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -252,8 +194,34 @@ public class CLCBProcItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(BpwmePackage.Literals.CLCB_PROC__EB_PROC,
+				(BpwmePackage.Literals.WORKFLOW_MAP__CONNECTIONS,
+				 BpwmeFactory.eINSTANCE.createConnection()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BpwmePackage.Literals.WORKFLOW_MAP__NODES,
+				 BpwmeFactory.eINSTANCE.createOLCBProc()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BpwmePackage.Literals.WORKFLOW_MAP__NODES,
+				 BpwmeFactory.eINSTANCE.createCLCBProc()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BpwmePackage.Literals.WORKFLOW_MAP__NODES,
 				 BpwmeFactory.eINSTANCE.createEBProc()));
 	}
 
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return BpwmeEditPlugin.INSTANCE;
+	}
+	
 }

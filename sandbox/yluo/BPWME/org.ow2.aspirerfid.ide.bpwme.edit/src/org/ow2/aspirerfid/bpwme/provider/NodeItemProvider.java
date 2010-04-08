@@ -4,11 +4,9 @@
  *
  * $Id$
  */
-package bpwme.provider;
+package org.ow2.aspirerfid.bpwme.provider;
 
 
-import bpwme.BpwmePackage;
-import bpwme.Condition;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,17 +23,16 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
 
 /**
- * This is the item provider adapter for a {@link bpwme.Condition} object.
+ * This is the item provider adapter for a {@link org.ow2.aspirerfid.bpwme.Node} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ConditionItemProvider
+public class NodeItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -49,7 +46,7 @@ public class ConditionItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ConditionItemProvider(AdapterFactory adapterFactory) {
+	public NodeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,66 +60,55 @@ public class ConditionItemProvider
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
-
-			addContentPropertyDescriptor(object);
-			addTypePropertyDescriptor(object);
+			//robert add
+			//addIngoingConnectionsPropertyDescriptor(object);
+			//addOutgoingConnectionsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Content feature.
+	 * This adds a property descriptor for the Ingoing Connections feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addContentPropertyDescriptor(Object object) {
+	protected void addIngoingConnectionsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Condition_content_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Condition_content_feature", "_UI_Condition_type"),
-				 BpwmePackage.Literals.CONDITION__CONTENT,
+				 getString("_UI_Node_ingoingConnections_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Node_ingoingConnections_feature", "_UI_Node_type"),
+				 BpwmePackage.Literals.NODE__INGOING_CONNECTIONS,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Type feature.
+	 * This adds a property descriptor for the Outgoing Connections feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTypePropertyDescriptor(Object object) {
+	protected void addOutgoingConnectionsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Condition_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Condition_type_feature", "_UI_Condition_type"),
-				 BpwmePackage.Literals.CONDITION__TYPE,
+				 getString("_UI_Node_outgoingConnections_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Node_outgoingConnections_feature", "_UI_Node_type"),
+				 BpwmePackage.Literals.NODE__OUTGOING_CONNECTIONS,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
-	}
-
-	/**
-	 * This returns Condition.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Condition"));
 	}
 
 	/**
@@ -133,10 +119,7 @@ public class ConditionItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Condition)object).getType();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Condition_type") :
-			getString("_UI_Condition_type") + " " + label;
+		return getString("_UI_Node_type");
 	}
 
 	/**
@@ -149,13 +132,6 @@ public class ConditionItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(Condition.class)) {
-			case BpwmePackage.CONDITION__CONTENT:
-			case BpwmePackage.CONDITION__TYPE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 

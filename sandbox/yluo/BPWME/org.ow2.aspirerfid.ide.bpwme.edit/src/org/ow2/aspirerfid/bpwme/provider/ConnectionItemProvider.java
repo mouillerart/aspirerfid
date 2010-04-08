@@ -4,10 +4,9 @@
  *
  * $Id$
  */
-package bpwme.provider;
+package org.ow2.aspirerfid.bpwme.provider;
 
 
-import bpwme.BpwmePackage;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,9 +24,10 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
 
 /**
- * This is the item provider adapter for a {@link bpwme.Connection} object.
+ * This is the item provider adapter for a {@link org.ow2.aspirerfid.bpwme.Connection} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

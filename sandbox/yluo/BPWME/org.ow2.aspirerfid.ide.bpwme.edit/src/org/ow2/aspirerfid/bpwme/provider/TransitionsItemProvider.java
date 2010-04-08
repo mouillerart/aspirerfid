@@ -4,10 +4,9 @@
  *
  * $Id$
  */
-package bpwme.provider;
+package org.ow2.aspirerfid.bpwme.provider;
 
 
-import bpwme.BpwmePackage;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,14 +24,15 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.ow2.aspirerfid.bpwme.BpwmePackage;
 
 /**
- * This is the item provider adapter for a {@link bpwme.Node} object.
+ * This is the item provider adapter for a {@link org.ow2.aspirerfid.bpwme.Transitions} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NodeItemProvider
+public class TransitionsItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -46,7 +46,7 @@ public class NodeItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NodeItemProvider(AdapterFactory adapterFactory) {
+	public TransitionsItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,27 +60,26 @@ public class NodeItemProvider
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
-			//robert add
-			//addIngoingConnectionsPropertyDescriptor(object);
-			//addOutgoingConnectionsPropertyDescriptor(object);
+
+			addTransitionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Ingoing Connections feature.
+	 * This adds a property descriptor for the Transition feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIngoingConnectionsPropertyDescriptor(Object object) {
+	protected void addTransitionPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Node_ingoingConnections_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Node_ingoingConnections_feature", "_UI_Node_type"),
-				 BpwmePackage.Literals.NODE__INGOING_CONNECTIONS,
+				 getString("_UI_Transitions_transition_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Transitions_transition_feature", "_UI_Transitions_type"),
+				 BpwmePackage.Literals.TRANSITIONS__TRANSITION,
 				 true,
 				 false,
 				 true,
@@ -90,25 +89,14 @@ public class NodeItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Outgoing Connections feature.
+	 * This returns Transitions.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addOutgoingConnectionsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Node_outgoingConnections_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Node_outgoingConnections_feature", "_UI_Node_type"),
-				 BpwmePackage.Literals.NODE__OUTGOING_CONNECTIONS,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Transitions"));
 	}
 
 	/**
@@ -119,7 +107,7 @@ public class NodeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Node_type");
+		return getString("_UI_Transitions_type");
 	}
 
 	/**
