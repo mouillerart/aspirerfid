@@ -147,4 +147,19 @@ public class BluetoothCommunication implements Runnable {
 			 */
 		}
 	}
+	
+	/**
+	 * Write some data to the client
+	 * @param data Data to be written
+	 * @return True if no occurred, False if the communication has been ended before
+	 * @throws IOException An exception occurred during write process
+	 */
+	public boolean writeData(String data) throws IOException
+	{
+		if(m_outputStream == null || m_stop)
+			return false;
+		
+		m_outputStream.writeBytes(data);
+		return true;
+	}
 }
