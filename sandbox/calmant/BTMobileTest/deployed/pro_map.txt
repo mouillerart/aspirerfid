@@ -1,0 +1,15 @@
+bttest.BTTest -> bttest.BTTest:
+    javax.bluetooth.UUID RFCOMM_UUID -> a
+    javax.microedition.lcdui.TextBox str -> b
+    javax.bluetooth.LocalDevice m_localDevice -> c
+    javax.bluetooth.DiscoveryAgent m_discoveryAgent -> d
+    boolean m_serverFound -> e
+    java.lang.String m_url -> f
+    javax.microedition.io.StreamConnection m_conn -> g
+    void destroyApp(boolean) -> destroyApp
+    void pauseApp() -> pauseApp
+    void startApp() -> startApp
+    void deviceDiscovered(javax.bluetooth.RemoteDevice,javax.bluetooth.DeviceClass) -> deviceDiscovered
+    void inquiryCompleted(int) -> inquiryCompleted
+    void serviceSearchCompleted(int,int) -> serviceSearchCompleted
+    void servicesDiscovered(int,javax.bluetooth.ServiceRecord[]) -> servicesDiscovered

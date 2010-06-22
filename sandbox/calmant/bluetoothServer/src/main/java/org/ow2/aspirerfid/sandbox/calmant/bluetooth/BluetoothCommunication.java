@@ -23,8 +23,8 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InterruptedIOException;
-import java.util.UUID;
 
+import javax.bluetooth.RemoteDevice;
 import javax.microedition.io.StreamConnection;
 
 public class BluetoothCommunication implements Runnable {
@@ -62,7 +62,14 @@ public class BluetoothCommunication implements Runnable {
 		m_outputStream = connection.openDataOutputStream();
 
 		// Generate the logical name
-		m_logicalName = UUID.randomUUID().toString();
+		// m_logicalName = UUID.randomUUID().toString();
+		
+		RemoteDevice device = RemoteDevice.getRemoteDevice(connection);
+		m_logicalName = device.getBluetoothAddress();
+		
+		String friendlyName = device.getFriendlyName(false);
+		if(friendlyName != null && friendlyName.length() > 0)
+			m_logicalName += " - " + friendlyName;
 	}
 	
 	/**
@@ -80,6 +87,9 @@ public class BluetoothCommunication implements Runnable {
 	 */
 	public void run() {
 		m_stop = false;
+		
+		// Tell everybody we are ready to listen
+		m_parentListener.commBegin(m_logicalName);
 
 		try {
 			/*

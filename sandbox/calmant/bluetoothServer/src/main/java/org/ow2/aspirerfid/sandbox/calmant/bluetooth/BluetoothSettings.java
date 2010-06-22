@@ -124,12 +124,12 @@ public class BluetoothSettings {
 	 * Default Service uuid.
 	 */
 	private static final String UUID_VALUE = "9ee2b296da2448399658cbc0a7ee69e2";
-	
+
 	/**
 	 * Max number of threads
 	 */
 	public static final String MAX_THREADS = "max_threads";
-	
+
 	/**
 	 * Default thread maximum count
 	 */
@@ -141,10 +141,10 @@ public class BluetoothSettings {
 	private final Properties m_bluetoothProperties;
 
 	/**
-	 * Default constructor.
-	 * Set default values, then try to read the default configuration file
+	 * Default constructor. Set default values, then try to read the default
+	 * configuration file
 	 */
-	public BluetoothSettings() {		
+	public BluetoothSettings() {
 		this(BluetoothSettings.propertiesFileName);
 	}
 
@@ -158,15 +158,12 @@ public class BluetoothSettings {
 		// It cannot be re factored because the attribute defaultProps is final.
 		Properties defaultProps = setDefault();
 		this.m_bluetoothProperties = new Properties(defaultProps);
-		
-		try
-		{
+
+		try {
 			loadXML(fileName);
-		}
-		catch(IOException error)
-		{
-			System.err.println("Error reading configuration file : " + fileName);
-			error.printStackTrace(System.err);
+		} catch (IOException error) {
+			System.err
+					.println("Error reading configuration file : " + fileName);
 		}
 	}
 
@@ -177,15 +174,13 @@ public class BluetoothSettings {
 	 *            Input stream where the properties can be read.
 	 * @throws IOException
 	 */
-	public BluetoothSettings(final InputStream in)
-			throws IOException {
+	public BluetoothSettings(final InputStream in) throws IOException {
 		Properties defaultProps = setDefault();
 		this.m_bluetoothProperties = new Properties(defaultProps);
 		loadXML(in);
 	}
-	
-	private void loadXML(final String fileName) throws IOException
-	{
+
+	private void loadXML(final String fileName) throws IOException {
 		File propertiesFile = new File(fileName);
 		InputStream in = new FileInputStream(propertiesFile);
 		loadXML(in);

@@ -19,11 +19,13 @@
 package org.ow2.aspirerfid.sandbox.calmant.bluetooth;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
 
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DiscoveryAgent;
@@ -142,16 +144,20 @@ public class BluetoothServer implements BluetoothServerService,
 					System.out.println("New client connected");
 
 					// Add the communication in the pool
+					try {
 					m_threadPool.execute(client_communication);
-					
-					// Advise all listeners
-					commBegin(client_communication.getLogicalName());
+					} catch (RejectedExecutionException error) {
+						System.err.println("Can't handle communication : "
+								+ error.getCause());
+					}
 				} catch (IOException error) {
 					System.err
 							.println("Error creating the communication stream.");
 					error.printStackTrace();
 				}
 			}
+		} catch (InterruptedIOException error) {
+			System.err.println("Server interrupted. Stopped");
 		} catch (IOException error) {
 			error.printStackTrace();
 		} finally {
@@ -238,6 +244,8 @@ public class BluetoothServer implements BluetoothServerService,
 		} catch (IOException e) {
 			// Don't worry about that...
 		}
+		
+		com.intel.bluetooth.BlueCoveImpl.shutdownThreadBluetoothStack();
 	}
 
 	/*

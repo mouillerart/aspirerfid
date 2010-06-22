@@ -1,0 +1,7 @@
+MIDlet-Version: 1.0.1
+MIDlet-Vendor: Thomas Calmant
+MIDlet-Jar-URL: BluetoothTest.jar
+MicroEdition-Configuration: CLDC-1.0
+MIDlet-1: BTTest,,bttest.BTTest
+MicroEdition-Profile: MIDP-2.0
+MIDlet-Name: Bluetooth Mobile Test
