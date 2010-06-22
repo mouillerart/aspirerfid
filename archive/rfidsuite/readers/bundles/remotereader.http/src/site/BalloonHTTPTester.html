@@ -1,0 +1,342 @@
+<html>
+<head>
+<title>OW2 :: Aspire RFID ::  Sounding Balloon Test page</title>
+
+<!--
+ * Copyright 2005-2008, Aspire
+ * 
+ * This library is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU Lesser General Public License as published by 
+ * the Free Software Foundation (the "LGPL"); either version 2.1 of the 
+ * License, or (at your option) any later version. If you do not alter this 
+ * notice, a recipient may use your version of this file under either the 
+ * LGPL version 2.1, or (at his option) any later version.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License 
+ * along with this library; if not, write to the Free Software Foundation, 
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * 
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY 
+ * KIND, either express or implied. See the GNU Lesser General Public 
+ * License for the specific language governing rights and limitations.
+-->
+
+<!--
+Authors: Didier Donsez, Kiev Gama
+-->
+
+<script language="JavaScript">
+
+<!--
+
+function addFloat(input,increment) {
+  var f=parseFloat(input.value);
+  input.value=f+increment;
+  return true;
+}
+
+function addInt(input,increment) {
+  var f=parseInt(input.value);
+  input.value=f+increment;
+  return true;
+}
+
+
+function setCurrentTimestamp(input) {
+  var currentDate = new Date();
+  input.value=currentDate.getTime();
+  return true;
+}
+
+function checkEmail(input) {
+	var email= input.value;
+	if(email.indexOf('@',0) == -1 
+	  || email.indexOf(';',0) != -1 || email.indexOf(' ',0) != -1
+	  || email.indexOf('/',0) != -1 || email.indexOf(';',0) != -1 
+	  || email.indexOf('<',0) != -1 || email.indexOf('>',0) != -1
+	  || email.indexOf('*',0) != -1 || email.indexOf('|',0) != -1
+	  || email.indexOf('`',0) != -1 || email.indexOf('&',0) != -1
+	  || email.indexOf('$',0) != -1 || email.indexOf('!',0) != -1
+	  || email.indexOf('"',0) != -1 || email.indexOf(':',0) != -1) { 
+		alert("Bad e-mail address: " + email);
+	} 
+}
+
+function checkNumeric(input) {
+	var text= input.value;
+	for( var i=0; i< text.length; i++) {
+		var ch= text.substring(i,i+1);
+		if (ch < "0" || ch > "9") {
+        alert("Bad numeric format.");
+        return false;
+    } 
+	}
+	return true;
+} 
+ 
+function checkTagId(input) {
+	var text= input.value;
+	for( var i=0; i< text.length; i++) {
+		var ch= text.substring(i,i+1);
+		if (
+      !(ch >= "0" && ch <= "9")
+      || (!(ch >= "A" && ch <= "Z"))
+      || (!(ch >= "a" && ch <= "z"))
+		
+		)  {
+         		alert("Bad tagId format.");
+			return false;
+    } 
+	}
+	return true;
+}  
+
+function checkReaderId(input) {
+	var text= input.value;
+	for( var i=0; i< text.length; i++) {
+		var ch= text.substring(i,i+1);
+		if (
+      (!(ch >= "0" && ch <= "9"))
+      || (!(ch >= "A" && ch <= "Z"))
+      || (!(ch >= "a" && ch <= "z"))
+      || (!(ch == "_"))
+      || (!(ch == "-"))
+      || (!(ch == "."))
+		
+		)  {
+      alert("Bad tagId format.");
+			return false;
+    } 
+	}
+	return true;
+}  
+
+function checkTagIdList(input) {
+  alert("check not implemented");
+	return true;
+}  
+
+
+
+  
+//-->
+</script>
+
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA"
+            type="text/javascript"></script>
+            
+<script type="text/javascript">
+ 
+// script to manage the map canvas in order to set the latitude and the longitude
+    var map;
+    var marker;
+
+    function setLatitude(lat) {
+        var latlng=map.getCenter();
+        map.setCenter(new GLatLng(lat, latlng.lng()), map.getZoom());        
+        marker.setLatLng(map.getCenter());
+        return true;
+    }    
+
+    function setLongitude(lng) {
+        var latlng=map.getCenter();
+        map.setCenter(new GLatLng(latlng.lat(),lng), map.getZoom());
+        marker.setLatLng(map.getCenter());
+        return true;
+    }    
+    
+    function initialize() {
+      if (GBrowserIsCompatible()) {
+        map = new GMap2(document.getElementById("map_canvas"));
+        map.setCenter(new GLatLng(45.193925, 5.770875), 6);
+
+        marker= new GMarker(map.getCenter(), {draggable: true});
+        marker.show();
+
+        GEvent.addListener(map,"click", function(overlay,latlng) {     
+          if (latlng) {
+            map.setCenter(latlng, map.getZoom());
+            marker.setLatLng(map.getCenter());
+            form03b.latitude.value=latlng.lat();
+            form03b.longitude.value=latlng.lng();
+          }
+        });
+
+        GEvent.addListener(marker, "dragend", function() {
+            map.setCenter(marker.getLatLng(), map.getZoom());
+            form03b.latitude.value=latlng.lat();
+            form03b.longitude.value=latlng.lng();
+            
+        });
+
+        map.addControl(new GSmallMapControl());
+        map.addControl(new GMapTypeControl());
+      }
+    }
+
+</script>
+    
+    
+  </head>
+  <body onload="initialize()" onunload="GUnload()">
+<h1 align=center>OW2 :: Aspire RFID :: Sounding Balloon Test page</h1>
+<hr>
+
+<hr>
+<h2>HTTP Request</h2>
+
+TODOLIST
+* debug the marker drag in the map
+* AJAX style form submission
+
+<form NAME="form03b" METHOD="GET" ACTION="http://localhost:8080/HttpTagReader">
+<center>
+
+
+<table CELLPADDING=5>
+
+<tr>
+<td align=left> TagId (ie GSM phone):
+<td><input type="text" name="id" OnChange="checkTagId(this)"
+      value="33612345678"
+>
+</tr>
+
+<tr>
+<td align=left>Timestamp:  <input type="button" value="set Now !" onClick="setCurrentTimestamp(this.form.timestamp)">
+<td><input type="text" name="timestamp" OnChange="checkTimestamp(this)"
+      value="1232370019656"
+>
+</tr>
+
+<tr>
+<td align=left>Latitude:
+<td><input type="text" name="latitude" value="45.193925">
+  <input type="button" value="++" onClick="addFloat(this.form.latitude,1);setLatitude(parseFloat(this.form.latitude.value))">
+  <input type="button" value="+" onClick="addFloat(this.form.latitude,0.1);setLatitude(parseFloat(this.form.latitude.value))">
+  <input type="button" value="-" onClick="addFloat(this.form.latitude,-0.1);setLatitude(parseFloat(this.form.latitude.value))"> 
+  <input type="button" value="--" onClick="addFloat(this.form.latitude,-1);setLatitude(parseFloat(this.form.latitude.value))"> 
+  
+  <!-- optional -->
+  <input type="hidden" name="latitude.method" value="gps">
+  <input type="hidden" name="latitude.unit" value="degre">
+
+</tr>
+
+<tr>
+<td align=left>Longitude:
+<td><input type="text" name="longitude" value="5.770875">
+  <input type="button" value="++" onClick="addFloat(this.form.longitude,1);setLongitude(parseFloat(this.form.longitude.value))">
+  <input type="button" value="+" onClick="addFloat(this.form.longitude,0.1);setLongitude(parseFloat(this.form.longitude.value))">
+  <input type="button" value="-" onClick="addFloat(this.form.longitude,-0.1);setLongitude(parseFloat(this.form.longitude.value))">
+  <input type="button" value="--" onClick="addFloat(this.form.longitude,-1);setLongitude(parseFloat(this.form.longitude.value))">
+  
+  <!-- optional -->
+  <input type="hidden" name="longitude.method" value="gps">
+  <input type="hidden" name="longitude.unit" value="degre">
+
+</tr>
+
+<tr>
+<td colspan="2">
+<div id="map_canvas" style="width: 400px; height: 250px"></div>
+</td>
+</tr>
+<tr>
+
+<tr>
+<td align=left>Altitude:
+<td><input type="text" name="altitude" value="8123">
+  <input type="button" value="+" onClick="addInt(this.form.altitude,10)">
+  <input type="button" value="-" onClick="addInt(this.form.altitude,-10)">
+  
+  <!-- optional -->
+  <input type="hidden" name="altitude.method" value="gps">
+  <input type="hidden" name="altitude.unit" value="m">
+</tr>
+
+<tr>
+<td align=left>Temperature 1:
+<td><input type="text" name="temperature1" value="274.0">
+  <input type="button" value="+" onClick="addFloat(this.form.temperature1,0.5)">
+  <input type="button" value="-" onClick="addFloat(this.form.temperature1,-0.5)">
+
+  <!-- optional -->
+  <input type="hidden" name="temperature1.unit" value="K">
+</tr>
+
+<tr>
+<td align=left>Temperature 2:
+<td><input type="text" name="temperature2" value="264.0">
+  <input type="button" value="+" onClick="addFloat(this.form.temperature2,0.5)">
+  <input type="button" value="-" onClick="addFloat(this.form.temperature2,-0.5)">
+
+  <!-- optional -->
+  <input type="hidden" name="temperature2.unit" value="K">
+</tr>
+
+<tr>
+<td align=left>Temperature 3:
+<td><input type="text" name="temperature3" value="274.5">
+  <input type="button" value="+" onClick="addFloat(this.form.temperature3,0.5)">
+  <input type="button" value="-" onClick="addFloat(this.form.temperature3,-0.5)">
+
+  <!-- optional -->
+  <input type="hidden" name="temperature3.unit" value="K">
+</tr>
+
+<tr>
+<td align=left>Temperature 4:
+<td><input type="text" name="temperature4" value="264.5">
+  <input type="button" value="+" onClick="addFloat(this.form.temperature4,0.5)">
+  <input type="button" value="-" onClick="addFloat(this.form.temperature4,-0.5)">
+
+  <!-- optional -->
+  <input type="hidden" name="temperature4.unit" value="K">
+</tr>
+
+<tr>
+<td align=left>Pressure 1:
+<td><input type="text" name="pressure1" value="1000">
+  <input type="button" value="++" onClick="addInt(this.form.pressure1,10)">
+  <input type="button" value="+" onClick="addInt(this.form.pressure1,1)">
+  <input type="button" value="-" onClick="addInt(this.form.pressure1,-1)">
+  <input type="button" value="--" onClick="addInt(this.form.pressure1,-10)">
+
+  <!-- optional -->
+  <input type="hidden" name="pressure1.unit" value="Pa">
+</tr>
+
+<tr>
+<td align=left>Pressure 2:
+<td><input type="text" name="pressure2" value="1020">
+  <input type="button" value="++" onClick="addInt(this.form.pressure2,10)">
+  <input type="button" value="+" onClick="addInt(this.form.pressure2,1)">
+  <input type="button" value="-" onClick="addInt(this.form.pressure2,-1)">
+  <input type="button" value="--" onClick="addInt(this.form.pressure2,-10)">
+
+  <!-- optional -->
+  <input type="hidden" name="pressure2.unit" value="Pa">
+</tr>
+
+</table>
+
+<input type="submit">&nbsp;<input type="reset">
+
+
+</center>
+</form>
+
+<script language="JavaScript">
+
+//<!--
+
+setCurrentTimestamp(document.form03b.timestamp);
+
+
+//-->
+
+</script>
+
+</body>
+</html>
