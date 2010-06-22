@@ -4,5 +4,4 @@ obr remove-url file:C:\Docume~1\Donsez\.m2\repository\repository.xml
 obr add-url file:C:\Docume~1\Donsez\.m2\repository\repository.xml
 obr list
 
-
 obr start "OW2 :: AspireRFID :: LIB USB JAVA PROXY"
