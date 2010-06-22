@@ -1,3 +1,0 @@
-- Create a superclass "AbstractReader" which implements the RfidReaderMBean
-- delete old commented code that refers to the WireAdmin
-- see RfidHttpReader.java header for improvements of this class.

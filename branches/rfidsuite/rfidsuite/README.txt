@@ -1,1 +1,0 @@
-This is the rfid suite, with all the necessary components to start it.
