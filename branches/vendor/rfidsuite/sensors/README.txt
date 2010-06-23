@@ -1,1 +1,0 @@
-Those are the sensors of AspireRFID, such as the thermometer, gps, etc.

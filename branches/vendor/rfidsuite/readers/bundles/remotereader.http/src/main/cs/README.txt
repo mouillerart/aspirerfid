@@ -1,1 +1,0 @@
-C# Example using the RFID reader HTTP interface
