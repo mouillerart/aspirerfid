@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.framework.BundleContext;
@@ -62,7 +63,7 @@ public class WireadminProcessor implements Consumer, Runnable, IProcessor {
 
 	private Thread m_thread;
 
-	private HashMap<String, LinkedList<Dictionary<String, Object>>> m_data = new HashMap<String, LinkedList<Dictionary<String, Object>>>();
+	private Map<String, List<Dictionary<String, Object>>> m_data = new HashMap<String, List<Dictionary<String, Object>>>();
 
 	public WireadminProcessor(BundleContext bc) {
 		m_bundleContext = bc;
@@ -169,7 +170,7 @@ public class WireadminProcessor implements Consumer, Runnable, IProcessor {
 		if (!m_data.containsKey(source))
 			m_data.put(source, new LinkedList());
 
-		m_data.get(source).addLast(d);
+		m_data.get(source).add(d);
 	}
 
 	public void run() {
@@ -202,6 +203,15 @@ public class WireadminProcessor implements Consumer, Runnable, IProcessor {
 
 		for (String key : m_data.keySet())
 			result.add(new Data(m_data.get(key), key));
+
+	    for (String key : m_data.keySet()) {
+	       List t = m_data.get(key);
+	       for (Object object : t) {
+            System.out.println("==============   " + t);
+         }
+	    }
+	       
+
 		
 		m_data.clear();
 		return result;
