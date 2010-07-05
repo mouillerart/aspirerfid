@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+
+   <groupId>fr.imag.adele.aspire</groupId>
+   <artifactId>aspire-cilia-demo-touch</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+   <packaging>bundle</packaging>
+
+   <name>Aspire-Cilia Demo IBuddy</name>
+
+
+   <repositories>
+      <repository>
+         <id>cilia</id>
+         <url>http://cilia.ligforge.imag.fr/repo/</url>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+   <dependencies>
+      <dependency>
+         <groupId>org.ow2.aspirerfid</groupId>
+         <artifactId>ibuddy</artifactId>
+         <version>1.0.0</version>
+         <type>bundle</type>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.felix</groupId>
+         <artifactId>org.apache.felix.shell</artifactId>
+         <version>1.5.0-SNAPSHOT</version>
+         <type>bundle</type>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>fr.liglab.adele.cilia</groupId>
+         <artifactId>cilia-core</artifactId>
+         <version>1.0.0-SNAPSHOT</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>fr.liglab.adele.cilia</groupId>
+         <artifactId>cilia-ipojo-compendium</artifactId>
+         <version>1.0.0-SNAPSHOT</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>fr.imag.adele.aspire</groupId>
+         <artifactId>reader-adaptor-api</artifactId>
+         <version>0.0.1-SNAPSHOT</version>
+         <type>bundle</type>
+         <scope>compile</scope>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <source>1.5</source>
+               <target>1.5</target>
+            </configuration>
+         </plugin>
+
+         <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+               <instructions>
+                  <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+               </instructions>
+            </configuration>
+         </plugin>
+
+         <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-ipojo-plugin</artifactId>
+            <version>1.4.2</version>
+            <executions>
+               <execution>
+                  <goals>
+                     <goal>ipojo-bundle</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+      </plugins>
+   </build>
+</project>
