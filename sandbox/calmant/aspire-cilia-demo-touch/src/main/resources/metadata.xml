@@ -3,7 +3,7 @@
    <component name="aspire-executor" classname="fr.imag.adele.aspire.ibuddy.Executor"
       immediate="true" architecture="true">
       <requires field="shell" />
-      
+
       <properties>
          <property name="commands" field="myCommands" />
       </properties>
@@ -16,12 +16,32 @@
       <cilia:multicast-dispatcher />
    </component>
 
+   <component classname="fr.imag.adele.aspire.ibuddy.WireadminProcessor"
+      name="aspire-sensor-consumer" architecture="true">
+
+      <callback transition="validate" method="activate" />
+      <callback transition="invalidate" method="deactivate" />
+
+      <properties>
+         <property name="pid" field="m_PID" />
+         <property field="m_pollDelay" name="pollDelay" />
+      </properties>
+
+      <!--
+         <jmx:config> <property field="m_pollDelay" name="pollDelay" rights="rw"
+         /> </jmx:config>
+      -->
+      <cilia:periodic-scheduler />
+      <cilia:multicast-dispatcher />
+   </component>
+
+
    <component name="app-exe" classname="fr.imag.adele.aspire.ibuddy.ApplicationExecutor"
       immediate="false" architecture="true">
       <provides />
    </component>
 
-   <instance component="app-exe" name="appExecutor"/>
+   <instance component="app-exe" name="appExecutor" />
 
    <!--
       <instance component="aspire-executor" name="myExecutor"> <property
