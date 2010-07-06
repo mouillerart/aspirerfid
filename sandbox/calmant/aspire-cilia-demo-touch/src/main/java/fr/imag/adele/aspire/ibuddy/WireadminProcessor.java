@@ -204,12 +204,12 @@ public class WireadminProcessor implements Consumer, Runnable, IProcessor {
 		for (String key : m_data.keySet())
 			result.add(new Data(m_data.get(key), key));
 
-	    for (String key : m_data.keySet()) {
-	       List t = m_data.get(key);
-	       for (Object object : t) {
-            System.out.println("==============   " + t);
-         }
-	    }
+//	    for (String key : m_data.keySet()) {
+//	       List t = m_data.get(key);
+//	       for (Object object : t) {
+//            System.out.println("==============   " + t);
+//         }
+//	    }
 	       
 
 		
