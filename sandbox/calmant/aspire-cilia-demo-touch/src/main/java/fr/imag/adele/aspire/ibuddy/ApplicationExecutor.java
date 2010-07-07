@@ -72,6 +72,9 @@ public class ApplicationExecutor implements Command {
       }
 
       String[] args = parseCmdLineOrder(cmdline);
+      for (int i = 0; i < args.length; i++) {
+         System.out.println("Args --------------> " + args[i]);
+      }
       exec(null, args);
 
    }
