@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ipojo>
+
+	<component name="barcode-reader-adaptor"
+		classname="org.ow2.aspirerfid.barcode.android.BarcodeReaderBridge"
+		 immediate="true" architecture="true">
+		<provides />
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+
+	<instance component="barcode-reader-adaptor" name="barcode-reader-adaptor-1" />
+
+</ipojo>
