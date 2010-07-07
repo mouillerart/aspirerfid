@@ -31,8 +31,7 @@ public class XMLGenerator implements IProcessor {
 
       for (Object object : dataSet) {
          Data data = (Data) object;
-         String name = data.getName();
-
+         String name = data.getName();        
          if (name.equals("tags")) {
             int round = (Integer) data.getProperty("round");
             List<Tag> original = (List<Tag>) data.getContent();
@@ -78,8 +77,8 @@ public class XMLGenerator implements IProcessor {
          for (Enumeration<String> e = dictionary.keys(); e.hasMoreElements();) {
             String name = e.nextElement();
             buf.append("\t<entry>\n");
-            buf.append("\t<name>").append(name).append("</name>\n");
-            buf.append("\t<value>").append(dictionary.get(name)).append("</value>\n");
+            buf.append("\t\t<name>").append(name).append("</name>\n");
+            buf.append("\t\t<value>").append(dictionary.get(name)).append("</value>\n");
             buf.append("\t</entry>\n");
          }
       }
