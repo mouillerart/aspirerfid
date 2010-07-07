@@ -39,181 +39,170 @@ import fr.liglab.adele.cilia.framework.IProcessor;
 
 public class WireadminProcessor implements Consumer, Runnable, IProcessor {
 
-	private String m_PID;
+   private String m_PID;
 
-	private long m_pollDelay;
+   private long m_pollDelay;
 
-	@SuppressWarnings("unchecked")
-	private static final Class[] m_flavors = new Class[] { Measurement.class,
-			State.class, Image.class, Position.class, Double.class,
-			Float.class, Long.class, Integer.class, Short.class, Boolean.class,
-			double[].class, float[].class, long[].class, int[].class,
-			short[].class, byte[].class, boolean[].class };
+   @SuppressWarnings("unchecked")
+   private static final Class[] m_flavors = new Class[] { Measurement.class, State.class, Image.class, Position.class,
+         Double.class, Float.class, Long.class, Integer.class, Short.class, Boolean.class, double[].class,
+         float[].class, long[].class, int[].class, short[].class, byte[].class, boolean[].class };
 
-	private BundleContext m_bundleContext;
+   private BundleContext m_bundleContext;
 
-	/**
-	 * registration of the Consumer service
-	 */
-	private ServiceRegistration m_serviceRegistration;
+   /**
+    * registration of the Consumer service
+    */
+   private ServiceRegistration m_serviceRegistration;
 
-	private boolean m_end;
+   private boolean m_end;
 
-	private Wire[] m_wires;
+   private Wire[] m_wires;
 
-	private Thread m_thread;
+   private Thread m_thread;
 
-	private Map<String, List<Dictionary<String, Object>>> m_data = new HashMap<String, List<Dictionary<String, Object>>>();
+   private Map<String, List<Dictionary<String, Object>>> m_data = new HashMap<String, List<Dictionary<String, Object>>>();
 
-	public WireadminProcessor(BundleContext bc) {
-		m_bundleContext = bc;
-	}
+   public WireadminProcessor(BundleContext bc) {
+      m_bundleContext = bc;
+   }
 
-	public void activate() {
-		// registration of the Consumer service
-		Hashtable<String, Object> props = new Hashtable<String, Object>();
-		props.put(Constants.SERVICE_PID, m_PID);
-		props.put(WireConstants.WIREADMIN_CONSUMER_FLAVORS, m_flavors);
-		m_serviceRegistration = m_bundleContext.registerService(
-				new String[] { Consumer.class.getName() }, this, props);
+   public void activate() {
+      // registration of the Consumer service
+      Hashtable<String, Object> props = new Hashtable<String, Object>();
+      props.put(Constants.SERVICE_PID, m_PID);
+      props.put(WireConstants.WIREADMIN_CONSUMER_FLAVORS, m_flavors);
+      m_serviceRegistration = m_bundleContext.registerService(new String[] { Consumer.class.getName() }, this, props);
 
-		// start the thread
-		m_end = false;
-		m_thread = new Thread(this);
-		m_thread.setName("Wire2EventBridge poll");
-		m_thread.start();
-	}
+      // start the thread
+      m_end = false;
+      m_thread = new Thread(this);
+      m_thread.setName("Wire2EventBridge poll");
+      m_thread.start();
+   }
 
-	public void deactivate() {
-		// stop the thread
-		m_end = true;
-		m_thread.interrupt();
+   public void deactivate() {
+      // stop the thread
+      m_end = true;
+      m_thread.interrupt();
 
-		// unregistration of the consumer service
-		m_serviceRegistration.unregister();
-	}
+      // unregistration of the consumer service
+      m_serviceRegistration.unregister();
+   }
 
-	/**
-	 * @see org.osgi.service.wireadmin.Consumer#updated(org.osgi.service.wireadmin.Wire,
-	 *      java.lang.Object)
-	 */
-	@SuppressWarnings("unchecked")
-	public void updated(Wire wire, Object o) {
-		// m_lastData=o;
+   /**
+    * @see org.osgi.service.wireadmin.Consumer#updated(org.osgi.service.wireadmin.Wire, java.lang.Object)
+    */
+   @SuppressWarnings("unchecked")
+   public void updated(Wire wire, Object o) {
+      // m_lastData=o;
 
-		Dictionary d = new Properties();
+      Dictionary d = new Properties();
 
-		String source = (String) wire.getProperties().get(
-				WireConstants.WIREADMIN_PRODUCER_PID);
-		if (source != null)
-			d.put("source", source);
+      String source = (String) wire.getProperties().get(WireConstants.WIREADMIN_PRODUCER_PID);
+      if (source != null)
+         d.put("source", source);
 
-		if (o instanceof Measurement) {
-			Measurement m = (Measurement) o;
-			d.put("value", new Double(m.getValue()));
-			d.put("timestamp", new Long(m.getTime()));
-		} else if (o instanceof State) {
-			State s = (State) o;
-			d.put("value", new Integer(s.getValue()));
-			d.put("state", s.getName());
-			d.put("timestamp", new Long(s.getTime()));
-		} else if (o instanceof Position) {
-			// TODO test nullity of lat,long and alt
-			Position p = (Position) o;
-			Measurement m;
-			Long t = null;
+      if (o instanceof Measurement) {
+         Measurement m = (Measurement) o;
+         d.put("value", new Double(m.getValue()));
+         d.put("timestamp", new Long(m.getTime()));
+      } else if (o instanceof State) {
+         State s = (State) o;
+         d.put("value", new Integer(s.getValue()));
+         d.put("state", s.getName());
+         d.put("timestamp", new Long(s.getTime()));
+      } else if (o instanceof Position) {
+         // TODO test nullity of lat,long and alt
+         Position p = (Position) o;
+         Measurement m;
+         Long t = null;
 
-			m = p.getLatitude();
-			if (m != null) {
-				d.put("latitude", new Double(m.getValue()));
-				if (t == null)
-					t = new Long(m.getTime());
-			}
+         m = p.getLatitude();
+         if (m != null) {
+            d.put("latitude", new Double(m.getValue()));
+            if (t == null)
+               t = new Long(m.getTime());
+         }
 
-			m = p.getLongitude();
-			if (m != null) {
-				d.put("longitude", new Double(m.getValue()));
-				if (t == null)
-					t = new Long(m.getTime());
-			}
+         m = p.getLongitude();
+         if (m != null) {
+            d.put("longitude", new Double(m.getValue()));
+            if (t == null)
+               t = new Long(m.getTime());
+         }
 
-			m = p.getAltitude();
-			if (m != null) {
-				d.put("altitude", new Double(m.getValue()));
-				if (t == null)
-					t = new Long(m.getTime());
-			}
+         m = p.getAltitude();
+         if (m != null) {
+            d.put("altitude", new Double(m.getValue()));
+            if (t == null)
+               t = new Long(m.getTime());
+         }
 
-			m = p.getSpeed();
-			if (m != null) {
-				d.put("speed", new Double(m.getValue()));
-				if (t == null)
-					t = new Long(m.getTime());
-			}
+         m = p.getSpeed();
+         if (m != null) {
+            d.put("speed", new Double(m.getValue()));
+            if (t == null)
+               t = new Long(m.getTime());
+         }
 
-			m = p.getTrack();
-			if (m != null) {
-				d.put("track", new Double(m.getValue()));
-				if (t == null)
-					t = new Long(m.getTime());
-			}
+         m = p.getTrack();
+         if (m != null) {
+            d.put("track", new Double(m.getValue()));
+            if (t == null)
+               t = new Long(m.getTime());
+         }
 
-			if (t != null) {
-				d.put("timestamp", t);
-			}
-		} else {
-			d.put("timestamp", new Long(System.currentTimeMillis()));
-			d.put("value", o);
-		}
+         if (t != null) {
+            d.put("timestamp", t);
+         }
+      } else {
+         d.put("timestamp", new Long(System.currentTimeMillis()));
+         d.put("value", o);
+      }
 
-		// Store dictionary
-		if (!m_data.containsKey(source))
-			m_data.put(source, new LinkedList());
+      if (!m_data.containsKey(source))
+         m_data.put(source, new LinkedList());
 
-		m_data.get(source).add(d);
-	}
+      m_data.get(source).add(d);
 
-	public void run() {
-		while (!m_end) {
-			synchronized (this) {
-				if (m_wires != null) {
-					for (Wire wire : m_wires) {
-						if (wire.isValid() && wire.isConnected()) {
-							updated(wire, wire.poll());
-						}
-					}
-				}
-			}
-			try {
-				Thread.sleep(m_pollDelay);
-			} catch (InterruptedException e) {
-			}
-		}
-	}
+   }
 
-	public void producersConnected(Wire[] wires) {
-		synchronized (this) {
-			m_wires = wires;
-		}
-	}
+   public void run() {
+      while (!m_end) {
+         synchronized (this) {
+            if (m_wires != null) {
+               for (Wire wire : m_wires) {
+                  if (wire.isValid() && wire.isConnected()) {
+                     updated(wire, wire.poll());
+                  }
+               }
+            }
+         }
+         try {
+            Thread.sleep(m_pollDelay);
+         } catch (InterruptedException e) {
+         }
+      }
+   }
 
-	@SuppressWarnings("unchecked")
-	public List<Data> process(List listSet) {
-		List<Data> result = new ArrayList<Data>();
+   public void producersConnected(Wire[] wires) {
+      synchronized (this) {
+         m_wires = wires;
+      }
+   }
 
-		for (String key : m_data.keySet())
-			result.add(new Data(m_data.get(key), key));
+   @SuppressWarnings("unchecked")
+   public List<Data> process(List listSet) {
+      List<Data> result = new ArrayList<Data>();
 
-//	    for (String key : m_data.keySet()) {
-//	       List t = m_data.get(key);
-//	       for (Object object : t) {
-//            System.out.println("==============   " + t);
-//         }
-//	    }
-	       
-
-		
-		m_data.clear();
-		return result;
-	}
+      for (String key : m_data.keySet()) {
+         Data data =  new Data(m_data.get(key), "sensor");
+         data.setProperty("sensorId", key);
+         result.add(data);
+      }
+      
+      m_data.clear();
+      return result;
+   }
 }
