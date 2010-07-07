@@ -7,11 +7,13 @@
       <properties>
          <property name="commands" field="myCommands" />
       </properties>
-
+      
+      <!-- 
       <jmx:config>
          <jmx:method name="addCommand" description="Add commands to component" />
       </jmx:config>
-
+      -->
+      
       <cilia:immediate-scheduler />
       <cilia:multicast-dispatcher />
    </component>
@@ -36,17 +38,31 @@
    </component>
 
 
-   <component name="app-exe" classname="fr.imag.adele.aspire.ibuddy.ApplicationExecutor"
+   <component name="exe-app-command" classname="fr.imag.adele.aspire.ibuddy.ApplicationExecutor"
       immediate="false" architecture="true">
       <provides />
    </component>
 
-   <instance component="app-exe" name="appExecutor" />
+   <instance component="exe-app-command" name="appExecutor" />
 
-   <!--
-      <instance component="aspire-executor" name="myExecutor"> <property
-      name="myCommands"> <property name="048537B9232580" value="ibuddy 0 head
-      1000 red yellow none" /> </property> </instance>
-   -->
+<!-- 
+   <instance component="aspire-executor" name="myExecutor">
+      <property name="myCommands">
+         <property name="048537B9232580" value="ibuddy 0 head 1000 red yellow none" />
+         <property name="041F72B9232580" value="exe-app explorer E:\\temp\\IFeelGood.mp3" />
+         <property name="04C835B9232580" value="exe-app explorer http://www.google.fr" />
+      </property>
+   </instance>
+ -->
+
+
+   <component name="aspire-xml-sensor-generator"
+      classname="fr.imag.adele.aspire.sensor.generator.XMLGenerator" immediate="true"
+      architecture="true">
+      <cilia:immediate-scheduler />
+      <cilia:multicast-dispatcher>
+         <sender type="console-sender" id="unique" />
+      </cilia:multicast-dispatcher>
+   </component>
 
 </ipojo>
