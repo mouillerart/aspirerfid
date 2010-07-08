@@ -1,0 +1,176 @@
+Index: FelixEmbedAndStarter.java
+===================================================================
+--- FelixEmbedAndStarter.java	(rÃ©vision 29)
++++ FelixEmbedAndStarter.java	(copie de travail)
+@@ -1,6 +1,9 @@
+ package de.mn.felixembedand;
+ 
++import java.io.DataInputStream;
++import java.io.EOFException;
+ import java.io.File;
++import java.io.IOException;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Properties;
+@@ -17,12 +20,17 @@
+ import org.osgi.util.tracker.ServiceTrackerCustomizer;
+ 
+ import android.app.Activity;
++import android.content.Intent;
++import android.net.LocalServerSocket;
++import android.net.LocalSocket;
++import android.net.Uri;
+ import android.view.View;
+ import android.widget.TextView;
+ import de.mn.felixembedand.view.ViewFactory;
+ 
+ public class FelixEmbedAndStarter extends Activity {
+     
++	private boolean m_end;
+ 	
+     private HostActivator m_hostActivator = null;
+     private InstallFromRActivator instFromR = null;
+@@ -32,7 +40,7 @@
+     private File newBundlesDir;
+     private File cacheDir;
+     
+-    // †berwacht, ob neue Services (deren Service Interfaces dieser HostApp bekannt sind)
++    // ï¿½berwacht, ob neue Services (deren Service Interfaces dieser HostApp bekannt sind)
+     // durch Bundles implementiert werden, welche wiederum in der eingebetteen Felix Instanz isntalliert sind und laufen
+     private ServiceTracker m_servicetracker = null;
+     
+@@ -50,7 +58,8 @@
+         // hostactivator for connection hostapp to framework
+         m_hostActivator = new HostActivator();
+         
+-        String path = this.getFilesDir().getAbsolutePath();
++        // String path = this.getFilesDir().getAbsolutePath();
++        String path = "/sdcard";
+         
+         // create empty bundle dir (InstallFromRActivator will use it)
+         bundlesDir = new File(path+"/felix/bundle");
+@@ -91,6 +100,9 @@
+         // add list of activators which shall be started with system bundle to config
+         m_felixProperties.put(FelixConstants.SYSTEMBUNDLE_ACTIVATORS_PROP, activatorList);
+         
++        // start local service before Felix (if bundles needs it immediatly)
++        startServer();
++        
+         // start felix with configProps
+         try
+         {
+@@ -106,7 +118,6 @@
+         }
+         
+         
+-        
+         // TEST
+         testInstalledBundleState();
+         
+@@ -166,7 +177,63 @@
+ 	}
+ 	
+ 	
++	private void startServer() {
++		m_end = false;
++		Thread thread = new Thread(new Runnable() {
++			
++			@Override
++			public void run() {
++				LocalServerSocket server;
++				try {
++					server = new LocalServerSocket("felix-browser");
++				} catch (IOException e) {
++					System.err.println("***** Can't start server *****");
++					e.printStackTrace(System.err);
++					return;
++				}
++				
++				while (!m_end) {
++					try {
++						LocalSocket client = server.accept();
++
++						DataInputStream in = new DataInputStream(client
++								.getInputStream());
++
++						try {
++							String toBeLaunched = null;
++							while ((toBeLaunched = in.readUTF()) != null) {
++								try {
++									Uri uri = Uri.parse(toBeLaunched);
++									
++									Intent i = new Intent(Intent.ACTION_VIEW, uri);
++									FelixEmbedAndStarter.this.startActivity(i);
++								} catch(Exception e) {
++									// Don't care
++								}
++							}
++						} catch (EOFException e) {
++							// do nothing
++						}
++					} catch (IOException e) {
++						System.err.println("***** Error reading client *****");
++						e.printStackTrace(System.err);
++					}
++				}
++				
++				try {
++					server.close();
++				} catch (IOException e) {
++					System.err.println("**** Can't stop server ****");
++					e.printStackTrace(System.err);
++				}
++			}
++		});
++		thread.start();
++	}
+ 	
++	private void stopServer() {
++		m_end = true;
++	}
+ 	
+ 	
+     @Override
+@@ -207,6 +274,9 @@
+ 
+     public void shutdownApplication()
+     {
++    	if(m_felix == null)
++    		return;
++    	
+         // Shut down the felix framework when stopping the
+         // host application.
+         try {
+@@ -227,12 +297,15 @@
+ 			System.out.println("Thread has waited and was then interrupted");
+ 			e.printStackTrace();
+ 		}
++		
++		// stops server
++		stopServer();
+     }
+     
+     private void testInstalledBundleState(){
+     	
+ 		Bundle[] bundles = getInstalledBundles();
+-		String teststr = "TEST: ";
++		String teststr = "";
+ 		for (Bundle b : bundles) {
+ 		
+ 			String stateStr ="";
+@@ -248,13 +321,13 @@
+ 			}
+ 			if (stateStr.length() == 0) stateStr = "UNKNOWN STATE";
+ 			
+-			teststr = teststr+"\n "+b.getSymbolicName()+"\nSTATE: "+stateStr+" ";
++			teststr = teststr + b.getSymbolicName() + "\nSTATE: "+stateStr+"\n";
+ 			System.out.println("TESTBUNDLE: "+b.getSymbolicName());
+ 		}
+ 
+         TextView tv = new TextView(this);
+ 		
+-        tv.setText("Hello: "+teststr);
++        tv.setText("Bundles state:\n" + teststr);
+         
+         setContentView(tv);
+     	
