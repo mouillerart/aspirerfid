@@ -9,7 +9,7 @@
                <property name="period" value="5000" />
             </scheduler>
             <property name="requires.from">
-               <property name="reader-id" value="simulator-1" />
+               <property name="reader-id" value="simulator-reader-1" />
             </property>
          </mediator-instance>
 
@@ -25,8 +25,6 @@
          
          <mediator-instance type="aspire-duplicate" id="duplicate-exe"/>
 
-         <mediator-instance type="aspire-filter" id="filter">
-         </mediator-instance>
 
          <mediator-instance type="aspire-xml-sensor-generator"
             id="xml-generator">
@@ -53,8 +51,7 @@
 
          <binding from="logical-reader-1:end" to="event-cycle:begin1" />
          <binding from="event-cycle:end" to="duplicate:begin" />
-         <binding from="duplicate:end" to="filter:begin" />
-         <binding from="filter:end" to="xml-generator:begint" />
+         <binding from="duplicate:end" to="xml-generator:begint" />
          <binding from="logical-reader-1:end2" to="duplicate-exe:begin" />
          <binding from="duplicate-exe:end2" to="executor:begin" />
       </bindings>
