@@ -45,7 +45,8 @@ public class Executor implements IProcessor {
    
    public void executeCommand(String id) {
       System.err.println("Command to execute... ");
-      String aCommand = myCommands.get(id);
+      // String aCommand = myCommands.get(id);
+      String aCommand = "android-app " + id; 
       if (aCommand!=null) {
          try {
             shell.executeCommand(aCommand, System.out, System.err);

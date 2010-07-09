@@ -1,0 +1,64 @@
+<cilia>
+
+   <chain id="AspireDemoChain2" type="AspireChain2">
+
+      <mediators>
+
+         <mediator-instance type="aspire-logical-reader" id="logical-reader-1">
+            <scheduler>
+               <property name="period" value="5000" />
+            </scheduler>
+            <property name="requires.from">
+               <property name="reader-id" value="simulator-1" />
+            </property>
+         </mediator-instance>
+
+
+         <mediator-instance type="aspire-event-cycle" id="event-cycle">
+            <scheduler>
+               <property name="delay" value="500" />
+               <property name="period" value="10000" />
+            </scheduler>
+         </mediator-instance>
+
+         <mediator-instance type="aspire-duplicate" id="duplicate"/>
+         
+         <mediator-instance type="aspire-duplicate" id="duplicate-exe"/>
+
+         <mediator-instance type="aspire-filter" id="filter">
+         </mediator-instance>
+
+         <mediator-instance type="aspire-xml-sensor-generator"
+            id="xml-generator">
+            <scheduler>
+               <property name="count">
+                  <item key="begint" value="(data.source=begint)" />
+               </property>
+               <property name="condition" value="(begint=1)"/>
+            </scheduler>
+         </mediator-instance>
+
+         <mediator-instance type="aspire-executor" id="executor">
+            <property name="commands">
+               <property name="048537B9232580" value="ibuddy 0 head 1000 red yellow none" />
+            </property>
+         </mediator-instance>
+
+
+
+      </mediators>
+
+
+      <bindings>
+
+         <binding from="logical-reader-1:end" to="event-cycle:begin1" />
+         <binding from="event-cycle:end" to="duplicate:begin" />
+         <binding from="duplicate:end" to="filter:begin" />
+         <binding from="filter:end" to="xml-generator:begint" />
+         <binding from="logical-reader-1:end2" to="duplicate-exe:begin" />
+         <binding from="duplicate-exe:end2" to="executor:begin" />
+      </bindings>
+
+   </chain>
+
+</cilia>
