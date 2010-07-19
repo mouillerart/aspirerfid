@@ -2,14 +2,19 @@
 
 <ipojo>
 
-	<component name="barcode-reader-adaptor"
-		classname="org.ow2.aspirerfid.barcode.android.BarcodeReaderBridge"
-		 immediate="true" architecture="true">
-		<provides />
-		<callback transition="validate" method="start" />
-		<callback transition="invalidate" method="stop" />
-	</component>
+    <component name="barcode-reader-adaptor"
+        classname="org.ow2.aspirerfid.barcode.android.BarcodeReaderBridge"
+         immediate="true" architecture="true">
+        <provides />
+        <callback transition="validate" method="start" />
+        <callback transition="invalidate" method="stop" />
+        <provides>
+            <property name="reader-id" field="readerId" />
+        </provides>
+    </component>
 
-	<instance component="barcode-reader-adaptor" name="barcode-reader-adaptor-1" />
+    <instance component="barcode-reader-adaptor" name="barcode-reader-adaptor-1">
+        <property name="reader-id" value="reader-1" />
+    </instance>
 
 </ipojo>
