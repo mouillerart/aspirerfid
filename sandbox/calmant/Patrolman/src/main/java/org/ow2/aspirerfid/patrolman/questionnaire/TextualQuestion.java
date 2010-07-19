@@ -47,6 +47,7 @@ public class TextualQuestion extends TextField implements Question {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.ow2.aspirerfid.patrolman.Question#toXML()
 	 */
 	public String toXML() {
@@ -54,5 +55,14 @@ public class TextualQuestion extends TextField implements Question {
 		result += "<answer>" + getString() + "</answer>";
 		result += "</textual>";
 		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.patrolman.questionnaire.Question#clear()
+	 */
+	public void clear() {
+		setString("");
 	}
 }

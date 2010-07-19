@@ -115,4 +115,12 @@ public class ChoiceQuestion extends ChoiceGroup implements Question {
 		result += "</choiceList>";
 		return result;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.ow2.aspirerfid.patrolman.questionnaire.Question#clear()
+	 */
+	public void clear() {
+		// On initialization, booleans are false
+		setSelectedFlags(new boolean[size()]);
+	}
 }

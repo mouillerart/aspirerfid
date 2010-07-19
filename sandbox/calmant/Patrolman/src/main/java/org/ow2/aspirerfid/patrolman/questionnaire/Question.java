@@ -23,6 +23,11 @@ public interface Question {
 	public boolean isCorrect();
 	
 	/**
+	 * Reset the question state (no entry/no selection/...)
+	 */
+	public void clear();
+	
+	/**
 	 * Returns the XML representation of the current state of the answer
 	 * @return A ECReport-ready XML representation
 	 */

@@ -3,6 +3,8 @@ package org.ow2.aspirerfid.patrolman.ecspec;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.ow2.aspirerfid.patrolman.questionnaire.Questionnaire;
+
 public class LightECSpec {
 	/** Logical readers list */
 	private Vector m_logicalReaders = new Vector();
@@ -69,5 +71,28 @@ public class LightECSpec {
 	 */
 	public Enumeration getReportSpecs() {
 		return m_reportSpecs.elements();
+	}
+
+	/**
+	 * Returns the first questionnaire corresponding to the tag unique ID
+	 * (pattern tag in ECSpec)
+	 * 
+	 * @param tagUID
+	 *            Tag's unique ID
+	 * @return The first questionnaire found, or null
+	 */
+	public Questionnaire findAssociatedQuestionnaire(String tagUID) {
+		Enumeration items = m_reportSpecs.elements();
+
+		while (items.hasMoreElements()) {
+			LightECReportSpec reportSpec = (LightECReportSpec) items
+					.nextElement();
+
+			Questionnaire qst = reportSpec.getQuestionnaire();
+			if (qst.handlesTag(tagUID))
+				return qst;
+		}
+
+		return null;
 	}
 }

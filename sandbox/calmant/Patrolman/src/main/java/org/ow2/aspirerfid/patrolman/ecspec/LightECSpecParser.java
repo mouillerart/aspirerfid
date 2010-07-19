@@ -22,14 +22,14 @@ public class LightECSpecParser {
 	private KXmlParser m_parser;
 	
 	/** Parent MIDlet */
-	private Patrolman m_midlet;
+	private Patrolman m_patrolman;
 
 	/**
 	 * Initializes the kXml parser
 	 */
 	public LightECSpecParser(Patrolman midlet) {
 		m_parser = new KXmlParser();
-		m_midlet = midlet;
+		m_patrolman = midlet;
 	}
 
 	/**
@@ -49,7 +49,9 @@ public class LightECSpecParser {
 				.getBytes())));
 
 		m_parser.nextTag();
-		return parseECSpec();
+		LightECSpec ecSpec = parseECSpec();
+		m_patrolman.addECSpec(ecSpec);
+		return ecSpec;
 	}
 
 	/**
@@ -262,7 +264,7 @@ public class LightECSpecParser {
 		}
 
 		if (qst != null) {
-			qst.pattern = pattern;
+			qst.setPattern(pattern);
 			reportSpec.setQuestionnaire(qst);
 		}
 
@@ -322,7 +324,7 @@ public class LightECSpecParser {
 		if (id == null || id.length() == 0)
 			return null;
 
-		Questionnaire qst = new Questionnaire(m_midlet, title, id);
+		Questionnaire qst = new Questionnaire(m_patrolman, title, id);
 
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 			String tagName = m_parser.getName();

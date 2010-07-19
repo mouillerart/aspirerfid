@@ -24,8 +24,8 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	/** UI Container */
 	private Form m_form;
 
-	/** GroupSpec pattern */
-	public String pattern;
+	/** GroupSpec m_pattern */
+	private String m_pattern;
 
 	/** Questionnaire id */
 	private String m_id;
@@ -38,13 +38,13 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 
 	/** Submit command */
 	private Command m_submitCmd;
-	
+
 	/** Reset button */
 	private StringItem m_clearBtn;
 
 	/** Reset command */
 	private Command m_resetCmd;
-	
+
 	/** Back button */
 	private StringItem m_backBtn;
 
@@ -81,7 +81,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	}
 
 	/**
-	 * Retrieve questionnaire's identifier
+	 * Retrieves questionnaire's identifier
 	 * 
 	 * @return Questionnaire's identifier
 	 */
@@ -90,7 +90,28 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	}
 
 	/**
-	 * Add a textual question to the form
+	 * Sets the UID pattern of handled tags.
+	 * 
+	 * @param pattern
+	 *            Pattern of handled tags
+	 */
+	public void setPattern(String pattern) {
+		m_pattern = pattern;
+	}
+
+	/**
+	 * Tests if the questionnaire corresponds to the given UID
+	 * 
+	 * @param tagUID
+	 *            Tag's UID
+	 * @return True if this questionnaire handles the given UID
+	 */
+	public boolean handlesTag(String tagUID) {
+		return tagUID.startsWith(m_pattern);
+	}
+
+	/**
+	 * Adds a textual question to the form
 	 * 
 	 * @param id
 	 *            Question id (mandatory)
@@ -115,7 +136,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	}
 
 	/**
-	 * Add a single choice question to the form
+	 * Adds a single choice question to the form
 	 * 
 	 * @param id
 	 *            Question Id (mandatory)
@@ -143,7 +164,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	}
 
 	/**
-	 * Add a multiple choice question to the form
+	 * Adds a multiple choice question to the form
 	 * 
 	 * @param id
 	 *            Question Id (mandatory)
@@ -188,10 +209,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 
 		Enumeration e = m_questions.elements();
 		while (e.hasMoreElements()) {
-			Object obj = e.nextElement();
-			if (obj instanceof Question) {
-				result += ((Question) obj).toXML();
-			}
+			result += ((Question) e.nextElement()).toXML();
 		}
 
 		result += "</questionnaire>";
@@ -220,12 +238,16 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 		if (command == m_submitCmd) {
 			// Ask the MIDlet to send the report
 			m_patrolman.sendECReport(m_reportSpec);
-		} else if(command == m_resetCmd) {
-			// TODO: set all questions to their default value
-		} else if(command == m_backCmd) {
+		} else if (command == m_resetCmd) {
+			// Clear all questions content
+			Enumeration questions = m_questions.elements();
+			while (questions.hasMoreElements()) {
+				((Question) questions.nextElement()).clear();
+			}
+		} else if (command == m_backCmd) {
 			/*
-			 * We may destroy the current displayable object
-			 * but it seems to be impossible
+			 * We may destroy the current displayable object but it seems to be
+			 * impossible
 			 */
 			m_patrolman.showMenuScreen();
 		}
@@ -255,19 +277,19 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 		m_submitCmd = new Command("Submit", Command.ITEM, 0);
 		m_submitBtn.setDefaultCommand(m_submitCmd);
 		m_submitBtn.setItemCommandListener(this);
-		
+
 		// Reset button
 		m_clearBtn = new StringItem("", "Clear", StringItem.BUTTON);
 		m_resetCmd = new Command("Clear", Command.ITEM, 0);
 		m_clearBtn.setDefaultCommand(m_resetCmd);
 		m_clearBtn.setItemCommandListener(this);
-		
+
 		// Back button
 		m_backBtn = new StringItem("", "Back", StringItem.BUTTON);
 		m_backCmd = new Command("Back", Command.ITEM, 0);
 		m_backBtn.setDefaultCommand(m_backCmd);
 		m_backBtn.setItemCommandListener(this);
-		
+
 		m_form.append(m_submitBtn);
 		m_form.append(m_clearBtn);
 		m_form.append(m_backBtn);

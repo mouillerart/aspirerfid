@@ -48,7 +48,6 @@
             <version>2.0.0</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>net.sf.kxml</groupId>
             <artifactId>kxml2-min</artifactId>
@@ -111,10 +110,7 @@
                     <useWtkLibs>false</useWtkLibs>
                     <libs>
                         <lib>${env.WTK_HOME}/lib/midpapi20.jar</lib>
-                        <lib>${env.WTK_HOME}/lib/cldcapi11.jar</lib>
-                        <lib>${env.WTK_HOME}/lib/jsr082.jar</lib>
-
-                        <!-- Nokia SDK files in ${env.WTK_HOME}/lib/ext -->
+                        <lib>${env.WTK_HOME}/lib/ext/cldcapi11.zip</lib>
                         <lib>${env.WTK_HOME}/lib/ext/bluetooth.zip</lib>
                         <lib>${env.WTK_HOME}/lib/ext/nfc.zip</lib>
                     </libs>
@@ -132,6 +128,7 @@
                             <groupId>net.sf.kxml</groupId>
                             <artifactId>kxml2-min</artifactId>
                         </dependency>
+
                         <dependency>
                             <groupId>com.nokia</groupId>
                             <artifactId>cldc</artifactId>

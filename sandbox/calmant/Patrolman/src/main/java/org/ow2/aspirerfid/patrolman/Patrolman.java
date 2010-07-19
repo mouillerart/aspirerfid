@@ -3,36 +3,48 @@
  */
 package org.ow2.aspirerfid.patrolman;
 
-import java.io.DataInputStream;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
+import javax.microedition.contactless.TargetProperties;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.ow2.aspirerfid.nfc.midlet.generic.GenericMidlet;
+import org.ow2.aspirerfid.nfc.midlet.generic.NFCMidletException;
+import org.ow2.aspirerfid.nfc.midlet.generic.ReaderThread;
+import org.ow2.aspirerfid.nfc.midlet.generic.RequestMessage;
 import org.ow2.aspirerfid.nfc.midlet.generic.ui.AlertScreen;
 import org.ow2.aspirerfid.nfc.midlet.generic.ui.Screen;
+import org.ow2.aspirerfid.nfc.midlet.reader.TagDetector;
+import org.ow2.aspirerfid.nfc.midlet.reader.rfid.RFIDDetector;
 import org.ow2.aspirerfid.nfc.midlet.sendersReceivers.bluetooth.BluetoothControlerUser;
 import org.ow2.aspirerfid.nfc.midlet.sendersReceivers.bluetooth.BluetoothController;
 import org.ow2.aspirerfid.patrolman.ecspec.LightECReportSpec;
 import org.ow2.aspirerfid.patrolman.ecspec.LightECSpec;
-import org.ow2.aspirerfid.patrolman.ecspec.LightECSpecParser;
+import org.ow2.aspirerfid.patrolman.nfc.TagReaderThread;
 import org.ow2.aspirerfid.patrolman.questionnaire.Questionnaire;
 import org.ow2.aspirerfid.patrolman.ui.MenuScreen;
 import org.ow2.aspirerfid.patrolman.ui.PresentationScreen;
+import org.ow2.aspirerfid.patrolman.ui.WaitingECSpec;
 
 /**
  * @author Thomas Calmant
  * 
  */
-public class Patrolman extends GenericMidlet implements BluetoothControlerUser {
+public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
+		TagDetector {
 
 	/** Bluetooth connection controller */
 	private BluetoothController m_btController;
-	
+
 	/** Menu screen */
-	private MenuScreen m_menuScreen; 
+	private MenuScreen m_menuScreen;
+	
+	/** ECSpecs */
+	private Vector m_ecSpecs;
+
+	/** ECSpec waiting screen */
+	private WaitingECSpec m_waitingScreen;
 
 	/*
 	 * (non-Javadoc)
@@ -40,12 +52,14 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser {
 	 * @see javax.microedition.midlet.MIDlet#startApp()
 	 */
 	protected void startApp() throws MIDletStateChangeException {
+		m_ecSpecs = new Vector();
 		m_btController = new BluetoothController(this);
-		
 		m_menuScreen = new MenuScreen(this);
+		m_waitingScreen = new WaitingECSpec(this, m_btController, m_menuScreen);
+		
 		setActiveScreen(new PresentationScreen(this));
 	}
-	
+
 	/**
 	 * Activates the menu screen
 	 */
@@ -54,11 +68,37 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser {
 	}
 
 	/**
+	 * Starts RFID detection
+	 */
+	public boolean startTagDetection() {
+		try {
+			startDetector(new RFIDDetector(this));
+			return true;
+		} catch (NFCMidletException e) {
+			setActiveScreen(new AlertScreen(this,
+					"There was a problem stablishing the tag listener.", true));
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Stops the RFID detection and show the main screen.
+	 */
+	public void stopTagDetection() {
+		stopDetector();
+		setActiveScreen(m_menuScreen);
+	}
+
+	/**
 	 * Searches for bluetooth server
 	 */
 	public void startBluetoothDetection(Screen previousScreen) {
-		// TODO: next screen (waiting for data)
-		m_btController.connectBluetooth(previousScreen, m_menuScreen);
+		if(m_btController.isBluetoothConnected())
+			m_waitingScreen.setActive();
+		else {
+			m_btController.connectBluetooth(previousScreen, m_waitingScreen);
+		}
 	}
 
 	/*
@@ -68,40 +108,6 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser {
 	 * BluetoothControlerUser#informConnected()
 	 */
 	public void informConnected() {
-		// TODO: show a 'waiting for spec' screen
-
-		// Parser / Questionnaire test
-		StringBuffer data = new StringBuffer();
-		InputStream is = Patrolman.class.getResourceAsStream("/text.xml");
-		DataInputStream dis = new DataInputStream(is);
-		if (dis == null || is == null) {
-			AlertScreen as = new AlertScreen(this, "File not found...");
-			as.setActive();
-			return;
-		}new MenuScreen(this)
-
-		try {
-			while (true) {
-				data.append((char) dis.readByte());
-			}
-		} catch (EOFException e) {
-			// do nothing
-		} catch (IOException e) {
-			AlertScreen as = new AlertScreen(this, "File not found...");
-			as.setActive();
-			return;
-		}
-
-		LightECSpecParser parser = new LightECSpecParser(this);
-		try {
-			LightECSpec spec = parser.parseString(data.toString());
-			LightECReportSpec report = spec.getReportSpec("ReportTest");
-
-			setActiveScreen(report.getQuestionnaire());
-		} catch (Exception e) {
-			System.out.println("Exception : " + e);
-			e.printStackTrace();
-		}
 	}
 
 	/*
@@ -111,7 +117,14 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser {
 	 * BluetoothControlerUser#informDisonnected()
 	 */
 	public void informDisonnected() {
-		// TODO: show info on UI
+	}
+	
+	/**
+	 * Adds a read ECSpec to the vector
+	 * @param ecspec The ECSpec to be added
+	 */
+	public void addECSpec(LightECSpec ecspec) {
+		m_ecSpecs.addElement(ecspec);
 	}
 
 	/**
@@ -124,17 +137,47 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser {
 		Questionnaire qst = ecSpec.getQuestionnaire();
 
 		// TODO: generate a real ECReport
-		String correctedXML = qst.toXML(); //.replace('\n', ' ');
+		String correctedXML = qst.toXML();
 		try {
 			m_btController.sendMessage(correctedXML);
 
-			// TODO: show error/success on UI
 			AlertScreen as = new AlertScreen(this, "Data sent");
 			as.setActive();
 		} catch (Exception e) {
 			AlertScreen as = new AlertScreen(this, "Error sending message : "
 					+ e.getMessage());
 			as.setActive();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.ow2.aspirerfid.nfc.midlet.reader.TagDetector#startReaderThread(javax
+	 * .microedition.contactless.TargetProperties[])
+	 */
+	public ReaderThread startReaderThread(TargetProperties[] properties) {
+		return new TagReaderThread(properties, this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.ow2.aspirerfid.nfc.midlet.reader.TagDetector#tagRead(org.ow2.aspirerfid
+	 * .nfc.midlet.generic.RequestMessage)
+	 */
+	public void tagRead(RequestMessage message) {
+		Enumeration elems = m_ecSpecs.elements();
+		
+		while(elems.hasMoreElements()) {
+			LightECSpec spec = (LightECSpec) elems.nextElement();
+			Questionnaire qst = spec.findAssociatedQuestionnaire(message.getTagUID());
+			if(qst != null) {
+				qst.setActive();
+				return;
+			}
 		}
 	}
 }

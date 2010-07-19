@@ -19,7 +19,8 @@
 			reportOnlyOnChange="false" includeSpecInReports="true">
 			<reportSet set="CURRENT" />
 			<groupSpec>
-				<pattern>urn:epc:pat:gid-96:82.20.*</pattern><!-- warehousemen -->
+				<!-- <pattern>urn:epc:pat:gid-96:82.20.*</pattern> -->
+				<pattern>04f05a59127a00</pattern>
 				<extension>
 					<questionnaire title="Report Test" id="Qst1">
 						<textual id="qst1">
