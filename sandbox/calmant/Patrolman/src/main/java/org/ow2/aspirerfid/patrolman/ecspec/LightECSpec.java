@@ -6,6 +6,9 @@ import java.util.Vector;
 import org.ow2.aspirerfid.patrolman.questionnaire.Questionnaire;
 
 public class LightECSpec {
+	/** ECSpec name */
+	private String m_name;
+	
 	/** Logical readers list */
 	private Vector m_logicalReaders = new Vector();
 
@@ -18,7 +21,7 @@ public class LightECSpec {
 	/**
 	 * Adds a logical reader
 	 * 
-	 * @param name
+	 * @param reportName
 	 *            The added logical reader
 	 */
 	public void addLogicalReader(String name) {
@@ -46,8 +49,8 @@ public class LightECSpec {
 	/**
 	 * Retrieves a specification
 	 * 
-	 * @param name
-	 *            the specification name
+	 * @param reportName
+	 *            the specification reportName
 	 * @return the specification, or null if it doesn't exist
 	 */
 	public LightECReportSpec getReportSpec(String name) {
@@ -57,7 +60,7 @@ public class LightECSpec {
 			LightECReportSpec reportSpec = (LightECReportSpec) items
 					.nextElement();
 
-			if (reportSpec.name.equals(name))
+			if (reportSpec.reportName.equals(name))
 				return reportSpec;
 		}
 
@@ -88,11 +91,25 @@ public class LightECSpec {
 			LightECReportSpec reportSpec = (LightECReportSpec) items
 					.nextElement();
 
-			Questionnaire qst = reportSpec.getQuestionnaire();
-			if (qst.handlesTag(tagUID))
+			Questionnaire qst = reportSpec.getQuestionnaire(tagUID);
+			if (qst != null)
 				return qst;
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param m_name the ECSpec name
+	 */
+	public void setName(String name) {
+		m_name = name;
+	}
+
+	/**
+	 * @return the ECSpec name
+	 */
+	public String getName() {
+		return m_name;
 	}
 }

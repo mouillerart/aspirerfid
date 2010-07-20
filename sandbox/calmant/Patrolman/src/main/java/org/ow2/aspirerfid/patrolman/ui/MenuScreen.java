@@ -18,7 +18,7 @@ import org.ow2.aspirerfid.patrolman.Patrolman;
  */
 public class MenuScreen extends Screen {
 
-	/** Select command name */
+	/** Select command reportName */
 	private static final String m_selectName = "Select";
 
 	/** Select command */

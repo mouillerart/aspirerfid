@@ -71,6 +71,8 @@ public class LightECSpecParser {
 				.println(m_parser.getName() + " - " + m_parser.getNamespace());
 
 		m_parser.require(XmlPullParser.START_TAG, null, "ale:ECSpec");
+		
+		ecspec.setName(m_parser.getAttributeValue(null, "name"));
 
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 			String tagName = m_parser.getName();
@@ -104,11 +106,11 @@ public class LightECSpecParser {
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 			m_parser.require(XmlPullParser.START_TAG, null, "reportSpec");
 
-			LightECReportSpec reportSpec = new LightECReportSpec();
+			LightECReportSpec reportSpec = new LightECReportSpec(ecspec.getName());
 
 			for (int i = 0; i < m_parser.getAttributeCount(); i++)
 				if (m_parser.getAttributeName(i).equals("reportName")) {
-					reportSpec.name = m_parser.getAttributeValue(i);
+					reportSpec.reportName = m_parser.getAttributeValue(i);
 					break;
 				}
 
@@ -219,7 +221,7 @@ public class LightECSpecParser {
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 			m_parser.require(XmlPullParser.START_TAG, null, "logicalReader");
 
-			// Add the logical reader name to the list
+			// Add the logical reader reportName to the list
 			ecspec.addLogicalReader(m_parser.nextText());
 
 			m_parser.require(XmlPullParser.END_TAG, null, "logicalReader");
@@ -242,15 +244,15 @@ public class LightECSpecParser {
 			throws XmlPullParserException, IOException {
 		m_parser.require(XmlPullParser.START_TAG, null, "groupSpec");
 
-		String pattern = null;
+		Vector patterns = new Vector();
 		Questionnaire qst = null;
 
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 			String tagName = m_parser.getName();
 
-			// Pattern (optional)
+			// Pattern (optional, can be multiple)
 			if (tagName.equals("pattern")) {
-				pattern = m_parser.nextText();
+				patterns.addElement(m_parser.nextText());
 			}
 
 			// Extension (Questionnaire)
@@ -264,8 +266,8 @@ public class LightECSpecParser {
 		}
 
 		if (qst != null) {
-			qst.setPattern(pattern);
-			reportSpec.setQuestionnaire(qst);
+			qst.setPatterns(patterns);
+			reportSpec.addQuestionnaire(qst);
 		}
 
 		m_parser.require(XmlPullParser.END_TAG, null, "groupSpec");
@@ -428,6 +430,7 @@ public class LightECSpecParser {
 			correct_answers = new Vector();
 
 		// List choices
+		int choice_pos = 0;
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 			String tagName = m_parser.getName();
 
@@ -436,7 +439,20 @@ public class LightECSpecParser {
 			else if (tagName.equals("choice")) {
 				choices.addElement(m_parser.nextText());
 
-				// TODO: test if value is an answer
+				// Test if value is an answer
+				String answer = m_parser.getAttributeValue(null, "answer");
+				
+				if(answer != null && answer.equalsIgnoreCase("false")) {
+					if(multiple) {
+						// Add answer to the list
+						correct_answers.addElement(new Integer(choice_pos));
+					} else {
+						// Set the correct answer
+						correct_answer = choice_pos;
+					}
+				}
+				
+				choice_pos++;
 			}
 		}
 

@@ -24,8 +24,8 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	/** UI Container */
 	private Form m_form;
 
-	/** GroupSpec m_pattern */
-	private String m_pattern;
+	/** GroupSpec patterns */
+	private Vector m_patterns;
 
 	/** Questionnaire id */
 	private String m_id;
@@ -80,6 +80,42 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 		setDiplayable(m_form);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.CommandListener#commandAction(javax.microedition
+	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
+	 */
+	public void commandAction(Command command, Displayable displayable) {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.ItemCommandListener#commandAction(javax.microedition
+	 * .lcdui.Command, javax.microedition.lcdui.Item)
+	 */
+	public void commandAction(Command command, Item item) {
+		if (command == m_submitCmd) {
+			// Ask the MIDlet to send the report
+			m_patrolman.sendECReport(this);
+		} else if (command == m_resetCmd) {
+			// Clear all questions content
+			Enumeration questions = m_questions.elements();
+			while (questions.hasMoreElements()) {
+				((Question) questions.nextElement()).clear();
+			}
+		} else if (command == m_backCmd) {
+			/*
+			 * We may destroy the current displayable object but it seems to be
+			 * impossible
+			 */
+			m_patrolman.showMenuScreen();
+		}
+	}
+
 	/**
 	 * Retrieves questionnaire's identifier
 	 * 
@@ -90,13 +126,27 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	}
 
 	/**
-	 * Sets the UID pattern of handled tags.
+	 * Adds a UID pattern of handled tags.
 	 * 
 	 * @param pattern
 	 *            Pattern of handled tags
 	 */
-	public void setPattern(String pattern) {
-		m_pattern = pattern;
+	public void addPattern(String pattern) {
+		if(m_patterns == null)
+			m_patterns = new Vector();
+		
+		m_patterns.addElement(pattern);
+	}
+	
+	/**
+	 * Sets UID patterns of handled tags. Erases existing patterns list. The
+	 * Vector may contain String objects
+	 * 
+	 * @param patterns
+	 *            The new UID patterns list
+	 */
+	public void setPatterns(Vector patterns) {
+		m_patterns = patterns;
 	}
 
 	/**
@@ -107,7 +157,61 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	 * @return True if this questionnaire handles the given UID
 	 */
 	public boolean handlesTag(String tagUID) {
-		return tagUID.startsWith(m_pattern);
+		// No patterns, everything is handled
+		if(m_patterns == null || m_patterns.size() == 0)
+			return true;
+		
+		Enumeration en = m_patterns.elements();
+		while (en.hasMoreElements()) {
+			String pattern = (String) en.nextElement();
+
+			if (correspond(tagUID, pattern))
+				return true;
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Tests if the first argument corresponds to the given pattern. Handles
+	 * multiple jokers in the string
+	 * 
+	 * @param str
+	 *            String to be tested
+	 * @param pattern
+	 *            Pattern to validate the string
+	 * @return True if the first parameter is validated by the pattern
+	 */
+	private boolean correspond(String str, String pattern) {
+		int str_pos = 0;
+		int old_joker_pos = 0;
+		int joker_pos = pattern.indexOf('*');
+
+		// Explicit pattern, just compare string and pattern
+		if (joker_pos == -1)
+			return str.compareTo(pattern) == 0;
+
+		int pattern_length = pattern.length();
+
+		do {
+			// Recognize parts between jokers
+			String sub_part = pattern.substring(old_joker_pos, joker_pos);
+
+			// string must correspond all along the pattern
+			if (!str.substring(str_pos).startsWith(sub_part))
+				return false;
+
+			// Get further
+			str_pos += sub_part.length();
+
+			old_joker_pos = joker_pos + 1;
+			joker_pos = pattern.indexOf('*');
+		} while (joker_pos != -1 || old_joker_pos > pattern_length);
+
+		if (str.substring(str_pos).startsWith(pattern.substring(old_joker_pos)))
+			return true;
+
+		return false;
 	}
 
 	/**
@@ -214,43 +318,6 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 
 		result += "</questionnaire>";
 		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.microedition.lcdui.CommandListener#commandAction(javax.microedition
-	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
-	 */
-	public void commandAction(Command command, Displayable displayable) {
-		// TODO Auto-generated method stub
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.microedition.lcdui.ItemCommandListener#commandAction(javax.microedition
-	 * .lcdui.Command, javax.microedition.lcdui.Item)
-	 */
-	public void commandAction(Command command, Item item) {
-		if (command == m_submitCmd) {
-			// Ask the MIDlet to send the report
-			m_patrolman.sendECReport(m_reportSpec);
-		} else if (command == m_resetCmd) {
-			// Clear all questions content
-			Enumeration questions = m_questions.elements();
-			while (questions.hasMoreElements()) {
-				((Question) questions.nextElement()).clear();
-			}
-		} else if (command == m_backCmd) {
-			/*
-			 * We may destroy the current displayable object but it seems to be
-			 * impossible
-			 */
-			m_patrolman.showMenuScreen();
-		}
 	}
 
 	/**

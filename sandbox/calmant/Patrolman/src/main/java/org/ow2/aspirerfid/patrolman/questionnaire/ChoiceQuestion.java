@@ -73,50 +73,82 @@ public class ChoiceQuestion extends ChoiceGroup implements Question {
 			return false;
 
 		case MULTIPLE:
-			// TODO: not implemented
-			break;
+			boolean[] selected = new boolean[size()];
+			int nb_selected = getSelectedFlags(selected);
+			int nb_tested = 0;
+
+			// We already have tested if the correct answers list is empty
+			if (nb_selected == 0)
+				return false;
+
+			for (int i = 0; i < selected.length && nb_tested < nb_selected; i++) {
+				if (selected[i]) {
+					// Tests if selected box is in the correct answers list
+					boolean correct = false;
+					for (int j = 0; j < m_correctAnswer.length; j++) {
+						if (i == m_correctAnswer[j]) {
+							correct = true;
+							break;
+						}
+					}
+
+					// If the selected has not been found, it's incorrect
+					if (!correct)
+						return false;
+
+					nb_tested++;
+				}
+			}
+			
+			// At this point, all possibilities has been tested
+			return true;
 		}
-		return true;
+		
+		// We may never reach this point
+		return false;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.ow2.aspirerfid.patrolman.Question#toXML()
 	 */
 	public String toXML() {
 		String result = "<choiceList id=\"" + m_id + "\">";
 
-		switch(m_type) {
+		switch (m_type) {
 		case UNIQUE:
 			result += "<choice>" + getSelectedIndex() + "</choice>";
 			break;
-			
+
 		case MULTIPLE:
 			int nb_choices = size();
 			boolean[] state = new boolean[nb_choices];
 			int nb_checked = getSelectedFlags(state);
 			int nb_found = 0;
-			
-			if(nb_checked <= 0)
+
+			if (nb_checked <= 0)
 				break;
-			
-			for(int i=0; i < nb_choices; i++) {
-				if(state[i]) {
+
+			for (int i = 0; i < nb_choices; i++) {
+				if (state[i]) {
 					nb_found++;
 					result += "<choice>" + getString(i) + "</choice>";
-					
-					if(nb_found >= nb_checked)
+
+					if (nb_found >= nb_checked)
 						break;
 				}
 			}
 			break;
 		}
-		
+
 		result += "</choiceList>";
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.ow2.aspirerfid.patrolman.questionnaire.Question#clear()
 	 */
 	public void clear() {

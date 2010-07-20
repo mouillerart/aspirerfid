@@ -3,6 +3,11 @@
  */
 package org.ow2.aspirerfid.patrolman;
 
+import java.io.DataInputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -39,7 +44,7 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 
 	/** Menu screen */
 	private MenuScreen m_menuScreen;
-	
+
 	/** ECSpecs */
 	private Vector m_ecSpecs;
 
@@ -56,7 +61,7 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 		m_btController = new BluetoothController(this);
 		m_menuScreen = new MenuScreen(this);
 		m_waitingScreen = new WaitingECSpec(this, m_btController, m_menuScreen);
-		
+
 		setActiveScreen(new PresentationScreen(this));
 	}
 
@@ -78,10 +83,10 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 			setActiveScreen(new AlertScreen(this,
 					"There was a problem stablishing the tag listener.", true));
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Stops the RFID detection and show the main screen.
 	 */
@@ -94,7 +99,7 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	 * Searches for bluetooth server
 	 */
 	public void startBluetoothDetection(Screen previousScreen) {
-		if(m_btController.isBluetoothConnected())
+		if (m_btController.isBluetoothConnected())
 			m_waitingScreen.setActive();
 		else {
 			m_btController.connectBluetooth(previousScreen, m_waitingScreen);
@@ -118,10 +123,12 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	 */
 	public void informDisonnected() {
 	}
-	
+
 	/**
 	 * Adds a read ECSpec to the vector
-	 * @param ecspec The ECSpec to be added
+	 * 
+	 * @param ecspec
+	 *            The ECSpec to be added
 	 */
 	public void addECSpec(LightECSpec ecspec) {
 		m_ecSpecs.addElement(ecspec);
@@ -130,16 +137,14 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	/**
 	 * Prepares an ECReport and sends it over BlueTooth
 	 * 
-	 * @param ecSpec
-	 *            ECReport specifications
+	 * @param questionnaire
+	 *            Questionnaire to be sent in the ECReport
 	 */
-	public void sendECReport(LightECReportSpec ecSpec) {
-		Questionnaire qst = ecSpec.getQuestionnaire();
-
-		// TODO: generate a real ECReport
-		String correctedXML = qst.toXML();
+	public void sendECReport(Questionnaire questionnaire) {
+		StringBuffer ecReportData = generateECReport(questionnaire);
+		
 		try {
-			m_btController.sendMessage(correctedXML);
+			m_btController.sendMessage(ecReportData.toString().replace('\n', ' '));
 
 			AlertScreen as = new AlertScreen(this, "Data sent");
 			as.setActive();
@@ -148,6 +153,90 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 					+ e.getMessage());
 			as.setActive();
 		}
+	}
+	
+	private StringBuffer generateECReport(Questionnaire questionnaire) {
+		LightECReportSpec reportSpec = questionnaire.getReportSpec();
+		
+		// Open template file
+		StringBuffer xmlTemplate = new StringBuffer();
+		InputStream is = Patrolman.class.getResourceAsStream("/ecSpec/ECReport_template.xml");
+		DataInputStream dis = new DataInputStream(is);
+		if (dis == null || is == null) {
+			// TODO: show error
+			return null;
+		}
+
+		// Read template file
+		try {
+			while (true) {
+				xmlTemplate.append((char) dis.readByte());
+			}
+		} catch (EOFException e) {
+			// do nothing
+		} catch (IOException e) {
+			// TODO show error
+			return null;
+		}
+		
+		// Replace dynamic fields
+		
+		// Specification Name
+		xmlTemplate = replaceField(xmlTemplate, "specName", reportSpec.getECSpecName());
+		
+		// Date
+		xmlTemplate = replaceField(xmlTemplate, "date", new Date(System.currentTimeMillis()).toString());
+		
+		// Report Name
+		xmlTemplate = replaceField(xmlTemplate, "reportName", reportSpec.reportName);
+		
+		// Extension part
+		xmlTemplate = replaceField(xmlTemplate, "questionnaireContent", questionnaire.toXML());
+		
+		return xmlTemplate;
+	}
+	
+	/**
+	 * Replaces the indicated field in the ECReport XML template by the specified value.
+	 * If the field is not found, nothing is done, else a new StringBuffer is created.
+	 * If value is null, it is replaced by an empty string.
+	 * If the field reportName is null or empty, it returns the data parameter
+	 * 
+	 * @param data Base text
+	 * @param fieldName Name of the replaced field
+	 * @param value Value of the field
+	 * @return A new StringBuffer if the field has been replaced, or the data parameter.
+	 */
+	private StringBuffer replaceField(StringBuffer data, String fieldName, String value) {
+		if(fieldName == null || fieldName.length() == 0)
+			return data;
+		
+		fieldName = "${" + fieldName + "}";
+		
+		if(value == null)
+			value = "";
+		
+		String strData = data.toString();
+		
+		int startPos = 0;
+		int fieldPos = strData.indexOf(fieldName);
+		if(fieldPos == -1)
+			return data;
+		
+		// Prepare memory
+		StringBuffer newData = new StringBuffer(data.length() - fieldName.length() + value.length());
+		
+		// Replace all instances of the field in the string
+		while(fieldPos != -1) {
+			newData.append(strData.substring(startPos, fieldPos)).append(value);
+			
+			startPos = fieldPos + fieldName.length();
+			fieldPos = strData.indexOf(fieldName, startPos);
+		}
+		
+		// Copy the end of data
+		newData.append(strData.substring(startPos));
+		return newData;
 	}
 
 	/*
@@ -170,11 +259,12 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	 */
 	public void tagRead(RequestMessage message) {
 		Enumeration elems = m_ecSpecs.elements();
-		
-		while(elems.hasMoreElements()) {
+
+		while (elems.hasMoreElements()) {
 			LightECSpec spec = (LightECSpec) elems.nextElement();
-			Questionnaire qst = spec.findAssociatedQuestionnaire(message.getTagUID());
-			if(qst != null) {
+			Questionnaire qst = spec.findAssociatedQuestionnaire(message
+					.getTagUID());
+			if (qst != null) {
 				qst.setActive();
 				return;
 			}
