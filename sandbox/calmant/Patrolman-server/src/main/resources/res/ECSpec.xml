@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ale:ECSpec xmlns:ale="urn:epcglobal:ale:xsd:1"
+			xmlns:epcglobal="urn:epcglobal:xsd:1"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			schemaVersion="1.0"
+			creationDate="2010-07-15T10:54:06.444+02:00">
+
+	<logicalReaders>
+		<logicalReader>SimpleReader</logicalReader>
+	</logicalReaders>
+
+	<boundarySpec>
+		<repeatPeriod unit="MS">2000</repeatPeriod>
+		<duration unit="MS">10000</duration>
+		<stableSetInterval unit="MS">0</stableSetInterval>
+	</boundarySpec>
+
+	<reportSpecs>
+
+		<reportSpec reportName="ReportTest" reportIfEmpty="false"
+			reportOnlyOnChange="false" includeSpecInReports="true">
+			<reportSet set="CURRENT" />
+			<groupSpec>
+				<!-- <pattern>urn:epc:pat:gid-96:82.20.*</pattern> -->
+				<pattern>04f05a59127a00</pattern>
+				<extension>
+					<questionnaire title="Report Test" id="Qst1">
+						<textual id="qst1">
+							<label>Question 1</label>
+							<default>This is question 1</default>
+						</textual>
+						
+						<textual id="qst2">
+							<label>Question 2</label>
+						</textual>
+						
+						<choiceList id="qst3">
+							<label>Unique</label>
+							<choice>Choice 1</choice>
+							<choice>Choice 2</choice>
+							<choice>Choice 3</choice>
+						</choiceList>
+						
+						<choiceList id="qst4" multiple="true">
+							<label>Multiple</label>
+							<choice>Choice 1</choice>
+							<choice>Choice 2</choice>
+							<choice>Choice 3</choice>
+						</choiceList>
+					</questionnaire>
+				</extension>
+			</groupSpec>
+			<output includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeTag="true" includeCount="true" />
+		</reportSpec>
+
+		
+	</reportSpecs>
+</ale:ECSpec>

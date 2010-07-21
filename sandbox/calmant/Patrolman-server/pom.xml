@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!--
+ * Copyright (c) 2008-2010, AspireRFID
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it either under the terms of the GNU Lesser General Public
+ * License version 2.1 as published by the Free Software Foundation
+ * (the "LGPL"). If you do not alter this
+ * notice, a recipient may use your version of this file under the LGPL.
+ *
+ * You should have received a copy of the LGPL along with this library
+ * in the file COPYING-LGPL-2.1; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
+ * OF ANY KIND, either express or implied. See the LGPL  for
+ * the specific language governing rights and limitations.
+ *
+ * Contact: AspireRFID mailto:aspirerfid@ow2.org
+-->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ow2.aspirerfid.patrolman</groupId>
+  <artifactId>patrolman.server</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>OW2 :: AspireRFID :: Patrolman Server</name>
+  <packaging>bundle</packaging>
+  <build>
+  	<plugins>
+  		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<source>1.5</source>
+				<target>1.5</target>
+			</configuration>
+		</plugin>
+		
+  		<plugin>
+  			<groupId>org.apache.felix</groupId>
+  			<artifactId>maven-bundle-plugin</artifactId>
+  			<version>2.1.0</version>
+  			<extensions>true</extensions>
+  			<configuration>
+  				<instructions>
+  					<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+	              	<Bundle-Name>${project.name}</Bundle-Name>
+	              	<Bundle-Version>1.0.0</Bundle-Version>
+	              	<!-- 
+	              	<Bundle-Activator>org.ow2.aspirerfid.patrolman.server.PatrolmanServer</Bundle-Activator>
+	              	-->
+	              	<Import-Package>org.osgi.framework,org.osgi.util.tracker,org.ow2.aspirerfid.sandbox.calmant.bluetooth</Import-Package>
+  				</instructions>
+  			</configuration>
+  		</plugin>
+  		
+  		<plugin>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>maven-ipojo-plugin</artifactId>
+               <version>1.4.2</version>
+			<executions>
+				<execution>
+					<goals>
+						<goal>ipojo-bundle</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+  	</plugins>
+  </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.apache.felix</groupId>
+  		<artifactId>org.osgi.core</artifactId>
+  		<version>1.4.0</version>
+  		<type>bundle</type>
+  		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.osgi</groupId>
+  		<artifactId>org.osgi</artifactId>
+  		<version>3.0.0</version>
+  		<type>jar</type>
+  		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.ow2.aspirerfid.sandbox</groupId>
+  		<artifactId>bluetoothServer</artifactId>
+  		<version>2.1.0-SNAPSHOT</version>
+  		<type>bundle</type>
+  		<scope>provided</scope>
+  	</dependency>
+  </dependencies>
+</project>
