@@ -16,7 +16,7 @@ public class LightECSpec {
 	private Vector m_reportSpecs = new Vector();
 
 	/** Boundary specifications : keep reports in memory */
-	public boolean m_keepReports = false;
+	private boolean m_keepReports = false;
 
 	/**
 	 * Adds a logical reader
@@ -60,7 +60,7 @@ public class LightECSpec {
 			LightECReportSpec reportSpec = (LightECReportSpec) items
 					.nextElement();
 
-			if (reportSpec.reportName.equals(name))
+			if (reportSpec.getReportName().equals(name))
 				return reportSpec;
 		}
 
@@ -111,5 +111,19 @@ public class LightECSpec {
 	 */
 	public String getName() {
 		return m_name;
+	}
+
+	/**
+	 * @param m_keepReports Do or do not keep reports in memory
+	 */
+	public void setKeepReports(boolean keepReports) {
+		m_keepReports = keepReports;
+	}
+
+	/**
+	 * @return Do we need to keep reports in memory ?
+	 */
+	public boolean getKeepReports() {
+		return m_keepReports;
 	}
 }

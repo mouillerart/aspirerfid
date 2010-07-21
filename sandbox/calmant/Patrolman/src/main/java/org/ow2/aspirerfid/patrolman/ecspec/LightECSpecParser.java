@@ -20,7 +20,7 @@ import org.xmlpull.v1.XmlPullParserException;
 public class LightECSpecParser {
 	/** kXML2 parser */
 	private KXmlParser m_parser;
-	
+
 	/** Parent MIDlet */
 	private Patrolman m_patrolman;
 
@@ -50,7 +50,6 @@ public class LightECSpecParser {
 
 		m_parser.nextTag();
 		LightECSpec ecSpec = parseECSpec();
-		m_patrolman.addECSpec(ecSpec);
 		return ecSpec;
 	}
 
@@ -67,11 +66,8 @@ public class LightECSpecParser {
 			XmlPullParserException {
 		LightECSpec ecspec = new LightECSpec();
 
-		System.out
-				.println(m_parser.getName() + " - " + m_parser.getNamespace());
-
 		m_parser.require(XmlPullParser.START_TAG, null, "ale:ECSpec");
-		
+
 		ecspec.setName(m_parser.getAttributeValue(null, "name"));
 
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
@@ -106,13 +102,10 @@ public class LightECSpecParser {
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 			m_parser.require(XmlPullParser.START_TAG, null, "reportSpec");
 
-			LightECReportSpec reportSpec = new LightECReportSpec(ecspec.getName());
-
-			for (int i = 0; i < m_parser.getAttributeCount(); i++)
-				if (m_parser.getAttributeName(i).equals("reportName")) {
-					reportSpec.reportName = m_parser.getAttributeValue(i);
-					break;
-				}
+			LightECReportSpec reportSpec = new LightECReportSpec(
+					ecspec.getName());
+			reportSpec.setReportName(m_parser.getAttributeValue(null,
+					"reportName"));
 
 			// report specification properties
 			while (m_parser.nextTag() != XmlPullParser.END_TAG) {
@@ -120,24 +113,27 @@ public class LightECSpecParser {
 
 				// Report set may always be current
 				if (tagName.equals("reportSet")) {
-					for (int i = 0; i < m_parser.getAttributeCount(); i++)
-						if (m_parser.getAttributeName(i).equals("set")) {
-							reportSpec.set = m_parser.getAttributeValue(i);
-						}
+					reportSpec.setReportSet(m_parser.getAttributeValue(null,
+							"set"));
+
 					m_parser.nextTag();
 					m_parser.require(XmlPullParser.END_TAG, null, "reportSet");
 				}
 
 				// Output may include tags, count or no extra information
 				else if (tagName.equals("output")) {
-					for (int i = 0; i < m_parser.getAttributeCount(); i++) {
-						String attrName = m_parser.getAttributeName(i);
+					String includeCount = m_parser.getAttributeValue(null,
+							"includeCount");
+					String includeTag = m_parser.getAttributeValue(null,
+							"includeTag");
 
-						if (attrName.equals("includeCount"))
-							reportSpec.includeCount = true;
-						else if (attrName.equals("includeTag"))
-							reportSpec.includeTag = true;
-					}
+					if (includeCount != null
+							&& includeCount.equalsIgnoreCase("true"))
+						reportSpec.setIncludeCount(true);
+
+					if (includeTag != null
+							&& includeTag.equalsIgnoreCase("false"))
+						reportSpec.setIncludeTag(true);
 
 					m_parser.nextTag();
 					m_parser.require(XmlPullParser.END_TAG, null, "output");
@@ -189,7 +185,7 @@ public class LightECSpecParser {
 					if (m_parser.getName().equals("keep_reports")) {
 						// False unless we read true.
 						if (m_parser.nextText().equals("true"))
-							ecspec.m_keepReports = true;
+							ecspec.setKeepReports(true);
 					}
 					// Other extensions ignored
 					else
@@ -312,16 +308,8 @@ public class LightECSpecParser {
 			IOException {
 		m_parser.require(XmlPullParser.START_TAG, null, "questionnaire");
 
-		String title = null, id = null;
-
-		for (int i = 0; i < m_parser.getAttributeCount(); i++) {
-			String attrName = m_parser.getAttributeName(i);
-
-			if (attrName.equals("title"))
-				title = m_parser.getAttributeValue(i);
-			else if (attrName.equals("id"))
-				id = m_parser.getAttributeValue(i);
-		}
+		String title = m_parser.getAttributeValue(null, "title");
+		String id = m_parser.getAttributeValue(null, "id");
 
 		if (id == null || id.length() == 0)
 			return null;
@@ -336,7 +324,7 @@ public class LightECSpecParser {
 			else if (tagName.equals("choiceList"))
 				addChoiceList(qst);
 		}
-		
+
 		qst.finalizeUI();
 
 		m_parser.require(XmlPullParser.END_TAG, null, "questionnaire");
@@ -357,20 +345,11 @@ public class LightECSpecParser {
 			IOException {
 		m_parser.require(XmlPullParser.START_TAG, null, "textual");
 
-		String id = null;
+		String id = m_parser.getAttributeValue(null, "id");
+		String default_answer = m_parser.getAttributeValue(null, "default");
+
 		String label = null;
-		String default_answer = null;
 		String correct_answer = null;
-
-		for (int i = 0; i < m_parser.getAttributeCount(); i++) {
-			String attrName = m_parser.getAttributeName(i);
-
-			if (attrName.equals("id"))
-				id = m_parser.getAttributeValue(i);
-			else if (attrName.equals("default")) {
-				default_answer = m_parser.getAttributeValue(i);
-			}
-		}
 
 		while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 			String tagName = m_parser.getName();
@@ -402,28 +381,26 @@ public class LightECSpecParser {
 			throws XmlPullParserException, IOException {
 		m_parser.require(XmlPullParser.START_TAG, null, "choiceList");
 
-		boolean multiple = false;
-		String id = null;
 		String label = null;
-		int default_answer = 0;
 		Vector choices = new Vector();
-
-		Vector correct_answers = null;
 		int correct_answer = 0;
+		Vector correct_answers = null;
+		boolean multiple = false;
 
-		// Get parameters
-		for (int i = 0; i < m_parser.getAttributeCount(); i++) {
-			String attrName = m_parser.getAttributeName(i);
+		if (m_parser.getAttributeValue(null, "multiple") != null
+				&& m_parser.getAttributeValue(null, "multiple")
+						.equalsIgnoreCase("true"))
+			multiple = true;
 
-			if (attrName.equals("multiple")
-					&& m_parser.getAttributeValue(i).equals("true")) {
-				multiple = true;
-			} else if (attrName.equals("id"))
-				id = m_parser.getAttributeValue(i);
-			else if (attrName.equals("default")) {
-				default_answer = Integer
-						.parseInt(m_parser.getAttributeValue(i));
-			}
+		String id = m_parser.getAttributeValue(null, "id");
+		int default_answer = 0;
+
+		try {
+			default_answer = Integer.parseInt(m_parser.getAttributeValue(null,
+					"default"));
+		} catch (NumberFormatException ex) {
+			// keep default value
+			default_answer = 0;
 		}
 
 		if (multiple)
@@ -441,9 +418,9 @@ public class LightECSpecParser {
 
 				// Test if value is an answer
 				String answer = m_parser.getAttributeValue(null, "answer");
-				
-				if(answer != null && answer.equalsIgnoreCase("false")) {
-					if(multiple) {
+
+				if (answer != null && answer.equalsIgnoreCase("false")) {
+					if (multiple) {
 						// Add answer to the list
 						correct_answers.addElement(new Integer(choice_pos));
 					} else {
@@ -451,7 +428,7 @@ public class LightECSpecParser {
 						correct_answer = choice_pos;
 					}
 				}
-				
+
 				choice_pos++;
 			}
 		}

@@ -25,24 +25,48 @@ public class ChoiceQuestion extends ChoiceGroup implements Question {
 
 	/** Choice type */
 	private int m_type;
+	
+	/** Default checked value */
+	private int m_defaultValue;
 
 	public ChoiceQuestion(String id, String label, int type, String[] choices,
 			int default_value, int[] correctAnswers) {
 		super(label, type);
 
 		m_id = id;
+		m_defaultValue = default_value;
 		m_correctAnswer = correctAnswers;
 		m_type = type;
 
 		for (int i = 0; i < choices.length; i++)
 			append(choices[i], null);
 
-		if (default_value >= 0 && default_value < choices.length) {
-			boolean[] checks = new boolean[choices.length];
-			checks[default_value] = true;
+		clear();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.patrolman.questionnaire.Question#clear()
+	 */
+	public void clear() {
+		if (m_defaultValue >= 0 && m_defaultValue < size()) {
+			boolean[] checks = new boolean[size()];
+			checks[m_defaultValue] = true;
 
 			setSelectedFlags(checks);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.patrolman.questionnaire.Question#getData()
+	 */
+	public Object getData() {
+		boolean[] selectionFlags = new boolean[size()];
+		getSelectedFlags(selectionFlags);
+		return selectionFlags;
 	}
 
 	/*
@@ -99,13 +123,25 @@ public class ChoiceQuestion extends ChoiceGroup implements Question {
 					nb_tested++;
 				}
 			}
-			
+
 			// At this point, all possibilities has been tested
 			return true;
 		}
-		
+
 		// We may never reach this point
 		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.ow2.aspirerfid.patrolman.questionnaire.Question#setData(java.lang
+	 * .Object)
+	 */
+	public void setData(Object value) {
+		boolean[] selectionFlags = (boolean[]) value;
+		setSelectedFlags(selectionFlags);
 	}
 
 	/*
@@ -114,45 +150,47 @@ public class ChoiceQuestion extends ChoiceGroup implements Question {
 	 * @see org.ow2.aspirerfid.patrolman.Question#toXML()
 	 */
 	public String toXML() {
-		String result = "<choiceList id=\"" + m_id + "\">";
-
-		switch (m_type) {
-		case UNIQUE:
-			result += "<choice>" + getSelectedIndex() + "</choice>";
-			break;
-
-		case MULTIPLE:
-			int nb_choices = size();
-			boolean[] state = new boolean[nb_choices];
-			int nb_checked = getSelectedFlags(state);
-			int nb_found = 0;
-
-			if (nb_checked <= 0)
-				break;
-
-			for (int i = 0; i < nb_choices; i++) {
-				if (state[i]) {
-					nb_found++;
-					result += "<choice>" + getString(i) + "</choice>";
-
-					if (nb_found >= nb_checked)
-						break;
-				}
-			}
-			break;
-		}
-
-		result += "</choiceList>";
-		return result;
+		return toXML(getData());
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.ow2.aspirerfid.patrolman.questionnaire.Question#clear()
+	 * @see
+	 * org.ow2.aspirerfid.patrolman.questionnaire.Question#toXML(java.lang.Object
+	 * )
 	 */
-	public void clear() {
-		// On initialization, booleans are false
-		setSelectedFlags(new boolean[size()]);
+	public String toXML(Object data) {
+		boolean[] state = (boolean[]) data;
+
+		StringBuffer result = new StringBuffer();
+		result.append("<choiceList id=\"").append(m_id).append("\">\n");
+
+		switch (m_type) {
+		case UNIQUE:
+			// Search for the first selected item
+			int firstChecked = 0;
+			while (firstChecked < state.length && !state[firstChecked])
+				firstChecked++;
+
+			if (firstChecked == state.length)
+				firstChecked = 0;
+
+			result.append("<choice>").append(getString(firstChecked))
+					.append("</choice>\n");
+			break;
+
+		case MULTIPLE:
+			for (int i = 0; i < state.length; i++) {
+				if (state[i]) {
+					result.append("<choice>").append(getString(i))
+							.append("</choice>\n");
+				}
+			}
+			break;
+		}
+
+		result.append("</choiceList>\n");
+		return result.toString();
 	}
 }

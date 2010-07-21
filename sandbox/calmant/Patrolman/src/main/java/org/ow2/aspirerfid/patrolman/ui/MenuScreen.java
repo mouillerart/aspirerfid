@@ -41,6 +41,9 @@ public class MenuScreen extends Screen {
 	/** Stop listening for tags */
 	private final String m_stopTagsListeningName = "Stop waiting for tags";
 
+	/** Submit questionnaires to server */
+	private final String m_submitAll = "Submit questionnaires to server";
+
 	/** Tag listening state */
 	private boolean m_tagListening;
 
@@ -49,7 +52,7 @@ public class MenuScreen extends Screen {
 
 	/** Options names */
 	private final String[] m_optionsNames = { m_connectName,
-			m_startTagsListeningName, m_exitName };
+			m_startTagsListeningName, m_submitAll, m_exitName };
 
 	/**
 	 * @param midlet
@@ -114,6 +117,10 @@ public class MenuScreen extends Screen {
 								m_stopTagsListeningName, null);
 					}
 				}
+			}
+			// Submit all questionnaires
+			else if (option.compareTo(m_submitAll) == 0) {
+				((Patrolman) getMidlet()).submitAllQuestionnaires();
 			}
 			// Unknown command
 			else

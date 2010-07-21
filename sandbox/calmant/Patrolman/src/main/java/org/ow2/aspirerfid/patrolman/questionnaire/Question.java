@@ -32,4 +32,20 @@ public interface Question {
 	 * @return A ECReport-ready XML representation
 	 */
 	public String toXML();
+	
+	/**
+	 * Returns the XML representation of the given state of the answer
+	 * @return A ECReport-ready XML representation
+	 */
+	public String toXML(Object data);
+	
+	/**
+	 * @return Question internal data for a future reload
+	 */
+	public Object getData();
+	
+	/**
+	 * @param value Previously saved data (see {@link #getData()})
+	 */
+	public void setData(Object value);
 }
