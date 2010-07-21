@@ -19,13 +19,11 @@
 package org.ow2.aspirerfid.sandbox.calmant.bluetooth;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InterruptedIOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionException;
 
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DiscoveryAgent;
@@ -53,7 +51,7 @@ import javax.microedition.io.StreamConnectionNotifier;
 public class BluetoothServer implements BluetoothServerService,
 		CommunicationListener {
 	/** Server configuration */
-	private final BluetoothSettings m_properties;
+	private BluetoothSettings m_properties;
 
 	/** Current 'valid' communications */
 	private Map<String, BluetoothCommunication> m_clients;
@@ -65,7 +63,7 @@ public class BluetoothServer implements BluetoothServerService,
 	 * The communications thread pool, avoiding to have a large amount of client
 	 * threads
 	 */
-	private ExecutorService m_threadPool;
+	// private ExecutorService m_threadPool;
 
 	/** The Bluetooth client acceptor */
 	private StreamConnectionNotifier m_connectionNotifier;
@@ -76,41 +74,36 @@ public class BluetoothServer implements BluetoothServerService,
 	/** The communication events subscribers */
 	private Vector<CommunicationListener> m_commListeners;
 
+	/** Debug mode activation */
+	private boolean m_debugMode;
+
 	/**
 	 * Prepares the thread pool
 	 */
 	public BluetoothServer() {
+		m_debugMode = false;
+		m_stop = true;
 		m_clients = new HashMap<String, BluetoothCommunication>();
 		m_commListeners = new Vector<CommunicationListener>();
 
-		m_properties = new BluetoothSettings();
-
-		int nbThreads;
-		try {
-			nbThreads = Integer.parseInt(m_properties
-					.getProperty(BluetoothSettings.MAX_THREADS));
-		} catch (NumberFormatException e) {
-			nbThreads = 2;
-			System.err
-					.println("Error reading max thread count. Using default value : "
-							+ nbThreads);
-		}
-
 		/*
-		 * The working threads are using blocking calls (DataInputStream),
-		 * so when all available threads are working and waiting for data,
-		 * the thread pool let new client threads in queue, until a working one stops.
+		 * The working threads are using blocking calls (DataInputStream), so
+		 * when all available threads are working and waiting for data, the
+		 * thread pool let new client threads in queue, until a working one
+		 * stops.
 		 * 
-		 * Using a cached thread pool bypass this problem, by creating one thread per client,
-		 * but don't allow to control how many threads are running.
+		 * Using a cached thread pool bypass this problem, by creating one
+		 * thread per client, but don't allow to control how many threads are
+		 * running.
 		 * 
-		 * It may be sufficient for a little amount of clients (maybe 5-10), but could cause
-		 * problems if it grows significantly. In this case, we should rewrite the worker thread,
-		 * to be stopped when waiting for data, and reactivated when data is available
-		 * (select() like behavior).
+		 * It may be sufficient for a little amount of clients (maybe 5-10), but
+		 * could cause problems if it grows significantly. In this case, we
+		 * should rewrite the worker thread, to be stopped when waiting for
+		 * data, and reactivated when data is available (select() like
+		 * behavior).
 		 */
 		// m_threadPool = Executors.newFixedThreadPool(nbThreads);
-		m_threadPool = Executors.newCachedThreadPool();
+		// m_threadPool = Executors.newCachedThreadPool();
 	}
 
 	/**
@@ -119,14 +112,16 @@ public class BluetoothServer implements BluetoothServerService,
 	public void run() {
 		try {
 			// Publish the service and waits for connections.
-			System.out.println("Start advertising service...");
+			debug("Start advertising service...");
 			// L2CAP returns L2CAPConnectionNotifier, RFCOMM returns
 			// StreamConnectionNotifier and OBEX returns ClientSession.
 			m_connectionNotifier = (StreamConnectionNotifier) Connector
 					.open(m_url);
-			
-			while (!m_stop) {	
-				System.out.println("Waiting for incoming connection...");
+
+			m_stop = false;
+
+			while (!m_stop) {
+				debug("Waiting for incoming connection...");
 
 				// Inserts the service record into the SDDB and wait for
 				// incoming
@@ -136,20 +131,21 @@ public class BluetoothServer implements BluetoothServerService,
 				// Errors opening the communication streams are not critical
 				try {
 					BluetoothCommunication client_communication = new BluetoothCommunication(
-							this, client_connection);
+							this,
+							client_connection,
+							BluetoothCommunication.ReadingMethod.valueOf(m_properties
+									.getProperty(BluetoothSettings.READING_MODE)));
 
 					m_clients.put(client_communication.getLogicalName(),
 							client_communication);
 
-					System.out.println("New client connected");
+					debug("New client connected");
 
 					// Add the communication in the pool
-					try {
-					m_threadPool.execute(client_communication);
-					} catch (RejectedExecutionException error) {
-						System.err.println("Can't handle communication : "
-								+ error.getCause());
-					}
+					new Thread(client_communication).start();
+
+					// FIXME Some exception often occurs using this method
+					// m_threadPool.execute(client_communication);
 				} catch (IOException error) {
 					System.err
 							.println("Error creating the communication stream.");
@@ -165,11 +161,53 @@ public class BluetoothServer implements BluetoothServerService,
 		}
 	}
 
-	/**
-	 * Starts the bluetooth server and set it discoverable. May need root rights
-	 * under Linux (or set the device discoverable in the system configuration)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothServerService#
+	 * prepareServer()
 	 */
 	public void prepareServer() {
+		m_properties = new BluetoothSettings();
+		prepareStack();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothServerService#
+	 * prepareServer(java.io.InputStream)
+	 */
+	public void prepareServer(InputStream configurationStream)
+			throws IOException {
+		m_properties = new BluetoothSettings(configurationStream);
+		prepareStack();
+	}
+
+	/**
+	 * Prepares the bluetooth server and set it discoverable. May need root
+	 * rights under Linux (or set the device discoverable in the system
+	 * configuration)
+	 */
+	private void prepareStack() {
+		m_debugMode = false;
+
+		if (m_properties.getProperty(BluetoothSettings.DEBUG_MODE)
+				.equalsIgnoreCase("true")) {
+			m_debugMode = true;
+		}
+
+		int nbThreads;
+		try {
+			nbThreads = Integer.parseInt(m_properties
+					.getProperty(BluetoothSettings.MAX_THREADS));
+		} catch (NumberFormatException e) {
+			nbThreads = 2;
+			System.err
+					.println("Error reading max thread count. Using default value : "
+							+ nbThreads);
+		}
+
 		int inquiry_mode;
 		try {
 			inquiry_mode = Integer.parseInt(m_properties
@@ -182,19 +220,18 @@ public class BluetoothServer implements BluetoothServerService,
 
 		try {
 			LocalDevice localDevice = LocalDevice.getLocalDevice();
-			System.out.println("Bluetooth address "
-					+ localDevice.getBluetoothAddress());
+			debug("Bluetooth address " + localDevice.getBluetoothAddress());
 
 			/*
-			 * Sets the local device visible to others devices. The mode can
-			 * be GIAC that is undefined in time. In the other hand, the LIAC
-			 * mode is limited in time, usually one minute.
+			 * Sets the local device visible to others devices. The mode can be
+			 * GIAC that is undefined in time. In the other hand, the LIAC mode
+			 * is limited in time, usually one minute.
 			 * 
-			 * Under Linux, this method needs root rights.
-			 * This restriction can be bypassed by setting the bluetooth device
-			 * discoverable in the system settings. 
+			 * Under Linux, this method needs root rights. This restriction can
+			 * be bypassed by setting the bluetooth device discoverable in the
+			 * system settings.
 			 */
-			System.out.println("Setting device to be discoverable...");
+			debug("Setting device to be discoverable...");
 			localDevice.setDiscoverable(inquiry_mode);
 
 			m_stop = false;
@@ -205,8 +242,7 @@ public class BluetoothServer implements BluetoothServerService,
 
 		// URL preparation
 		String uuidString = m_properties.getProperty(BluetoothSettings.UUID);
-		String name = m_properties
-				.getProperty(BluetoothSettings.SERVICE_NAME);
+		String name = m_properties.getProperty(BluetoothSettings.SERVICE_NAME);
 		String authenticate = m_properties
 				.getProperty(BluetoothSettings.AUTHENTICATE);
 		String encrypt = m_properties.getProperty(BluetoothSettings.ENCRYPT);
@@ -236,7 +272,7 @@ public class BluetoothServer implements BluetoothServerService,
 			comm.stop();
 
 		// Kill clients threads
-		m_threadPool.shutdownNow();
+		// m_threadPool.shutdownNow();
 
 		// Gracefully stop the Bluetooth parts
 		try {
@@ -244,8 +280,10 @@ public class BluetoothServer implements BluetoothServerService,
 		} catch (IOException e) {
 			// Don't worry about that...
 		}
-		
+
+		// BlueCove stack specific shutdown
 		com.intel.bluetooth.BlueCoveImpl.shutdownThreadBluetoothStack();
+		com.intel.bluetooth.BlueCoveImpl.shutdown();
 	}
 
 	/*
@@ -304,7 +342,7 @@ public class BluetoothServer implements BluetoothServerService,
 		for (CommunicationListener listener : m_commListeners)
 			listener.commBegin(logicalName);
 
-		System.out.println("[BEGC] Communication ready : " + logicalName);
+		debug("[BEGC] Communication ready : " + logicalName);
 	}
 
 	/*
@@ -322,7 +360,8 @@ public class BluetoothServer implements BluetoothServerService,
 			listener.commEnd(logicalName);
 
 		m_clients.remove(logicalName);
-		System.out.println("[ENDC] Communication closed : " + logicalName);
+
+		debug("[ENDC] Communication closed : " + logicalName);
 	}
 
 	/*
@@ -339,7 +378,31 @@ public class BluetoothServer implements BluetoothServerService,
 		for (CommunicationListener listener : m_commListeners)
 			listener.commRead(logicalName, data);
 
-		System.out.println("[DATA] Data received from : " + logicalName + "("
+		debug("[DATA] Data received from : " + logicalName + "("
 				+ data.length() + "bytes)");
+	}
+
+	/**
+	 * Log on System.out if in debug mode
+	 * 
+	 * @param message
+	 *            Message to log
+	 */
+	private void debug(String message) {
+		if (!m_debugMode)
+			return;
+
+		System.out.println(message);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothServerService#isRunning
+	 * ()
+	 */
+	public boolean isRunning() {
+		return !m_stop;
 	}
 }

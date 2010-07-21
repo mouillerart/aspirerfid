@@ -36,47 +36,30 @@ import javax.bluetooth.DiscoveryAgent;
  */
 public class BluetoothSettings {
 
-	/**
-	 * Remote device authentication.
-	 */
+	/** Remote device authentication. */
 	public static final String AUTHENTICATE = "authenticate";
-	/**
-	 * Remote device authentication par default.
-	 */
+	/** Default remote device authentication */
 	private static final String AUTHENTICATE_VALUE = "false";
-	/**
-	 * Encrypt connection.
-	 */
+	
+	/** Encrypt connection. */
 	public static final String ENCRYPT = "encrypt";
-	/**
-	 * Encrypt connection par default.
-	 */
+	/** Default connection encryption */
 	private static final String ENCRYPT_VALUE = "false";
-	/**
-	 * Inquiry mode par default.
-	 */
+	
+	/** Inquiry mode */
 	public static final String INQUIRY_MODE = "inquiryMode";
-	/**
-	 * Inquiry mode par default.
-	 */
+	/** Default inquiry mode */
 	private static final String INQUIRY_MODE_VALUE = "" + DiscoveryAgent.GIAC;
-	/**
-	 * Is inquiry scanning allowed during a connection: "true" or "false".
-	 */
+	
+	/** Is inquiry scanning allowed during a connection: "true" or "false". */
 	public static final String INQUIRY_SCAN = "bluetooth.connected.inquiry.scan";
-	/**
-	 * Is master/slave switch allowed: "true" or "false".
-	 */
+	/** Is master/slave switch allowed: "true" or "false". */
 	public static final String MASTER_SLAVE = "bluetooth.master.switch";
 
-	/**
-	 * The maximum number of connected devices supported.
-	 */
+	/** The maximum number of connected devices supported. */
 	public static final String MAX_DEVICES = "bluetooth.connected.devices.max";
 
-	/**
-	 * The L2CAP maximum transmission unit.
-	 */
+	/** The L2CAP maximum transmission unit. */
 	public static final String MAX_MTU = "bluetooth.l2cap.receiveMTU.max";
 
 	/**
@@ -85,86 +68,52 @@ public class BluetoothSettings {
 	 */
 	public static final String MAX_RETRIEVABLE = "bluetooth.sd.attr.retrievable.max";
 
-	/**
-	 * The maximum number of concurrent service-discovery transactions.
-	 */
-	public static final String MAX_TRANS = "bluetooth.sd.trans.max";
-
-	/**
-	 * Is paging allowed during a connection: "true" or "false".
-	 */
-	public static final String PAGE = "bluetooth.connected.page";
-
-	/**
-	 * Is page scanning allowed during a connection: "true" or "false".
-	 */
-	public static final String PAGE_SCAN = "bluetooth.connected.page.scan";
-
-	/**
-	 * Properties file name.
-	 */
-	private static String propertiesFileName = "bluetooth.xml";
-
-	/**
-	 * Service name.
-	 */
-	public static final String SERVICE_NAME = "serviceName";
-
-	/**
-	 * Default Service name.
-	 */
-	private static final String SERVICE_NAME_VALUE = "Echo Server";
-
-	/**
-	 * Service uuid.
-	 */
-	public static final String UUID = "uuid";
-
-	/**
-	 * Default Service uuid.
-	 */
-	private static final String UUID_VALUE = "9ee2b296da2448399658cbc0a7ee69e2";
-
-	/**
-	 * Max number of threads
-	 */
+	/** Max number of threads */
 	public static final String MAX_THREADS = "max_threads";
-
-	/**
-	 * Default thread maximum count
-	 */
+	/** Default thread maximum count */
 	private static final String MAX_THREADS_VALUE = "5";
 
-	/**
-	 * Bluetooth properties.
-	 */
+	/** The maximum number of concurrent service-discovery transactions. */
+	public static final String MAX_TRANS = "bluetooth.sd.trans.max";
+
+	/** Is paging allowed during a connection: "true" or "false". */
+	public static final String PAGE = "bluetooth.connected.page";
+	/** Is page scanning allowed during a connection: "true" or "false". */
+	public static final String PAGE_SCAN = "bluetooth.connected.page.scan";
+
+	/** Properties file name. */
+	private static String propertiesFileName = "bluetooth.xml";
+	
+	/** Reading mode */
+	public static String READING_MODE = "readingMode";
+	/** Default reading mode */
+	private static String READING_MODE_VALUE = "BYTE";
+
+	/** Service name. */
+	public static final String SERVICE_NAME = "serviceName";
+	/** Default Service name. */
+	private static final String SERVICE_NAME_VALUE = "Echo Server";
+
+	/** Service uuid. */
+	public static final String UUID = "uuid";
+	/** Default Service uuid. */
+	private static final String UUID_VALUE = "9ee2b296da2448399658cbc0a7ee69e2";
+	
+	/** Debug mode (verbose) */
+	public static final String DEBUG_MODE = "debug";
+	/** Default: no debug */
+	private static final String DEBUG_MODE_VALUE = "false";
+
+	/** Bluetooth properties. */
 	private final Properties m_bluetoothProperties;
 
+	
 	/**
 	 * Default constructor. Set default values, then try to read the default
 	 * configuration file
 	 */
 	public BluetoothSettings() {
 		this(BluetoothSettings.propertiesFileName);
-	}
-
-	/**
-	 * Loads the bluetooth properties from the given file name.
-	 * 
-	 * @param fileName
-	 *            File name of the bluetooth properties.
-	 */
-	public BluetoothSettings(final String fileName) {
-		// It cannot be re factored because the attribute defaultProps is final.
-		Properties defaultProps = setDefault();
-		this.m_bluetoothProperties = new Properties(defaultProps);
-
-		try {
-			loadXML(fileName);
-		} catch (IOException error) {
-			System.err
-					.println("Error reading configuration file : " + fileName);
-		}
 	}
 
 	/**
@@ -176,14 +125,42 @@ public class BluetoothSettings {
 	 */
 	public BluetoothSettings(final InputStream in) throws IOException {
 		Properties defaultProps = setDefault();
-		this.m_bluetoothProperties = new Properties(defaultProps);
+		m_bluetoothProperties = new Properties(defaultProps);
 		loadXML(in);
 	}
 
-	private void loadXML(final String fileName) throws IOException {
-		File propertiesFile = new File(fileName);
-		InputStream in = new FileInputStream(propertiesFile);
-		loadXML(in);
+	/**
+	 * Loads the bluetooth properties from the given file name.
+	 * 
+	 * @param fileName
+	 *            File name of the bluetooth properties.
+	 */
+	public BluetoothSettings(final String fileName) {
+		// It cannot be re factored because the attribute defaultProps is final.
+		Properties defaultProps = setDefault();
+		m_bluetoothProperties = new Properties(defaultProps);
+
+		try {
+			loadXML(fileName);
+		} catch (IOException error) {
+			System.err
+					.println("Error reading configuration file : " + fileName);
+		}
+	}
+
+	/**
+	 * Returns a given string, according to the given key.
+	 * 
+	 * @param key
+	 *            Object's key.
+	 * @return String related to the given key.
+	 */
+	public final String getProperty(final String key) {
+		String value = "";
+		value = m_bluetoothProperties.getProperty(key);
+		System.out.println("[PARAM] " + key + ": " + value);
+
+		return value;
 	}
 
 	/**
@@ -192,10 +169,16 @@ public class BluetoothSettings {
 	 */
 	private void loadXML(final InputStream in) throws IOException {
 		try {
-			this.m_bluetoothProperties.loadFromXML(in);
+			m_bluetoothProperties.loadFromXML(in);
 		} catch (InvalidPropertiesFormatException e) {
 			throw new IOException("Bad file format : " + e.getMessage());
 		}
+	}
+
+	private void loadXML(final String fileName) throws IOException {
+		File propertiesFile = new File(fileName);
+		InputStream in = new FileInputStream(propertiesFile);
+		loadXML(in);
 	}
 
 	/**
@@ -214,21 +197,8 @@ public class BluetoothSettings {
 		defaultProps.setProperty(BluetoothSettings.INQUIRY_MODE,
 				BluetoothSettings.INQUIRY_MODE_VALUE);
 		defaultProps.setProperty(MAX_THREADS, MAX_THREADS_VALUE);
+		defaultProps.setProperty(READING_MODE, READING_MODE_VALUE);
+		defaultProps.setProperty(DEBUG_MODE, DEBUG_MODE_VALUE);
 		return defaultProps;
-	}
-
-	/**
-	 * Returns a given string, according to the given key.
-	 * 
-	 * @param key
-	 *            Object's key.
-	 * @return String related to the given key.
-	 */
-	public final String getProperty(final String key) {
-		String value = "";
-		value = this.m_bluetoothProperties.getProperty(key);
-		System.out.println("[PARAM] " + key + ": " + value);
-
-		return value;
 	}
 }

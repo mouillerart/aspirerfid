@@ -18,6 +18,9 @@
 
 package org.ow2.aspirerfid.sandbox.calmant.bluetooth;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * Interface of a Bluetooth server, to be used for server control To be
  * complete, a server must implement the CommunicationListener interface, to be
@@ -27,23 +30,41 @@ package org.ow2.aspirerfid.sandbox.calmant.bluetooth;
  */
 public interface BluetoothServerService extends Runnable {
 	/**
-	 * Configure the server (UUID, etc)
-	 */
-	public void prepareServer();
-
-	/**
-	 * Stop the server. Do not accept any new connection. Close all active
-	 * connections.
-	 */
-	public void stop();
-
-	/**
 	 * Subscribe a new listener for devices events.
 	 * 
 	 * @param comm
 	 *            The new listener
 	 */
 	public void addCommunicationListener(CommunicationListener comm);
+
+	/**
+	 * Retrieve a communication object from its logical name
+	 * 
+	 * @param logicalName
+	 *            The communication identifier (logical name)
+	 * @return The communication object, null if non existent.
+	 */
+	public BluetoothCommunication getCommunication(String logicalName);
+
+	/**
+	 * Returns the current server running state
+	 * 
+	 * @return True if the server thread is currently listening
+	 */
+	public boolean isRunning();
+
+	/**
+	 * Configure the server (UUID, etc) with default configuration file or
+	 * default internal configuration
+	 */
+	public void prepareServer();
+
+	/**
+	 * Configure the server (UUID, etc) with the specified input stream or
+	 * default internal configuration
+	 */
+	public void prepareServer(InputStream configurationStream)
+			throws IOException;
 
 	/**
 	 * Remove a listener from the devices events update list.
@@ -54,11 +75,8 @@ public interface BluetoothServerService extends Runnable {
 	public void removeCommunicationListener(CommunicationListener comm);
 
 	/**
-	 * Retrieve a communication object from its logical name
-	 * 
-	 * @param logicalName
-	 *            The communication identifier (logical name)
-	 * @return The communication object, null if non existent.
+	 * Stop the server. Do not accept any new connection. Close all active
+	 * connections.
 	 */
-	public BluetoothCommunication getCommunication(String logicalName);
+	public void stop();
 }

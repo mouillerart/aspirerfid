@@ -42,6 +42,13 @@ public class BluetoothCommunication implements Runnable {
 	/** Client logical name (ID) */
 	private String m_logicalName;
 
+	public enum ReadingMethod {
+		BYTE, CHAR, UTF
+	}
+
+	/** {@link DataOutputStream} reading methode */
+	private ReadingMethod m_readingMethod;
+
 	/**
 	 * Prepares a thread handling a client connection.
 	 * 
@@ -49,6 +56,9 @@ public class BluetoothCommunication implements Runnable {
 	 *            The server which has accepted the current client.
 	 * @param connection
 	 *            A connected BlueTooth client (RFCOMM)
+	 * @param readingMethod
+	 *            {@link DataOutputStream} method to be used to read incoming
+	 *            data
 	 * @throws IOException
 	 *             An error occurred during the opening of data streams.
 	 * 
@@ -56,38 +66,38 @@ public class BluetoothCommunication implements Runnable {
 	 * @see StreamConnection#openDataOutputStream()
 	 */
 	public BluetoothCommunication(CommunicationListener server,
-			StreamConnection connection) throws IOException {
+			StreamConnection connection, ReadingMethod readingMethod)
+			throws IOException {
 		m_parentListener = server;
 		m_inputStream = connection.openDataInputStream();
 		m_outputStream = connection.openDataOutputStream();
+		m_readingMethod = readingMethod;
 
 		// Generate the logical name
-		// m_logicalName = UUID.randomUUID().toString();
-		
 		RemoteDevice device = RemoteDevice.getRemoteDevice(connection);
 		m_logicalName = device.getBluetoothAddress();
-		
+
 		String friendlyName = device.getFriendlyName(false);
-		if(friendlyName != null && friendlyName.length() > 0)
+		if (friendlyName != null && friendlyName.length() > 0)
 			m_logicalName += " - " + friendlyName;
 	}
-	
+
 	/**
 	 * Retrieves the auto-generated logical name of this communication
+	 * 
 	 * @return The logical name associated to the communication
 	 */
-	public String getLogicalName()
-	{
+	public String getLogicalName() {
 		return m_logicalName;
 	}
 
 	/**
 	 * Reads the client data. Advise the server when correct data has been read,
-	 * or when an exception occurred
+	 * or when an exception occurred (uses {@link DataInputStream#readChar()})
 	 */
 	public void run() {
 		m_stop = false;
-		
+
 		// Tell everybody we are ready to listen
 		m_parentListener.commBegin(m_logicalName);
 
@@ -107,9 +117,38 @@ public class BluetoothCommunication implements Runnable {
 
 				// Read data line by line
 				String data = "";
-				byte read;
-				while ((read = m_inputStream.readByte()) != '\n')
-					data += (char) read;
+				/*
+				 * char read; while ((read = m_inputStream.readChar()) != '\n')
+				 * data += read;
+				 */
+				boolean endline = false;
+
+				do {
+					switch (m_readingMethod) {
+					case BYTE: {
+						byte read = m_inputStream.readByte();
+						if (read == '\n')
+							endline = true;
+						else
+							data += (char) read;
+						break;
+					}
+
+					case CHAR: {
+						char read = m_inputStream.readChar();
+						if (read == '\n')
+							endline = true;
+						else
+							data += read;
+						break;
+					}
+
+					case UTF:
+						data = m_inputStream.readUTF();
+						endline = true;
+						break;
+					}
+				} while (!endline);
 
 				m_parentListener.commRead(m_logicalName, data);
 			}
@@ -157,19 +196,33 @@ public class BluetoothCommunication implements Runnable {
 			 */
 		}
 	}
-	
+
 	/**
-	 * Write some data to the client
-	 * @param data Data to be written
-	 * @return True if no occurred, False if the communication has been ended before
-	 * @throws IOException An exception occurred during write process
+	 * Writes some data to the client (uses
+	 * {@link DataOutputStream#writeBytes(String)})
+	 * 
+	 * @param data
+	 *            Data to be written
+	 * @return True if no occurred, False if the communication has been ended
+	 *         before
+	 * @throws IOException
+	 *             An exception occurred during write process
 	 */
-	public boolean writeData(String data) throws IOException
-	{
-		if(m_outputStream == null || m_stop)
+	public boolean writeData(String data) throws IOException {
+		if (m_outputStream == null || m_stop)
 			return false;
-		
+
 		m_outputStream.writeBytes(data);
 		return true;
+	}
+
+	/**
+	 * Retrieves the output stream, in order to directly write data to the
+	 * client
+	 * 
+	 * @return Communication output stream
+	 */
+	public DataOutputStream getDataOutputStream() {
+		return m_outputStream;
 	}
 }
