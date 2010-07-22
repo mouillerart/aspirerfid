@@ -22,6 +22,7 @@ import org.ow2.aspirerfid.nfc.midlet.sendersReceivers.bluetooth.BluetoothControl
 import org.ow2.aspirerfid.nfc.midlet.sendersReceivers.bluetooth.BluetoothController;
 import org.ow2.aspirerfid.patrolman.ecspec.LightECReportSpec;
 import org.ow2.aspirerfid.patrolman.ecspec.LightECSpec;
+import org.ow2.aspirerfid.patrolman.nfc.TagReaderMessage;
 import org.ow2.aspirerfid.patrolman.nfc.TagReaderThread;
 import org.ow2.aspirerfid.patrolman.questionnaire.Questionnaire;
 import org.ow2.aspirerfid.patrolman.ui.MenuScreen;
@@ -81,13 +82,15 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 		 */
 
 		// Flush it
-		m_btController.sendMessage("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "<ale:ECReports xmlns:ale=\"urn:epcglobal:ale:xsd:1\"\n"
-				+ "xmlns:epcglobal=\"urn:epcglobal:xsd:1\"\n"
-				+ "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-				+ "schemaVersion=\"1.0\"\n" + "specName=\"" + ecSpec.getName()
-				+ "\"\ndate=\"" + date + "\"\nALEID=\"Patrolman\"\n"
-				+ "totalMilliseconds=\"0\">\n<reports>\n");
+		m_btController
+				.sendMessage("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+						+ "<ale:ECReports xmlns:ale=\"urn:epcglobal:ale:xsd:1\"\n"
+						+ "xmlns:epcglobal=\"urn:epcglobal:xsd:1\"\n"
+						+ "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+						+ "schemaVersion=\"1.0\"\n" + "specName=\""
+						+ ecSpec.getName() + "\"\ndate=\"" + date
+						+ "\"\nALEID=\"Patrolman\"\n"
+						+ "totalMilliseconds=\"0\">\n<reports>\n");
 
 		// Add ECReports
 		Enumeration ecReports = ecSpec.getReportSpecs();
@@ -122,35 +125,28 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	}
 
 	/**
-	 * Prepares an ECReport and sends it over BlueTooth
-	 * (!! WARNING: heavy memory consumption !!)
+	 * Prepares an ECReport and sends it over BlueTooth (!! WARNING: heavy
+	 * memory consumption !!)
 	 * 
 	 * @param questionnaire
 	 *            Questionnaire to be sent in the ECReport
 	 */
 	/*
-	public void sendECReport(Questionnaire questionnaire) {
-		String ecReportData = questionnaire.getReportSpec()
-				.toXML(questionnaire);
-
-		try {
-			m_btController.sendMessage(ecReportData.replace('\n', ' '));
-
-			AlertScreen as = new AlertScreen(this, "Data sent");
-			as.setActive();
-		} catch (Exception e) {
-			AlertScreen as = new AlertScreen(this, "Error sending message : "
-					+ e.getMessage());
-			as.setActive();
-		}
-	}
-	*/
+	 * public void sendECReport(Questionnaire questionnaire) { String
+	 * ecReportData = questionnaire.getReportSpec() .toXML(questionnaire);
+	 * 
+	 * try { m_btController.sendMessage(ecReportData.replace('\n', ' '));
+	 * 
+	 * AlertScreen as = new AlertScreen(this, "Data sent"); as.setActive(); }
+	 * catch (Exception e) { AlertScreen as = new AlertScreen(this,
+	 * "Error sending message : " + e.getMessage()); as.setActive(); } }
+	 */
 
 	/**
 	 * Activates the menu screen
 	 */
 	public void showMenuScreen() {
-		m_menuScreen.setActive();
+		setActiveScreen(m_menuScreen);
 	}
 
 	/**
@@ -182,9 +178,9 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	 * Searches for bluetooth server
 	 */
 	public void startBluetoothDetection(Screen previousScreen) {
-		if (m_btController.isBluetoothConnected())
-			m_waitingScreen.setActive();
-		else {
+		if (m_btController.isBluetoothConnected()) {
+			setActiveScreen(m_waitingScreen);
+		} else {
 			m_btController.connectBluetooth(previousScreen, m_waitingScreen);
 		}
 	}
@@ -248,18 +244,37 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	 * org.ow2.aspirerfid.nfc.midlet.reader.TagDetector#tagRead(org.ow2.aspirerfid
 	 * .nfc.midlet.generic.RequestMessage)
 	 */
-	public void tagRead(RequestMessage message) {
+	public void tagRead(RequestMessage rawMessage) {
+		if (!(rawMessage instanceof TagReaderMessage)) {
+			showMessage("Error: not a valid Tag message");
+			return;
+		}
+
+		TagReaderMessage message = (TagReaderMessage) rawMessage;
 		Enumeration elems = m_ecSpecs.elements();
 
 		while (elems.hasMoreElements()) {
 			LightECSpec spec = (LightECSpec) elems.nextElement();
 			Questionnaire qst = spec.findAssociatedQuestionnaire(message
 					.getTagUID());
+
+			if (qst == null) {
+				qst = spec
+						.findAssociatedQuestionnaire(message.getRecordsType());
+			}
+
 			if (qst != null) {
 				qst.loadQuestionnaire(message.getTagUID());
-				qst.setActive();
-				return;
+				setActiveScreen(qst);
 			}
+
+			if (message.raisedException()) {
+				showMessage("Incomplete reading :"
+						+ message.getThrownException());
+			}
+
+			if (qst != null)
+				return;
 		}
 	}
 }

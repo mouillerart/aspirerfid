@@ -8,7 +8,7 @@ import org.ow2.aspirerfid.patrolman.questionnaire.Questionnaire;
 public class LightECSpec {
 	/** ECSpec name */
 	private String m_name;
-	
+
 	/** Logical readers list */
 	private Vector m_logicalReaders = new Vector();
 
@@ -80,18 +80,21 @@ public class LightECSpec {
 	 * Returns the first questionnaire corresponding to the tag unique ID
 	 * (pattern tag in ECSpec)
 	 * 
-	 * @param tagUID
-	 *            Tag's unique ID
+	 * @param tagInfo
+	 *            Tag information (unique ID or record type)
 	 * @return The first questionnaire found, or null
 	 */
-	public Questionnaire findAssociatedQuestionnaire(String tagUID) {
+	public Questionnaire findAssociatedQuestionnaire(String tagInfo) {
+		if (tagInfo == null)
+			return null;
+
 		Enumeration items = m_reportSpecs.elements();
 
 		while (items.hasMoreElements()) {
 			LightECReportSpec reportSpec = (LightECReportSpec) items
 					.nextElement();
 
-			Questionnaire qst = reportSpec.getQuestionnaire(tagUID);
+			Questionnaire qst = reportSpec.getQuestionnaire(tagInfo);
 			if (qst != null)
 				return qst;
 		}
@@ -100,7 +103,35 @@ public class LightECSpec {
 	}
 
 	/**
-	 * @param m_name the ECSpec name
+	 * Returns the first questionnaire corresponding to the tag unique ID
+	 * (pattern tag in ECSpec)
+	 * 
+	 * @param recordsTypes
+	 *            Tag records types (String)
+	 * @return The first questionnaire found, or null
+	 */
+	public Questionnaire findAssociatedQuestionnaire(Vector recordsTypes) {
+		Enumeration items = m_reportSpecs.elements();
+
+		while (items.hasMoreElements()) {
+			LightECReportSpec reportSpec = (LightECReportSpec) items
+					.nextElement();
+
+			Enumeration records = recordsTypes.elements();
+			while (records.hasMoreElements()) {
+				Questionnaire qst = reportSpec.getQuestionnaire(records
+						.nextElement().toString());
+				if (qst != null)
+					return qst;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param m_name
+	 *            the ECSpec name
 	 */
 	public void setName(String name) {
 		m_name = name;
@@ -114,7 +145,8 @@ public class LightECSpec {
 	}
 
 	/**
-	 * @param m_keepReports Do or do not keep reports in memory
+	 * @param m_keepReports
+	 *            Do or do not keep reports in memory
 	 */
 	public void setKeepReports(boolean keepReports) {
 		m_keepReports = keepReports;

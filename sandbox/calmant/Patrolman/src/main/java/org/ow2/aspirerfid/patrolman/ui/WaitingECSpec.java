@@ -92,10 +92,10 @@ public class WaitingECSpec extends Screen {
 		if (command == m_disconnectCmd) {
 			// Stop command and go to menu screen
 			closeConnection();
-			m_menuScreen.setActive();
+			getMidlet().setActiveScreen(m_menuScreen);
 		} else if (command == m_backCmd) {
 			// Go to the menu screen
-			m_menuScreen.setActive();
+			getMidlet().setActiveScreen(m_menuScreen);
 		} else if (command == m_refreshCmd) {
 			// Ask for a refresh
 			refresh();
