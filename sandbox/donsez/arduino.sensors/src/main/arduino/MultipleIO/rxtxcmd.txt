@@ -1,0 +1,16 @@
+rem rxtx.cmd to test the MulipleIO program for Ardiuno
+rem this program set pins values or get pin values (analog and digital)
+rem Author Didier Donsez
+
+rxtx open COM18 9600 None None 8 1 None
+
+rem blink led 0x0D every second 10 times 
+rxtx send 09 00 0A 5D 3D 80 04 00 2D 80 04 00 
+
+rem blink led 0x0D every second 10 times and get the value of pin 0x0C
+rxtx send 0B 00 0A 5D 4C 3D 80 04 00 2D 80 04 00 1C
+
+rem pool every second  the value of digital pins 0x0A 0x0B 0x0C  0x0D
+rxtx send 0B 00 0A 4A 4B 4C 1A 1B 1C 80 04 00
+
+rxtx close

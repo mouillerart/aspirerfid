@@ -1,0 +1,1 @@
+This project provides a wireadmin producers collecting digital and 10bit analog values from an Arduino board connected to a USB-to-serial port.
