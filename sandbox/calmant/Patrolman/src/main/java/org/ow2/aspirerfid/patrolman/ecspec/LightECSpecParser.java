@@ -1,3 +1,21 @@
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
 package org.ow2.aspirerfid.patrolman.ecspec;
 
 import java.io.ByteArrayInputStream;
@@ -253,7 +271,24 @@ public class LightECSpecParser {
 
 			// Extension (Questionnaire)
 			else if (tagName.equals("extension")) {
-				qst = parseExtension();
+
+				// Look for the child tag
+				while (m_parser.nextTag() != XmlPullParser.END_TAG
+						&& !m_parser.getName().equals("extension")) {
+					ignoreTag(m_parser.getName());
+				}
+
+				// Found : create a questionnaire
+				if (m_parser.getName().equals("extension")) {
+					qst = parseExtension();
+				}
+				
+				// Skip other tags
+				while (m_parser.nextTag() != XmlPullParser.END_TAG) {
+					ignoreTag(m_parser.getName());
+				}
+
+				m_parser.require(XmlPullParser.END_TAG, null, "extension");
 			}
 
 			// Ignore the rest
@@ -270,8 +305,8 @@ public class LightECSpecParser {
 	}
 
 	/**
-	 * Parses the extension tag of the groupSpec tag. Tries to create a
-	 * questionnaire from the XML file
+	 * Parses the extension tag, child of an extension tag of the groupSpec tag.
+	 * Tries to create a questionnaire from the XML file
 	 * 
 	 * @return A questionnaire, if found or null
 	 * @throws XmlPullParserException
