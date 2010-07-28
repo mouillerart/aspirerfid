@@ -24,30 +24,32 @@
 				<!-- <pattern>urn:epc:pat:gid-96:82.20.*</pattern> -->
 				<pattern>04f05a59127a00</pattern>
 				<extension>
-					<questionnaire title="Report Test" id="Qst1">
-						<textual id="qst1">
-							<label>Question 1</label>
-							<default>This is question 1</default>
-						</textual>
-						
-						<textual id="qst2">
-							<label>Question 2</label>
-						</textual>
-						
-						<choiceList id="qst3">
-							<label>Unique</label>
-							<choice>Choice 1</choice>
-							<choice>Choice 2</choice>
-							<choice>Choice 3</choice>
-						</choiceList>
-						
-						<choiceList id="qst4" multiple="true">
-							<label>Multiple</label>
-							<choice>Choice 1</choice>
-							<choice>Choice 2</choice>
-							<choice>Choice 3</choice>
-						</choiceList>
-					</questionnaire>
+					<extension>
+						<questionnaire title="Report Test" id="Qst1">
+							<textual id="qst1">
+								<label>Question 1</label>
+								<default>This is question 1</default>
+							</textual>
+							
+							<textual id="qst2">
+								<label>Question 2</label>
+							</textual>
+							
+							<choiceList id="qst3">
+								<label>Unique</label>
+								<choice>Choice 1</choice>
+								<choice>Choice 2</choice>
+								<choice>Choice 3</choice>
+							</choiceList>
+							
+							<choiceList id="qst4" multiple="true">
+								<label>Multiple</label>
+								<choice>Choice 1</choice>
+								<choice>Choice 2</choice>
+								<choice>Choice 3</choice>
+							</choiceList>
+						</questionnaire>
+					</extension>
 				</extension>
 			</groupSpec>
 			<output includeRawHex="true" includeRawDecimal="true" includeEPC="true" includeTag="true" includeCount="true" />
