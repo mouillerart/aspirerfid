@@ -1,13 +1,29 @@
-/**
- * 
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package org.ow2.aspirerfid.patrolman.questionnaire;
 
 import javax.microedition.lcdui.ChoiceGroup;
 
 /**
- * @author Thomas Calmant
+ * Choice list to be added to a {@link Questionnaire}. Can be a unique or
+ * multiple choice(s) list
  * 
+ * @author Thomas Calmant
  */
 public class ChoiceQuestion extends ChoiceGroup implements Question {
 
@@ -25,10 +41,27 @@ public class ChoiceQuestion extends ChoiceGroup implements Question {
 
 	/** Choice type */
 	private int m_type;
-	
+
 	/** Default checked value */
 	private int m_defaultValue;
 
+	/**
+	 * Creates the choice list
+	 * 
+	 * @param id
+	 *            Question ID
+	 * @param label
+	 *            Label associated to the list
+	 * @param type
+	 *            {@link #UNIQUE} or {@link #MULTIPLE}
+	 * @param choices
+	 *            All choices in a String array
+	 * @param default_value
+	 *            Default selected choice
+	 * @param correctAnswers
+	 *            An array containing valid choices indices (corresponding to
+	 *            choices). Can be null.
+	 */
 	public ChoiceQuestion(String id, String label, int type, String[] choices,
 			int default_value, int[] correctAnswers) {
 		super(label, type);

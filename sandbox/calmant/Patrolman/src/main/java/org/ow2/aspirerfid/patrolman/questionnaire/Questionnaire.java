@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 package org.ow2.aspirerfid.patrolman.questionnaire;
 
 import java.util.Enumeration;
@@ -132,7 +149,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 
 		m_patterns.addElement(pattern);
 	}
-	
+
 	/**
 	 * Adds a textual question to the form
 	 * 
@@ -188,7 +205,9 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 
 	/**
 	 * Append a question to the UI
-	 * @param item Question to be added
+	 * 
+	 * @param item
+	 *            Question to be added
 	 * @return The appending result
 	 */
 	private int appendQuestion(Item item) {
@@ -207,6 +226,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command command, Displayable displayable) {
+		// Unused
 	}
 
 	/*
@@ -282,7 +302,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	}
 
 	/**
-	 * Adds submit, reset and back buttons
+	 * Adds submit, reset and back buttons at the end of the questionnaire
 	 */
 	public void finalizeUI() {
 		// Submit button
@@ -290,7 +310,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 		m_saveCmd = new Command("Save", Command.ITEM, 0);
 		m_saveBtn.setDefaultCommand(m_saveCmd);
 		m_saveBtn.setItemCommandListener(this);
-		
+
 		// Back button
 		m_backBtn = new StringItem("", "Back", StringItem.BUTTON);
 		m_backCmd = new Command("Back", Command.ITEM, 1);
@@ -307,7 +327,7 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 		m_form.append(m_clearBtn);
 		m_form.append(m_backBtn);
 	}
-	
+
 	/**
 	 * Returns the pattern corresponding to the given tag UID or null if not
 	 * found
@@ -357,7 +377,9 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 
 	/**
 	 * Retrieves the data associated to the given tag UID
-	 * @param tagUID Tag UID
+	 * 
+	 * @param tagUID
+	 *            Tag UID
 	 * @return The associated data, or null
 	 */
 	public QuestionnaireData getQuestionnaireData(String tagUID) {
@@ -440,73 +462,25 @@ public class Questionnaire extends Screen implements ItemCommandListener {
 	}
 
 	/**
-	 * Returns the XML representation of the current questionnaire state.
-	 * (WARNING: heavy memory consumption)
-	 * 
-	 * @return An XML representation of the current state
-	 */
-	/*
-	public String toXML() {
-		StringBuffer result = new StringBuffer("<questionnaire id=\"" + m_id
-				+ "\">\n");
-
-		Enumeration e = m_questions.elements();
-		while (e.hasMoreElements()) {
-			result.append(((Question) e.nextElement()).toXML());
-		}
-
-		result.append("</questionnaire>\n");
-		return result.toString();
-	}
-	*/
-	
-	/**
-	 * Returns the XML representation of the given questionnaire state.
-	 * (WARNING: heavy memory consumption)
-	 * 
-	 * @param data Questionnaire state to be sent
-	 * @return An XML representation of the given state
-	 */
-	/*
-	public String toXML(QuestionnaireData data) {
-		if(data == null)
-			return toXML();
-		
-		if(m_questions.size() != data.getValues().size())
-			throw new RuntimeException("Invalid QuestionnaireData size");
-		
-		StringBuffer result = new StringBuffer("<questionnaire id=\"" + m_id
-				+ "\">\n");
-		
-		Enumeration questions = m_questions.elements();
-		Enumeration qst_data = data.getValues().elements();
-		
-		while (questions.hasMoreElements() && qst_data.hasMoreElements()) {
-			result.append(((Question) questions.nextElement()).toXML(qst_data.nextElement()));
-		}
-
-		result.append("</questionnaire>\n");
-		return result.toString();
-	}
-	*/
-
-	/**
 	 * Sends the XML representation of the given questionnaire state.
 	 * 
-	 * @param btController A connected BlueTooth controller
-	 * @param data Questionnaire state to be sent
+	 * @param btController
+	 *            A connected BlueTooth controller
+	 * @param data
+	 *            Questionnaire state to be sent
 	 */
 	public void sendXML(BluetoothController btController, QuestionnaireData data) {
-		if(data == null || m_questions.size() != data.getValues().size())
+		if (data == null || m_questions.size() != data.getValues().size())
 			throw new RuntimeException("Invalid QuestionnaireData size");
-		
+
 		btController.sendMessage("<questionnaire id=\"" + m_id + "\">\n");
-		
+
 		Enumeration questions = m_questions.elements();
 		Enumeration qst_data = data.getValues().elements();
-		
+
 		while (questions.hasMoreElements() && qst_data.hasMoreElements()) {
-			btController.sendMessage(((Question) questions.nextElement()).toXML(qst_data.nextElement()));
+			btController.sendMessage(((Question) questions.nextElement())
+					.toXML(qst_data.nextElement()));
 		}
 
 		btController.sendMessage("</questionnaire>\n");

@@ -31,7 +31,8 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 /**
- * Parses a LightECSpec XML file with kXML2
+ * Parses a LightECSpec XML file with kXML2. Saves only used data, ignore the
+ * rest
  * 
  * @author Thomas Calmant
  */
@@ -282,7 +283,7 @@ public class LightECSpecParser {
 				if (m_parser.getName().equals("extension")) {
 					qst = parseExtension();
 				}
-				
+
 				// Skip other tags
 				while (m_parser.nextTag() != XmlPullParser.END_TAG) {
 					ignoreTag(m_parser.getName());

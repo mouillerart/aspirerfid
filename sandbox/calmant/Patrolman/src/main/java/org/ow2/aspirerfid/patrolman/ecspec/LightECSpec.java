@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 package org.ow2.aspirerfid.patrolman.ecspec;
 
 import java.util.Enumeration;
@@ -5,6 +22,12 @@ import java.util.Vector;
 
 import org.ow2.aspirerfid.patrolman.questionnaire.Questionnaire;
 
+/**
+ * Representation of an ECSpec Contains a list of logical readers (not used) and
+ * of ECReportSpecs
+ * 
+ * @author Thomas Calmant
+ */
 public class LightECSpec {
 	/** ECSpec name */
 	private String m_name;
@@ -130,7 +153,9 @@ public class LightECSpec {
 	}
 
 	/**
-	 * @param m_name
+	 * Sets the ECSpec name (used in ECReportSpec XML generation)
+	 * 
+	 * @param name
 	 *            the ECSpec name
 	 */
 	public void setName(String name) {
@@ -145,7 +170,7 @@ public class LightECSpec {
 	}
 
 	/**
-	 * @param m_keepReports
+	 * @param keepReports
 	 *            Do or do not keep reports in memory
 	 */
 	public void setKeepReports(boolean keepReports) {
@@ -153,7 +178,7 @@ public class LightECSpec {
 	}
 
 	/**
-	 * @return Do we need to keep reports in memory ?
+	 * @return True if reports may be kept in memory
 	 */
 	public boolean getKeepReports() {
 		return m_keepReports;

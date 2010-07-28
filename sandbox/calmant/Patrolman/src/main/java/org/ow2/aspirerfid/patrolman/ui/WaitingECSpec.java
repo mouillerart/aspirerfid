@@ -1,5 +1,19 @@
-/**
- * 
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package org.ow2.aspirerfid.patrolman.ui;
 
@@ -16,8 +30,10 @@ import org.ow2.aspirerfid.patrolman.ecspec.LightECSpec;
 import org.ow2.aspirerfid.patrolman.ecspec.LightECSpecParser;
 
 /**
- * @author Thomas Calmant
+ * Screen shown when connected to a BlueTooth server, and waiting for an ECSpec
+ * XML file.
  * 
+ * @author Thomas Calmant
  */
 public class WaitingECSpec extends Screen {
 	/** BlueTooth controller */
@@ -61,7 +77,14 @@ public class WaitingECSpec extends Screen {
 			Command.EXIT, 3);
 
 	/**
+	 * Prepares the screen UI
+	 * 
 	 * @param midlet
+	 *            Parent midlet
+	 * @param btController
+	 *            A BlueTooth controller (connected state)
+	 * @param menuScreen
+	 *            Screen to be shown when using the Back command
 	 */
 	public WaitingECSpec(GenericMidlet midlet,
 			BluetoothController btController, Screen menuScreen) {
@@ -105,7 +128,7 @@ public class WaitingECSpec extends Screen {
 	}
 
 	/**
-	 * Ask the server to send an ECSpec
+	 * Asks the server to send an ECSpec
 	 */
 	private void refresh() {
 		m_btController.sendMessage(REFRESH_COMMAND);
@@ -128,7 +151,7 @@ public class WaitingECSpec extends Screen {
 	}
 
 	/**
-	 * Disconnect from the server
+	 * Disconnects from the server
 	 */
 	private void closeConnection() {
 		if (m_btController.isBluetoothConnected())

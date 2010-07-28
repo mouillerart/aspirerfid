@@ -1,11 +1,24 @@
-/**
- * 
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package org.ow2.aspirerfid.patrolman.nfc;
 
 import java.io.IOException;
 
-import javax.microedition.contactless.ContactlessException;
 import javax.microedition.contactless.TargetProperties;
 import javax.microedition.contactless.TargetType;
 import javax.microedition.contactless.ndef.NDEFMessage;
@@ -15,11 +28,10 @@ import javax.microedition.io.Connector;
 
 import org.ow2.aspirerfid.nfc.midlet.generic.ReaderThread;
 import org.ow2.aspirerfid.nfc.midlet.generic.RequestMessage;
-import org.ow2.aspirerfid.nfc.midlet.generic.ui.AlertScreen;
 import org.ow2.aspirerfid.nfc.midlet.reader.TagDetector;
 
 /**
- * Process the information tag and creates a message with all the information.
+ * Processes the information tag and creates a message with all the information.
  * 
  * @author Andres Gomez
  * @author Thomas Calmant
@@ -51,13 +63,13 @@ public class TagReaderThread extends ReaderThread {
 		if (targetProp == null)
 			return reader_msg;
 
-		// UID
+		// store UID
 		reader_msg.setTagUID(targetProp.getUid());
-		
-		// Get the record type
+
+		// Try to read all record, with their type
 		if (targetProp.hasTargetType(TargetType.NDEF_TAG)) {
 			NDEFTagConnection conn = null;
-			
+
 			try {
 				conn = (NDEFTagConnection) Connector.open(targetProp.getUrl());
 				NDEFMessage msg = conn.readNDEF();
@@ -69,7 +81,9 @@ public class TagReaderThread extends ReaderThread {
 					for (int i = 0; i < nb_records; i++) {
 						NDEFRecord rec = records[i];
 						if (rec != null) {
-							reader_msg.addRecordType(rec.getRecordType().toString());
+							// Get the record type
+							reader_msg.addRecordType(rec.getRecordType()
+									.toString());
 						}
 					}
 				}
@@ -85,7 +99,7 @@ public class TagReaderThread extends ReaderThread {
 				}
 			}
 		}
-		
+
 		return reader_msg;
 	}
 }

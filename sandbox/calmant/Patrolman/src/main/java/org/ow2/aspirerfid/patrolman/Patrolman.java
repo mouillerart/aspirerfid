@@ -1,5 +1,19 @@
-/**
- * 
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package org.ow2.aspirerfid.patrolman;
 
@@ -30,8 +44,9 @@ import org.ow2.aspirerfid.patrolman.ui.PresentationScreen;
 import org.ow2.aspirerfid.patrolman.ui.WaitingECSpec;
 
 /**
- * @author Thomas Calmant
+ * Patrolman MIDlet entry point
  * 
+ * @author Thomas Calmant
  */
 public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 		TagDetector {
@@ -59,28 +74,16 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	}
 
 	/**
-	 * Generates an ECReport XML file from the given ECSpec The XML file will
-	 * contain all reports with all their associated questionnaires
+	 * Sends an ECReport XML file from the given ECSpec over BlueTooth.The XML
+	 * file will contain all reports with all their associated questionnaires
 	 * 
 	 * @param ecSpec
 	 *            The base ECSpec
-	 * @return An XML file content
 	 */
 	private void sendECReportXMLFile(LightECSpec ecSpec) {
 		String date = new Date(System.currentTimeMillis()).toString();
 
-		// Beginning of XML File
-		/*
-		 * xmlFile.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
-		 * .append("<ale:ECReports xmlns:ale=\"urn:epcglobal:ale:xsd:1\"\n")
-		 * .append("xmlns:epcglobal=\"urn:epcglobal:xsd:1\"\n")
-		 * .append("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n")
-		 * .append("schemaVersion=\"1.0\"\n").append("specName=\"")
-		 * .append(ecSpec.getName()).append("\"\ndate=\"").append(date)
-		 * .append("\"\nALEID=\"Patrolman\"\n")
-		 * .append("totalMilliseconds=\"0\">\n<reports>\n");
-		 */
-
+		// Beginning of XML File.
 		// Flush it
 		m_btController
 				.sendMessage("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -125,24 +128,6 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	}
 
 	/**
-	 * Prepares an ECReport and sends it over BlueTooth (!! WARNING: heavy
-	 * memory consumption !!)
-	 * 
-	 * @param questionnaire
-	 *            Questionnaire to be sent in the ECReport
-	 */
-	/*
-	 * public void sendECReport(Questionnaire questionnaire) { String
-	 * ecReportData = questionnaire.getReportSpec() .toXML(questionnaire);
-	 * 
-	 * try { m_btController.sendMessage(ecReportData.replace('\n', ' '));
-	 * 
-	 * AlertScreen as = new AlertScreen(this, "Data sent"); as.setActive(); }
-	 * catch (Exception e) { AlertScreen as = new AlertScreen(this,
-	 * "Error sending message : " + e.getMessage()); as.setActive(); } }
-	 */
-
-	/**
 	 * Activates the menu screen
 	 */
 	public void showMenuScreen() {
@@ -175,7 +160,7 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	}
 
 	/**
-	 * Searches for bluetooth server
+	 * Searches for bluetooth servers and ask the user to connect one of them
 	 */
 	public void startBluetoothDetection(Screen previousScreen) {
 		if (m_btController.isBluetoothConnected()) {
@@ -197,7 +182,7 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	}
 
 	/**
-	 * Starts RFID detection
+	 * Starts the RFID detection
 	 */
 	public boolean startTagDetection() {
 		try {
@@ -212,11 +197,11 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	}
 
 	/**
-	 * Stops the RFID detection and show the main screen.
+	 * Stops the RFID detection and return to the menu screen.
 	 */
 	public void stopTagDetection() {
 		stopDetector();
-		setActiveScreen(m_menuScreen);
+		showMenuScreen();
 	}
 
 	/**
@@ -237,14 +222,18 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 		showMessage("All reports sent");
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Called when a tag has been read.
 	 * 
-	 * @see
-	 * org.ow2.aspirerfid.nfc.midlet.reader.TagDetector#tagRead(org.ow2.aspirerfid
-	 * .nfc.midlet.generic.RequestMessage)
+	 * @param rawMessage
+	 *            Data read from the tag (can be incomplete) Must be a
+	 *            {@link TagReaderMessage} object
+	 * 
+	 * @see org.ow2.aspirerfid.nfc.midlet.reader.TagDetector#tagRead(org.ow2.aspirerfid
+	 *      .nfc.midlet.generic.RequestMessage)
 	 */
 	public void tagRead(RequestMessage rawMessage) {
+		// Wait for our special type of message
 		if (!(rawMessage instanceof TagReaderMessage)) {
 			showMessage("Error: not a valid Tag message");
 			return;
@@ -263,18 +252,26 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 						.findAssociatedQuestionnaire(message.getRecordsType());
 			}
 
+			// Questionnaire found, activate it
 			if (qst != null) {
 				qst.loadQuestionnaire(message.getTagUID());
 				setActiveScreen(qst);
-			}
 
-			if (message.raisedException()) {
-				showMessage("Incomplete reading :"
-						+ message.getThrownException());
-			}
+				// Pops up an alert message if the tag couldn't be completely
+				// read
+				// (not an "important" error, since tag's UID has been read)
+				if (message.raisedException()) {
+					showMessage("Incomplete reading :"
+							+ message.getThrownException());
+				}
 
-			if (qst != null)
+				// Stop searching for a valid questionnaire
 				return;
+			}
 		}
+
+		// No questionnaire found
+		showMessage("No questionnaire found for this tag ("
+				+ message.getTagUID() + ")");
 	}
 }
