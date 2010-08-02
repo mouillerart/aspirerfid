@@ -1,7 +1,7 @@
 package org.ow2.aspirerfid.sandbox.calmant.btbundle;
 
-import org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothServerService;
-import org.ow2.aspirerfid.sandbox.calmant.bluetooth.CommunicationListener;
+import org.ow2.aspirerfid.bluetooth.BluetoothServerService;
+import org.ow2.aspirerfid.bluetooth.CommunicationListener;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
