@@ -7,4 +7,5 @@
 	<entry key="authenticate">false</entry>
 	<entry key="encrypt">false</entry>
 	<entry key="inquiryMode">10390323</entry>
+	<entry key="readingMode">CHAR</entry>
 </properties>

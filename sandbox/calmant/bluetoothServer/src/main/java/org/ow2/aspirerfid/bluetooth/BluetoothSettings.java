@@ -15,7 +15,7 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package org.ow2.aspirerfid.sandbox.calmant.bluetooth;
+package org.ow2.aspirerfid.bluetooth;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -16,7 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.ow2.aspirerfid.sandbox.calmant.bluetooth;
+package org.ow2.aspirerfid.bluetooth;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -164,7 +164,7 @@ public class BluetoothServer implements BluetoothServerService,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothServerService#
+	 * @see org.ow2.aspirerfid.bluetooth.BluetoothServerService#
 	 * prepareServer()
 	 */
 	public void prepareServer() {
@@ -175,7 +175,7 @@ public class BluetoothServer implements BluetoothServerService,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothServerService#
+	 * @see org.ow2.aspirerfid.bluetooth.BluetoothServerService#
 	 * prepareServer(java.io.InputStream)
 	 */
 	public void prepareServer(InputStream configurationStream)
@@ -399,7 +399,7 @@ public class BluetoothServer implements BluetoothServerService,
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothServerService#isRunning
+	 * org.ow2.aspirerfid.bluetooth.BluetoothServerService#isRunning
 	 * ()
 	 */
 	public boolean isRunning() {

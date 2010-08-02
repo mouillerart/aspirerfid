@@ -16,7 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.ow2.aspirerfid.sandbox.calmant.bluetooth;
+package org.ow2.aspirerfid.bluetooth;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
