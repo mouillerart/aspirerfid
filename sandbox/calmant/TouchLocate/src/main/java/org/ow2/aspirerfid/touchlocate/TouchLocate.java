@@ -11,11 +11,10 @@ import org.ow2.aspirerfid.nfc.midlet.generic.ui.AlertScreen;
 import org.ow2.aspirerfid.nfc.midlet.generic.ui.Screen;
 import org.ow2.aspirerfid.nfc.midlet.reader.TagDetector;
 import org.ow2.aspirerfid.nfc.midlet.reader.rfid.RFIDDetector;
+import org.ow2.aspirerfid.touchlocate.nfc.TagLocationMessage;
 import org.ow2.aspirerfid.touchlocate.nfc.TagReaderThread;
-import org.ow2.aspirerfid.touchlocate.ui.ActionScreen;
 import org.ow2.aspirerfid.touchlocate.ui.MenuScreen;
-import org.ow2.aspirerfid.touchlocate.ui.PresentationScreen;
-import org.ow2.aspirerfid.touchlocate.ui.ShowScreen;
+import org.ow2.aspirerfid.touchlocate.ui.WaitingScreen;
 
 /**
  * Touch'n Locate mobile demonstration Reads an NFC position tag then let the
@@ -27,10 +26,10 @@ import org.ow2.aspirerfid.touchlocate.ui.ShowScreen;
  */
 public class TouchLocate extends GenericMidlet implements TagDetector {
 
-	/** Result screen */
-	private ShowScreen m_showScreen;
+	/** Tag waiting screen */
+	private WaitingScreen m_waitScreen;
 	
-	/** Menu screen */
+	/** Tag handling screen */
 	private MenuScreen m_menuScreen;
 
 	/*
@@ -39,17 +38,10 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 	 * @see javax.microedition.midlet.MIDlet#startApp()
 	 */
 	protected void startApp() throws MIDletStateChangeException {
-		m_menuScreen = new MenuScreen(this);
-		m_showScreen = new ShowScreen(this, m_menuScreen);
+		m_waitScreen = new WaitingScreen(this);
+		m_menuScreen = new MenuScreen(this, m_waitScreen);
 		
-		// setActiveScreen(new PresentationScreen(this, m_menuScreen));
-		GPSLocation loc = new GPSLocation();
-		loc.latitude = 12.5;
-		loc.longitude = 45.12;
-		
-		ActionScreen as = new ActionScreen(this);
-		as.setLocation(loc);
-		as.setActive();
+		setActiveScreen(m_waitScreen);
 	}
 
 	/**
@@ -73,7 +65,6 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 	 */
 	public void stopDetecting() {
 		stopDetector();
-		setActiveScreen(m_menuScreen);
 	}
 
 	/*
@@ -95,8 +86,15 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 	 * .nfc.midlet.generic.RequestMessage)
 	 */
 	public void tagRead(RequestMessage msg) {
-		m_showScreen.setText(msg.toString());
-		setActiveScreen(m_showScreen);
+		if(!(msg instanceof TagLocationMessage)) {
+			m_waitScreen.setText("Not a location tag");
+			return;
+		}
+		
+		m_menuScreen.setLocationMessage((TagLocationMessage) msg);
+		setActiveScreen(m_menuScreen);
+		
+		m_waitScreen.setText("Waiting for a tag...");
 	}
 
 }

@@ -25,6 +25,8 @@ import org.ow2.aspirerfid.nfc.midlet.reader.TagDetector;
  * @author Thomas Calmant
  */
 public class TagReaderThread extends ReaderThread {
+	
+	public static final String LOCATION_TYPE = "urn:nfc:wkt:L";
 
 	/**
 	 * Instance the class.
@@ -46,19 +48,16 @@ public class TagReaderThread extends ReaderThread {
 	 * .microedition.contactless.TargetProperties)
 	 */
 	protected RequestMessage buildMessage(TargetProperties targetProp) {
-		TagReaderMessage reader_msg = new TagReaderMessage(m_midlet);
-		String descr = "";
+		TagLocationMessage reader_msg = new TagLocationMessage(m_midlet);
 
 		if (targetProp == null) {
-			descr = "No Props...";
-			return reader_msg;
+			return null;
 		}
 
 		// UID
 		reader_msg.setTagUID(targetProp.getUid());
 
 		if (targetProp.hasTargetType(TargetType.NDEF_TAG)) {
-			descr = "NDEF TAG\n";
 			NDEFTagConnection conn = null;
 			try {
 				conn = (NDEFTagConnection) Connector.open(targetProp.getUrl());
@@ -70,29 +69,24 @@ public class TagReaderThread extends ReaderThread {
 
 					for (int i = 0; i < nb_records; i++) {
 						NDEFRecord rec = records[i];
-						if (rec == null) {
-							descr += "NullRecord: " + i + "\n";
-						} else {
+						
+						if(rec != null) { // && rec.getRecordType().getName().equals(LOCATION_TYPE)) {
+							// reader_msg.info += rec.getRecordType().toString() + " - " + rec.getRecordType().getName() + "\n";
 							String id = byte2string(rec.getId());
-							String payload = byte2string(rec.getPayload());
-
-							descr += "RecordType: "
-									+ rec.getRecordType() + "\n";
-							descr += "Id: " + id + "\nPayload: "
-									+ payload + "\n";
+							if(reader_msg.setLocation(id, rec.getPayload())) {
+								return reader_msg;
+							}
 						}
 					}
-				} else {
-					descr += "No msg\n";
 				}
+				else
+					reader_msg.info += "No message\n";
 			} catch (IOException e) {
-				e.printStackTrace();
-				descr += "IOEx - " + e.getMessage();
+				reader_msg.info += "IOEx - " + e.getMessage() + "\n";
 			} catch (ContactlessException e) {
-				e.printStackTrace();
-				descr += "ClEx - " + e.getMessage();
+				reader_msg.info += "ClEx - " + e.getMessage() + "\n";
 			} catch (Exception e) {
-				descr += "Ex - " + e.getMessage();
+				reader_msg.info += "Ex - " + e.getMessage() + "\n";
 			} finally {
 				if (conn != null) {
 					try {
@@ -104,7 +98,6 @@ public class TagReaderThread extends ReaderThread {
 			}
 		}
 		
-		reader_msg.setDescription(descr);
 		return reader_msg;
 	}
 
@@ -128,5 +121,4 @@ public class TagReaderThread extends ReaderThread {
 
 		return ret;
 	}
-
 }
