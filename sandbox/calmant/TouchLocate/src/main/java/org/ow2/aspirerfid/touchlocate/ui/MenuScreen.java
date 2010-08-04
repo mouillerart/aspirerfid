@@ -12,6 +12,8 @@ import org.ow2.aspirerfid.nfc.midlet.generic.GenericMidlet;
 import org.ow2.aspirerfid.nfc.midlet.generic.ui.Screen;
 import org.ow2.aspirerfid.touchlocate.nfc.TagLocationMessage;
 
+import fr.touchkey.gui.GoogleMaps;
+
 /**
  * @author Thomas Calmant
  * 
@@ -48,6 +50,9 @@ public class MenuScreen extends Screen {
 	/** Information screen */
 	private InformationScreen m_infosScreen;
 
+	/** Map screen */
+	private MapScreen m_mapScreen;
+
 	/** Menu list */
 	private List m_optionsList;
 
@@ -55,14 +60,17 @@ public class MenuScreen extends Screen {
 	private TagLocationMessage m_locationMsg;
 
 	/**
-	 * @param midlet Parent MIDlet
-	 * @param previousScreen Screen shown on back command 
+	 * @param midlet
+	 *            Parent MIDlet
+	 * @param previousScreen
+	 *            Screen shown on back command
 	 */
 	public MenuScreen(GenericMidlet midlet, Screen previousScreen) {
 		super(midlet);
 		m_previousScreen = previousScreen;
 
 		m_infosScreen = new InformationScreen(midlet, this);
+		m_mapScreen = new MapScreen(midlet, this);
 		m_locationMsg = null;
 
 		m_optionsList = new List("Menu", Choice.IMPLICIT, s_optionsNames, null);
@@ -97,9 +105,25 @@ public class MenuScreen extends Screen {
 			String option = s_optionsNames[m_optionsList.getSelectedIndex()];
 
 			if (option.equals(s_showOnMap)) {
-				// TODO: show Google Map
+				m_mapScreen.setAddress(m_locationMsg.getLatitude(),
+						m_locationMsg.getLongitude());
+				
+				getMidlet().setActiveScreen(m_mapScreen);
+
 			} else if (option.equals(s_geocode)) {
-				// TODO: show address informations
+				GoogleMaps gmaps = new GoogleMaps("");
+				try {
+					m_infosScreen.setText(gmaps.reverseGeocodeAddress(
+							m_locationMsg.getLatitude(),
+							m_locationMsg.getLongitude()));
+				} catch (Exception e) {
+					m_infosScreen.setText("Error during reverse geocoding :\n"
+							+ e.toString());
+				}
+
+			} else if (option.equals(s_poi)) {
+				// TODO: show POI list
+
 			} else if (option.equals(s_infos)) {
 				m_infosScreen.setText(m_locationMsg.toString());
 				getMidlet().setActiveScreen(m_infosScreen);

@@ -29,7 +29,7 @@ public class PresentationScreen extends Screen {
 
 	/** Next screen command */
 	private Command m_enter;
-	
+
 	/** Next screen */
 	private Screen m_nextScreen;
 
@@ -56,9 +56,10 @@ public class PresentationScreen extends Screen {
 			getMidlet().setActiveScreen(
 					new AlertScreen(getMidlet(), "Error: Logo not found."));
 		}
-		
+
 		// Application's description.
-		StringItem description = new StringItem("", "LIG - Adele\nThomas Calmant\n2010");
+		StringItem description = new StringItem("",
+				"LIG - Adele\nThomas Calmant\n2010\nIncludes code from Team TouchKey");
 		description.setLayout(Item.LAYOUT_CENTER);
 		m_form.append(description);
 

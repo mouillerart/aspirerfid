@@ -25,7 +25,7 @@ import org.ow2.aspirerfid.nfc.midlet.reader.TagDetector;
  * @author Thomas Calmant
  */
 public class TagReaderThread extends ReaderThread {
-	
+	/** Location record type */
 	public static final String LOCATION_TYPE = "urn:nfc:wkt:L";
 
 	/**
@@ -34,7 +34,7 @@ public class TagReaderThread extends ReaderThread {
 	 * @param properties
 	 *            Set of properties of the tag.
 	 * @param midlet
-	 *            Midlet that calls the RFID Detector.
+	 *            MIDlet that calls the RFID Detector.
 	 */
 	public TagReaderThread(TargetProperties[] properties, TagDetector midlet) {
 		super(properties, midlet);
@@ -46,6 +46,8 @@ public class TagReaderThread extends ReaderThread {
 	 * @see
 	 * org.ow2.aspirerfid.nfc.midlet.generic.ReaderThread#buildMessage(javax
 	 * .microedition.contactless.TargetProperties)
+	 * 
+	 * TODO: remove/improve debug informations
 	 */
 	protected RequestMessage buildMessage(TargetProperties targetProp) {
 		TagLocationMessage reader_msg = new TagLocationMessage(m_midlet);

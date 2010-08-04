@@ -35,6 +35,7 @@ public class TagLocationMessage extends RequestMessage {
 	/** Bearing */
 	private float m_bearing;
 	
+	// TODO: remove this debug data, or improve it
 	public String info = "";
 
 	/**
