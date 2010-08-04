@@ -28,12 +28,15 @@ public class WaitingScreen extends Screen {
 	 */
 	public WaitingScreen(GenericMidlet midlet) {
 		super(midlet);
+		
+		// Start detecting tags
 		((TouchLocate)midlet).startDetecting(this);
 		
 		m_status = new StringItem("Status", "Waiting for a tag...");
 		
 		Form form = new Form("Touch'n Locate");
 		form.append(m_status);
+		form.addCommand(s_exitCmd);
 		form.setCommandListener(this);
 		
 		setDiplayable(form);

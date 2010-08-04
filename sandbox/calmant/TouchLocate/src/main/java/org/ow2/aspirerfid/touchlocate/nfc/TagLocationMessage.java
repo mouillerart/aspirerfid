@@ -24,16 +24,16 @@ public class TagLocationMessage extends RequestMessage {
 	private String m_uid;
 
 	/** Latitude */
-	private float m_latitude;
+	public double m_latitude;
 
 	/** Longitude */
-	private float m_longitude;
+	public double m_longitude;
 
 	/** Altitude */
-	private float m_altitude;
+	private double m_altitude;
 
 	/** Bearing */
-	private float m_bearing;
+	private double m_bearing;
 	
 	// TODO: remove this debug data, or improve it
 	public String info = "";

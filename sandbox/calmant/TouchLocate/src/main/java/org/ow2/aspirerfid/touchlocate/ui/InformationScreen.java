@@ -37,7 +37,7 @@ public class InformationScreen extends Screen {
 		super(midlet);
 		m_previousScreen = previousScreen;
 
-		m_infos = new StringItem("Information", "");
+		m_infos = new StringItem(null, null);
 
 		Form form = new Form("Information");
 		form.append(m_infos);

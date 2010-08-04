@@ -15,6 +15,7 @@ import fr.touchkey.gui.KeyLocation;
  * 
  */
 public class MapCanvas extends KeyLocation {
+	private static final Command s_backCmd = new Command("Back", Command.BACK, 0);
 
 	/** Parent {@link MapScreen} */
 	private MapScreen m_parentScreen;
@@ -31,6 +32,9 @@ public class MapCanvas extends KeyLocation {
 
 		m_parentScreen = parentScreen;
 		m_address = null;
+		
+		addCommand(s_backCmd);
+		setCommandListener(this);
 	}
 
 	/**
@@ -50,7 +54,7 @@ public class MapCanvas extends KeyLocation {
 	 * , javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command command, Displayable displayable) {
-		if (command.getCommandType() == Command.BACK) {
+		if (command == s_backCmd) {
 			m_parentScreen.goBack();
 			return;
 		}

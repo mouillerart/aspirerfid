@@ -14,6 +14,7 @@ import org.ow2.aspirerfid.nfc.midlet.reader.rfid.RFIDDetector;
 import org.ow2.aspirerfid.touchlocate.nfc.TagLocationMessage;
 import org.ow2.aspirerfid.touchlocate.nfc.TagReaderThread;
 import org.ow2.aspirerfid.touchlocate.ui.MenuScreen;
+import org.ow2.aspirerfid.touchlocate.ui.PresentationScreen;
 import org.ow2.aspirerfid.touchlocate.ui.WaitingScreen;
 
 /**
@@ -41,7 +42,7 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 		m_waitScreen = new WaitingScreen(this);
 		m_menuScreen = new MenuScreen(this, m_waitScreen);
 		
-		setActiveScreen(m_waitScreen);
+		setActiveScreen(new PresentationScreen(this, m_waitScreen));
 	}
 
 	/**
@@ -86,12 +87,21 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 	 * .nfc.midlet.generic.RequestMessage)
 	 */
 	public void tagRead(RequestMessage msg) {
+		// FIXME debug purpose
+		TagLocationMessage loc = new TagLocationMessage(this);
+		loc.m_latitude = 45.7;
+		loc.m_longitude = 5.04;
+		
+		
+		/*
 		if(!(msg instanceof TagLocationMessage)) {
 			m_waitScreen.setText("Not a location tag");
 			return;
 		}
+		*/
 		
-		m_menuScreen.setLocationMessage((TagLocationMessage) msg);
+		m_menuScreen.setLocationMessage(loc);
+		// m_menuScreen.setLocationMessage((TagLocationMessage) msg);
 		setActiveScreen(m_menuScreen);
 		
 		m_waitScreen.setText("Waiting for a tag...");
