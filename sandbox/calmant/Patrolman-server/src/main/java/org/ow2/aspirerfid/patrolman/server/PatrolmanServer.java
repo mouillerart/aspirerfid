@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothCommunication;
-import org.ow2.aspirerfid.sandbox.calmant.bluetooth.BluetoothServerService;
-import org.ow2.aspirerfid.sandbox.calmant.bluetooth.CommunicationListener;
+import org.ow2.aspirerfid.bluetooth.BluetoothCommunication;
+import org.ow2.aspirerfid.bluetooth.BluetoothServerService;
+import org.ow2.aspirerfid.bluetooth.CommunicationListener;
 
 public class PatrolmanServer implements CommunicationListener {
 	/** ECSpec file */
