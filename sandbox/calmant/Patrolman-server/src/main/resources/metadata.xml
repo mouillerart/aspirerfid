@@ -22,7 +22,7 @@
 	<component classname="org.ow2.aspirerfid.patrolman.server.PatrolmanServer"
 			immediate="false" architecture="true">
 		<provides />
-		<requires field="m_server" optional="false "/>
+		<requires field="m_server" optional="false" />
 		<callback transition="validate" method="start" />
 		<callback transition="invalidate" method="stop" />
 	</component>

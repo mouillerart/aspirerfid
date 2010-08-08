@@ -45,10 +45,7 @@
   					<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 	              	<Bundle-Name>${project.name}</Bundle-Name>
 	              	<Bundle-Version>1.0.0</Bundle-Version>
-	              	<!-- 
-	              	<Bundle-Activator>org.ow2.aspirerfid.patrolman.server.PatrolmanServer</Bundle-Activator>
-	              	-->
-	              	<Import-Package>org.osgi.framework,org.osgi.util.tracker,org.ow2.aspirerfid.sandbox.calmant.bluetooth</Import-Package>
+	              	<Import-Package>org.osgi.framework,org.osgi.util.tracker,org.ow2.aspirerfid.bluetooth</Import-Package>
   				</instructions>
   			</configuration>
   		</plugin>
