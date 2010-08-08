@@ -47,17 +47,20 @@ public class MenuScreen extends Screen {
 	private static final Command m_exitCmd = new Command(m_exitName,
 			Command.EXIT, 1);
 
-	/** Connect Bluetooth device option */
-	private final String m_connectName = "Connect BT device";
+	/** Retrieve an ECSpec file from a server */
+	private static final String m_connectName = "Retrieve ECSpec";
 
 	/** Listen for tags */
-	private final String m_startTagsListeningName = "Wait for tags";
+	private static final String m_startTagsListeningName = "Wait for tags";
 
 	/** Stop listening for tags */
-	private final String m_stopTagsListeningName = "Stop waiting for tags";
+	private static final String m_stopTagsListeningName = "Stop waiting for tags";
 
 	/** Submit questionnaires to server */
-	private final String m_submitAll = "Submit questionnaires to server";
+	private static final String m_submitAll = "Submit questionnaires to server";
+
+	/** Disconnect from server */
+	private static final String m_disconnectServer = "Disconnect from server";
 
 	/** Tag listening state */
 	private boolean m_tagListening;
@@ -67,7 +70,8 @@ public class MenuScreen extends Screen {
 
 	/** Options names */
 	private final String[] m_optionsNames = { m_connectName,
-			m_startTagsListeningName, m_submitAll, m_exitName };
+			m_startTagsListeningName, m_submitAll, m_disconnectServer,
+			m_exitName };
 
 	/**
 	 * Creates the menu (options list), but doesn't activate it
@@ -112,15 +116,15 @@ public class MenuScreen extends Screen {
 			String option = m_optionsNames[m_optionsList.getSelectedIndex()];
 
 			// Exit menu command
-			if (option.compareTo(m_exitName) == 0) {
+			if (option.equals(m_exitName)) {
 				getMidlet().stopApplication(true, true);
 			}
 			// Connect menu command
-			else if (option.compareTo(m_connectName) == 0) {
+			else if (option.equals(m_connectName)) {
 				((Patrolman) getMidlet()).startBluetoothDetection(this);
 			}
 			// Toggle listening for tags
-			else if (option.compareTo(m_startTagsListeningName) == 0) {
+			else if (option.equals(m_startTagsListeningName)) {
 				if (m_tagListening) {
 					// Stop listening
 					((Patrolman) getMidlet()).stopTagDetection();
@@ -137,8 +141,12 @@ public class MenuScreen extends Screen {
 				}
 			}
 			// Submit all questionnaires
-			else if (option.compareTo(m_submitAll) == 0) {
-				((Patrolman) getMidlet()).submitAllQuestionnaires();
+			else if (option.equals(m_submitAll)) {
+				((Patrolman) getMidlet()).connectSubmitAllQuestionnaires();
+			}
+			// Disconnect from server
+			else if(option.equals(m_disconnectServer)) {
+				((Patrolman)getMidlet()).disconnectBluetooth();
 			}
 			// Unknown command
 			else

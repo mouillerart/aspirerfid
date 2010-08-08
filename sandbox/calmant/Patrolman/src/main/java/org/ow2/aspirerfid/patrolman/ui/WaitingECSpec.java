@@ -133,6 +133,7 @@ public class WaitingECSpec extends Screen {
 	private void refresh() {
 		m_btController.sendMessage(REFRESH_COMMAND);
 
+		m_infos.setText("Waiting for an answer...");
 		String data = m_btController.receiveMessage();
 		m_infos.setText("Analizing data...");
 
@@ -148,6 +149,16 @@ public class WaitingECSpec extends Screen {
 			m_infos.setText("Error analizing data :\n" + parseEx + "\n"
 					+ parseEx.getMessage());
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.nfc.midlet.generic.ui.Screen#setActive()
+	 */
+	public void setActive() {
+		super.setActive();
+		refresh();
 	}
 
 	/**

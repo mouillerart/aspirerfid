@@ -41,6 +41,7 @@ import org.ow2.aspirerfid.patrolman.nfc.TagReaderThread;
 import org.ow2.aspirerfid.patrolman.questionnaire.Questionnaire;
 import org.ow2.aspirerfid.patrolman.ui.MenuScreen;
 import org.ow2.aspirerfid.patrolman.ui.PresentationScreen;
+import org.ow2.aspirerfid.patrolman.ui.SubmitScreen;
 import org.ow2.aspirerfid.patrolman.ui.WaitingECSpec;
 
 /**
@@ -56,6 +57,9 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 
 	/** Menu screen */
 	private MenuScreen m_menuScreen;
+
+	/** Questionnaire submission screen */
+	private SubmitScreen m_submitScreen;
 
 	/** ECSpecs */
 	private Vector m_ecSpecs;
@@ -114,7 +118,7 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	 * BluetoothControlerUser#informConnected()
 	 */
 	public void informConnected() {
-		// Do nothing
+		// do nothing
 	}
 
 	/*
@@ -124,7 +128,7 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	 * BluetoothControlerUser#informDisonnected()
 	 */
 	public void informDisonnected() {
-		// Do nothing
+		// do nothing
 	}
 
 	/**
@@ -154,6 +158,7 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 		m_ecSpecs = new Vector();
 		m_btController = new BluetoothController(this);
 		m_menuScreen = new MenuScreen(this);
+		m_submitScreen = new SubmitScreen(this, m_menuScreen);
 		m_waitingScreen = new WaitingECSpec(this, m_btController, m_menuScreen);
 
 		setActiveScreen(new PresentationScreen(this));
@@ -205,21 +210,30 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 	}
 
 	/**
-	 * Submits all questionnaires to the server. If the phone is not connected
-	 * to a server, connects to a user-selected one
+	 * Shows the questionnaires submission screen, which automatically submits
+	 * all questionnaires.
+	 * 
+	 * If the phone is not connected to a server, a connection screen is shown
+	 * before the submission screen.
+	 */
+	public void connectSubmitAllQuestionnaires() {
+		if (!m_btController.isBluetoothConnected()) {
+			m_btController.connectBluetooth(m_menuScreen, m_submitScreen);
+		} else {
+			setActiveScreen(m_submitScreen);
+		}
+	}
+
+	/**
+	 * Submits all questionnaires to the server. The phone must be connected to
+	 * a server.
 	 */
 	public void submitAllQuestionnaires() {
-		if (!m_btController.isBluetoothConnected()) {
-			m_btController.connectBluetooth(m_menuScreen, m_menuScreen);
-		}
-
 		// Loop through ECSpecs
 		Enumeration spec_enum = m_ecSpecs.elements();
 		while (spec_enum.hasMoreElements()) {
 			sendECReportXMLFile((LightECSpec) spec_enum.nextElement());
 		}
-
-		showMessage("All reports sent");
 	}
 
 	/**
@@ -273,5 +287,16 @@ public class Patrolman extends GenericMidlet implements BluetoothControlerUser,
 		// No questionnaire found
 		showMessage("No questionnaire found for this tag ("
 				+ message.getTagUID() + ")");
+	}
+	
+	/**
+	 * Disconnect from BlueTooth server
+	 */
+	public void disconnectBluetooth() {
+		if(m_btController.isBluetoothConnected()) {
+			m_btController.disconnectBluetooth(m_menuScreen, m_menuScreen);
+		} else {
+			showMessage("Not connected");
+		}
 	}
 }
