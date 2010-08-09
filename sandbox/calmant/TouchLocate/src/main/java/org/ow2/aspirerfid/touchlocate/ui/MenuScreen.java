@@ -1,5 +1,19 @@
-/**
- * 
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package org.ow2.aspirerfid.touchlocate.ui;
 
@@ -49,6 +63,9 @@ public class MenuScreen extends Screen {
 
 	/** Information screen */
 	private InformationScreen m_infosScreen;
+	
+	/** POI search screen */
+	private POIScreen m_poiScreen;
 
 	/** Map screen */
 	private MapScreen m_mapScreen;
@@ -70,6 +87,7 @@ public class MenuScreen extends Screen {
 		m_previousScreen = previousScreen;
 
 		m_infosScreen = new InformationScreen(midlet, this);
+		m_poiScreen = new POIScreen(midlet, this);
 		m_mapScreen = new MapScreen(midlet, this);
 		m_locationMsg = null;
 
@@ -105,12 +123,14 @@ public class MenuScreen extends Screen {
 			String option = s_optionsNames[m_optionsList.getSelectedIndex()];
 
 			if (option.equals(s_showOnMap)) {
+				// Show Google Maps, centered on the tag location
 				m_mapScreen.setAddress(m_locationMsg.getLatitude(),
 						m_locationMsg.getLongitude());
 				
 				getMidlet().setActiveScreen(m_mapScreen);
 
 			} else if (option.equals(s_geocode)) {
+				// Retrieve address from GPS coordinates
 				GoogleMaps gmaps = new GoogleMaps("");
 				try {
 					m_infosScreen.setText(gmaps.reverseGeocodeAddress(
@@ -120,11 +140,15 @@ public class MenuScreen extends Screen {
 					m_infosScreen.setText("Error during reverse geocoding :\n"
 							+ e.toString());
 				}
-
+				getMidlet().setActiveScreen(m_infosScreen);
+				
 			} else if (option.equals(s_poi)) {
-				// TODO: show POI list
-
+				// Show POI search screen
+				m_poiScreen.setLocation(m_locationMsg.getLatitude(), m_locationMsg.getLongitude());
+				getMidlet().setActiveScreen(m_poiScreen);
+				
 			} else if (option.equals(s_infos)) {
+				// Show tag informations
 				m_infosScreen.setText(m_locationMsg.toString());
 				getMidlet().setActiveScreen(m_infosScreen);
 			}
