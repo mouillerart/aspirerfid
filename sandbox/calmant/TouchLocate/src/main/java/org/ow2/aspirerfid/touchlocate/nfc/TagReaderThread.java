@@ -32,14 +32,12 @@ import org.ow2.aspirerfid.nfc.midlet.generic.RequestMessage;
 import org.ow2.aspirerfid.nfc.midlet.reader.TagDetector;
 
 /**
- * Process the information tag and creates a message with all the information.
+ * Processes the information tag and creates a message with all the information.
  * 
  * @author Andres Gomez
  * @author Thomas Calmant
  */
 public class TagReaderThread extends ReaderThread {
-	/** Location record type */
-	public static final String LOCATION_TYPE = "urn:nfc:wkt:L";
 
 	/**
 	 * Instance the class.
@@ -90,8 +88,7 @@ public class TagReaderThread extends ReaderThread {
 								return reader_msg;
 						}
 					}
-				} else
-					reader_msg.appendInformation("No message");
+				}
 			} catch (IOException e) {
 				reader_msg.appendInformation("IOException : " + e.getMessage());
 			} catch (ContactlessException e) {

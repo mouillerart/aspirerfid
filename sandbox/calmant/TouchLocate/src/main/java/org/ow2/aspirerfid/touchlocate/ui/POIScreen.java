@@ -32,6 +32,8 @@ import fr.touchkey.gui.GoogleMaps;
  * Points of interest search screen.
  * 
  * @author Thomas Calmant
+ * 
+ *         TODO parse JSON POI data and show it nicely
  */
 public class POIScreen extends Screen {
 

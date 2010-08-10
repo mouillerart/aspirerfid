@@ -29,8 +29,9 @@ import org.ow2.aspirerfid.touchlocate.nfc.TagLocationMessage;
 import fr.touchkey.gui.GoogleMaps;
 
 /**
- * @author Thomas Calmant
+ * Proposes actions to the user. Actions success depends on location tag data.
  * 
+ * @author Thomas Calmant
  */
 public class MenuScreen extends Screen {
 
@@ -63,7 +64,7 @@ public class MenuScreen extends Screen {
 
 	/** Information screen */
 	private InformationScreen m_infosScreen;
-	
+
 	/** POI search screen */
 	private POIScreen m_poiScreen;
 
@@ -126,7 +127,7 @@ public class MenuScreen extends Screen {
 				// Show Google Maps, centered on the tag location
 				m_mapScreen.setAddress(m_locationMsg.getLatitude(),
 						m_locationMsg.getLongitude());
-				
+
 				getMidlet().setActiveScreen(m_mapScreen);
 
 			} else if (option.equals(s_geocode)) {
@@ -141,12 +142,13 @@ public class MenuScreen extends Screen {
 							+ e.toString());
 				}
 				getMidlet().setActiveScreen(m_infosScreen);
-				
+
 			} else if (option.equals(s_poi)) {
 				// Show POI search screen
-				m_poiScreen.setLocation(m_locationMsg.getLatitude(), m_locationMsg.getLongitude());
+				m_poiScreen.setLocation(m_locationMsg.getLatitude(),
+						m_locationMsg.getLongitude());
 				getMidlet().setActiveScreen(m_poiScreen);
-				
+
 			} else if (option.equals(s_infos)) {
 				// Show tag informations
 				m_infosScreen.setText(m_locationMsg.toString());
@@ -154,5 +156,4 @@ public class MenuScreen extends Screen {
 			}
 		}
 	}
-
 }

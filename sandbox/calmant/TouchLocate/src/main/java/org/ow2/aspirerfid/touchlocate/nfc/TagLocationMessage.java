@@ -21,10 +21,12 @@ import org.ow2.aspirerfid.nfc.midlet.generic.RequestMessage;
 import org.ow2.aspirerfid.nfc.midlet.reader.TagDetector;
 
 /**
- * @author Thomas Calmant
+ * Parses and stores location tag data  
  * 
+ * @author Thomas Calmant
  */
 public class TagLocationMessage extends RequestMessage {
+	
 	/** Latitude field number in record */
 	private static final int LATITUDE_FIELD = 0;
 	/** Longitude field number in record */
@@ -153,6 +155,13 @@ public class TagLocationMessage extends RequestMessage {
 	 */
 	public String getTagUID() {
 		return m_uid;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isValid() {
+		return m_latitude != Double.NaN && m_longitude != Double.NaN;
 	}
 
 	/**

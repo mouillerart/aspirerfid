@@ -1,5 +1,19 @@
-/**
- * 
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package org.ow2.aspirerfid.touchlocate.ui;
 
@@ -11,11 +25,18 @@ import fr.touchkey.gui.GmapManipulationThread;
 import fr.touchkey.gui.KeyLocation;
 
 /**
+ * Draws a Google Map static image. Handles moving and zooming.
+ * 
  * @author Thomas Calmant
  * 
+ *         TODO cache images in memory (~60 kb/image) to speed up UI (10 seconds
+ *         freeze per image loading)
  */
 public class MapCanvas extends KeyLocation {
-	private static final Command s_backCmd = new Command("Back", Command.BACK, 0);
+
+	/** Back command */
+	private static final Command s_backCmd = new Command("Back", Command.BACK,
+			0);
 
 	/** Parent {@link MapScreen} */
 	private MapScreen m_parentScreen;
@@ -32,7 +53,7 @@ public class MapCanvas extends KeyLocation {
 
 		m_parentScreen = parentScreen;
 		m_address = null;
-		
+
 		addCommand(s_backCmd);
 		setCommandListener(this);
 	}
@@ -40,7 +61,7 @@ public class MapCanvas extends KeyLocation {
 	/**
 	 * Overrides KeyLocation address
 	 * 
-	 * @return Address to center map
+	 * @return Location of map center
 	 */
 	public String getAdresse() {
 		return m_address;
@@ -72,7 +93,7 @@ public class MapCanvas extends KeyLocation {
 		// Reset display
 		setMap(null);
 		repaint();
-		
+
 		// Load the new map
 		m_address = address;
 		new GmapManipulationThread(this, Constante.GETMAP).start();

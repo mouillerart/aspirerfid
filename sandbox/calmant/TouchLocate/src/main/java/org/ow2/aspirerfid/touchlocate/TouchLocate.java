@@ -108,11 +108,16 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 			m_waitScreen.setText("Not a location tag");
 			return;
 		}
+		
+		TagLocationMessage location = (TagLocationMessage) msg;
+		if(!location.isValid()) {
+			m_waitScreen.setText("Invalid location tag");
+			return;
+		}
 
-		m_menuScreen.setLocationMessage((TagLocationMessage) msg);
+		m_menuScreen.setLocationMessage(location);
 
 		setActiveScreen(m_menuScreen);
 		m_waitScreen.setText("Waiting for a tag...");
 	}
-
 }

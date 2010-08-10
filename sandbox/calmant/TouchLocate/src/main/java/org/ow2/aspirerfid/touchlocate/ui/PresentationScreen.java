@@ -32,17 +32,14 @@ import org.ow2.aspirerfid.nfc.midlet.generic.ui.Screen;
 import org.ow2.aspirerfid.nfc.midlet.generic.ui.UITools;
 
 /**
- * Presentation screen (title + logo) Based on Andres Gomez code
+ * Presentation screen (title + logo)
  * 
  * @author Thomas Calmant
- * 
  */
 public class PresentationScreen extends Screen {
-	/** UI container */
-	private Form m_form;
 
 	/** Next screen command */
-	private Command m_enter;
+	private static final Command m_enter = new Command("Enter", Command.OK, 0);
 
 	/** Next screen */
 	private Screen m_nextScreen;
@@ -51,18 +48,15 @@ public class PresentationScreen extends Screen {
 		super(midlet);
 		m_nextScreen = nextScreen;
 
-		m_form = new Form("Touch'n Locate Demo");
-
-		// Command to pass to the main menu.
-		m_enter = new Command("Enter", Command.OK, 1);
-		m_form.addCommand(m_enter);
+		Form form = new Form("Touch'n Locate Demo");
+		form.addCommand(m_enter);
 
 		// Loads an image and adds it to the current form.
 		try {
 			InputStream inputStream = this.getClass().getResourceAsStream(
 					"/aspire.jpg");
 
-			m_form.append(new ImageItem(null, UITools
+			form.append(new ImageItem(null, UITools
 					.getImageInParam(inputStream), ImageItem.LAYOUT_CENTER,
 					null));
 
@@ -75,12 +69,12 @@ public class PresentationScreen extends Screen {
 		StringItem description = new StringItem("",
 				"LIG - Adele\nThomas Calmant\n2010\nIncludes code from\nTeam TouchKey");
 		description.setLayout(Item.LAYOUT_CENTER);
-		m_form.append(description);
+		form.append(description);
 
 		// Establishes the listener to this screen.
-		m_form.setCommandListener(this);
+		form.setCommandListener(this);
 
-		setDiplayable(m_form);
+		setDiplayable(form);
 	}
 
 	/*
@@ -91,19 +85,9 @@ public class PresentationScreen extends Screen {
 	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command command, Displayable displayable) {
-		if (displayable != m_form) {
-			// Invalid displayable.
-			throw new RuntimeException(
-					"Error: Invalid 'presentation' displayable");
-		}
-
 		// Skip command.
 		if (command == m_enter) {
 			getMidlet().setActiveScreen(m_nextScreen);
-		} else {
-			// Unknown command.
-			throw new RuntimeException(
-					"Error: Invalid command in 'presentation'");
 		}
 	}
 
