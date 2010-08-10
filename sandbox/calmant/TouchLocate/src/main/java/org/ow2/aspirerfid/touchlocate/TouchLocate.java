@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 package org.ow2.aspirerfid.touchlocate;
 
 import javax.microedition.contactless.TargetProperties;
@@ -29,7 +46,7 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 
 	/** Tag waiting screen */
 	private WaitingScreen m_waitScreen;
-	
+
 	/** Tag handling screen */
 	private MenuScreen m_menuScreen;
 
@@ -41,7 +58,7 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 	protected void startApp() throws MIDletStateChangeException {
 		m_waitScreen = new WaitingScreen(this);
 		m_menuScreen = new MenuScreen(this, m_waitScreen);
-		
+
 		setActiveScreen(new PresentationScreen(this, m_waitScreen));
 	}
 
@@ -87,23 +104,14 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 	 * .nfc.midlet.generic.RequestMessage)
 	 */
 	public void tagRead(RequestMessage msg) {
-		// FIXME debug purpose
-		TagLocationMessage loc = new TagLocationMessage(this);
-		loc.m_latitude = 45.7;
-		loc.m_longitude = 5.04;
-		
-		
-		/*
-		if(!(msg instanceof TagLocationMessage)) {
+		if (!(msg instanceof TagLocationMessage)) {
 			m_waitScreen.setText("Not a location tag");
 			return;
 		}
-		*/
-		
-		m_menuScreen.setLocationMessage(loc);
-		// m_menuScreen.setLocationMessage((TagLocationMessage) msg);
+
+		m_menuScreen.setLocationMessage((TagLocationMessage) msg);
+
 		setActiveScreen(m_menuScreen);
-		
 		m_waitScreen.setText("Waiting for a tag...");
 	}
 

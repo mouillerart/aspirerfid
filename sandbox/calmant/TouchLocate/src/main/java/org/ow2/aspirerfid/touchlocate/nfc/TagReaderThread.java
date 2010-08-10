@@ -1,5 +1,19 @@
-/**
- * 
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package org.ow2.aspirerfid.touchlocate.nfc;
 
@@ -19,7 +33,6 @@ import org.ow2.aspirerfid.nfc.midlet.reader.TagDetector;
 
 /**
  * Process the information tag and creates a message with all the information.
- * TODO To read the content is probably necessary to use NDEFMessage interface.
  * 
  * @author Andres Gomez
  * @author Thomas Calmant
@@ -46,8 +59,6 @@ public class TagReaderThread extends ReaderThread {
 	 * @see
 	 * org.ow2.aspirerfid.nfc.midlet.generic.ReaderThread#buildMessage(javax
 	 * .microedition.contactless.TargetProperties)
-	 * 
-	 * TODO: remove/improve debug informations
 	 */
 	protected RequestMessage buildMessage(TargetProperties targetProp) {
 		TagLocationMessage reader_msg = new TagLocationMessage(m_midlet);
@@ -71,24 +82,24 @@ public class TagReaderThread extends ReaderThread {
 
 					for (int i = 0; i < nb_records; i++) {
 						NDEFRecord rec = records[i];
-						
-						if(rec != null) { // && rec.getRecordType().getName().equals(LOCATION_TYPE)) {
-							// reader_msg.info += rec.getRecordType().toString() + " - " + rec.getRecordType().getName() + "\n";
-							String id = byte2string(rec.getId());
-							if(reader_msg.setLocation(id, rec.getPayload())) {
+
+						if (rec != null) {
+							// Return the first correctly read message
+							if (reader_msg.setLocation(rec.getRecordType()
+									.getName(), rec.getPayload()))
 								return reader_msg;
-							}
 						}
 					}
-				}
-				else
-					reader_msg.info += "No message\n";
+				} else
+					reader_msg.appendInformation("No message");
 			} catch (IOException e) {
-				reader_msg.info += "IOEx - " + e.getMessage() + "\n";
+				reader_msg.appendInformation("IOException : " + e.getMessage());
 			} catch (ContactlessException e) {
-				reader_msg.info += "ClEx - " + e.getMessage() + "\n";
+				reader_msg.appendInformation("ContactlessException : "
+						+ e.getMessage());
 			} catch (Exception e) {
-				reader_msg.info += "Ex - " + e.getMessage() + "\n";
+				reader_msg.appendInformation("Exception : " + e + "\n"
+						+ e.getMessage());
 			} finally {
 				if (conn != null) {
 					try {
@@ -99,28 +110,7 @@ public class TagReaderThread extends ReaderThread {
 				}
 			}
 		}
-		
+
 		return reader_msg;
-	}
-
-	private String byte2string(byte[] bytes) {
-		String ret = "";
-		if (bytes == null)
-			return "null";
-
-		for (int i = 0; i < bytes.length; i++) {
-			/*
-			 * Worst behavior I've ever seen on a Nokia : A direct conversion
-			 * from byte to char throws a NullPointerException An arithmetic
-			 * conversion (0 + byte value) is OK.
-			 */
-			char conv = 0;
-			byte c = bytes[i];
-
-			conv += c;
-			ret += conv;
-		}
-
-		return ret;
 	}
 }
