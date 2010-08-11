@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.touchkey.team</groupId>
+    <artifactId>touchkey</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>TouchKey Google Maps GUI</name>
+
+    <organization>
+        <name>Team TouchKey</name>
+        <url>http://team.touchkey.fr</url>
+    </organization>
+    
+    <licenses>
+	  <license>
+	    <name>GNU Lesser Public License 2.1</name>
+	    <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
+	  </license>
+	</licenses>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.nokia</groupId>
+            <artifactId>cldc</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.3</source>
+                    <target>1.1</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
