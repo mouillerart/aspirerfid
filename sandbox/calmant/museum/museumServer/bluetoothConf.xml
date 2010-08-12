@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Bluetooth Properties</comment>
+	<entry key="uuid">3807a6762b5f46adb9b48fef8ad0952d</entry>
+	<entry key="serviceName">Museum Server</entry>
+	<entry key="authenticate">false</entry>
+	<entry key="encrypt">false</entry>
+	<entry key="inquiryMode">10390323</entry>
+</properties>

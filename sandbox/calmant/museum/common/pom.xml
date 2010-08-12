@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<!-- parent>
+		<groupId>org.ow2.aspire.rfid.nfc</groupId>
+		<artifactId>nokia</artifactId>
+		<version>0.1.0</version>
+	</parent-->
+
+	<groupId>org.ow2.aspirerfid.museum</groupId>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>common</artifactId>
+	<packaging>bundle</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>Museum Commons</name>
+	<dependencies>
+
+		<dependency>
+			<groupId>xparse</groupId>
+			<artifactId>xparse-j</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+			<type>jar</type>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>
+							${pom.artifactId}
+						</Bundle-SymbolicName>
+						<Import-Package>!javax.swing.*,*</Import-Package>
+						<Export-Package>!javax.swing.*,*</Export-Package>
+						<!-- Bundle-Activator>
+
+							</Bundle-Activator>
+						-->
+						<Embed-Dependency>!junit,xparse;*</Embed-Dependency>
+
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.4</source>
+					<target>1.4</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.ow2.aspirerfid.museum</groupId>
+    <artifactId>midlet</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Museum Midlet</name>
+
+    <organization>
+        <name>Aspire RFID</name>
+    </organization>
+
+    <properties>
+        <me2Version>2.0.1</me2Version><!--me-version-->
+
+        <wtk.home>${env.WTK_HOME}</wtk.home>
+
+        <j2me.midlet.vendor>
+            ${project.organization.name}
+        </j2me.midlet.vendor>
+        <j2me.midlet.name>${project.name}</j2me.midlet.name>
+        <j2me.midlet.version>0.0.1-SNAPSHOT</j2me.midlet.version>
+        <j2me.midlet.configuration>CLDC-1.1</j2me.midlet.configuration>
+        <j2me.midlet.profile>MIDP-2.0</j2me.midlet.profile>
+
+
+        <wtk.bluetooth.enabled>true</wtk.bluetooth.enabled>
+        <wtk.midpapi>${env.WTK_HOME}/lib/midpapi20.zip</wtk.midpapi>
+
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>xparse</groupId>
+            <artifactId>xparse-j</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ow2.aspirerfid.museum</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ow2.aspirerfid</groupId>
+            <artifactId>architecture</artifactId>
+            <version>2.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nokia</groupId>
+            <artifactId>cldc</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.nokia</groupId>
+            <artifactId>bluetooth</artifactId>
+            <version>1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.nokia</groupId>
+            <artifactId>contactless</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.3</source>
+                    <target>1.1</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.pyx4me</groupId>
+                <artifactId>j2me-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <wtkHome>${env.WTK_HOME}</wtkHome>
+                    <proguardInclude>proguard.conf</proguardInclude>
+                    <proguard>true</proguard>
+                    <obfuscate>false</obfuscate>
+
+                    <!-- To not use the WTK libs but use the given ones. -->
+                    <useWtkLibs>false</useWtkLibs>
+                    <libs>
+                        <lib>${env.WTK_HOME}/lib/ext/cldcapi11.zip</lib>
+                        <lib>${env.WTK_HOME}/lib/ext/bluetooth.zip</lib>
+                        <lib>${env.WTK_HOME}/lib/ext/nfc.zip</lib>
+                    </libs>
+
+                    <!-- List of dependencies to avoid the duplicated definition error when intalling with maven -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>xparse</groupId>
+                            <artifactId>xparse-j</artifactId>
+                            <filter>!com/exploringxml/xml/**</filter>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.ow2.aspirerfid.museum</groupId>
+                            <artifactId>common</artifactId>
+                            <filter>
+                                !org/ow2/aspirerfid/museum/pojo/**,!org/ow2/aspirerfid/museum/pojo/artwork/**,!org/ow2/aspirerfid/museum/pojo/question/**,!org/ow2/aspirerfid/museum/util/**
+                            </filter>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.ow2.aspirerfid</groupId>
+                            <artifactId>architecture</artifactId>
+                            <filter>
+                                !org/ow2/aspirerfid/midlet/generic/**,!org/ow2/aspirerfid/midlet/generic/ui/**,!org/ow2/aspirerfid/midlet/message/receive/**,!org/ow2/aspirerfid/midlet/message/send/**,!org/ow2/aspirerfid/midlet/reader/**,!org/ow2/aspirerfid/midlet/reader/rfid/**,!org/ow2/aspirerfid/midlet/reader/rfid/thread/**,!org/ow2/aspirerfid/midlet/sendersReceivers/bluetooth/**,!org/ow2/aspirerfid/midlet/sendersReceivers/bluetooth/states/**,!org/ow2/aspirerfid/midlet/sendersReceivers/bluetooth/ui/**,!org/ow2/aspirerfid/midlet/sendersReceivers/**
+                            </filter>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.nokia</groupId>
+                            <artifactId>cldc</artifactId>
+                            <exclude>true</exclude>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.nokia</groupId>
+                            <artifactId>bluetooth</artifactId>
+                            <exclude>true</exclude>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.nokia</groupId>
+                            <artifactId>contactless</artifactId>
+                            <exclude>true</exclude>
+                        </dependency>
+                    </dependencies>
+
+                    <!-- List of jars to include in the file to deploy in the phone. -->
+                    <assembly>
+                        <inclusions>
+                            <inclusion>
+                                <groupId>xparse</groupId>
+                                <artifactId>xparse-j</artifactId>
+                            </inclusion>
+                            <inclusion>
+                                <groupId>
+                                    org.ow2.aspirerfid
+                                </groupId>
+                                <artifactId>architecture</artifactId>
+                            </inclusion>
+                            <inclusion>
+                                <groupId>
+                                    org.ow2.aspirerfid.museum
+                                </groupId>
+                                <artifactId>common</artifactId>
+                            </inclusion>
+                        </inclusions>
+                    </assembly>
+
+                    <!-- JAD file -->
+                    <jadAttributes>
+                        <MIDlet-Vendor>
+                            ${project.organization.name}
+                        </MIDlet-Vendor>
+                        <Created-By>ADELE Lab</Created-By>
+                        <!--
+                            To ask the platform to optionally grant permissions provided certain API-subsets are available, use:
+                            <MIDlet-Permissions-Opt>javax.wireless.messaging.sms.receive,javax.wireless.messaging.sms.send</MIDlet-Permissions-Opt>
+                            <MIDlet-Permissions>
+                            javax.microedition.io.Connector.http
+                            </MIDlet-Permissions>
+                        -->
+                        <!-- Generated ID of the deployment of the midlet. -->
+                        <MIDlet-UUID>
+                            7e628dda4afb4f2faa2f132c4f3d33ed
+                        </MIDlet-UUID>
+                        <!-- Bluetooth addresses of the servers -->
+                        <XXXRemoteServer-1>
+                            001A6BADEC03
+                        </XXXRemoteServer-1>
+                        <XXXRemoteServer-2>
+                            000272C4F12E
+                        </XXXRemoteServer-2>
+                        <!-- GIAC or LIAC -->
+                        <Local-BTAccessCode>
+                            10390323
+                        </Local-BTAccessCode>
+                        <!-- Service name in the server. -->
+                        <Server-UUID>
+                            3807a6762b5f46adb9b48fef8ad0952d
+                        </Server-UUID>
+                        <!-- Automatic connection when detecting just one server. -->
+                        <BT-OneAutomatic>true</BT-OneAutomatic>
+                        <transmitted-parameters>true</transmitted-parameters>
+                    </jadAttributes>
+
+                    <!-- MANIFEST File -->
+                    <archive>
+                        <manifestEntries>
+                            <url>${pom.url}</url>
+                        </manifestEntries>
+                    </archive>
+
+                    <!-- List of midlets to run -->
+                    <midlets>
+                        <!-- for each MIDlet entry-point, simply reiterate this section -->
+                        <MIDlet>
+                            <name>Museum</name>
+                            <icon>/museum.jpg</icon>
+                            <class>
+                                org.ow2.aspirerfid.museum.midlet.MuseumMidlet
+                            </class>
+                        </MIDlet>
+                    </midlets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
