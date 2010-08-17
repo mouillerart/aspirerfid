@@ -41,9 +41,9 @@ import javax.microedition.io.StreamConnectionNotifier;
  * <pre>
  * server = new BluetoothServer();
  * // Configure the server
- * server.prepareServer()
+ * server.prepareServer();
  * // Wait for clients
- * new Thread(server).start();
+ * server.startServer();
  * </pre>
  * 
  * @author Thomas Calmant
@@ -76,6 +76,9 @@ public class BluetoothServer implements BluetoothServerService,
 
 	/** Debug mode activation */
 	private boolean m_debugMode;
+	
+	/** Authorize only one thread instance */
+	private static boolean s_threadRunning = false;
 
 	/**
 	 * Prepares the thread pool
@@ -105,11 +108,24 @@ public class BluetoothServer implements BluetoothServerService,
 		// m_threadPool = Executors.newFixedThreadPool(nbThreads);
 		// m_threadPool = Executors.newCachedThreadPool();
 	}
+	
+	/**
+	 * Server starter utility method
+	 */
+	public void startServer() {
+		if(s_threadRunning)
+			return;
+		
+		new Thread(this).start();
+	}
 
 	/**
 	 * Client acceptance loop. May be used in a thread
 	 */
 	public void run() {
+		if(s_threadRunning)
+			return;
+		
 		try {
 			// Publish the service and waits for connections.
 			debug("Start advertising service...");
@@ -118,6 +134,7 @@ public class BluetoothServer implements BluetoothServerService,
 			m_connectionNotifier = (StreamConnectionNotifier) Connector
 					.open(m_url);
 
+			s_threadRunning = true;
 			m_stop = false;
 
 			while (!m_stop) {
@@ -158,6 +175,7 @@ public class BluetoothServer implements BluetoothServerService,
 			error.printStackTrace();
 		} finally {
 			stop();
+			s_threadRunning = false;
 		}
 	}
 
@@ -268,8 +286,11 @@ public class BluetoothServer implements BluetoothServerService,
 		m_stop = true;
 
 		// Stop all communications
-		for (BluetoothCommunication comm : m_clients.values())
-			comm.stop();
+		for (BluetoothCommunication comm : m_clients.values()) {
+			if(comm != null) {
+				comm.stop();
+			}
+		}
 
 		// Kill clients threads
 		// m_threadPool.shutdownNow();
@@ -282,8 +303,13 @@ public class BluetoothServer implements BluetoothServerService,
 		}
 
 		// BlueCove stack specific shutdown
-		com.intel.bluetooth.BlueCoveImpl.shutdownThreadBluetoothStack();
-		com.intel.bluetooth.BlueCoveImpl.shutdown();
+		try {
+			com.intel.bluetooth.BlueCoveImpl.shutdownThreadBluetoothStack();
+			com.intel.bluetooth.BlueCoveImpl.shutdown();
+		} catch (Exception ex) {
+			// This may never happen...
+			debug("Exception during BlueCove shutdown : " + ex);
+		}
 	}
 
 	/*
