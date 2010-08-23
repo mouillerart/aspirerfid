@@ -19,33 +19,47 @@ package org.ow2.aspirerfid.touchlocate.ui;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
+import javax.microedition.lcdui.Form;
+import javax.microedition.lcdui.StringItem;
 
 import org.ow2.aspirerfid.nfc.midlet.generic.GenericMidlet;
 import org.ow2.aspirerfid.nfc.midlet.generic.ui.Screen;
 
 /**
- * Displays a Google Map canvas
+ * Shows PoI informations
  * 
  * @author Thomas Calmant
  */
-public class MapScreen extends Screen {
+public class POIInfoScreen extends Screen {
+
+	/** Back command */
+	private static final Command s_backCmd = new Command("Back", Command.BACK,
+			0);
 
 	/** Previous screen */
 	private Screen m_previousScreen;
 
-	/** GMap canvas */
-	private MapCanvas m_mapCanvas;
+	/** Information field */
+	private StringItem m_infos;
 
 	/**
 	 * @param midlet
 	 *            Parent MIDlet
+	 * @param previousScreen
+	 *            Back screen
 	 */
-	public MapScreen(GenericMidlet midlet, Screen previousScreen) {
+	public POIInfoScreen(GenericMidlet midlet, Screen previousScreen) {
 		super(midlet);
 		m_previousScreen = previousScreen;
 
-		m_mapCanvas = new MapCanvas(this);
-		setDiplayable(m_mapCanvas);
+		m_infos = new StringItem(null, null);
+
+		Form form = new Form("Point of Interest");
+		form.append(m_infos);
+		form.addCommand(s_backCmd);
+		form.setCommandListener(this);
+
+		setDiplayable(form);
 	}
 
 	/*
@@ -56,36 +70,41 @@ public class MapScreen extends Screen {
 	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command command, Displayable displayable) {
-		// No action at this level
+		if (command == s_backCmd) {
+			getMidlet().setActiveScreen(m_previousScreen);
+		}
 	}
 
 	/**
-	 * Changes the map center address
+	 * Sets PoI informations to be shown
 	 * 
-	 * @param address
-	 *            The new address / GPS coordinates
+	 * @param poi
+	 *            Point of Interest
 	 */
-	public void setAddress(String address) {
-		m_mapCanvas.loadMap(address);
-	}
+	public void setPoI(PointOfInterest poi) {
 
-	/**
-	 * Changes the map center address
-	 * 
-	 * @param latitude
-	 *            Location latitude
-	 * @param longitude
-	 *            Location longitude
-	 */
-	public void setAddress(double latitude, double longitude) {
-		m_mapCanvas.loadMap(Double.toString(latitude) + ','
-				+ Double.toString(longitude));
-	}
+		String info = "";
 
-	/**
-	 * Activates the previous menu
-	 */
-	protected void goBack() {
-		getMidlet().setActiveScreen(m_previousScreen);
+		if (poi.title != null) {
+			info += "Title: " + poi.title + "\n";
+		}
+
+		if (poi.address != null) {
+			info += "Address: " + poi.address + "\n";
+		}
+
+		if (poi.city != null) {
+			info += "City: " + poi.city + "\n";
+		}
+
+		if (poi.phone != null) {
+			info += "Phone: " + poi.phone + "\n";
+		}
+
+		if (poi.latitude != null && poi.longitude != null) {
+			info += "Location :\n" + poi.latitude + ", " + poi.longitude + "\n";
+		}
+
+		m_infos.setText(info);
 	}
 }

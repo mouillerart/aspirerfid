@@ -17,13 +17,21 @@
  */
 package org.ow2.aspirerfid.touchlocate.ui;
 
+import java.util.Vector;
+
+import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
-import javax.microedition.lcdui.StringItem;
+import javax.microedition.lcdui.Item;
+import javax.microedition.lcdui.ItemCommandListener;
 import javax.microedition.lcdui.TextField;
 
+import org.json.me.JSONArray;
+import org.json.me.JSONException;
+import org.json.me.JSONObject;
 import org.ow2.aspirerfid.nfc.midlet.generic.GenericMidlet;
+import org.ow2.aspirerfid.nfc.midlet.generic.ui.AlertScreen;
 import org.ow2.aspirerfid.nfc.midlet.generic.ui.Screen;
 
 import fr.touchkey.gui.GoogleMaps;
@@ -32,10 +40,8 @@ import fr.touchkey.gui.GoogleMaps;
  * Points of interest search screen.
  * 
  * @author Thomas Calmant
- * 
- *         TODO parse JSON POI data and show it nicely
  */
-public class POIScreen extends Screen {
+public class POIScreen extends Screen implements ItemCommandListener {
 
 	/** Back command */
 	private static final Command m_backCmd = new Command("Back", Command.BACK,
@@ -51,8 +57,14 @@ public class POIScreen extends Screen {
 	/** Search text field */
 	private TextField m_searchField;
 
-	/** Result string item */
-	private StringItem m_resultUI;
+	/** Results list UI */
+	private ChoiceGroup m_resultsListUI;
+
+	/** PoI Screen */
+	private POIInfoScreen m_poiScreen;
+
+	/** Results list */
+	private Vector m_results;
 
 	/** Center latitude */
 	private double m_latitude;
@@ -69,13 +81,17 @@ public class POIScreen extends Screen {
 	public POIScreen(GenericMidlet midlet, Screen previousScreen) {
 		super(midlet);
 		m_previousScreen = previousScreen;
+		m_results = new Vector();
+
+		m_poiScreen = new POIInfoScreen(midlet, this);
 
 		m_searchField = new TextField("Search", "", 64, TextField.ANY);
-		m_resultUI = new StringItem("Result :", null);
+		m_resultsListUI = new ChoiceGroup("Result", ChoiceGroup.IMPLICIT);
+		m_resultsListUI.setItemCommandListener(this);
 
 		Form form = new Form("POI search");
 		form.append(m_searchField);
-		form.append(m_resultUI);
+		form.append(m_resultsListUI);
 
 		form.addCommand(m_findCmd);
 		form.addCommand(m_backCmd);
@@ -108,19 +124,101 @@ public class POIScreen extends Screen {
 		if (command == m_findCmd) {
 			GoogleMaps maps = new GoogleMaps("");
 			try {
-				m_resultUI.setText("Retrieving data...");
+				showMessage("Retrieving data...");
 				String result = maps.findPOIinJSON(m_searchField.getString(),
 						m_latitude, m_longitude);
 
-				// TODO parse JSON data and show it correctly
-				// TODO find a way to limit the search area
-				m_resultUI.setText(result);
+				// parse JSON data and show it correctly
+				parseJSONList(result);
 			} catch (Exception ex) {
-				m_resultUI.setText("Error :\n" + ex);
+				showMessage("Error :\n" + ex);
 			}
 		} else if (command == m_backCmd) {
 			getMidlet().setActiveScreen(m_previousScreen);
 		}
 	}
 
+	/**
+	 * Parses Google Ajax API result
+	 * 
+	 * @param json
+	 *            JSON data received from Google
+	 * @throws JSONException
+	 *             Error parsing the JSON data
+	 */
+	private void parseJSONList(String json) throws JSONException {
+		JSONObject input = new JSONObject(json);
+
+		if (!input.getString("responseStatus").equals("200")) {
+			return;
+		}
+
+		JSONArray dico = input.getJSONObject("responseData").getJSONArray(
+				"results");
+		int nb_results = dico.length();
+
+		for (int i = 0; i < nb_results; i++) {
+			JSONObject element = dico.getJSONObject(i);
+			PointOfInterest poi = new PointOfInterest();
+
+			poi.title = element.optString("titleNoFormatting");
+			if (poi.title == null) {
+				poi.title = element.optString("title");
+			}
+
+			poi.latitude = element.optString("lat");
+			poi.longitude = element.optString("lng");
+
+			poi.address = element.optString("streetAddress");
+			poi.city = element.optString("city");
+
+			JSONObject phoneObject = element.optJSONObject("phoneNumbers");
+			if (phoneObject != null) {
+				poi.phone = phoneObject.optString("number");
+			}
+
+			if (poi.isValid()) {
+				m_results.addElement(poi);
+				m_resultsListUI.append(poi.toString(), null);
+			}
+		}
+	}
+
+	/**
+	 * Shows a message on the UI
+	 * 
+	 * @param text
+	 *            Text to show
+	 */
+	private void showMessage(String text) {
+		AlertScreen as = new AlertScreen(getMidlet(), text);
+		getMidlet().setActiveScreen(as);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.microedition.lcdui.ItemCommandListener#commandAction(javax.microedition
+	 * .lcdui.Command, javax.microedition.lcdui.Item)
+	 */
+	public void commandAction(Command command, Item item) {
+		if (item != m_resultsListUI)
+			return;
+
+		// Retrieve selected element
+		String title = m_resultsListUI.getString(m_resultsListUI
+				.getSelectedIndex());
+
+		// Get its informations
+		int index = m_results.indexOf(title);
+		if (index == -1)
+			return;
+
+		PointOfInterest poi = (PointOfInterest) m_results.elementAt(index);
+		if (poi.isValid()) {
+			m_poiScreen.setPoI(poi);
+			getMidlet().setActiveScreen(m_poiScreen);
+		}
+	}
 }

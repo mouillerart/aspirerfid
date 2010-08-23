@@ -1,0 +1,8 @@
+Touch'n locate Demo
+
+This demo needs a specific dependency : a JSON parser for JavaME.
+It must provide to the JSON Java API (http://www.json.org/java/).
+The corresponding Maven dependency for this project is : org.json.me / json-mobile
+
+ Valid library (to be converted into a Maven Artifact) : 
+ https://meapplicationdevelopers.dev.java.net/source/browse/meapplicationdevelopers/demobox/mobileajax/lib/json/ 
