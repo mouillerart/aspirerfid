@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) Aspire
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 package org.ow2.aspirerfid.patrolman.server;
 
 import java.io.DataInputStream;
@@ -11,6 +28,7 @@ import org.ow2.aspirerfid.bluetooth.BluetoothServerService;
 import org.ow2.aspirerfid.bluetooth.CommunicationListener;
 
 public class PatrolmanServer implements CommunicationListener {
+
 	/** ECSpec file */
 	public static final String ECSPEC_FILE = "/res/ECSpec.xml";
 
@@ -29,20 +47,20 @@ public class PatrolmanServer implements CommunicationListener {
 	public void start() {
 		m_readingClients = new HashMap<String, String>();
 
-		if (!m_server.isRunning()) {
-			try {
-				m_server.prepareServer(PatrolmanServer.class
-						.getResourceAsStream(BT_SETTINGS));
-			} catch (IOException e) {
-				System.err
-						.println("[Patrolman] Error reading configuration file");
-				e.printStackTrace(System.err);
-			}
-			new Thread(m_server).start();
-			System.out.println("Server started.");
+		try {
+			// Configure the server
+			m_server.prepareServer(PatrolmanServer.class
+					.getResourceAsStream(BT_SETTINGS));
+		} catch (IOException e) {
+			System.err.println("[Patrolman] Error reading configuration file");
+			e.printStackTrace(System.err);
 		}
 
+		// Subscribe this bundle to server communications
 		m_server.addCommunicationListener(this);
+
+		// Start the server
+		m_server.startServer();
 		System.out.println("Waiting for clients");
 	}
 
@@ -51,6 +69,7 @@ public class PatrolmanServer implements CommunicationListener {
 	 */
 	public void stop() {
 		m_readingClients.clear();
+		m_readingClients = null;
 	}
 
 	/*
@@ -118,11 +137,11 @@ public class PatrolmanServer implements CommunicationListener {
 	private void refresh(BluetoothCommunication comm) {
 		if (comm == null || comm.getDataOutputStream() == null)
 			System.err.println("[Patrolman] No valid communication");
-		
+
 		System.out.println("[Patrolman] Sending ECSpec to "
 				+ comm.getLogicalName());
 
-		// Read the test XML file
+		// Read the ECSpec XML file
 		StringBuffer xmlData = new StringBuffer();
 		InputStream is = PatrolmanServer.class.getResourceAsStream(ECSPEC_FILE);
 		DataInputStream dis = new DataInputStream(is);
