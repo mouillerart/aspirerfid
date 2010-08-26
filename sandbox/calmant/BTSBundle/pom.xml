@@ -1,10 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.ow2.aspirerfid.sandbox</groupId>
+  <groupId>org.ow2.aspirerfid.bluetooth.test</groupId>
   <artifactId>BTSBundle</artifactId>
-  <name>OW2 :: AspireRFID :: Bluetooth Tester</name>
-  <version>0.0.1-SNAPSHOT</version>
+  <name>OW2 :: AspireRFID :: Bluetooth Server Test</name>
+  <version>0.1.0</version>
   <packaging>bundle</packaging>
+  <description>Bluetooth Server test bundle </description>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>org.ow2.aspirerfid</groupId>
+  		<artifactId>bluetooth.server</artifactId>
+  		<version>2.1.0</version>
+  		<type>bundle</type>
+  		<scope>provided</scope>
+  	</dependency>
+  </dependencies>
+  
   <build>
   	<plugins>
   		<plugin>
@@ -16,35 +28,30 @@
   				<instructions>
   					<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 	              	<Bundle-Name>${project.artifactId}</Bundle-Name>
-	              	<Bundle-Version>1.0.0</Bundle-Version>
-	              	<Bundle-Activator>org.ow2.aspirerfid.sandbox.calmant.btbundle.BTSActivator</Bundle-Activator>
-	              	<Import-Package>org.osgi.framework,org.osgi.util.tracker,org.ow2.aspirerfid.sandbox.calmant.bluetooth</Import-Package>
+	              	<Bundle-Version>1.1.0</Bundle-Version>
   				</instructions>
   			</configuration>
   		</plugin>
+  		<plugin>
+  			<groupId>org.apache.felix</groupId>
+  			<artifactId>maven-ipojo-plugin</artifactId>
+  			<version>1.4.2</version>
+  			<executions>
+				<execution>
+					<goals>
+						<goal>ipojo-bundle</goal>
+					</goals>
+				</execution>
+			</executions>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-compiler-plugin</artifactId>
+  			<configuration>
+				<source>1.5</source>
+				<target>1.5</target>
+			</configuration>
+  		</plugin>
   	</plugins>
   </build>
-  <dependencies>
-  	<dependency>
-  		<groupId>org.apache.felix</groupId>
-  		<artifactId>org.osgi.core</artifactId>
-  		<version>1.4.0</version>
-  		<type>bundle</type>
-  		<scope>provided</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.osgi</groupId>
-  		<artifactId>org.osgi</artifactId>
-  		<version>3.0.0</version>
-  		<type>jar</type>
-  		<scope>provided</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.ow2.aspirerfid</groupId>
-  		<artifactId>bluetooth.server</artifactId>
-  		<version>2.1.0</version>
-  		<type>bundle</type>
-  		<scope>provided</scope>
-  	</dependency>
-  </dependencies>
 </project>
