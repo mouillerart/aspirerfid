@@ -39,7 +39,7 @@ import javax.microedition.io.StreamConnectionNotifier;
  * Sample :
  * 
  * <pre>
- * server = new BluetoothServer();
+ * server = new BluetoothServerImpl();
  * // Configure the server
  * server.prepareServer();
  * // Wait for clients
@@ -48,7 +48,7 @@ import javax.microedition.io.StreamConnectionNotifier;
  * 
  * @author Thomas Calmant
  */
-public class BluetoothServer implements BluetoothServerService,
+public class BluetoothServerImpl implements BluetoothServerService,
 		CommunicationListener {
 	/** Server configuration */
 	private BluetoothSettings m_properties;
@@ -76,14 +76,14 @@ public class BluetoothServer implements BluetoothServerService,
 
 	/** Debug mode activation */
 	private boolean m_debugMode;
-	
+
 	/** Authorize only one thread instance */
 	private static boolean s_threadRunning = false;
 
 	/**
 	 * Prepares the thread pool
 	 */
-	public BluetoothServer() {
+	public BluetoothServerImpl() {
 		m_debugMode = false;
 		m_stop = true;
 		m_clients = new HashMap<String, BluetoothCommunication>();
@@ -108,14 +108,16 @@ public class BluetoothServer implements BluetoothServerService,
 		// m_threadPool = Executors.newFixedThreadPool(nbThreads);
 		// m_threadPool = Executors.newCachedThreadPool();
 	}
-	
-	/**
-	 * Server starter utility method
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.bluetooth.BluetoothServerService#startServer()
 	 */
 	public void startServer() {
-		if(s_threadRunning)
+		if (s_threadRunning)
 			return;
-		
+
 		new Thread(this).start();
 	}
 
@@ -123,9 +125,9 @@ public class BluetoothServer implements BluetoothServerService,
 	 * Client acceptance loop. May be used in a thread
 	 */
 	public void run() {
-		if(s_threadRunning)
+		if (s_threadRunning)
 			return;
-		
+
 		try {
 			// Publish the service and waits for connections.
 			debug("Start advertising service...");
@@ -182,8 +184,7 @@ public class BluetoothServer implements BluetoothServerService,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.ow2.aspirerfid.bluetooth.BluetoothServerService#
-	 * prepareServer()
+	 * @see org.ow2.aspirerfid.bluetooth.BluetoothServerService# prepareServer()
 	 */
 	public void prepareServer() {
 		m_properties = new BluetoothSettings();
@@ -287,7 +288,7 @@ public class BluetoothServer implements BluetoothServerService,
 
 		// Stop all communications
 		for (BluetoothCommunication comm : m_clients.values()) {
-			if(comm != null) {
+			if (comm != null) {
 				comm.stop();
 			}
 		}
@@ -326,7 +327,7 @@ public class BluetoothServer implements BluetoothServerService,
 	public void addCommunicationListener(CommunicationListener comm) {
 		// We must avoid infinite loop by calling communication events on the
 		// event dispatcher
-		if (comm != null && !(comm instanceof BluetoothServer))
+		if (comm != null && !(comm instanceof BluetoothServerImpl))
 			m_commListeners.add(comm);
 	}
 
@@ -424,9 +425,7 @@ public class BluetoothServer implements BluetoothServerService,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.ow2.aspirerfid.bluetooth.BluetoothServerService#isRunning
-	 * ()
+	 * @see org.ow2.aspirerfid.bluetooth.BluetoothServerService#isRunning ()
 	 */
 	public boolean isRunning() {
 		return !m_stop;

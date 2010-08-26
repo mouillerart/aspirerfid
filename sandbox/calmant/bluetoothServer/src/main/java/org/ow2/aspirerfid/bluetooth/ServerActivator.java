@@ -29,8 +29,9 @@ import org.osgi.framework.ServiceRegistration;
  * @author Thomas Calmant
  */
 public class ServerActivator implements BundleActivator {
+
 	/** The shared bluetooth server */
-	private BluetoothServer m_server;
+	private BluetoothServerImpl m_server;
 
 	/** Registered service */
 	private ServiceRegistration m_service;
@@ -44,11 +45,11 @@ public class ServerActivator implements BundleActivator {
 	 */
 	public void start(BundleContext context) throws Exception {
 		// Create the server object
-		m_server = new BluetoothServer();
+		m_server = new BluetoothServerImpl();
 
 		// Register the service
-		m_service = context.registerService(BluetoothServerService.class
-				.getName(), m_server, null);
+		m_service = context.registerService(
+				BluetoothServerService.class.getName(), m_server, null);
 	}
 
 	/*
@@ -60,6 +61,10 @@ public class ServerActivator implements BundleActivator {
 	public void stop(BundleContext context) throws Exception {
 		// Unregister the service
 		m_service.unregister();
+
+		// Force the server to stops
+		m_server.stop();
+		m_server = null;
 	}
 
 }

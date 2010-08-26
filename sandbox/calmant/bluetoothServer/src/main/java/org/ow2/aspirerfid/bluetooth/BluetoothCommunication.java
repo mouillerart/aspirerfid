@@ -28,8 +28,10 @@ import javax.bluetooth.RemoteDevice;
 import javax.microedition.io.StreamConnection;
 
 public class BluetoothCommunication implements Runnable {
+
 	/** Stream to read messages */
 	private DataInputStream m_inputStream;
+
 	/** Stream to send messages */
 	private DataOutputStream m_outputStream;
 
@@ -46,7 +48,7 @@ public class BluetoothCommunication implements Runnable {
 		BYTE, CHAR, UTF
 	}
 
-	/** {@link DataOutputStream} reading methode */
+	/** {@link DataOutputStream} reading method */
 	private ReadingMethod m_readingMethod;
 
 	/**
@@ -117,10 +119,6 @@ public class BluetoothCommunication implements Runnable {
 
 				// Read data line by line
 				String data = "";
-				/*
-				 * char read; while ((read = m_inputStream.readChar()) != '\n')
-				 * data += read;
-				 */
 				boolean endline = false;
 
 				do {

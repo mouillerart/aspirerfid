@@ -75,6 +75,11 @@ public interface BluetoothServerService extends Runnable {
 	public void removeCommunicationListener(CommunicationListener comm);
 
 	/**
+	 * Server starter utility method
+	 */
+	public void startServer();
+
+	/**
 	 * Stop the server. Do not accept any new connection. Close all active
 	 * connections.
 	 */
