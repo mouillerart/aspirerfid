@@ -17,14 +17,9 @@
  */
 package org.ow2.aspirerfid.touchlocate.ui;
 
-import java.util.Vector;
-
-import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.lcdui.Form;
-import javax.microedition.lcdui.Item;
-import javax.microedition.lcdui.ItemCommandListener;
+import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 
 import org.json.me.JSONArray;
@@ -41,30 +36,24 @@ import fr.touchkey.gui.GoogleMaps;
  * 
  * @author Thomas Calmant
  */
-public class POIScreen extends Screen implements ItemCommandListener {
+public class POIScreen extends Screen {
 
 	/** Back command */
-	private static final Command m_backCmd = new Command("Back", Command.BACK,
+	private static final Command s_backCmd = new Command("Back", Command.BACK,
 			0);
 
 	/** Find command */
-	private static final Command m_findCmd = new Command("Find",
-			Command.SCREEN, 0);
+	private static final Command s_findCmd = new Command("Find", Command.ITEM,
+			0);
 
 	/** Previous screen */
 	private Screen m_previousScreen;
 
 	/** Search text field */
-	private TextField m_searchField;
+	private TextBox m_searchField;
 
-	/** Results list UI */
-	private ChoiceGroup m_resultsListUI;
-
-	/** PoI Screen */
-	private POIInfoScreen m_poiScreen;
-
-	/** Results list */
-	private Vector m_results;
+	/** PoI Result Screen */
+	private POISearchResult m_resultScreen;
 
 	/** Center latitude */
 	private double m_latitude;
@@ -81,23 +70,21 @@ public class POIScreen extends Screen implements ItemCommandListener {
 	public POIScreen(GenericMidlet midlet, Screen previousScreen) {
 		super(midlet);
 		m_previousScreen = previousScreen;
-		m_results = new Vector();
+		m_resultScreen = new POISearchResult(midlet, this);
 
-		m_poiScreen = new POIInfoScreen(midlet, this);
+		m_searchField = new TextBox("Search", "", 256, TextField.ANY);
+		m_searchField.addCommand(s_findCmd);
+		m_searchField.addCommand(s_backCmd);
+		m_searchField.setCommandListener(this);
 
-		m_searchField = new TextField("Search", "", 64, TextField.ANY);
-		m_resultsListUI = new ChoiceGroup("Result", ChoiceGroup.IMPLICIT);
-		m_resultsListUI.setItemCommandListener(this);
+		/*
+		 * Form form = new Form("POI search"); form.append(m_searchField);
+		 * 
+		 * form.addCommand(s_findCmd); form.addCommand(s_backCmd);
+		 * form.setCommandListener(this);
+		 */
 
-		Form form = new Form("POI search");
-		form.append(m_searchField);
-		form.append(m_resultsListUI);
-
-		form.addCommand(m_findCmd);
-		form.addCommand(m_backCmd);
-		form.setCommandListener(this);
-
-		setDiplayable(form);
+		setDiplayable(m_searchField);
 	}
 
 	/**
@@ -121,7 +108,9 @@ public class POIScreen extends Screen implements ItemCommandListener {
 	 * .lcdui.Command, javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command command, Displayable displayable) {
-		if (command == m_findCmd) {
+		if (command == s_findCmd) {
+			m_resultScreen.reset();
+
 			GoogleMaps maps = new GoogleMaps("");
 			try {
 				showMessage("Retrieving data...");
@@ -130,10 +119,14 @@ public class POIScreen extends Screen implements ItemCommandListener {
 
 				// parse JSON data and show it correctly
 				parseJSONList(result);
+
+				// Show the result screen
+				getMidlet().setActiveScreen(m_resultScreen);
+
 			} catch (Exception ex) {
 				showMessage("Error :\n" + ex);
 			}
-		} else if (command == m_backCmd) {
+		} else if (command == s_backCmd) {
 			getMidlet().setActiveScreen(m_previousScreen);
 		}
 	}
@@ -178,8 +171,7 @@ public class POIScreen extends Screen implements ItemCommandListener {
 			}
 
 			if (poi.isValid()) {
-				m_results.addElement(poi);
-				m_resultsListUI.append(poi.toString(), null);
+				m_resultScreen.addResult(poi.toString(), poi);
 			}
 		}
 	}
@@ -193,32 +185,5 @@ public class POIScreen extends Screen implements ItemCommandListener {
 	private void showMessage(String text) {
 		AlertScreen as = new AlertScreen(getMidlet(), text);
 		getMidlet().setActiveScreen(as);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.microedition.lcdui.ItemCommandListener#commandAction(javax.microedition
-	 * .lcdui.Command, javax.microedition.lcdui.Item)
-	 */
-	public void commandAction(Command command, Item item) {
-		if (item != m_resultsListUI)
-			return;
-
-		// Retrieve selected element
-		String title = m_resultsListUI.getString(m_resultsListUI
-				.getSelectedIndex());
-
-		// Get its informations
-		int index = m_results.indexOf(title);
-		if (index == -1)
-			return;
-
-		PointOfInterest poi = (PointOfInterest) m_results.elementAt(index);
-		if (poi.isValid()) {
-			m_poiScreen.setPoI(poi);
-			getMidlet().setActiveScreen(m_poiScreen);
-		}
 	}
 }

@@ -104,16 +104,22 @@ public class TouchLocate extends GenericMidlet implements TagDetector {
 	 * .nfc.midlet.generic.RequestMessage)
 	 */
 	public void tagRead(RequestMessage msg) {
+
 		if (!(msg instanceof TagLocationMessage)) {
 			m_waitScreen.setText("Not a location tag");
 			return;
 		}
-		
+
 		TagLocationMessage location = (TagLocationMessage) msg;
-		if(!location.isValid()) {
+		if (!location.isValid()) {
 			m_waitScreen.setText("Invalid location tag");
 			return;
 		}
+
+		// // Useful if you debug the project on the emulator TagLocationMessage
+		// location = new TagLocationMessage(this);
+		// location.setLocation("U",
+		// new String("_loc/45.187778/5.726945").getBytes());
 
 		m_menuScreen.setLocationMessage(location);
 

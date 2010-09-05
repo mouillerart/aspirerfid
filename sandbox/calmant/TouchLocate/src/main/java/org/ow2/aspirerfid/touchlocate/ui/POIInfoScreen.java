@@ -52,7 +52,7 @@ public class POIInfoScreen extends Screen {
 		super(midlet);
 		m_previousScreen = previousScreen;
 
-		m_infos = new StringItem(null, null);
+		m_infos = new StringItem("Informations", "");
 
 		Form form = new Form("Point of Interest");
 		form.append(m_infos);
