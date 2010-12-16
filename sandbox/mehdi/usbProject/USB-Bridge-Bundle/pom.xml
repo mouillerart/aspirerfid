@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ow2.aspirerfid.usb</groupId>
+	<artifactId>USB-Bridge</artifactId>
+	<packaging>bundle</packaging>
+	<name>USB Bridge</name>
+	<version>1.0.0</version>
+	<description>USB Bridge to catch usb device from the system</description>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>libusb.java</groupId>
+			<artifactId>ch.ntb.usb</artifactId>
+			<version>0.5.9</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/ch.ntb.usb-0.5.9.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.1.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Name>${pom.name}</Bundle-Name>
+						<Bundle-Description>
+							USB Bridge
+						</Bundle-Description>
+						<Bundle-SymbolicName>
+							${pom.artifactId}
+						</Bundle-SymbolicName>
+						<Bundle-Vendor>
+							ADELE/LIG/ Grenoble University, France
+						</Bundle-Vendor>
+						<Bundle-Version>${pom.version}</Bundle-Version>
+						<Export-Package>
+							org.ow2.aspirerfid.usb,
+							org.ow2.aspirerfid.usb.descriptor 
+						</Export-Package>
+						<Private-Package>
+							ch.ntb.usb,
+							ch.ntb.usb.logger,
+							ch.ntb.usb.testApp,
+							ch.ntb.usb.usbView,
+							org.ow2.aspirerfid.usb.impl
+						</Private-Package>
+						<Bundle-NativeCode>
+							LibusbJava.dll;osname=WindowsXP;processor=x86,
+							LibusbJava.dll;osname=windows vista;processor=x86,
+							LibusbJava.dll;osname=Windows 7;processor=x86,
+							libusbJava.so;osname=Linux;processor=x86
+						</Bundle-NativeCode>
+
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-ipojo-plugin</artifactId>
+				<!--				<version>1.6.0</version>-->
+				<executions>
+					<execution>
+						<goals>
+							<goal>ipojo-bundle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
