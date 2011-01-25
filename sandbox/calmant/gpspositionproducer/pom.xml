@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ow2.aspirerfid</groupId>
+	<artifactId>sensor.gpspositionproducer</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+	<name>OW2 :: AspireRFID :: GPS Position Producer</name>
+	<description>Provides a org.osgi.service.wireadmin.Producer service that polls GPS positions from a GPS receiver connected to the gateway by a serial link or others receiver (CellID from Cellular Phone, ...)</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.2.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Activator>org.ow2.aspirerfid.gpspositionproducer.impl.Activator</Bundle-Activator>
+						
+						<Private-Package>org.ow2.aspirerfid.gpspositionproducer.impl</Private-Package>
+	<!-- <Import-Package>!com.ibm.uvm.tools,!com.sun.jdmk.comm;*</Import-Package> -->
+						<Export-Service>org.osgi.service.wireadmin.Producer</Export-Service>
+						
+						<Embed-Dependency>*;scope=compile|system</Embed-Dependency>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>1.4.0</version>
+			<type>bundle</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>4.2.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.dinopolis</groupId>
+			<artifactId>dinopolis-util</artifactId>
+			<version>0.5.3</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/embeddedlibs/dinopolis-util-0.5.3.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.dinopolis.gpstool</groupId>
+			<artifactId>gpsinput</artifactId>
+			<version>0.5.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/embeddedlibs/gpsinput-0.5.1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>gnu-regexp</groupId>
+			<artifactId>gnu-regexp</artifactId>
+			<version>1.1.4</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>

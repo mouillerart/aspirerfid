@@ -1,0 +1,224 @@
+<html>
+<head>
+<title>GPS Position Producer</title>
+</head>
+<body>
+
+<!-- Start of Bundle Documentation -->
+<hr width="100%" size="2">
+<h1><i><a name="gpspositionproducer"></a><font color="#0000aa">GPS
+Position Producer (gpspositionproducer.jar)</font></i></h1>
+
+<p><b>Description</b><br>
+This bundle provides provides a org.osgi.service.wireadmin.Producer
+service that polls GPS positions from a GPS receiver connected to the
+gateway by a serial link or others receiver (CellID from Cellular Phone,
+...) <br>
+In fact, this bundle use classes from GPSMap (<a
+	href="http://gpsmap.sourceforge.net">http://gpsmap.sourceforge.net</a>)
+done by Christof Dallermassl.<br>
+<br>
+For more details on how to use this bundle, refer to the
+/doc/readme.html file embedded in the bundle jarfile.<br>
+</p>
+
+<p><b>Contributors</b><br>
+Didier Donsez (<a href="mailto:Didier.Donsez@ieee.org">Didier.Donsez@ieee.org</a>)<br>
+Thomas Calmant (<a href="mailto:thomas.calmant@gmail.com">thomas.calmant@gmail.com</a>)<br>
+</p>
+
+<p><b>License</b><br>
+LGPL<br>
+</p>
+
+<p><b>Services</b><br>
+<code>org.osgi.service.wireadmin.Producer</code></p>
+
+<p><b>Properties</b><br>
+</p>
+<ul>
+	<li>wireadmin.producer.flavors=Class[] {
+	org.osgi.util.position.Position.class, java.lang.String.class }</li>
+	<li>service.pid=fr.imag.adele.bundle.gpspositionproducer</li>
+	<li>service.description=A service that polls positions from a GPS
+	receiver</li>
+	<li>PositioningMethod=GPS</li>
+</ul>
+
+<p><b>Requirements</b><br>
+</p>
+<ul>
+	<li>gnu.io ()</li>
+	<li>org.osgi.service.wireadmin; specification-version=1.0</li>
+	<li>org.osgi.util.measurement; specification-version=1.0</li>
+	<li>org.osgi.util.position; specification-version=1.0</li>
+</ul>
+
+<!-- End of Bundle Documentation -->
+
+<hr width="100%" size="2">
+
+<!-- Start of extra information  -->
+
+<p><b>Download</b><br>
+</p>
+<ul>
+	<li><a
+		href='http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/gpspositionproducer/gpspositionproducer.jar'>Bundle
+	binaries</a></li>
+	<li><a
+		href='http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/gpspositionproducer/gpspositionproducer-src.jar'>Bundle
+	sources</a></li>
+	<li><a
+		href='http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/gpspositionproducer/readme.html'>The
+	latest version of this documentation</a></li>
+	<li><a
+		href='http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/gpspositionproducer/obr.txt'>The
+	OBR descriptor (text format)</a></li>
+</ul>
+
+<p><b>Build</b><br>
+</p>
+<ol>
+	<li>Download a recent distribution of GPSMap available from <a
+		href="http://gpsmap.sourceforge.net">http://gpsmap.sourceforge.net</a>, and extract the following files to the <i>./embeddedlibs</i> folder :
+		<ul>
+		<li>dinopolis-util-<i>version</i>.jar</li>
+		<li>gpsinput-<i>version</i>.jar</li>
+		</ul>
+	Current version is 0.5.3.</li>
+	<li>Download the RXTX bundle from AspireRFID repository : <a
+		href="http://wiki.aspire.ow2.org/xwiki/bin/view/Main.Documentation.Bundles/RXTX">See
+	the bundle documentation</a>. Use a recent distribution of the RXTX 2.2
+	available from <a href="http://rxtx.qbang.org/wiki/index.php/Download">http://rxtx.qbang.org/wiki/index.php/Download</a>.
+	It will be needed at runtime, in the running OSGi framework</li>
+	<li>Configure the properties (serial port, ...) in <i>./src/main/resources/CONFIG-INF/config.properties</i>.
+	<li>Build with Maven : <i>mvn clean install</i></li>
+</ol>
+
+
+<p><b>Usage</b><br>
+The activation of this bundle is blocking when no GPS receiver is
+connected to the gateway <br>
+</p>
+
+<p><b>Tested gateways (testers are welcome)</b><br>
+</p>
+<ul>
+	<li><a href="http://oscar.objectweb.org/">Oscar</a> (done by
+	Didier Donsez) under SUN VM under WinXP</li>
+	<li><a href="http://incubator.apache.org/project/felix">Felix</a>
+	(done by Didier Donsez) under SUN VM under WinXP</li>
+	<li><a href="http://www.knopflerfish.org">Knopflerfish OSGi</a>
+	(done by David Tacconi) under IBM J9 for Palm and IBM J9 for iPaq6300.</li>
+	<li><a
+		href="http://wwws.sun.com/software/embeddedserver/index.html">SUN
+	JES</a> (to do)</li>
+	<li><a href="http://www-306.ibm.com/software/wireless/wsdd/">IBM
+	SMF</a> (to do)</li>
+</ul>
+
+<p><b>Tested GPS Receiver (testers are welcome)</b><br>
+</p>
+<ul>
+	<li>Trimble Lassen SK8 (serial port : NMEA output mode) (by Didier
+	Donsez)</li>
+	<li>Garmin eTrex Legend (serial port : NMEA output mode) (by
+	Didier Donsez)</li>
+	<li><a href="http://www.sanav.com">Sanav</a> BT-48 (Bluetooth
+	serial port : NMEA output mode) (by david [dot] tacconi [at] create-net
+	[dot] it)</li>
+</ul>
+
+<p><b>History</b><br>
+</p>
+<ul>
+	<li>0.5.1 (Jan 2011) : converted from Ant to Maven 3.</li>
+	<li>0.5.0 (Aug 2006) : discard javax.comm, port to gpsylon 0.5.1
+	and RXTX (<a href="http://www.rxtx.org">http://www.rxtx.org</a>), a GNU
+	javax.comm alternative (for Linux, ...). requires to add a GsmTransport
+	using org.gnu.rxtx</li>
+</ul>
+
+
+<p><b>TODO (contributions are welcome)</b><br>
+</p>
+<ul>
+	<li>provides a ManagedService for configuration</li>
+	<li>provides a DynamicMBean for configuration</li>
+	<li>post org.osgi.service.event.Event(s) when the number of
+	satellites changes (GPGSV messages)
+	<li>provides a service for the J2ME Location API (JSR 179)</li>
+	<li>produces Location objects (J2ME Location API (JSR 179))
+	optionally by using dynamic import</li>
+	<li>Package as a Driver/Device for a Device Access Manager</li>
+	<li>DONE test it with RXTX under Linux (<a
+		href="http://www.rxtx.org">http://www.rxtx.org</a>), a GNU javax.comm
+	alternative (for Linux, ...). requires to add a GsmTransport using
+	org.gnu.rxtx</li>
+</ul>
+
+<p><b>Typical usage</b><br>
+</p>
+<ul>
+	<li><a
+		href="http://developers.sun.com/techtopics/mobility/midp/articles/telematics/">in
+	telematics</a></li>
+</ul>
+<p>The following book introduces Location-Based Services: <br>
+Jochen Schiller (Editor), Agnes Voisard (Editor), Location-Based
+Services, Publisher: Elsevier Science, Morgan Kaufmann Series in Data
+Management Systems, May 2004, ISBN: 1558609296, 255pp</p>
+
+<p><b>Links</b> <br>
+Some links on other wire admin materials:</p>
+<ul>
+	<li><a
+		href="http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/wireadmin/readme.html">My
+	Wire Admin Implementation</a></li>
+	<li><a
+		href="http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/wireadmincmd/readme.html">The
+	OSCAR shell command for the wire admin</a></li>
+	<li><a
+		href="http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/consumerservlet/readme.html">The
+	Customer Servlet that display polled objects</a></li>
+	<li><a
+		href="http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/gpspositionproducer/readme.html">A
+	GPS Position Producer (requires a serial GPS Receiver !)</a></li>
+	<li><a
+		href="http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/poitracker/readme.html">A
+	POI Tracker (Point Of Interest) (is a position consumer)</a></li>
+	<li><a
+		href="http://www-adele.imag.fr/users/Didier.Donsez/dev/osgi/">My
+	Bundle Farm</a></li>
+</ul>
+
+<p>Other links about NMEA0183, GPS, Location-Based Services, ...</p>
+<ul>
+	<li><a href="http://gpsmap.sourceforge.net/">Download the
+	latest version of GPSMap</a></li>
+	<li><a href="http://maps.google.com/">Google Maps</a></li>
+	<li><a href="http://home.mira.net/~gnb/gps/nmea.html">GPS -
+	NMEA sentence information</a></li>
+	<li><a href="http://www.nmea.org/">NMEA Web Site</a></li>
+	<li><a href="http://vancouver-webpages.com/peter/idx_faq.html">FAQ
+	on GPS and NMEA</a></li>
+	<li><a href="http://home.mira.net/~gnb/gps/nmea.html"></a>http://home.mira.net/~gnb/gps/nmea.html</li>
+	<li><a href="http://www.grc.nasa.gov/WWW/MAEL/ag/agnmea1.htm"></a>http://www.grc.nasa.gov/WWW/MAEL/ag/agnmea1.htm</li>
+	<li><a
+		href="http://developers.sun.com/techtopics/mobility/apis/articles/location/">J2ME
+	and the Location API</a></li>
+	<li><a href="http://www.jcp.org/en/jsr/detail?id=179">*
+	Location API for J2ME specification (JSR 179)</a></li>
+	<li><a
+		href="http://www.clubic.com/telecharger-fiche14069-nasa-world-wind.html">A
+	fine NASA tool to get positions from sattelite maps</a></li>
+</ul>
+
+<p><b>My GPS position</b> <br>
+<code><a
+	href="http://www-adele.imag.fr/users/Didier.Donsez/map/map.html">lat
+45 11'37"N, lon 05 46'15"E, alt 223m</a></code></p>
+
+</body>
+</html>
