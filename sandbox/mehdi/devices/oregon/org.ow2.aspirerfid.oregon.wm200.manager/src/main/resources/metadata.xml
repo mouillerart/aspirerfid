@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipojo>
+<!-- declare your component types and instances here -->
+	<component classname="org.ow2.aspirerfid.sensor.wmr200.impl.WMR200ManagerImpl"
+		immediate="false" name="wmr200Manager">
+		<provides />
+		<requires field="usbBridge" />
+		<requires field="wmr200Factory" filter="(factory.name=wmr200Service)" />
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+
+	<component classname="org.ow2.aspirerfid.sensor.wmr200.impl.WMR200ServiceImpl"
+		immediate="false" name="wmr200Service">
+		
+		<provides>
+			<property name="service.pid" type="java.lang.String"/>
+			<property name="wmr200.id" field="wmr200ID"/>
+		</provides>
+		<requires field="wmr200Manager" />
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+
+	<instance component="wmr200Manager" />
+
+</ipojo>

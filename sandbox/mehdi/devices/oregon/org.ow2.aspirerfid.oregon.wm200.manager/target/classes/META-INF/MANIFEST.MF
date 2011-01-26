@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Export-Package: org.ow2.aspirerfid.sensor.wmr200.service;uses:="org.ap
+ ache.log4j,org.ow2.chameleon.usb.descriptor,org.ow2.chameleon.usb.ser
+ vice"
+Built-By: Mehdi
+Tool: Bnd-0.0.357
+Bundle-Name: org.ow2.aspirerfid.oregon.wm200.manager
+Created-By: Apache Maven Bundle Plugin
+Bundle-Vendor: ADELE/LIG
+Build-Jdk: 1.6.0_23
+Bundle-Version: 0.0.1.SNAPSHOT
+Bnd-LastModified: 1295979781343
+Bundle-ManifestVersion: 2
+Bundle-Description: Manage connected WMR200 Stations
+Import-Package: javax.management,org.apache.felix.ipojo;version="1.6",
+ org.apache.log4j,org.ow2.aspirerfid.sensor.wmr200.service,org.ow2.cha
+ meleon.usb.descriptor,org.ow2.chameleon.usb.service
+Bundle-SymbolicName: org.ow2.aspirerfid.oregon.wm200.manager
+

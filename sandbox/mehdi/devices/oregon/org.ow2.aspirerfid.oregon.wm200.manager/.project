@@ -1,0 +1,15 @@
+<projectDescription>
+  <name>org.ow2.aspirerfid.oregon.wm200.manager</name>
+  <comment>Manage connected WMR200 Stations. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <projects>
+    <project>org.ow2.chameleon.usb.bridge</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>
