@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipojo>
+<!-- declare your component types and instances here -->
+	<component classname="fr.imag.adele.devices.tikitag.impl.TikitagManagerImpl"
+		immediate="false" name="tikitagManager">
+		<provides />
+		<requires field="usbManager" />
+		<requires field="tikitagFactory" filter="(factory.name=tikitagService)" />
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+
+	<component classname="fr.imag.adele.devices.tikitag.impl.TikitagServiceImpl"
+		immediate="false" name="tikitagService">
+		
+		<provides>
+			<property name="service.pid" type="java.lang.String"/>
+			<property name="tikitag.id" field="tikitagID"/>
+		</provides>
+		<requires field="tikitagManager" />
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+
+	<instance component="tikitagManager" />
+
+</ipojo>

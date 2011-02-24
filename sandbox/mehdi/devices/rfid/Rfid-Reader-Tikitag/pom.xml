@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.imag.adele.devices</groupId>
+	<artifactId>rfid-reader-rikitag</artifactId>
+	<packaging>bundle</packaging>
+	<name>Rfid-Reader Tikitag</name>
+	<version>1.0.0</version>
+	<description>Expose Tikitag Reader as OSGi Service</description>
+
+	<dependencies>
+	<dependency>
+			<groupId>org.ow2.chameleon.usb</groupId>
+			<artifactId>org.ow2.chameleon.usb.bridge</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.ipojo</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+		<dependency>
+			<groupId>org.sembysem</groupId>
+			<artifactId>Rfid-Reader-Service</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+
+	<developers>
+		<developer>
+			<id>damou</id>
+			<name>Elmehdi Damou</name>
+			<email>Elmehdi.Damou@imag.fr</email>
+		</developer>
+	</developers>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.1.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Name>${pom.artifactId}</Bundle-Name>
+						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						<Bundle-Description>${pom.description}</Bundle-Description>
+						<Bundle-Vendor>ADELE/LIG</Bundle-Vendor>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-ipojo-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>ipojo-bundle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

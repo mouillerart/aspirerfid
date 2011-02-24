@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipojo>
+<!-- declare your component types and instances here -->
+	<component classname="fr.imag.adele.devices.mirror.impl.MirrorManagerImpl"
+		immediate="false" name="mirrorManager">
+		<provides />
+		<requires field="usbManager" />
+		<requires field="mirrorFactory" filter="(factory.name=mirrorService)" />
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+
+	<component classname="fr.imag.adele.devices.mirror.impl.MirrorServiceImpl"
+		immediate="false" name="mirrorService">
+		
+		<provides>
+			<property name="service.pid" type="java.lang.String"/>
+			<property name="mirror.id" field="mirrorID"/>
+		</provides>
+		<requires field="mirrorManager" />
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+
+	<instance component="mirrorManager" />
+
+</ipojo>
