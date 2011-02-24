@@ -25,7 +25,13 @@
 		</dependency>
 	</dependencies>
 
-
+	<developers>
+		<developer>
+			<id>damou</id>
+			<name>Elmehdi Damou</name>
+			<email>Elmehdi.Damou@imag.fr</email>
+		</developer>
+	</developers>
 	<build>
 		<plugins>
 			<plugin>
