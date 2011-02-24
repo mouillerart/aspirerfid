@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ipojo>
+	<component immediate="false" classname="org.pachube.service.impl.PachubeGeneratorImpl" 
+			name="PachubeFactory">
+	
+		<callback transition="validate" method="start" />
+		<callback transition="invalidate" method="stop" />
+	</component>
+
+	<instance component="PachubeFactory" name="Patchube-Service"/>
+</ipojo>

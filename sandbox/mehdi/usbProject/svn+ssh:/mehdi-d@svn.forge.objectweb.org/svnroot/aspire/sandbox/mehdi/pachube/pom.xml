@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>jpachube.util</groupId>
+	<artifactId>jpachube.util</artifactId>
+	<name>JPachube :: Util</name>
+	<description>Utilities for Pachube</description>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>jpachube</groupId>
+			<artifactId>jpachube</artifactId>
+			<version>0.1.0</version> <!-- 29-10-09 -->
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/jpachube.jar</systemPath>
+		</dependency>
+		
+		
+		<dependency>
+    		<groupId>org.json</groupId>
+    		<artifactId>json</artifactId>
+    		<version>20090211</version>
+		</dependency>		
+	</dependencies>
+	
+	<developers>
+		<developer>
+			<id>donsez</id>
+			<name>Didier Donsez</name>
+			<email>Didier.Donsez@imag.fr</email>
+		</developer>
+		<developer>
+			<id>debbabi</id>
+			<name>Debbabi Bassem</name>
+			<email>Bassem.Debbabi@imag.fr</email>
+		</developer>
+		<developer>
+			<id>damou</id>
+			<name>Elmehdi Damou</name>
+			<email>Elmehdi.Damou@imag.fr</email>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${pom.artifactId}.Main</mainClass>
+							<packageName>${pom.artifactId}</packageName>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						<Bundle-Description>${description}</Bundle-Description>
+						<Export-Package>org.pachube.service</Export-Package>
+						<Private-Package>
+							Pachube,
+							Pachube.httpClient,
+							Pachube2,
+							org.pachube.service.impl,
+							jpachube.util,
+							org.json
+						</Private-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-ipojo-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>ipojo-bundle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
