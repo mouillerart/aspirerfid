@@ -18,11 +18,19 @@
  */
 package org.ow2.aspirerfid.sensor.wmr200.service;
 
+import java.util.Date;
+import java.util.Map;
+
+// TODO: Auto-generated Javadoc
 /**
  * The Interface WMR200Service.
  * @author Elmehdi Damou
  */
 public interface WMR200Service{
+	
+//	/** The SENSOR. */
+	/** The Constant SENSOR. */
+public static final String SENSOR = "sensor";
 	
 	
 	/**
@@ -38,15 +46,54 @@ public interface WMR200Service{
 	/**
 	 * Gets the a data.
 	 *
-	 * @param address the address
+	 * @param metricName the address
 	 * @return the a data
 	 */
-	public Double getAData(String address);
+	public Double getAValue(String metricName);
+	
+	
+	/**
+	 * Gets the last measurement time.
+	 *
+	 * @param metricName the metric name
+	 * @return the last measurement time
+	 */
+	public Date getLastMeasurementTime(String metricName);
 
+	/**
+	 * return the map containing all data.
+	 *
+	 * @return the all data
+	 */
+	public Map<String, Double> getAllData();
 
+	
+	/**
+	 * Gets the all mesurement time.
+	 *
+	 * @return the all mesurement time
+	 */
+	public Map<String, Date> getAllMeasurementTimes();
+	
 	/**
 	 * Resets the wmr200.
 	 */
-	public void reset();	
+	public void reset();
+	
+	
+	/**
+	 * Gets the topic.
+	 *
+	 * @return the topic
+	 */
+	public String getTopic();
+	
+	
+	/**
+	 * Sets the topic.
+	 *
+	 * @param topicName the new topic
+	 */
+	public void setTopic(String topicName);
 
 }

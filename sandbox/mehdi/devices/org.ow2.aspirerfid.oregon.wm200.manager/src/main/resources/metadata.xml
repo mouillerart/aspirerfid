@@ -4,7 +4,8 @@
 	<component classname="org.ow2.aspirerfid.sensor.wmr200.impl.WMR200ManagerImpl"
 		immediate="false" name="wmr200Manager">
 		<provides />
-		<requires field="usbBridge" />
+		<requires field="usbBridge" proxy="false"/>
+		
 		<requires field="wmr200Factory" filter="(factory.name=wmr200Service)" />
 		<callback transition="validate" method="start" />
 		<callback transition="invalidate" method="stop" />
@@ -17,7 +18,12 @@
 			<property name="service.pid" type="java.lang.String"/>
 			<property name="wmr200.id" field="wmr200ID"/>
 		</provides>
-		<requires field="wmr200Manager" />
+		<requires field="wmr200Manager" proxy="false"/>
+		
+		<requires field="eventAdmin"  proxy="false" />
+		<properties propagation="true" >
+			<property field="topic"  mandatory="true" />
+		</properties>
 		<callback transition="validate" method="start" />
 		<callback transition="invalidate" method="stop" />
 	</component>

@@ -19,29 +19,41 @@
 package org.ow2.aspirerfid.sensor.wmr200.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import javax.management.AttributeChangeNotification;
-import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
 
 import org.apache.log4j.Logger;
-import org.osgi.service.wireadmin.Producer;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventAdmin;
+import org.ow2.aspirerfid.sensor.wmr200.service.ANEMOMETER;
+import org.ow2.aspirerfid.sensor.wmr200.service.BAROMETER;
+import org.ow2.aspirerfid.sensor.wmr200.service.PLUVIOMETER;
+import org.ow2.aspirerfid.sensor.wmr200.service.THERMOMETER;
+import org.ow2.aspirerfid.sensor.wmr200.service.UVMETER;
 import org.ow2.aspirerfid.sensor.wmr200.service.WMR200Descriptor;
 import org.ow2.aspirerfid.sensor.wmr200.service.WMR200Manager;
-import org.ow2.aspirerfid.sensor.wmr200.service.WMR200MapKey;
 import org.ow2.aspirerfid.sensor.wmr200.service.WMR200Service;
 
+import com.sun.java.swing.plaf.windows.WindowsTreeUI.CollapsedIcon;
+
+// TODO: Auto-generated Javadoc
 /**
  * The Class WMR200ServiceImpl.
- *  @author Elmehdi Damou
+ * 
+ * @author Elmehdi Damou
  */
-public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements WMR200Service, Runnable {
+public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
+		WMR200Service, Runnable {
 
 	/** The translator. */
 	private WMR200Translator translator;
@@ -51,7 +63,7 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 
 	/** Map<IEEEAdress, Time>. */
 	private Hashtable<String, Date> m_lastMeasurementTimes;
-	
+
 	/** The old_m_all data. */
 	Hashtable<String, Double> old_m_allData = m_allData;
 
@@ -60,9 +72,6 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 
 	/** The buf. */
 	byte[] buf = new byte[WMR200Descriptor.WMR200_CRTL_MSG_SIZE];
-
-	/** The big buffer. */
-	List<Byte> bigBuffer = new ArrayList<Byte>();
 
 	/** The wmr200 id. */
 	private String wmr200ID; // injected by iPOJO configuration
@@ -85,10 +94,18 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 	/** The pooling. */
 	private boolean pooling = false;
 
+	/** The event admin. */
+	private EventAdmin eventAdmin;
+
+	/** The topics. */
+	private String topic;
 
 	/** The logger. */
-	private Logger logger = Logger.getLogger(WMR200ServiceImpl.class
-			.getName());
+	private Logger logger = Logger.getLogger(WMR200ServiceImpl.class.getName());
+
+	private int badFrames = 0;
+
+	private Map<Byte, List<Byte>> frames;
 
 	/**
 	 * iPOJO validate callback Opens the {@link WMR200Descriptor}.
@@ -96,12 +113,13 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 	public void start() {
 		logger.debug(">>wmr200 " + wmr200ID + " started.");
 		translator = new WMR200Translator();
-		if (!pooling){
+		if (!pooling) {
 			m_allData = new Hashtable<String, Double>();
 			m_lastMeasurementTimes = new Hashtable<String, Date>();
-			Pooling(2000, TimeUnit.MILLISECONDS);
+			Pooling(2500, TimeUnit.MILLISECONDS);
+
 		}
-		
+
 	}
 
 	/**
@@ -112,9 +130,8 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 		schedFuture.cancel(false);
 		timer.purge();
 		wmr200.close();
-		
-	}
 
+	}
 
 	/**
 	 * Gets the wM r200 id.
@@ -147,12 +164,11 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 			}
 			this.schedFuture = this.timer.scheduleWithFixedDelay(this,
 					initialTime, interval, unit);
+			// this.timer.sc
 			pooling = true;
 		}
 
 	}
-
-	
 
 	/*
 	 * (non-Javadoc)
@@ -190,60 +206,114 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
-		
+
 		try {
-			buf = wmr200.getDataFromWMR200();
-			
-			int donneeValide = buf[0] & 0xff; // Le premier byte indique le
-												// nombre de donnee valide
-												// dans la trame
+			List<Byte> bigBuffer = new ArrayList<Byte>();
+			buf = wmr200
+					.sendCommandAndReceiveDataFromWMR200(WMR200Descriptor.WMR200_REQUEST_NEXT_DATA);
 
-			if (donneeValide > 0 && donneeValide < 8) {
-				int indice=1;
-				while (indice <= donneeValide) {
-					bigBuffer.add((byte) buf[indice++]);
+			while (buf != null) {
+				int donneeValide = buf[0] & 0xff; // Le premier byte indique le
+				// nombre de donnee valide
+				// dans la trame
+				logger.debug("valide data : " + donneeValide);
+				for (int i = 1; i <= donneeValide; i++) {
+					if (bigBuffer.size()==0){
+						if (buf[i]>= (byte)0xD1 & buf[i]<=(byte)0xD9){
+							bigBuffer.add((byte) buf[i]);
+						}
+					}else {
+						bigBuffer.add((byte) buf[i]);
+					}
+					
 				}
-				indice = 1;
+				logger.debug("current bigbuffer " + wmr200.printByteArray(bigBuffer));
+				Thread.currentThread().sleep(2000);
+				buf = wmr200
+						.sendCommandAndReceiveDataFromWMR200(WMR200Descriptor.WMR200_REQUEST_NEXT_DATA);
 			}
 
-			
-			if (bigBuffer.size() >= 2) {
-				
-				 if ((bigBuffer.get(0) & 0xff)<210 || (bigBuffer.get(0) & 0xff)>217 || (bigBuffer.get(1) & 0xff)>50  ){ //keep only value that begin with d2 to d9
-					bigBuffer.clear();
+			while (bigBuffer.size() > 0) {
+				if (((byte)bigBuffer.get(0) < (byte)0xD1) || ((byte)bigBuffer.get(0) > (byte)0xD9)) {
+					// All frames must start with 0xD1 - 0xD9. If the first
+					// byte is not within this range, we don't have a proper
+					// frame start. Discard all octets and restart with the next
+					// packet.
+					logger.debug("Bad frame: " + wmr200.printByteArray(bigBuffer));
+					this.badFrames += 1;
+					break;
 				}
-				 else if (bigBuffer.size() == (bigBuffer.get(1) & 0xff)) {
 
-					startWorking(bigBuffer);
-					bigBuffer.clear();
-				} else if (bigBuffer.size() > (bigBuffer.get(1) & 0xff)) {
-					startWorking(bigBuffer
-							.subList(0, (bigBuffer.get(1) & 0xff)));
-					bigBuffer = bigBuffer.subList((bigBuffer.get(1) & 0xff),
-							bigBuffer.size());
+				if (((byte)bigBuffer.get(0) == (byte)0xD1) && bigBuffer.size() == 1) {
+					// 0xD1 frames have only 1 octet.
+					logger.debug("D1 frame:" + wmr200.printByteArray(bigBuffer));
+					startWorking(bigBuffer.subList(1, bigBuffer.size()));
+					bigBuffer = bigBuffer.subList(1, bigBuffer.size());
+					
+				} else if ((bigBuffer.size() < 2)
+						|| (bigBuffer.size() < bigBuffer.get(1))) {
+					// 0xD2 - 0xD9 frames use the 2nd octet to specifiy the
+					// length of the frame. The length includes the type and length octet.
+					logger.debug("Short frame:" + wmr200.printByteArray(bigBuffer));
+					badFrames += 1;
+					break;
+				} else {
+					// This is for all frames with length byte and checksum.
+					logger.debug("DX frame:" + wmr200.printByteArray(bigBuffer));
+					if ((byte)bigBuffer.get(0) == (byte)0xD1){
+						bigBuffer = bigBuffer.subList(1, bigBuffer.size());
+					}
+					
+					while (bigBuffer.size()!=0 && bigBuffer.get(1)!=0){
+						logger.debug("DX frame:" + wmr200.printByteArray(bigBuffer));
+						startWorking(new ArrayList<Byte>(bigBuffer.subList(0, bigBuffer.get(1))));
+						bigBuffer = bigBuffer.subList(bigBuffer.get(1),	bigBuffer.size());
+						logger.debug("After DX frame:" + wmr200.printByteArray(bigBuffer));
+						if (bigBuffer.size() < bigBuffer.get(1)){
+							bigBuffer.clear();
+						}
+					}
 				}
-				
+
+				// if (bigBuffer.size() >= 2) {
+				//
+				// if ((bigBuffer.get(0) & 0xff)<210 || (bigBuffer.get(0) &
+				// 0xff)>217 || (bigBuffer.get(1) & 0xff)>50 ){ //keep only
+				// value
+				// that begin with d2 to d9
+				// bigBuffer.clear();
+				// }
+				// else if (bigBuffer.size() == (bigBuffer.get(1) & 0xff)) {
+				//
+				// startWorking(bigBuffer);
+				// bigBuffer.clear();
+				// } else if (bigBuffer.size() > (bigBuffer.get(1) & 0xff)) {
+				// startWorking(bigBuffer
+				// .subList(0, (bigBuffer.get(1) & 0xff)));
+				// bigBuffer = bigBuffer.subList((bigBuffer.get(1) & 0xff),
+				// bigBuffer.size());
+				// }
+				//
+				// }
 			}
-
-						
-		} catch (InterruptedException e) {
-			logger.debug(e.getMessage(),e);
+		} catch (Exception e) {
+			logger.debug(e.getMessage(), e);
 		}
 	}
 
 	/**
 	 * Start working.
 	 * 
-	 * @param bigBuffer
+	 * @param frame
 	 *            the big buffer
 	 * @throws InterruptedException
 	 *             the interrupted exception
 	 */
-	private void startWorking(List<Byte> bigBuffer) throws InterruptedException {
+	private void startWorking(List<Byte> frame) throws InterruptedException {
 		String st = null;
-		if (bigBuffer.size() > 0 && WMR200Utils.checkSumState(bigBuffer)) {
+		if (frame.size() > 0 && WMR200Utils.checkSumState(frame)) {
 			st = "Chaine a traiter : \n		";
-			for (Byte byte1 : bigBuffer) {
+			for (Byte byte1 : frame) {
 				st = st + (Integer.toHexString(byte1 & 0xff) + " ");
 			}
 
@@ -251,59 +321,68 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 				logger.info(st);
 			}
 
-			switch (bigBuffer.get(0)) {
+			switch (frame.get(0)) {
 
 			case ((byte) 0xd1):
 				// Message d1
 				logger.info("Entre dans d1");
 				readUnknownD1();
+				logger.info("Sort de d1");
 				break;
 
 			case ((byte) 0xd2):
 				// Message d2 : History
 				logger.info("Entre dans d2");
-				readHistoryFromD2(bigBuffer);
+				readHistoryFromD2(frame);
+				logger.info("Sort de d2");
 				break;
 
 			case ((byte) 0xd3):
 				// Message d3 : Anemometer (Wind)
 				logger.info("Entre dans d3");
-				readAnemometerD3(bigBuffer);
+				readAnemometerD3(frame);
+				logger.info("Sort de d3");
 				break;
 
 			case ((byte) 0xd4):
 				// Message d4 : Rain gauge (Rainfall)
 				logger.info("Entre dans d4");
-				readRainGaugeD4(bigBuffer);
+				readRainGaugeD4(frame);
+				logger.info("Sort de d4");
 				break;
 
 			case ((byte) 0xd5):
 				// Message d5 : UV Meter
 				logger.info("Entre dans d5");
-				readUVMeterD5(bigBuffer);
+				readUVMeterD5(frame);
+				logger.info("Sort de d5");
 				break;
 
 			case ((byte) 0xd6):
 				// Message d6 : Barometer
 				logger.info("Entre dans d6");
-				readBarometerD6(bigBuffer);
+				readBarometerD6(frame);
+				logger.info("Sort de d6");
 				break;
 
 			case ((byte) 0xd7):
 				// Message d6 : Thermometer (Temperature)
 				logger.info("Entre dans d7");
-				readThermometerD7(bigBuffer);
+				readThermometerD7(frame);
+				logger.info("Sort de d7");
 				break;
 
 			case ((byte) 0xd8):
 				// Message d8 :
 				logger.info("Entre dans d8");
 				readUnknownD8();
+				logger.info("Sort de d8");
 				break;
 			case ((byte) 0xd9):
 				// Message d9 : Data Logger Information
 				logger.info("Entre dans d9");
 				readDataLoggerStateD9();
+				logger.info("Sort de d9");
 				break;
 
 			default:
@@ -339,7 +418,7 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 	public void readHistoryFromD2(List<Byte> bigBuffer) {
 
 		System.out.println("find D2");
-		//TODO check the cache of WMR200
+		// TODO check the cache of WMR200
 		// List<Byte> date = bigBuffer.subList(0, 7);
 		//
 		// List<Byte> temp = bigBuffer.subList(0, 7);
@@ -403,23 +482,35 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 				10, 12));
 
 		logger.info("wind Direction : "
-				+ WMR200MapKey.WIND_DIRECTION_TAB[winDirection]
+				+ ANEMOMETER.WIND_DIRECTION_TAB[winDirection]
 				+ " | wind Speed   : " + windSpeed + " | Wind Avrg : "
 				+ windAverageSpeed + " | Date : " + date);
 
 		old_m_allData = m_allData;
 		old_m_lastMeasurementTimes = m_lastMeasurementTimes;
-		
-		m_lastMeasurementTimes.put(WMR200MapKey.WINDDIRECTION_TYPE, date);
-		m_allData.put(WMR200MapKey.WINDDIRECTION_TYPE, new Double(winDirection));
-//
-//		myNotificationSend("Anemometer Changed");
-//
-		m_lastMeasurementTimes.put(WMR200MapKey.WINDAVERGAE_TYPE, date);
-		m_allData.put(WMR200MapKey.WINDAVERGAE_TYPE, new Double(windAverageSpeed));
-		
-		m_lastMeasurementTimes.put(WMR200MapKey.WINDSPEED_TYPE, date);
-		m_allData.put(WMR200MapKey.WINDSPEED_TYPE, new Double(winDirection));
+
+		m_lastMeasurementTimes.put(ANEMOMETER.WIND_DIRECTION, date);
+		m_allData.put(ANEMOMETER.WIND_DIRECTION, new Double(winDirection));
+
+		m_lastMeasurementTimes.put(ANEMOMETER.WIND_AVERAGE, date);
+		m_allData.put(ANEMOMETER.WIND_AVERAGE, new Double(windAverageSpeed));
+
+		m_lastMeasurementTimes.put(ANEMOMETER.WIND_SPEED, date);
+		m_allData.put(ANEMOMETER.WIND_SPEED, new Double(windSpeed));
+		sendNotification(ANEMOMETER.NAME);
+
+	}
+
+	/**
+	 * Send notification.
+	 * 
+	 * @param sensorName
+	 *            the sensor name
+	 */
+	private void sendNotification(String sensorName) {
+		Dictionary<String, String> props = new Hashtable<String, String>();
+		props.put(WMR200Service.SENSOR, sensorName);
+		eventAdmin.postEvent(new Event(getTopic(), props));
 
 	}
 
@@ -466,24 +557,19 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 		old_m_allData = m_allData;
 		old_m_lastMeasurementTimes = m_lastMeasurementTimes;
 
-		m_lastMeasurementTimes.put(WMR200MapKey.RAIN_RATE_TYPE, date);
-		m_allData.put(WMR200MapKey.RAIN_RATE_TYPE, new Double(rate));
+		m_lastMeasurementTimes.put(PLUVIOMETER.RAIN_RATE, date);
+		m_allData.put(PLUVIOMETER.RAIN_RATE, new Double(rate));
 
-		myNotificationSend("RAin GAuge Changed");
+		m_lastMeasurementTimes.put(PLUVIOMETER.RAINFALL_H, date);
+		m_allData.put(PLUVIOMETER.RAINFALL_H, new Double(rainFallH));
 
+		m_lastMeasurementTimes.put(PLUVIOMETER.RAINFALL_24H, date);
+		m_allData.put(PLUVIOMETER.RAINFALL_24H, new Double(rainFall24H));
 
-		m_lastMeasurementTimes.put(WMR200MapKey.RAINFALL_H_TYPE, date);
-		m_allData.put(WMR200MapKey.RAINFALL_H_TYPE, new Double(rainFallH));
+		m_lastMeasurementTimes.put(PLUVIOMETER.RAINFALL_TOTAL, dateTotal);
+		m_allData.put(PLUVIOMETER.RAINFALL_TOTAL, new Double(rainfallTotal));
 
-
-		m_lastMeasurementTimes.put(WMR200MapKey.RAINFALL_24H_TYPE, date);
-		m_allData.put(WMR200MapKey.RAINFALL_24H_TYPE, new Double(rainFall24H));
-
-		
-
-		m_lastMeasurementTimes.put(WMR200MapKey.RAINFALL_TOTAL_TYPE, dateTotal);
-		m_allData.put(WMR200MapKey.RAINFALL_TOTAL_TYPE, new Double(
-				rainfallTotal));
+		sendNotification(PLUVIOMETER.NAME);
 	}
 
 	/*
@@ -509,10 +595,10 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 		old_m_allData = m_allData;
 		old_m_lastMeasurementTimes = m_lastMeasurementTimes;
 
-		m_lastMeasurementTimes.put(WMR200MapKey.UV_TYPE, date);
-		m_allData.put(WMR200MapKey.UV_TYPE, new Double(uv));
+		m_lastMeasurementTimes.put(UVMETER.UV, date);
+		m_allData.put(UVMETER.UV, new Double(uv));
 
-//		myNotificationSend("UvMeter Changed");
+		sendNotification(UVMETER.NAME);
 
 	}
 
@@ -545,38 +631,30 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 				.get(10));
 
 		logger.info("pression : " + pression + " |prevision : "
-				+ WMR200MapKey.PREVISION_TEXT[prevision]
+				+ BAROMETER.PREVISION_TEXT[prevision]
 				+ " |Altitude pression  : " + altitudePression
 				+ " | Altitude prevision : "
-				+ WMR200MapKey.PREVISION_TEXT[altitutePrevision] + " |Date : "
+				+ BAROMETER.PREVISION_TEXT[altitutePrevision] + " |Date : "
 				+ date);
 
 		old_m_allData = m_allData;
 		old_m_lastMeasurementTimes = m_lastMeasurementTimes;
 
-		m_lastMeasurementTimes.put(WMR200MapKey.PRESSION_TYPE, date);
-		m_allData.put(WMR200MapKey.PRESSION_TYPE, new Double(pression));
+		m_lastMeasurementTimes.put(BAROMETER.PRESSURE, date);
+		m_allData.put(BAROMETER.PRESSURE, new Double(pression));
 
-		myNotificationSend("Barometer Changed");
+		m_lastMeasurementTimes.put(BAROMETER.PREVISION, date);
+		m_allData.put(BAROMETER.PREVISION, new Double(prevision));
 
-		
+		m_lastMeasurementTimes.put(BAROMETER.ALTITUDE_PRESSURE, date);
+		m_allData
+				.put(BAROMETER.ALTITUDE_PRESSURE, new Double(altitudePression));
 
-		m_lastMeasurementTimes.put(WMR200MapKey.PREVISION_TYPE, date);
-		m_allData.put(WMR200MapKey.PREVISION_TYPE, new Double(prevision));
-//
-//		
-//
-		m_lastMeasurementTimes.put(WMR200MapKey.ALTITUDE_PRESSION_TYPE, date);
-		m_allData.put(WMR200MapKey.ALTITUDE_PRESSION_TYPE, new Double(
-				altitudePression));
-
-		
-
-		m_lastMeasurementTimes.put(WMR200MapKey.ALTITUDE_PREVISION_TYPE, date);
-		m_allData.put(WMR200MapKey.ALTITUDE_PREVISION_TYPE, new Double(
+		m_lastMeasurementTimes.put(BAROMETER.ALTITUDE_PREVISION, date);
+		m_allData.put(BAROMETER.ALTITUDE_PREVISION, new Double(
 				altitutePrevision));
 
-		
+		sendNotification(BAROMETER.NAME);
 
 	}
 
@@ -623,32 +701,26 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 		old_m_lastMeasurementTimes = m_lastMeasurementTimes;
 
 		if ((bigBuffer.get(7) & 0xff) != 1) {// indoor
-			m_lastMeasurementTimes.put(WMR200MapKey.TEMPERATURE_TYPE, date);
-			m_allData.put(WMR200MapKey.TEMPERATURE_TYPE,
-					new Double(temperature));
-			m_lastMeasurementTimes.put(WMR200MapKey.HUMIDITY_TYPE, date);
-			m_allData.put(WMR200MapKey.HUMIDITY_TYPE, new Double(humidity));
-			m_lastMeasurementTimes.put(WMR200MapKey.DEWPOINT_TYPE, date);
-			m_allData.put(WMR200MapKey.DEWPOINT_TYPE, new Double(dewPoint));
-//
-//			
-//		
-//
-		} else {// outdoor
-			m_lastMeasurementTimes.put(WMR200MapKey.TEMPERATURE_OUT_TYPE, date);
-			m_allData.put(WMR200MapKey.TEMPERATURE_OUT_TYPE, new Double(
+			m_lastMeasurementTimes.put(THERMOMETER.INDOOR_TEMPERATURE, date);
+			m_allData.put(THERMOMETER.INDOOR_TEMPERATURE, new Double(
 					temperature));
-			m_lastMeasurementTimes.put(WMR200MapKey.HUMIDITY_OUT_TYPE, date);
-			m_allData.put(WMR200MapKey.HUMIDITY_OUT_TYPE, new Double(humidity));
-			m_lastMeasurementTimes.put(WMR200MapKey.DEWPOINT_OUT_TYPE, date);
-			m_allData.put(WMR200MapKey.DEWPOINT_OUT_TYPE, new Double(dewPoint));
+			m_lastMeasurementTimes.put(THERMOMETER.INDOOR_HUMIDITY, date);
+			m_allData.put(THERMOMETER.INDOOR_HUMIDITY, new Double(humidity));
+			m_lastMeasurementTimes.put(THERMOMETER.INDOOR_DEW_POINT, date);
+			m_allData.put(THERMOMETER.INDOOR_DEW_POINT, new Double(dewPoint));
+			sendNotification(THERMOMETER.INDOOR_NAME);
 
+		} else {// outdoor
+			m_lastMeasurementTimes.put(THERMOMETER.OUTDOOR_TEMPERATURE, date);
+			m_allData.put(THERMOMETER.OUTDOOR_TEMPERATURE, new Double(
+					temperature));
+			m_lastMeasurementTimes.put(THERMOMETER.OUTDOOR_HUMIDITY, date);
+			m_allData.put(THERMOMETER.OUTDOOR_HUMIDITY, new Double(humidity));
+			m_lastMeasurementTimes.put(THERMOMETER.OUTDOOR_DEW_POINT, date);
+			m_allData.put(THERMOMETER.OUTDOOR_DEW_POINT, new Double(dewPoint));
+			sendNotification(THERMOMETER.OUTDOOR_NAME);
 		}
-//
-//		myNotificationSend("Thermometer Changed");
-
 	}
-
 
 	/*
 	 * (non-Javadoc)
@@ -681,7 +753,6 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 
 	}
 
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -689,7 +760,7 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 	 * org.ow2.aspirerfid.sensor.wmr200.host.WMR200Service#getallData(java.lang
 	 * .String)
 	 */
-	public Double getAData(String address) {
+	public Double getAValue(String address) {
 		return (m_allData.containsKey(address)) ? m_allData.get(address) : 0.0d;
 	}
 
@@ -712,7 +783,7 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 		}
 
 		logger.info(total);
-		
+
 	}
 
 	/*
@@ -723,8 +794,9 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 	 */
 	/**
 	 * Gets the last measurement time.
-	 *
-	 * @param address the address
+	 * 
+	 * @param address
+	 *            the address
 	 * @return the last measurement time
 	 */
 	public Date getLastMeasurementTime(String address) {
@@ -753,9 +825,6 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 		logger.info(total);
 	}
 
-
-
-
 	/**
 	 * My notification send.
 	 * 
@@ -763,16 +832,58 @@ public class WMR200ServiceImpl extends NotificationBroadcasterSupport implements
 	 *            the msg
 	 */
 	private void myNotificationSend(String msg) {
-//		Notification n = new AttributeChangeNotification(this, sequence ++,
-//				System.currentTimeMillis(), msg, "m_allData", "Hashtable",
-//				old_m_allData, m_allData);
-//		sendNotification(n);
-//
-//		n = new AttributeChangeNotification(this, sequence++,
-//				System.currentTimeMillis(), msg + " Date",
-//				"m_lastMeasurementTimes", "Hashtable",
-//				old_m_lastMeasurementTimes, m_lastMeasurementTimes);
-//
-//		sendNotification(n);
+		// Notification n = new AttributeChangeNotification(this, sequence ++,
+		// System.currentTimeMillis(), msg, "m_allData", "Hashtable",
+		// old_m_allData, m_allData);
+		// sendNotification(n);
+		//
+		// n = new AttributeChangeNotification(this, sequence++,
+		// System.currentTimeMillis(), msg + " Date",
+		// "m_lastMeasurementTimes", "Hashtable",
+		// old_m_lastMeasurementTimes, m_lastMeasurementTimes);
+		//
+		// sendNotification(n);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.sensor.wmr200.service.WMR200Service#getAllData()
+	 */
+	public Map<String, Double> getAllData() {
+		return m_allData;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.ow2.aspirerfid.sensor.wmr200.service.WMR200Service#getAllMesurementTime
+	 * ()
+	 */
+	public Map<String, Date> getAllMeasurementTimes() {
+		return m_lastMeasurementTimes;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.ow2.aspirerfid.sensor.wmr200.service.WMR200Service#getTopic()
+	 */
+	public String getTopic() {
+		return topic;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.ow2.aspirerfid.sensor.wmr200.service.WMR200Service#setTopic(java.
+	 * lang.String)
+	 */
+	public void setTopic(String topicName) {
+		topic = topicName;
+
+	}
+
 }

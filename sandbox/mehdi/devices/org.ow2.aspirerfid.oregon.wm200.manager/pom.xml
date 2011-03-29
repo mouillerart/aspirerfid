@@ -1,13 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.ow2.aspirerfid</groupId>
-  <artifactId>org.ow2.aspirerfid.oregon.wm200.manager</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>bundle</packaging>
-  <name>OregonWMR200-MANAGER</name>
-  <description>Manage connected WMR200 Stations</description>
-  
-  <dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ow2.aspirerfid</groupId>
+	<artifactId>org.ow2.aspirerfid.oregon.wm200.manager</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+	<name>OregonWMR200-MANAGER</name>
+	<description>Manage connected WMR200 Stations</description>
+
+	<dependencies>
 		<dependency>
 			<groupId>org.ow2.chameleon.usb</groupId>
 			<artifactId>org.ow2.chameleon.usb.bridge</artifactId>
@@ -18,7 +19,12 @@
 			<artifactId>org.apache.felix.ipojo</artifactId>
 			<version>1.6.0</version>
 		</dependency>
-	<dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.eventadmin</artifactId>
+			<version>1.2.10</version>
+		</dependency>
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
@@ -49,8 +55,8 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-Name>${pom.artifactId}</Bundle-Name>
-						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						<Bundle-Name>OregonWMR200-MANAGER</Bundle-Name>
+						<Bundle-SymbolicName>OregonWMR200-MANAGER</Bundle-SymbolicName>
 						<Bundle-Description>${pom.description}</Bundle-Description>
 						<Bundle-Vendor>ADELE/LIG</Bundle-Vendor>
 					</instructions>

@@ -181,6 +181,7 @@ public class WMR200ManagerImpl implements WMR200Manager, Runnable {
 							+ wmr200ID);
 					configuration.put("service.pid", wmr200Factory.getName()
 							+ "@{DEVICE_NUMBER:" + wmr200ID + "}");
+					configuration.put("topic", "weather/"+ "wmr200");
 					configuration.put(wmr200_ID_PROPERTY, wmr200ID);
 					try {
 						ComponentInstance instance = wmr200Factory
