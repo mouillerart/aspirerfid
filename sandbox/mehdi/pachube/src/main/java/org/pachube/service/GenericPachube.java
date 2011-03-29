@@ -3,19 +3,12 @@ package org.pachube.service;
 import java.awt.Color;
 
 import Pachube.Feed;
-import Pachube.Pachube;
 import Pachube.PachubeException;
 import Pachube.Trigger;
 import Pachube.httpClient.HttpResponse;
-import Pachube2.Pachube2;
 
-public class GenericPachube {
-	
-	private Object pachube;
-	
-	public GenericPachube(Object pachube) {
-		this.pachube = pachube;
-	}
+public interface GenericPachube {
+
 	/**
 	 * Gets a Feed by Feed ID
 	 * 
@@ -25,13 +18,7 @@ public class GenericPachube {
 	 * @throws PachubeException
 	 *             If something goes wrong.
 	 */
-	public Feed getFeed(int feed) throws PachubeException {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).getFeed(feed);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).getFeed(feed));
-		return null;
-	}
+	public abstract Feed getFeed(int feed) throws PachubeException;
 
 	/**
 	 * Creates a new feed from the feed provide. The feed provide should have no
@@ -48,14 +35,7 @@ public class GenericPachube {
 	 * @throws PachubeException
 	 *             If something goes wrong.
 	 */
-	public Feed createFeed(Feed feed) throws PachubeException {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).createFeed(feed);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).createFeed(feed));
-		return null;
-		
-	}
+	public abstract Feed createFeed(Feed feed) throws PachubeException;
 
 	/**
 	 * This Method is not intended to be used by Users, instead get the Feed
@@ -67,14 +47,8 @@ public class GenericPachube {
 	 * @return
 	 * @throws PachubeException
 	 */
-	public boolean updateFeed(int feed, String s) throws PachubeException {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).updateFeed(feed,s);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).updateFeed(feed,s));
-		return false;
-	
-	}
+	public abstract boolean updateFeed(int feed, String s)
+			throws PachubeException;
 
 	/**
 	 * Delete a Feed specified by the feed id. If any Feed object exists that is
@@ -85,14 +59,7 @@ public class GenericPachube {
 	 *            If of the feed to delete
 	 * @return HttpResponse
 	 */
-	public HttpResponse deleteFeed(int feed) {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).deleteFeed(feed);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).deleteFeed(feed));
-		return null;
-		
-	}
+	public abstract HttpResponse deleteFeed(int feed);
 
 	/**
 	 * This Method is not intended to be used by Users, instead get the Feed
@@ -104,15 +71,8 @@ public class GenericPachube {
 	 * @return
 	 * @throws PachubeException
 	 */
-	public boolean createDatastream(int feed, String s) throws PachubeException {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).createDatastream(feed,s);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).createDatastream(feed,s));
-		return false;
-	
-
-	}
+	public abstract boolean createDatastream(int feed, String s)
+			throws PachubeException;
 
 	/**
 	 * This Method is not intended to be used by Users, instead get the Feed
@@ -123,14 +83,7 @@ public class GenericPachube {
 	 * @param datastream
 	 * @return
 	 */
-	public HttpResponse deleteDatastream(int feed, int datastream) {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).deleteDatastream(feed,datastream);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).deleteDatastream(feed,datastream));
-		return null;
-	
-	}
+	public abstract HttpResponse deleteDatastream(int feed, int datastream);
 
 	/**
 	 * This Method is not intended to be used by Users, instead get the Feed
@@ -142,14 +95,8 @@ public class GenericPachube {
 	 * @param s
 	 * @return
 	 */
-	public HttpResponse updateDatastream(int feed, int datastream, String s) {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).updateDatastream(feed,datastream,s);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).updateDatastream(feed,datastream,s));
-		return null;
-	
-	}
+	public abstract HttpResponse updateDatastream(int feed, int datastream,
+			String s);
 
 	/**
 	 * This Method is not intended to be used by Users, instead get the Feed
@@ -159,10 +106,7 @@ public class GenericPachube {
 	 * @param datastream
 	 * @return
 	 */
-	public HttpResponse getDatastream(int feed, int datastream) {
-		return null;
-		
-	}
+	public abstract HttpResponse getDatastream(int feed, int datastream);
 
 	/**
 	 * This Method is not intended to be used by Users, instead get the Feed
@@ -172,14 +116,7 @@ public class GenericPachube {
 	 * @param datastream
 	 * @return
 	 */
-	public Double[] getDatastreamHistory(int feed, int datastream) {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).getDatastreamHistory(feed,datastream);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).getDatastreamHistory(feed,datastream));
-		return null;
-		
-	}
+	public abstract Double[] getDatastreamHistory(int feed, int datastream);
 
 	/**
 	 * This Method is not intended to be used by Users, instead get the Feed
@@ -189,15 +126,7 @@ public class GenericPachube {
 	 * @param datastream
 	 * @return
 	 */
-	public String[] getDatastreamArchive(int feed, int datastream) {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).getDatastreamArchive(feed,datastream);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).getDatastreamArchive(feed,datastream));
-		return null;
-		
-
-	}
+	public abstract String[] getDatastreamArchive(int feed, int datastream);
 
 	/**
 	 * Creates a Trigger on pachube from the object provided.
@@ -206,68 +135,36 @@ public class GenericPachube {
 	 * @return
 	 * @throws PachubeException
 	 */
-	public String createTrigger(Trigger t) throws PachubeException {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).createTrigger(t);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).createTrigger(t));
-		return null;
-	}
-	
+	public abstract String createTrigger(Trigger t) throws PachubeException;
+
 	/**
 	 * Gets a Trigger from pachube specified by the parameter
 	 * 
 	 * @param id id of the Trigger to get
 	 */
-	public Trigger getTrigger(int id) throws PachubeException {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).getTrigger(id);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).getTrigger(id));
-		return null;
-	}
-	
+	public abstract Trigger getTrigger(int id) throws PachubeException;
+
 	/**
 	 * Gets all the Triggers owned by the authenticating user
 	 * 
 	 * @param id id of the Trigger to get
 	 */
-	public Trigger[] getTriggers() throws PachubeException {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).getTriggers();
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).getTriggers());
-		return null;
-		
-	}
-	
+	public abstract Trigger[] getTriggers() throws PachubeException;
+
 	/**
 	 * Deletes a Trigger from pachube
 	 * @param id id of the trigger to delete
 	 * @return
 	 */
-	public HttpResponse deleteTrigger(int id){
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).deleteTrigger(id);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).deleteTrigger(id));
-		return null;
-	}
-	
+	public abstract HttpResponse deleteTrigger(int id);
+
 	/**
 	 * Updates a Trigger on pachube
 	 * @param id id of the triggerto update
 	 * @param t Trigger object of the new trigger
 	 * @return
 	 */
-	public HttpResponse updateTrigger(int id,Trigger t){
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).updateTrigger(id,t);
-		else if (pachube instanceof Pachube2)
-			return (((Pachube2) pachube).updateTrigger(id,t));
-		return null;
-		
-	}
+	public abstract HttpResponse updateTrigger(int id, Trigger t);
 
 	/**
 	 * Gets a Pachube graph of the datastream
@@ -284,12 +181,7 @@ public class GenericPachube {
 	 *            Color of the line
 	 * @return String which can be used to form a URL Object.
 	 */
-	public String showGraph(int feedID, int streamID, int width, int height,
-			Color c) {
-		if (pachube instanceof Pachube)
-			return ((Pachube) pachube).showGraph( feedID,  streamID,  width,  height,c);
-		else if (pachube instanceof Pachube2)
-			return ((Pachube2) pachube).showGraph( feedID,  streamID,  width,  height,c);
-		return null;
-	}
+	public abstract String showGraph(int feedID, int streamID, int width,
+			int height, Color c);
+
 }

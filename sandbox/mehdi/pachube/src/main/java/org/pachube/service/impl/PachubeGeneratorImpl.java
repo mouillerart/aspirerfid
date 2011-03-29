@@ -22,11 +22,11 @@ public class PachubeGeneratorImpl implements PachubeGenerator{
 		switch (version) {
 		
 			case V1:
-					pachube = new GenericPachube(new Pachube(apiKey));
+					pachube = new GenericPachubeImpl(new Pachube(apiKey));
 				break;
 				
 			case V2:
-					pachube = new GenericPachube(new Pachube2(apiKey));
+					pachube = new GenericPachubeImpl(new Pachube2(apiKey));
 				break;
 	
 			default:
