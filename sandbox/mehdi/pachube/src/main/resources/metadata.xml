@@ -3,7 +3,7 @@
 <ipojo>
 	<component immediate="false" classname="org.pachube.service.impl.PachubeGeneratorImpl" 
 			name="PachubeFactory">
-	
+		<provides/>
 		<callback transition="validate" method="start" />
 		<callback transition="invalidate" method="stop" />
 	</component>
