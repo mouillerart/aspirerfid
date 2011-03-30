@@ -17,15 +17,15 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/jpachube.jar</systemPath>
 		</dependency>
-		
-		
+
+
 		<dependency>
-    		<groupId>org.json</groupId>
-    		<artifactId>json</artifactId>
-    		<version>20090211</version>
-		</dependency>		
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
 	</dependencies>
-	
+
 	<developers>
 		<developer>
 			<id>donsez</id>
@@ -76,9 +76,8 @@
 					<instructions>
 						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
 						<Bundle-Description>${description}</Bundle-Description>
-						<Export-Package>org.pachube.service</Export-Package>
+						<Export-Package>org.pachube.service,Pachube</Export-Package>
 						<Private-Package>
-							Pachube,
 							Pachube.httpClient,
 							Pachube2,
 							org.pachube.service.impl,
