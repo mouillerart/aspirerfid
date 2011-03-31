@@ -24,76 +24,74 @@ import java.util.Map;
 // TODO: Auto-generated Javadoc
 /**
  * The Interface WMR200Service.
+ * 
  * @author Elmehdi Damou
  */
-public interface WMR200Service{
-	
-//	/** The SENSOR. */
-	/** The Constant SENSOR. */
-public static final String SENSOR = "sensor";
-	
-	
-	/**
-	 * Start.
-	 */
-	public void start();
+public interface WMR200Service {
 
-	/**
-	 * Stop.
-	 */
-	public void stop();
+    /** The Constant SENSOR. */
+    public static final String SENSOR = "sensor";
 
-	/**
-	 * Gets the a data.
-	 *
-	 * @param metricName the address
-	 * @return the a data
-	 */
-	public Double getAValue(String metricName);
-	
-	
-	/**
-	 * Gets the last measurement time.
-	 *
-	 * @param metricName the metric name
-	 * @return the last measurement time
-	 */
-	public Date getLastMeasurementTime(String metricName);
+    /**
+     * Start.
+     */
+    public void start();
 
-	/**
-	 * return the map containing all data.
-	 *
-	 * @return the all data
-	 */
-	public Map<String, Double> getAllData();
+    /**
+     * Stop.
+     */
+    public void stop();
 
-	
-	/**
-	 * Gets the all mesurement time.
-	 *
-	 * @return the all mesurement time
-	 */
-	public Map<String, Date> getAllMeasurementTimes();
-	
-	/**
-	 * Resets the wmr200.
-	 */
-	public void reset();
-	
-	
-	/**
-	 * Gets the topic.
-	 *
-	 * @return the topic
-	 */
-	public String getTopic();
-	
-	
-	/**
-	 * Sets the topic.
-	 *
-	 * @param topicName the new topic
-	 */
-	public void setTopic(String topicName);
+    /**
+     * Gets the a data.
+     * 
+     * @param metricName
+     *            the address
+     * @return the a data
+     */
+    public Double getAValue(Enum metricName);
+
+    /**
+     * Gets the last measurement time.
+     * 
+     * @param metricName
+     *            the metric name
+     * @return the last measurement time
+     */
+    public Date getLastMeasurementTime(Enum metricName);
+
+    /**
+     * return the map containing all data.
+     * 
+     * @return the all data
+     */
+    public Map<Enum, Double> getAllData();
+
+    /**
+     * Gets the all mesurement time.
+     * 
+     * @return the all mesurement time
+     */
+    public Map<Enum, Date> getAllMeasurementTimes();
+
+    /**
+     * Resets the wmr200.
+     */
+    public void reset();
+
+    /**
+     * Gets the topic.
+     * 
+     * @return the topic
+     */
+    public String getTopic();
+
+    /**
+     * Sets the topic.
+     * 
+     * @param topicName
+     *            the new topic
+     */
+    public void setTopic(String topicName);
 
 }
