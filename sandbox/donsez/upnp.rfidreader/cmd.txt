@@ -1,0 +1,6 @@
+start file:bundle/org.ops4j.pax.logging.pax-logging-api_1.5.1.jar
+start file:bundle/org.ops4j.pax.logging.pax-logging-service_1.5.1.jar
+
+start file:bundle/com.tikitag.client-bundle_1.0.0.SNAPSHOT.jar
+
+start file:C:/Users/donsez/dev/aspire-sandbox-donsez-svn-public/upnp.rfidreader/target/org.ow2.aspire.upnp.rfidreader-0.1.0.jar

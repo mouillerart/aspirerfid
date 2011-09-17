@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<root>
+	<specVersion>
+		<major>1</major>
+		<minor>0</minor>
+	</specVersion>
+	<URLBase>http://wiki.aspire.ow2.org</URLBase>
+	<device>
+		<deviceType>urn:schemas-upnp-org:device:DimmableLight:1</deviceType>
+		<friendlyName>RFID Reader UPnP Device</friendlyName>
+		<manufacturer>Didier Donsez (OW2 Aspire team)</manufacturer>
+		<manufacturerURL>http://wiki.aspire.ow2.org</manufacturerURL>
+		<modelDescription>RFID Reader UPnP Device</modelDescription>
+		<modelName>RFID Reader</modelName>
+		<modelNumber>123</modelNumber>
+		<modelURL>http://wiki.aspire.ow2.org</modelURL>
+		<serialNumber>123456789</serialNumber>
+		<UDN>uuid:ow2-aspire-rfidreader</UDN>
+		<UPC>upc:ow2-aspire-rfidreader</UPC>
+		<iconList>
+			<icon>
+				<mimetype>image/png</mimetype>
+				<width>48</width>
+				<height>48</height>
+				<depth>16</depth>
+				<url>/icon/reader.png</url>
+			</icon>
+		</iconList>
+		<serviceList>
+			<service>
+				<serviceType>urn:schemas-ow2aspire-org:service:Reader:1</serviceType>
+				<serviceId>urn:ow2aspire-org:serviceId:Reader:1</serviceId>
+				<SCPDURL>URL to service description</SCPDURL>
+				<controlURL>URL for control</controlURL>
+				<eventSubURL>URL for eventing</eventSubURL>
+			</service>
+			<service>
+				<serviceType>urn:schemas-upnp-org:service:TemperatureSensor:1</serviceType>
+				<serviceId>urn:upnp-org:serviceId:TemperatureSensor:1</serviceId>
+				<SCPDURL>URL to service description</SCPDURL>
+				<controlURL>URL for control</controlURL>
+				<eventSubURL>URL for eventing</eventSubURL>
+			</service>
+			<service>
+				<serviceType>urn:schemas-upnp-org:service:LowPowerDevice:1</serviceType>
+				<serviceId>urn:upnp-org:serviceId:LowPowerDevice:1</serviceId>
+				<SCPDURL>URL to service description</SCPDURL>
+				<controlURL>URL for control</controlURL>
+				<eventSubURL>URL for eventing</eventSubURL>
+			</service>
+			<!--Declarations for other services added by UPnP vendor (if 
+			any) go here-->
+		</serviceList>
+		<deviceList>
+			<!-- Description of embedded devices added by UPnP vendor (if any) go here -->
+		</deviceList>
+		<presentationURL>http://www.apache.org/~donsez/dev/osgi/upnp.devicegen/readme.html</presentationURL>
+	</device>
+</root>

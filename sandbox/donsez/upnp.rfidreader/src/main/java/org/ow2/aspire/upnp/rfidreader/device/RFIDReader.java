@@ -9,34 +9,37 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.felix.upnp.devicegen.util.AbstractUPnPDevice;
+import org.apache.felix.upnp.devicegen.util.DeviceIcon;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.upnp.UPnPDevice;
 import org.osgi.service.upnp.UPnPIcon;
 import org.osgi.service.upnp.UPnPService;
+import org.ow2.aspire.upnp.rfidreader.impl.LowPowerDeviceModelImpl;
+import org.ow2.aspire.upnp.rfidreader.impl.ReaderModelImpl;
+import org.ow2.aspire.upnp.rfidreader.impl.TemperatureSensorModelImpl;
+import org.ow2.aspire.upnp.rfidreader.service.LowPowerDevice;
+import org.ow2.aspire.upnp.rfidreader.service.Reader;
+import org.ow2.aspire.upnp.rfidreader.service.TemperatureSensor;
 
-import org.apache.felix.upnp.devicegen.util.AbstractUPnPDevice;
-import org.apache.felix.upnp.devicegen.util.DeviceIcon;
-
-import org.ow2.aspire.upnp.rfidreader.model.*;
-import org.ow2.aspire.upnp.rfidreader.service.*;
-import org.ow2.aspire.upnp.rfidreader.impl.*;
-
-
-	
 
 public class RFIDReader extends AbstractUPnPDevice {
 
-	public RFIDReader(BundleContext context, AbstractUPnPDevice parent) {
+	Thread thread;
+	ReaderModelImpl myReaderModel;
+	TemperatureSensorModelImpl myTemperatureSensorModel;
+	LowPowerDeviceModelImpl myLowPowerDeviceModel;
+	
+	public RFIDReader(BundleContext context, AbstractUPnPDevice parent) throws Exception {
 		super(context,parent);
 
 		DEVICE_ID="uuid:ow2-aspire-rfidreader";
 
 		// ServiceModel Declaration List
-		ReaderModel myReaderModel=null; // TODO initialise it
-TemperatureSensorModel myTemperatureSensorModel=null; // TODO initialise it
-LowPowerDeviceModel myLowPowerDeviceModel=null; // TODO initialise it
+		myReaderModel=new ReaderModelImpl(this); // TODO initialise it
+		myTemperatureSensorModel=new TemperatureSensorModelImpl(this); // TODO initialise it
+		myLowPowerDeviceModel=new LowPowerDeviceModelImpl(this); // TODO initialise it
 
-		
 		// Icon Lists
 		
 		List iconsList=new LinkedList();
@@ -119,7 +122,7 @@ LowPowerDeviceModel myLowPowerDeviceModel=null; // TODO initialise it
 	}
 	
 	protected void setupDeviceProperties(){	
-		dictionary.put(UPnPDevice.TYPE,"urn:schemas-upnp-org:device:DimmableLight:1");
+		dictionary.put(UPnPDevice.TYPE,"urn:schemas-upnp-org:device:RFIDReader:1");
 		dictionary.put(UPnPDevice.FRIENDLY_NAME,"RFID Reader UPnP Device");
 		dictionary.put(UPnPDevice.MANUFACTURER,"Didier Donsez (OW2 Aspire team)");
 		dictionary.put(UPnPDevice.MANUFACTURER_URL,"http://wiki.aspire.ow2.org");
@@ -131,7 +134,7 @@ LowPowerDeviceModel myLowPowerDeviceModel=null; // TODO initialise it
 		dictionary.put(UPnPDevice.UDN,getUDN());
 		dictionary.put(UPnPDevice.ID,dictionary.get(UPnPDevice.UDN));
 		dictionary.put(UPnPDevice.UPC,"upc:ow2-aspire-rfidreader");
-		dictionary.put(UPnPDevice.PRESENTATION_URL,"http://www.apache.org/~donsez/dev/osgi/upnp.devicegen/readme.html");		
+		dictionary.put(UPnPDevice.PRESENTATION_URL,"http://wiki.aspire.ow2.org");		
 
 		if(parent!=null) {
 			dictionary.put(UPnPDevice.PARENT_UDN,parent.getUDN());
@@ -147,4 +150,24 @@ LowPowerDeviceModel myLowPowerDeviceModel=null; // TODO initialise it
 		}
 		
 	}
+	
+	public void start(BundleContext bundleContext) throws Exception {
+		super.start(bundleContext);
+		myReaderModel.start(bundleContext);
+		myTemperatureSensorModel.start(bundleContext);
+		myLowPowerDeviceModel.start(bundleContext);
+	}
+	
+	public void stop(BundleContext bundleContext) throws Exception {
+		myLowPowerDeviceModel.stop(bundleContext);
+		myTemperatureSensorModel.start(bundleContext);
+		myReaderModel.stop(bundleContext);
+		super.stop(bundleContext);
+	}
+	
+//	public void notifyNotifiers(PropertyChangeEvent event) {
+//		for(int n=0;n<notifiers.length;n++) {	
+//			notifiers[n].propertyChange(event);
+//		}
+//	}
 }

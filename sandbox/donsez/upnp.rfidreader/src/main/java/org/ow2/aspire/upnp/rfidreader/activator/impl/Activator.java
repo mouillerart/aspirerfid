@@ -14,6 +14,7 @@ public class Activator implements BundleActivator {
 	
 	public void start(BundleContext bundleContext) throws Exception {	
 		rfidReader=new RFIDReader(bundleContext, null);
+		rfidReader.start(bundleContext);
 	}
 	
 	public void stop(BundleContext bundleContext) throws Exception {
