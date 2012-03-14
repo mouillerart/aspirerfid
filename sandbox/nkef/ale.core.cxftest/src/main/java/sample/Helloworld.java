@@ -1,4 +1,4 @@
-package org.ow2.aspirerfid.ale.core.helloworld;
+package sample;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

@@ -16,7 +16,7 @@
     <felix.version>4.0.2</felix.version>
     <osgi.version>4.2.0</osgi.version>
     <felix.plugin.version>2.3.4</felix.plugin.version>
-    <bundle.export.package>org.ow2.aspirerfid.ale.core.helloworld</bundle.export.package>
+    <bundle.export.package>sample</bundle.export.package>
 
     <project.build.skipTests>true</project.build.skipTests>
 
@@ -59,7 +59,7 @@
             <Bundle-Name>AspireRFID ALE Core module CXF JAX WS TEST</Bundle-Name>
             <Bundle-Description>AspireRFID ALE Core module CXF JAX WS TEST</Bundle-Description>
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-            <Bundle-Activator>org.ow2.aspirerfid.ale.core.SimpleActivator</Bundle-Activator>
+            <Bundle-Activator>com.odelia.osgi.dosgi.SimpleActivator</Bundle-Activator>
             <Import-Package>${bundle.import.package}</Import-Package>
             <!-- <Private-Package>${bundle.private.package}</Private-Package> -->
             <Export-Package>${bundle.export.package}</Export-Package>

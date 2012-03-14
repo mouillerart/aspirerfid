@@ -1,5 +1,5 @@
 
-package org.ow2.aspirerfid.ale.core.helloworld;
+package sample;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

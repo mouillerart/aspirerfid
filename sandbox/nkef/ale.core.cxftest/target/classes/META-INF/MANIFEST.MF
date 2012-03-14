@@ -1,7 +1,6 @@
 Manifest-Version: 1.0
-Export-Package: org.ow2.aspirerfid.ale.core.helloworld;uses:="javax.jw
- s,javax.xml.bind.annotation,javax.xml.ws,javax.xml.bind,javax.xml.nam
- espace"
+Export-Package: sample;uses:="javax.jws,javax.xml.bind.annotation,java
+ x.xml.ws,javax.xml.bind,javax.xml.namespace"
 Built-By: kefnik
 Tool: Bnd-1.15.0
 Bundle-Name: AspireRFID ALE Core module CXF JAX WS TEST
@@ -9,12 +8,12 @@ Created-By: Apache Maven Bundle Plugin
 DynamicImport-Package: org.apache.cxf.dosgi.dsw.qos,org.apache.cxf
 Build-Jdk: 1.7.0_03
 Bundle-Version: 0.0.1.SNAPSHOT
-Bnd-LastModified: 1331751522715
-Bundle-Activator: org.ow2.aspirerfid.ale.core.SimpleActivator
+Bnd-LastModified: 1331756772511
+Bundle-Activator: com.odelia.osgi.dosgi.SimpleActivator
 Bundle-ManifestVersion: 2
 Bundle-Description: AspireRFID ALE Core module CXF JAX WS TEST
 Import-Package: javax.jws,javax.xml.bind,javax.xml.bind.annotation,jav
- ax.xml.namespace,javax.xml.ws,org.osgi.framework;version="[1.5,2)",or
- g.ow2.aspirerfid.ale.core.helloworld
+ ax.xml.namespace,javax.xml.ws,org.osgi.framework;version="[1.5,2)",sa
+ mple
 Bundle-SymbolicName: ale.core.cxftest
 

@@ -1,5 +1,5 @@
 
-package org.ow2.aspirerfid.ale.core.helloworld;
+package sample;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "arg0"
 })
-@XmlRootElement(name = "saluer")
-public class Saluer {
+@XmlRootElement(name = "sayHello")
+public class SayHello {
 
     @XmlElementRef(name = "arg0", type = JAXBElement.class/*, required = false*/)
     protected JAXBElement<String> arg0;

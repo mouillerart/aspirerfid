@@ -1,6 +1,6 @@
-package org.ow2.aspirerfid.ale.core;
+package com.odelia.osgi.dosgi;
 
-import org.ow2.aspirerfid.ale.core.helloworld.Helloworld;
+import sample.Helloworld;
 
 
 public class SimpleServiceImpl implements Helloworld {

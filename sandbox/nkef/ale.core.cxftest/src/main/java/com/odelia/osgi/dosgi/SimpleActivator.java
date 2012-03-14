@@ -1,4 +1,4 @@
-package org.ow2.aspirerfid.ale.core;
+package com.odelia.osgi.dosgi;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.ServiceRegistration;
@@ -6,7 +6,7 @@ import org.osgi.framework.BundleContext;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.ow2.aspirerfid.ale.core.helloworld.Helloworld;
+import sample.Helloworld;
 
 
 public class SimpleActivator implements BundleActivator {
@@ -17,7 +17,7 @@ public class SimpleActivator implements BundleActivator {
     public void start(BundleContext context) {
         Dictionary props = new Hashtable();
 
-        props.put("service.exported.interfaces", "org.ow2.aspirerfid.ale.core.helloworld.Helloworld");
+        props.put("service.exported.interfaces", "sample.Helloworld");
         props.put("service.exported.configs", PROPERTY_BASE_NAME);
 
         // If the property bellow is not used, the URL used for the web service should be: 
