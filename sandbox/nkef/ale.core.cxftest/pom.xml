@@ -11,7 +11,7 @@
 
 
   <properties>
-    <bundle.import.package>*</bundle.import.package>
+    <bundle.import.package>*;resolution:=optional</bundle.import.package>
     <bundle.private.package></bundle.private.package>
     <felix.version>4.0.2</felix.version>
     <osgi.version>4.2.0</osgi.version>
