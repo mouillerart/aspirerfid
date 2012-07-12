@@ -25,6 +25,7 @@ public class SimpleActivator implements BundleActivator {
         props.put(PROPERTY_BASE_NAME + ".address", "http://localhost:9090/SimpleService");
 
         props.put(PROPERTY_BASE_NAME + ".frontend", "jaxws");
+//        props.put(PROPERTY_BASE_NAME + ".databinding","jaxb");
         props.put(PROPERTY_BASE_NAME + ".service.ns", "http://sample/"); // service namespace 
         props.put(PROPERTY_BASE_NAME + ".service.name", "Helloworld"); // service name
         props.put(PROPERTY_BASE_NAME + ".port.name", "HelloworldSOAP11Port"); // port/endpoint name 
