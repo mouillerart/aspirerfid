@@ -1,0 +1,94 @@
+// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.geocities.com/kpdus/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   XmppClient.java
+
+package org.ow2.aspirerfid.example.myxmpp;
+
+import java.io.*;
+import org.jivesoftware.smack.*;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Packet;
+import org.ow2.aspirerfid.xmpp.xmppclient.XMPPClientService;
+
+public class XmppClient
+    implements PacketListener, ConnectionListener
+{
+
+    public XmppClient()
+    {
+    }
+
+    public void begin()
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String cmdLine = null;
+        do
+        {
+            try
+            {
+                System.out.print(">xmpp ");
+                cmdLine = br.readLine();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+            if(cmdLine == null || cmdLine.length() == 0)
+                System.out.println("Please enter your message");
+            else
+            if(!cmdLine.equalsIgnoreCase("bye") && !cmdLine.equalsIgnoreCase("exit"))
+            {
+                try
+                {
+                    m_xmpp.addMessage(cmdLine);
+                    m_xmpp.sendMessage(cmdLine);
+                    m_xmpp.addPacketListener(this, null);
+                }
+                catch(XMPPException e)
+                {
+                    e.printStackTrace();
+                }
+            } else
+            {
+                end();
+                return;
+            }
+        } while(true);
+    }
+
+    public void end()
+    {
+        m_xmpp.removePacketListener(this);
+        m_xmpp.addConnectionListener(this);
+    }
+
+    public void processPacket(Packet packet)
+    {
+        Message m = (Message)packet;
+        String current = m.getBody();
+        System.out.println("recu : " + current);
+    }
+
+    public void connectionClosed()
+    {
+    }
+
+    public void connectionClosedOnError(Exception exception)
+    {
+    }
+
+    public void reconnectingIn(int i)
+    {
+    }
+
+    public void reconnectionFailed(Exception exception)
+    {
+    }
+
+    public void reconnectionSuccessful()
+    {
+    }
+
+    XMPPClientService m_xmpp;
+}

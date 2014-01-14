@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: xmpp_client_library
+Bundle-SymbolicName: xmpp_client_library
+Bundle-Version: 1.0.0.qualifier

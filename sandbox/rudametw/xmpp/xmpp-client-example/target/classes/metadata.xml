@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipojo>
+<!-- declare your component types and instances here -->
+	<component classname="m2m.xmpp.LCxmpp.XmppUser" name="XmppUser"
+	immediate="false" architecture="true">
+		<requires field="m_xmpp"/>
+		<callback transition="validate" method="begin" />
+		<callback transition="invalidate" method="end" />
+	</component>
+
+	<instance component="XmppUser" name="xmppUser_instance" />
+
+</ipojo>
+

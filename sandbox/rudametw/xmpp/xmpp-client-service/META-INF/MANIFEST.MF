@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: xmpp_client_service
+Bundle-SymbolicName: xmpp_client_service
+Bundle-Version: 1.0.0.qualifier
+Export-Package: org.ow2.aspirerfid.xmpp.xmppclient,
+ org.ow2.aspirerfid.xmpp.xmppclient.impl

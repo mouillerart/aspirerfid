@@ -1,0 +1,94 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>bundle</packaging>
+	<groupId>m2m.xmpp.LCxmpp</groupId>
+	<artifactId>m2m.xmpp.LCxmpp</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<dependencies>
+		<dependency>
+			<groupId>m2m.xmpp</groupId>
+			<artifactId>m2m.xmpp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>Smack</groupId>
+			<artifactId>Smack</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>jivesoftware</groupId>
+			<artifactId>smack</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>jivesoftware</groupId>
+			<artifactId>smackx</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+	</dependencies>
+		<!--
+	<repositories>
+		<repository>
+			<id>jsdoctk1</id>
+			<url>http://jsdoctk-plugin.googlecode.com/svn/repo</url>
+		</repository>
+	</repositories>
+		-->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Copyright>XmppUser</Bundle-Copyright>
+						<Bundle-Name>XmppUser</Bundle-Name>
+						<Bundle-SymbolicName>${pom.artifactId}
+						</Bundle-SymbolicName>
+						<Bundle-Description>${pom.description}
+						</Bundle-Description>
+						<!--  <Bundle-Vendor>Amel&Amina</Bundle-Vendor>-->
+						<Private-Package>
+							m2m.xmpp.LCxmpp
+						</Private-Package>
+						<!--  <Import-Package> *
+
+					   </Import-Package>-->
+
+
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-ipojo-plugin</artifactId>
+				<version>0.8.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>ipojo-bundle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
